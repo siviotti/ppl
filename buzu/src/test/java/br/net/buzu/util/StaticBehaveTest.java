@@ -56,7 +56,7 @@ public class StaticBehaveTest {
 
 		Metadata child3 = context.metadataFactory().create(unboundedMetaInfo, null);
 		try {
-			StaticBehave.checkStaticChild(child2);
+			StaticBehave.checkStaticChild(child3);
 			fail();
 		} catch (IllegalArgumentException iae) {
 			assertTrue(iae.getMessage().startsWith(StaticBehave.INVALID_STATIC_CHILD));

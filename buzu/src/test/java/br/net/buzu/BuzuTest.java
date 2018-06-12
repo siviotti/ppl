@@ -357,6 +357,7 @@ public class BuzuTest {
 		assertTrue(ppl.contains("#0-" + people.size())); // #0-3
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testUnsafeCollection() {
 		List<Person> people = new ArrayList<>();

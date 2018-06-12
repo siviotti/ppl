@@ -1,6 +1,6 @@
 package br.net.buzu.metadata.build;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,10 +8,8 @@ import org.junit.Test;
 import br.net.buzu.BuzuTest;
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.BasicMetaclassReader;
-import br.net.buzu.metaclass.BasicSkipStrategy;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.metadata.build.parse.Splitter;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.PplString;
 

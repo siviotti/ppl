@@ -20,6 +20,10 @@ public enum Suit {
 	
 	private final Color color;
 
+	public Color getColor() {
+		return color;
+	}
+
 	private Suit(Color color) {
 		this.color = color;
 	}

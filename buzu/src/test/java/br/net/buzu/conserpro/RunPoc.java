@@ -14,7 +14,6 @@ import br.net.buzu.metadata.build.MetadataBuilder;
 import br.net.buzu.parsing.Text;
 import br.net.buzu.pplspec.api.PayloadParser;
 import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.StaticMetadata;
 
 public class RunPoc {

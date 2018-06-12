@@ -22,8 +22,6 @@ import java.util.List;
 import br.net.buzu.pplspec.api.PayloadParser;
 import br.net.buzu.pplspec.exception.PplParseException;
 import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.StaticMetaclass;
 import br.net.buzu.pplspec.model.StaticMetadata;
 import br.net.buzu.util.Reflect;
 

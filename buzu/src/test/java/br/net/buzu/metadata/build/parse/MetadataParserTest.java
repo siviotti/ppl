@@ -195,6 +195,6 @@ public class MetadataParserTest {
 
 	@Test
 	public void testParseComplexDomain() {
-		List<String> domain = parser.parseDomain(COMPLEX_EXT);
+		parser.parseDomain(COMPLEX_EXT);
 	}
 }

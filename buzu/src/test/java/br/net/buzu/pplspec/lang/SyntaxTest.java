@@ -77,16 +77,13 @@ public class SyntaxTest {
 	 @Test
 	public void testPerformance() {
 		String name = "name-test_ABC-25";
-		long t0 = System.currentTimeMillis();
 		int repeat = 1000000;
 		for (int i = 0; i < repeat; i++) {
 			Syntax.NAME_PATTERN.matcher(name).matches();
 		}
-		long t1 = System.currentTimeMillis();
 		for (int i = 0; i < repeat; i++) {
 			syntax.isValidMetaName(name);
 		}
-		long t2 = System.currentTimeMillis();
 	}
 
 	@Test

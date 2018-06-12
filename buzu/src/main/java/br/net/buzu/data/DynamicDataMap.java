@@ -89,5 +89,8 @@ public class DynamicDataMap implements DataMap {
 		return sb.toString();
 	}
 
+	public Metadata getMetadata() {
+		return metadata;
+	}
 	
 }
