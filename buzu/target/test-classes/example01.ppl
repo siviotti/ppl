@@ -1,0 +1,13 @@
+name: 			S10#1;
+address:(
+	street: 	S20#1;
+	city: 		S20=;
+	zip: 		C05#1;
+	)#1-2;
+age:			N3;
+phone: 			C9#0-2;
+
+
+{"name":"John","addresses":[{"street":"221b Baker Street","city":"London","zip":"12345"},{"street":"10 Downing Street","city":"London","zip":"54321"}],"age":33,"phones":["12345678","12345678"]}
+
+(name:S10;address:(street:S20;city:S20;zip:C01)#2;age:N3;phone:C9#2);John221b Baker StreetLondon1234510 Downing StreetLondon54321331234567812345678

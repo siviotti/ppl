@@ -1,0 +1,10 @@
+
+<name>Ladybug</name><age>15</age><city>Paris</city>
+
+{'name':'Ladybug','age':15,'city':'Paris'}
+
+(21;name:7;age:I2;city:5);Ladybug15Paris
+
+{['name':'Ladybug','age':15,'city':'Paris', 'name':'Catnoir','age':15,'city':'Paris']}
+
+(21;name:7;age:I2;city:5);Ladybug15ParisCatnoir15Paris
