@@ -14,10 +14,9 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.metadata;
+package br.net.buzu.pplspec.model;
 
 import br.net.buzu.pplspec.lang.Token;
-import br.net.buzu.pplspec.model.LabeledValue;
 
 /**
  * Generic implementation to <code>LabelValue</code>.
@@ -27,9 +26,9 @@ import br.net.buzu.pplspec.model.LabeledValue;
  * @see LabeledValue
  *
  */
-public class GenericLabelValue<T extends Comparable<T>> implements LabeledValue<T> {
+public class DomainItem implements LabeledValue {
 
-	private final T value;
+	private final String value;
 	private final String label;
 
 	/**
@@ -38,7 +37,7 @@ public class GenericLabelValue<T extends Comparable<T>> implements LabeledValue<
 	 * @param value
 	 *            The internal value.
 	 */
-	public GenericLabelValue(T value) {
+	public DomainItem(String value) {
 		this(value, null);
 	}
 
@@ -50,7 +49,7 @@ public class GenericLabelValue<T extends Comparable<T>> implements LabeledValue<
 	 * @param label
 	 *            The correspondent label.
 	 */
-	public GenericLabelValue(T value, String label) {
+	public DomainItem(String value, String label) {
 		super();
 		if (value == null) {
 			throw new NullPointerException("'value' cannot be null!");
@@ -58,9 +57,23 @@ public class GenericLabelValue<T extends Comparable<T>> implements LabeledValue<
 		this.value = value;
 		this.label = label;
 	}
+	
+	public static DomainItem parse(String text) {
+		if (text == null) {
+			return null;
+		}
+		int pos = text.indexOf(Token.LABEL_VALUE);
+		if (pos < 0) {
+			return new DomainItem(text);
+		}
+		String value = text.substring(0, pos);
+		String label = text.substring(pos+1, text.length());
+		return new DomainItem(value, label);
+	}
+
 
 	@Override
-	public T value() {
+	public String value() {
 		return value;
 	}
 
@@ -87,15 +100,15 @@ public class GenericLabelValue<T extends Comparable<T>> implements LabeledValue<
 		if (obj == null) {
 			return false;
 		}
-		if (obj instanceof LabeledValue<?>) {
-			return value.equals(((LabeledValue<?>) obj).value());
+		if (obj instanceof LabeledValue) {
+			return value.equals(((LabeledValue) obj).value());
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return hasLabel() ? value.toString() + Token.LABEL_VALUE + label : value.toString();
+		return hasLabel() ? value + Token.LABEL_VALUE + label : value;
 	}
 
 }

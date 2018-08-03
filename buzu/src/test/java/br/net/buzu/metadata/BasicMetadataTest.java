@@ -28,8 +28,8 @@ public class BasicMetadataTest {
 		assertTrue(bm2.toTree(0).equals(bm1.toTree(0)));
 		assertTrue(bm1.equals(bm1));
 		assertFalse(bm1.equals(null));
-		assertFalse(bm1.equals("abc"));
-
+		Object o = new String("abc");
+		assertFalse(bm1.equals(o));
 	}
 
 }

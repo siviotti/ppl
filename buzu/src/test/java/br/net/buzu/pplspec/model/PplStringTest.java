@@ -90,7 +90,8 @@ public class PplStringTest {
 		PplString pplString1 = new PplString("(name: S10; age: I3; city:S5)Ladybug   015Paris");
 		PplString pplString2 = new PplString("(name: S10; age: I3; city:S5)Ladybug   015Paris");
 		assertFalse(pplString1.equals(null));
-		assertFalse(pplString1.equals("abc"));
+		Object o = new String("abc");
+		assertFalse(pplString1.equals(o));
 		assertTrue(pplString1.equals(pplString1));
 		assertEquals(pplString1, pplString2);
 		assertEquals(pplString1.hashCode(), pplString2.hashCode());

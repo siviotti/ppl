@@ -190,8 +190,9 @@ public class MetaInfoTest {
 		assertTrue(metaInfo.equals(copy) && copy.equals(metaInfo)); // Symmetry
 		assertTrue(copy.equals(metaInfo) && copy2.equals(metaInfo) && copy.equals(copy2)); // Transitive
 		assertTrue(metaInfo.equals(copy) && metaInfo.equals(copy) && metaInfo.equals(copy)); // Consistent
-		assertFalse(metaInfo.equals(false));
 		assertFalse(metaInfo.equals(null));
+		Object o = new String("abc");
+		assertFalse(metaInfo.equals(o));
 		// compareTo
 		assertTrue(copy.compareTo(copy2)==0);
 		assertTrue(copy.compareTo(copy3)==-1);

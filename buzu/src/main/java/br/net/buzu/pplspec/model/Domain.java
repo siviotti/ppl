@@ -16,6 +16,8 @@
  */
 package br.net.buzu.pplspec.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,14 +27,38 @@ import java.util.List;
  * @since 1.0
  *
  */
-public interface Domain<T extends Comparable<T>> extends Nameable {
+public class Domain implements Nameable {
+
+	public static final Domain EMPTY = new Domain("", null);
+
+	private final String name;
+
+	private final List<DomainItem> items;
+
+	protected Domain(String name, List<DomainItem> items) {
+		super();
+		this.name = name;
+		this.items = items != null ? Collections.unmodifiableList(items)
+				: Collections.unmodifiableList(new ArrayList<>());
+	}
+	
+	public static Domain create(String name, List<DomainItem> items) {
+		return new Domain(name, items);
+	}
+	
+	@Override
+	public String name() {
+		return name;
+	}
+
 
 	/**
 	 * Retuns the items of LabeledValue.
 	 * 
 	 * @return A instance of List<LabeledValue>.
 	 */
-	public List<LabeledValue<T>> items();
-
+	public List<DomainItem> items() {
+		return items;
+	}
 
 }

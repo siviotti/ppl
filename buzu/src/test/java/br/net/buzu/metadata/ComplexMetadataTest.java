@@ -55,8 +55,8 @@ public class ComplexMetadataTest {
 		assertTrue(c2.equals(c1));
 		assertTrue(c1.equals(c1));
 		assertFalse(c1.equals(null));
-		assertFalse(c1.equals(false));
-
+		Object o = new String("abc");
+		assertFalse(c1.equals(o));
 	}
 
 }

@@ -23,14 +23,14 @@ package br.net.buzu.pplspec.model;
  * @since 10 de abr de 2018 - Construção da Duimp (Release 1)
  *
  */
-public interface LabeledValue<T extends Comparable<T>> {
+public interface LabeledValue {
 
 	/**
-	 * The real value of the objet.
+	 * The real value of the object.
 	 * 
 	 * @return The internal value ignoring the label.
 	 */
-	T value();
+	String value();
 
 	/**
 	 * The optional label relative to the value.
@@ -40,8 +40,7 @@ public interface LabeledValue<T extends Comparable<T>> {
 	String label();
 
 	/**
-	 * Indicates if the class use the "label" field or use only the code as a
-	 * value.
+	 * Indicates if the class use the "label" field or use only the code as a value.
 	 * 
 	 * @return <code>true</code> if the value is like "value+label" or
 	 *         <code>false</code> if the value has no label.
