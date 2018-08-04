@@ -8,9 +8,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.MetaInfoTest;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.Subtype;
 
@@ -21,7 +21,7 @@ import br.net.buzu.pplspec.model.Subtype;
 public class AbstractMetadataTest {
 
 	private static Metadata createSample(String name, Subtype subtype, int size, int minOccurs, int maxOccurs) {
-		List<String> domain = MetaInfoTest.domain("white", "black", "red");
+		Domain domain = Domain.create("white", "black", "red");
 		MetaInfo metaInfo = new MetaInfo("", 31, name, subtype, size, 0, minOccurs, maxOccurs, domain, "red", "XYZ");
 		return new GenericSimpleMetadata(Kind.ARRAY, metaInfo);
 
@@ -39,7 +39,7 @@ public class AbstractMetadataTest {
 
 	@Test
 	public void test() {
-		List<String> domain = MetaInfoTest.domain("Diamons", "white", "black", "red");
+		Domain domain = Domain.create("Diamons", "white", "black", "red");
 		MetaInfo metaInfo = new MetaInfo("", 31, "test", Subtype.STRING, 10, 0, 1, 2, domain, "red", "XYZ");
 
 		Metadata m1 = new GenericSimpleMetadata(Kind.RECORD, metaInfo);

@@ -20,6 +20,7 @@ import br.net.buzu.pplspec.api.MetadataCoder;
 import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.lang.Token;
 import br.net.buzu.pplspec.model.Dialect;
+import br.net.buzu.pplspec.model.DomainItem;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.MetaInfo;
 
@@ -158,8 +159,8 @@ public class VerboseMetadataCoder implements MetadataCoder {
 				valueEnd = "" + Token.VALUE_END;
 			}
 			sb.append(Token.DOMAIN_BEGIN);
-			for (String item : meta.domain()) {
-				sb.append(valueBegin).append(item).append(valueEnd).append(Token.DOMAIN_SEPARATOR);
+			for (DomainItem item : meta.domain().items()) {
+				sb.append(valueBegin).append(item.asSerial()).append(valueEnd).append(Token.DOMAIN_SEPARATOR);
 			}
 			sb.deleteCharAt(sb.length() - 1);
 			sb.append(Token.DOMAIN_END);

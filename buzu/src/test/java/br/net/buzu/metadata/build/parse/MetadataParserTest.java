@@ -15,7 +15,7 @@ import br.net.buzu.context.BasicContext;
 import br.net.buzu.metadata.ComplexStaticMetadada;
 import br.net.buzu.metadata.code.ShortMetadataCoder;
 import br.net.buzu.pplspec.lang.Syntax;
-import br.net.buzu.pplspec.model.MetaInfoTest;
+import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.StaticMetadata;
 import br.net.buzu.pplspec.model.Subtype;
@@ -77,7 +77,7 @@ public class MetadataParserTest {
 	@Test
 	public void testParseSingle() {
 		BasicMetadataParser metadataParser = new BasicMetadataParser();
-		Metadata metadata = metadataParser.parse("",NAME, 0);
+		Metadata metadata = metadataParser.parse("", NAME, 0);
 		assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1);
 	}
 
@@ -93,7 +93,7 @@ public class MetadataParserTest {
 	@Test
 	public void testParseComplex() {
 		BasicMetadataParser parser = new BasicMetadataParser();
-		Metadata metadata = parser.parse("",PERSON, 0);
+		Metadata metadata = parser.parse("", PERSON, 0);
 		assertEquals(3, metadata.children().size());
 		assertMetadata(metadata.children().get(0), "name", Subtype.STRING, 20, 0, 1);
 		assertMetadata(metadata.children().get(1), "age", Subtype.INTEGER, 2, 0, 1);
@@ -103,10 +103,10 @@ public class MetadataParserTest {
 	@Test
 	public void testParseExtension() {
 		BasicMetadataParser parser = new BasicMetadataParser();
-		Metadata metadata = parser.parse("",EXT, 0);
+		Metadata metadata = parser.parse("", EXT, 0);
 		assertMetadata(metadata, "color", Subtype.STRING, 10, 0, 1);
-		List<String> domain = MetaInfoTest.domain("black", "white", "red");
-		assertEquals(domain, metadata.info().domain());
+		Domain domain = Domain.create("black", "white", "red");
+		assertEquals(domain.items(), metadata.info().domain().items());
 	}
 
 	@Test
@@ -167,21 +167,21 @@ public class MetadataParserTest {
 
 	@Test
 	public void testParseDomain() {
-		List<String> domain = parser.parseDomain(EXT);
-		assertEquals("black", domain.get(0));
-		assertEquals("white", domain.get(1));
-		assertEquals("red", domain.get(2));
+		Domain domain = parser.parseDomain(EXT);
+		assertEquals("black", domain.items().get(0).value());
+		assertEquals("white", domain.items().get(1).value());
+		assertEquals("red", domain.items().get(2).value());
 
 		ParseNode node1 = new ParseNode("color", "S", "10", "0-1", "[black,white,red]", "red", "K I test", null);
-		List<String> domain1 = parser.parseDomain(node1);
+		Domain domain1 = parser.parseDomain(node1);
 		assertEquals(domain, domain1);
 
 		ParseNode node2 = new ParseNode("color", "S", "10", "0-1", "[\"bl'ack\",'wh,i\"te',red]", "red", "K I test",
 				null);
-		List<String> domain2 = parser.parseDomain(node2);
-		assertEquals("bl'ack", domain2.get(0));
-		assertEquals("wh,i\"te", domain2.get(1));
-		assertEquals("red", domain2.get(2));
+		Domain domain2 = parser.parseDomain(node2);
+		assertEquals("bl'ack", domain2.items().get(0).value());
+		assertEquals("wh,i\"te", domain2.items().get(1).value());
+		assertEquals("red", domain2.items().get(2).value());
 
 		ParseNode nodeError = new ParseNode("color", "S", "10", "0-1", "['black','white,'red']", "red", "K I test",
 				null);

@@ -91,6 +91,10 @@ public class DomainItem implements LabeledValue {
 	public int hashCode() {
 		return value.hashCode() * 31 + (label != null ? label.hashCode() : 0);
 	}
+	
+	public String asSerial() {
+		return hasLabel() ? value + Token.LABEL_VALUE + label : value;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -108,7 +112,7 @@ public class DomainItem implements LabeledValue {
 
 	@Override
 	public String toString() {
-		return hasLabel() ? value + Token.LABEL_VALUE + label : value;
+		return asSerial();
 	}
 
 }

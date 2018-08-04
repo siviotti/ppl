@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.net.buzu.pplspec.lang.Syntax;
+
 /**
  * Represents the Domain Value of a Metadata.
  * 
@@ -29,7 +31,7 @@ import java.util.List;
  */
 public class Domain implements Nameable {
 
-	public static final Domain EMPTY = new Domain("", null);
+	public static final Domain EMPTY = new Domain(Syntax.EMPTY, null);
 
 	private final String name;
 
@@ -41,16 +43,35 @@ public class Domain implements Nameable {
 		this.items = items != null ? Collections.unmodifiableList(items)
 				: Collections.unmodifiableList(new ArrayList<>());
 	}
-	
+
+	public static List<DomainItem> createItems(String... array) {
+		List<DomainItem> list = new ArrayList<>();
+		for (int i = 0; i < array.length; i++) {
+			list.add(DomainItem.parse(array[i]));
+		}
+		return list;
+	}
+
+	public static List<DomainItem> createItems(List<String> stringList) {
+		List<DomainItem> list = new ArrayList<>();
+		for (String item : stringList) {
+			list.add(DomainItem.parse(item));
+		}
+		return list;
+	}
+
 	public static Domain create(String name, List<DomainItem> items) {
 		return new Domain(name, items);
 	}
-	
+
+	public static Domain create(String... array) {
+		return create(Syntax.EMPTY, createItems(array));
+	}
+
 	@Override
 	public String name() {
 		return name;
 	}
-
 
 	/**
 	 * Retuns the items of LabeledValue.
@@ -59,6 +80,36 @@ public class Domain implements Nameable {
 	 */
 	public List<DomainItem> items() {
 		return items;
+	}
+
+	public boolean isEmpty() {
+		return items.isEmpty();
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode() * 31 + items.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (obj instanceof Domain) {
+			Domain o = (Domain) obj;
+			return name.equals(o.name) && items.equals(o.items);
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
 	}
 
 }

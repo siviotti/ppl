@@ -2,14 +2,12 @@ package br.net.buzu.context;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import br.net.buzu.metadata.SimpleStaticMetadata;
+import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.MetaInfoTest;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.Subtype;
 
@@ -42,7 +40,7 @@ public class BasicMetadataFactoryTest {
 
 	@Test
 	public void testSimpleExtended() {
-		List<String> domain = MetaInfoTest.domain("Diamond", "Heart", "Club", "Spade");
+		Domain domain = Domain.create("Diamond", "Heart", "Club", "Spade");
 		MetaInfo metaInfo = new MetaInfo("", 0, "simpleComplex", Subtype.STRING, 10, 0, 0, 1, domain, "Club", "K");
 		Metadata metadata = factory.create(metaInfo, null);
 		assertEquals(SimpleStaticMetadata.class, metadata.getClass());

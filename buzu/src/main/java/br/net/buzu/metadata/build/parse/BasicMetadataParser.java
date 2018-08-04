@@ -26,6 +26,7 @@ import br.net.buzu.pplspec.context.PplContext;
 import br.net.buzu.pplspec.exception.PplParseException;
 import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.lang.Token;
+import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.PplString;
@@ -114,7 +115,7 @@ public class BasicMetadataParser implements MetadataParser {
 		int scale = parseScale(node, subtype);
 		int minOccurs = parseMinOccurs(node);
 		int maxOccurs = parseMaxOccurs(node);
-		List<String> domain = parseDomain(node);
+		Domain domain = parseDomain(node);
 		MetaInfo metaInfo = new MetaInfo(parentId, index, name, subtype, size, scale, minOccurs, maxOccurs, domain,
 				node.defaultValue, node.tags);
 		return context.metadataFactory().create(metaInfo, parseChildren(metaInfo.id(), node));
@@ -205,42 +206,42 @@ public class BasicMetadataParser implements MetadataParser {
 		return (index < -1) ? Integer.parseInt(occurs) : Integer.parseInt(occurs.substring(index + 1, occurs.length()));
 	}
 
-	protected List<String> parseDomain(ParseNode node) {
-		String domain = node.getDomain();
-		if (domain == null || domain.length() < 3) {
-			return MetaInfo.EMPTY_DOMAIN;
+	protected Domain parseDomain(ParseNode node) {
+		String domainStr = node.getDomain();
+		if (domainStr == null || domainStr.length() < 3) {
+			return Domain.EMPTY;
 		}
-		if (domain.charAt(0) != Token.DOMAIN_BEGIN || domain.charAt(domain.length() - 1) != Token.DOMAIN_END) {
-			throw new MetadataParseException(INVALID_DOMAIN + domain, node);
+		if (domainStr.charAt(0) != Token.DOMAIN_BEGIN || domainStr.charAt(domainStr.length() - 1) != Token.DOMAIN_END) {
+			throw new MetadataParseException(INVALID_DOMAIN + domainStr, node);
 		}
-		domain = domain.substring(1, domain.length() - 1);
-		if (domain.trim().isEmpty()) {
-			return MetaInfo.EMPTY_DOMAIN;
+		domainStr = domainStr.substring(1, domainStr.length() - 1);
+		if (domainStr.trim().isEmpty()) {
+			return Domain.EMPTY;
 		}
 		List<String> list = new ArrayList<>();
 		char c;
 		int beginIndex = 0;
-		int endIndex = domain.length();
-		for (int i = 0; i < domain.length(); i++) {
-			c = domain.charAt(i);
+		int endIndex = domainStr.length();
+		for (int i = 0; i < domainStr.length(); i++) {
+			c = domainStr.charAt(i);
 			if (c == Token.PLIC || c == Token.QUOTE) {
 				try {
-					i = context.syntax().nextStringDelimeter(domain, i, c);
+					i = context.syntax().nextStringDelimeter(domainStr, i, c);
 				} catch (ParseException e) {
-					throw new MetadataParseException(INVALID_DOMAIN + domain, node, e);
+					throw new MetadataParseException(INVALID_DOMAIN + domainStr, node, e);
 				}
 				continue;
 			}
 			if (c == Token.DOMAIN_SEPARATOR) {
 				endIndex = i;
-				list.add(extractItem(domain, beginIndex, endIndex));
+				list.add(extractItem(domainStr, beginIndex, endIndex));
 				beginIndex = endIndex + 1;
 			}
 
 		}
-		list.add(extractItem(domain, beginIndex, domain.length()));
+		list.add(extractItem(domainStr, beginIndex, domainStr.length()));
 
-		return list;
+		return Domain.create(node.name + Token.PATH_SEP + "domain", Domain.createItems(list));
 	}
 
 	private String extractItem(final String domain, int beginIndex, int endIndex) {

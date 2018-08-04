@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.net.buzu.pplspec.lang.Syntax;
+import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Subtype;
 
@@ -72,7 +73,7 @@ public class Layout {
 	}
 
 	public Layout(String name, Subtype subtype, int size, int scale, int minOccurs, int maxOccurs, String defaultValue,
-			List<String> domain, String tags) {
+			Domain domain, String tags) {
 		this(new MetaInfo("", 0, name, subtype, size, scale, minOccurs, maxOccurs, domain, defaultValue, tags), null);
 	}
 
@@ -93,7 +94,7 @@ public class Layout {
 	}
 
 	public Layout field(String name, Subtype subtype, int size, int precision, int minOccurs, int maxOccurs,
-			String defaultValue, List<String> domain, String tags) {
+			String defaultValue, Domain domain, String tags) {
 		Layout child = new Layout(new MetaInfo(metaInfo.id(), childrenSize(), name, subtype, size, precision, minOccurs,
 				maxOccurs, domain, defaultValue, tags), this);
 		add(child);
@@ -151,12 +152,12 @@ public class Layout {
 	}
 
 	public Layout atomic(String name, Subtype subtype, int size, boolean required, String defaultValue,
-			List<String> domain, String tags) {
+			Domain domain, String tags) {
 		return field(name, subtype, size, NO_PRECISION, getMinOccurs(required), 1, defaultValue, domain, tags);
 	}
 
 	public Layout atomic(String name, Subtype subtype, int size, int precision, boolean required, String defaultValue,
-			List<String> domain, String tags) {
+			Domain domain, String tags) {
 		return field(name, subtype, size, precision, getMinOccurs(required), 1, defaultValue, domain, tags);
 	}
 

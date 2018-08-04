@@ -17,7 +17,6 @@
 package br.net.buzu.pplspec.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +37,6 @@ import br.net.buzu.pplspec.lang.Token;
 public final class MetaInfo implements Comparable<MetaInfo> {
 
 	public static final int NO_SCALE = 0;
-	public static final List<String> EMPTY_DOMAIN = Collections.unmodifiableList(new ArrayList<>());
 
 	// Basic
 	private final String id;
@@ -51,7 +49,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 	private final int maxOccurs;
 	// Extension
 	private final boolean extended;
-	private final List<String> domain;
+	private final Domain domain;
 	private final String defaultValue;
 	private final String tags;
 	private final Align align;
@@ -65,7 +63,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 	public MetaInfo(String parentId, PplMetadata pplMetadata, String originalFieldName, Subtype originalSubtype) {
 		this(parentId, pplMetadata.index(), getName(pplMetadata, originalFieldName),
 				getSubtype(pplMetadata, originalSubtype), pplMetadata.size(), pplMetadata.scale(),
-				pplMetadata.minOccurs(), pplMetadata.maxOccurs(), Arrays.asList(pplMetadata.domain()),
+				pplMetadata.minOccurs(), pplMetadata.maxOccurs(), Domain.create(pplMetadata.domain()),
 				pplMetadata.defaultValue(), buildTags(pplMetadata));
 	}
 
@@ -83,7 +81,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 	 * @param tags
 	 */
 	public MetaInfo(String parentId, int index, String name, Subtype subtype, int size, int scale, int minOccurs,
-			int maxOccurs, List<String> domain, String defaultValue, String tags) {
+			int maxOccurs, Domain domain, String defaultValue, String tags) {
 		super();
 		this.id = createId(parentId, name);
 		this.index = index;
@@ -94,7 +92,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 		checkOccurs(minOccurs, maxOccurs);
 		this.minOccurs = minOccurs < 0 ? 0 : minOccurs;
 		this.maxOccurs = maxOccurs;
-		this.domain = (domain != null) ? Collections.unmodifiableList(domain) : EMPTY_DOMAIN;
+		this.domain = (domain != null) ? domain : Domain.EMPTY;
 		this.defaultValue = (defaultValue != null) ? defaultValue : Syntax.EMPTY;
 		this.tags = (tags != null) ? tags : Syntax.EMPTY;
 		this.extended = isExtended(this.domain, this.defaultValue, this.tags);
@@ -146,14 +144,14 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 		return sb.toString();
 	}
 
-	private static String serializeDomain(List<String> domain) {
+	private static String serializeDomain(Domain domain) {
 		if (domain == null || domain.isEmpty()) {
 			return Syntax.EMPTY;
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(Token.DOMAIN_BEGIN);
-		for (String item : domain) {
-			sb.append(Token.VALUE_BEGIN).append(item).append(Token.VALUE_END).append(Token.DOMAIN_SEPARATOR);
+		for (DomainItem item : domain.items()) {
+			sb.append(Token.VALUE_BEGIN).append(item.asSerial()).append(Token.VALUE_END).append(Token.DOMAIN_SEPARATOR);
 		}
 		sb.deleteCharAt(sb.length() - 1); // remove last
 		sb.append(Token.DOMAIN_END);
@@ -167,7 +165,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 		return "" + Token.DEFAULT_VALUE + Token.VALUE_BEGIN + defaultValue + Token.VALUE_END;
 	}
 
-	private static boolean isExtended(List<String> domain, String defaultValue, String tags) {
+	private static boolean isExtended(Domain domain, String defaultValue, String tags) {
 		return !domain.isEmpty() || !defaultValue.isEmpty() || !tags.isEmpty();
 	}
 
@@ -283,8 +281,8 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 			// Domain defined and invalid item
 			return false;
 		}
-		for (String internalItem : domain) {
-			if (item.equals(internalItem)) {
+		for (DomainItem internalItem : domain.items()) {
+			if (internalItem.value().equals(item)) {
 				return true;
 			}
 		}
@@ -338,7 +336,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 		return defaultValue;
 	}
 
-	public List<String> domain() {
+	public Domain domain() {
 		return domain;
 	}
 

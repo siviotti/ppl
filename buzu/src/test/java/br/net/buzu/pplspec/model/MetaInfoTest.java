@@ -1,16 +1,14 @@
 package br.net.buzu.pplspec.model;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import br.net.buzu.pplspec.annotation.PplMetadata;
 import br.net.buzu.pplspec.lang.Syntax;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Subtype;
 
 /**
  * MetaInfo Unit Test.
@@ -19,6 +17,8 @@ import br.net.buzu.pplspec.model.Subtype;
  * @since 1.0
  */
 public class MetaInfoTest {
+	
+	private static String [] array = {"Diamond", "Heart", "Club", "Spade"};
 
 	public static void assertMetainfo(MetaInfo metaInfo, String name, Subtype subtype, int size, int scale,
 			int minOccurs, int maxOccurs) {
@@ -31,19 +31,15 @@ public class MetaInfoTest {
 	}
 
 	public static void assertMetainfo(MetaInfo metaInfo, String name, Subtype subtype, int size, int scale,
-			int minOccurs, int maxOccurs, String defaultValue, List<String> domain, String tags) {
+			int minOccurs, int maxOccurs, String defaultValue, Domain domain, String tags) {
 		assertMetainfo(metaInfo, name, subtype, size, scale, minOccurs, maxOccurs);
 		assertEquals(defaultValue, metaInfo.defaultValue());
 		assertEquals(domain, metaInfo.domain());
 		assertEquals(tags, metaInfo.tags());
 	}
 
-	public static List<String> domain(String... items) {
-		List<String> list = new ArrayList<>();
-		for (String s : items) {
-			list.add(s);
-		}
-		return list;
+	public static Domain domain(String... items) {
+		return Domain.create(items);
 	}
 	
 
@@ -62,7 +58,7 @@ public class MetaInfoTest {
 	public void testEmptyMetaInfo() {
 		MetaInfo metaInfo = new MetaInfo("",0, null, Subtype.STRING, 0, 0, 0, 0);
 		assertFalse(metaInfo.hasDomain());
-		assertMetainfo(metaInfo, null, Subtype.STRING, 0, 0, 0, 0, Syntax.EMPTY, MetaInfo.EMPTY_DOMAIN, Syntax.EMPTY);
+		assertMetainfo(metaInfo, null, Subtype.STRING, 0, 0, 0, 0, Syntax.EMPTY, Domain.EMPTY, Syntax.EMPTY);
 		assertEquals("", metaInfo.id());
 	}
 
@@ -71,7 +67,7 @@ public class MetaInfoTest {
 		MetaInfo metaInfo1 = new MetaInfo("",0, null, Subtype.STRING, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
 				0, PplMetadata.EMPTY_INTEGER);
 		assertMetainfo(metaInfo1, null, Subtype.STRING, PplMetadata.EMPTY_INTEGER, MetaInfo.NO_SCALE, 0,
-				PplMetadata.EMPTY_INTEGER, Syntax.EMPTY, MetaInfo.EMPTY_DOMAIN, Syntax.EMPTY);
+				PplMetadata.EMPTY_INTEGER, Syntax.EMPTY, Domain.EMPTY, Syntax.EMPTY);
 		assertFalse(metaInfo1.isComplete());
 		assertFalse(metaInfo1.hasSize());
 		assertFalse(metaInfo1.hasMaxOccurs());
@@ -79,14 +75,14 @@ public class MetaInfoTest {
 		MetaInfo metaInfo2 = new MetaInfo("",0, null, Subtype.STRING, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
 				0, 5);
 		assertMetainfo(metaInfo2, null, Subtype.STRING, PplMetadata.EMPTY_INTEGER, MetaInfo.NO_SCALE, 0, 5,
-				Syntax.EMPTY, MetaInfo.EMPTY_DOMAIN, Syntax.EMPTY);
+				Syntax.EMPTY, Domain.EMPTY, Syntax.EMPTY);
 		assertFalse(metaInfo2.isComplete());
 		assertFalse(metaInfo2.hasSize()); // PplMetadata.EMPTY_INTEGER
 		assertTrue(metaInfo2.hasMaxOccurs()); // 5
 		//
 		MetaInfo metaInfo3 = new MetaInfo("",0, null, Subtype.STRING, 10, 0, 0, PplMetadata.EMPTY_INTEGER);
 		assertMetainfo(metaInfo3, null, Subtype.STRING, 10, 0, 0, PplMetadata.EMPTY_INTEGER, Syntax.EMPTY,
-				MetaInfo.EMPTY_DOMAIN, Syntax.EMPTY);
+				Domain.EMPTY, Syntax.EMPTY);
 		assertFalse(metaInfo3.isComplete());
 		assertTrue(metaInfo3.hasSize()); // PplMetadata.EMPTY_INTEGER
 		assertFalse(metaInfo3.hasMaxOccurs()); // 5
@@ -95,7 +91,7 @@ public class MetaInfoTest {
 	@Test
 	public void testCompleteMetaInfo() {
 		MetaInfo metaInfo2 = new MetaInfo("",0, null, Subtype.STRING, 10, 0, 0, 5);
-		assertMetainfo(metaInfo2, null, Subtype.STRING, 10, 0, 0, 5, Syntax.EMPTY, MetaInfo.EMPTY_DOMAIN, Syntax.EMPTY);
+		assertMetainfo(metaInfo2, null, Subtype.STRING, 10, 0, 0, 5, Syntax.EMPTY, Domain.EMPTY, Syntax.EMPTY);
 		assertTrue(metaInfo2.isComplete());
 		assertTrue(metaInfo2.hasSize()); // 10
 		assertTrue(metaInfo2.hasMaxOccurs()); // 5
@@ -132,7 +128,7 @@ public class MetaInfoTest {
 
 	@Test
 	public void testDomain() {
-		List<String> domain = domain("Diamond", "Heart", "Club", "Spade");
+		Domain domain = Domain.create(array);
 		MetaInfo metaInfo = new MetaInfo("",31, "nameTest", Subtype.STRING, 100, 0, 1, 20, domain,"Heart",  "XYZ");
 
 		assertTrue(metaInfo.hasDomain());
@@ -149,7 +145,7 @@ public class MetaInfoTest {
 		MetaInfo other = new MetaInfo("",31, "nameTest", Subtype.STRING, 100, 0, 1, 20, null, null, null);
 		assertFalse(other.hasDomain());
 		assertTrue(other.inDomain("Diamond"));
-		assertTrue(other.domain().equals(MetaInfo.EMPTY_DOMAIN));
+		assertTrue(other.domain().equals(Domain.EMPTY));
 	}
 
 	@Test
@@ -176,7 +172,7 @@ public class MetaInfoTest {
 
 	@Test
 	public void testComplete() {
-		List<String> domain = domain("Diamons", "Heart", "Club", "Spade");
+		Domain domain = Domain.create(array);
 		MetaInfo metaInfo = new MetaInfo("",1, "nameTest", Subtype.STRING, 100, 0, 1, 20, domain, "Heart", "XYZ");
 		assertMetainfo(metaInfo, "nameTest", Subtype.STRING, 100, 0, 1, 20, "Heart", domain, "XYZ");
 

@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.MetaInfoTest;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.Subtype;
 
@@ -21,14 +21,14 @@ import br.net.buzu.pplspec.model.Subtype;
 public class ComplexMetadataTest {
 
 	public static ComplexMetadata createSample(String name, Subtype subtype, int size, int scale, int minOccurs,
-			int maxOccurs, List<String> domain, String defaultValue, String tags, List<Metadata> children) {
+			int maxOccurs, Domain domain, String defaultValue, String tags, List<Metadata> children) {
 		MetaInfo metaInfo = new MetaInfo("",31, name, subtype, size, 0, minOccurs, maxOccurs, domain, defaultValue, tags);
 		return new ComplexMetadata(metaInfo, children);
 
 	}
 
 	static ComplexMetadata createSample(String name, Subtype subtype, int size, int minOccurs, int maxOccurs) {
-		List<String> domain = MetaInfoTest.domain("white", "black", "red");
+		Domain domain = Domain.create("white", "black", "red");
 		return createSample(name, subtype, size, 0, minOccurs, maxOccurs, domain, "red", "XYZ", null);
 
 	}
