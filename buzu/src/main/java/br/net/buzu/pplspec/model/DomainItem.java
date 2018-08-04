@@ -108,8 +108,8 @@ public class DomainItem implements LabeledValue, Comparable<DomainItem> {
 		if (obj == null) {
 			return false;
 		}
-		if (obj instanceof LabeledValue) {
-			return value.equals(((LabeledValue) obj).value());
+		if (obj instanceof DomainItem) {
+			return asSerial().equals(((DomainItem)obj).asSerial());
 		}
 		return false;
 	}

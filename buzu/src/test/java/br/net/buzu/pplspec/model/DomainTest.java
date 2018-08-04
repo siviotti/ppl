@@ -17,7 +17,8 @@ public class DomainTest {
 	private static final String _01_WHITE = "01=white";
 	private static final String _02_BLACK = "02=black";
 	private static final String _03_RED = "03=red";
-	private static final String DOMAIN_NAME = "domainName";
+	private static final String DOMAIN_NAME1 = "domainName1";
+	private static final String DOMAIN_NAME2 = "domainName2";
 	private static final String WHITE = "white";
 	private static final String BLACK = "black";
 	private static final String RED = "red";
@@ -73,13 +74,34 @@ public class DomainTest {
 
 	@Test
 	public void testNamed() {
-		Domain domain = Domain.create(DOMAIN_NAME, Domain.list(WHITE, BLACK, RED));
-		assertEquals(3, domain.items().size());
-		assertEquals(DOMAIN_NAME, domain.name());
-		assertEquals(WHITE, domain.items().get(0).value());
-		assertEquals(BLACK, domain.items().get(1).value());
-		assertEquals(RED, domain.items().get(2).value());
+		Domain domain1 = Domain.create(DOMAIN_NAME1, Domain.list(WHITE, BLACK, RED));
+		Domain clone = Domain.create(DOMAIN_NAME1, Domain.list(WHITE, BLACK, RED));
+		Domain domain2 = Domain.create(DOMAIN_NAME2, Domain.list(WHITE, BLACK, RED));
+		Domain domain3 = Domain.create(DOMAIN_NAME1, Domain.list(WHITE, BLACK));
+		assertEquals(3, domain1.items().size());
+		assertEquals(DOMAIN_NAME1, domain1.name());
+		assertEquals(WHITE, domain1.items().get(0).value());
+		assertEquals(BLACK, domain1.items().get(1).value());
+		assertEquals(RED, domain1.items().get(2).value());
+		// Object
+		assertEquals(domain1, clone);
+		assertEquals(clone, domain1);
+		assertFalse(domain1.equals(null));
+		assertTrue(domain1.equals(domain1));
+		assertFalse(domain1.equals("abc"));
+		assertTrue(domain1.hashCode() == clone.hashCode());
+		
+		assertFalse(domain1.equals(domain2));
+		assertFalse(domain1.name().equals(domain2.name()));
+		assertTrue(domain1.name().equals(domain3.name()));
+		assertFalse(domain1.equals(domain3));
+		assertFalse(domain1.hashCode()== domain2.hashCode());
+		assertFalse(domain1.toString().equals(domain2.toString()));
+		assertTrue(domain1.equalsItems(domain2));
+		assertFalse(domain1.equalsItems(domain3));
+		
 	}
 
 
 }
+

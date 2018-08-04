@@ -73,9 +73,9 @@ public class Domain implements Nameable {
 	public String name() {
 		return name;
 	}
-	
+
 	public boolean containsValue(String value) {
-		for (DomainItem item: items) {
+		for (DomainItem item : items) {
 			if (item.value().equals(value)) {
 				return true;
 			}
@@ -83,11 +83,6 @@ public class Domain implements Nameable {
 		return false;
 	}
 
-	/**
-	 * Retuns the items of LabeledValue.
-	 * 
-	 * @return A instance of List<LabeledValue>.
-	 */
 	public List<DomainItem> items() {
 		return items;
 	}
@@ -95,7 +90,7 @@ public class Domain implements Nameable {
 	public boolean isEmpty() {
 		return items.isEmpty();
 	}
-	
+
 	public String asSerial() {
 		if (items.isEmpty()) {
 			return Syntax.EMPTY;
@@ -109,7 +104,6 @@ public class Domain implements Nameable {
 		sb.append(Token.DOMAIN_END);
 		return sb.toString();
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -126,14 +120,18 @@ public class Domain implements Nameable {
 		}
 		if (obj instanceof Domain) {
 			Domain o = (Domain) obj;
-			return name.equals(o.name) && items.equals(o.items);
+			return name.equals(o.name) && equalsItems(o);
 		}
 		return false;
 	}
 
+	public boolean equalsItems(Domain other) {
+		return items.equals(other.items);
+	}
+
 	@Override
 	public String toString() {
-		return asSerial();
+		return new StringBuilder().append(name).append(asSerial()).toString();
 	}
 
 }
