@@ -26,7 +26,7 @@ import br.net.buzu.pplspec.lang.Token;
  * @see LabeledValue
  *
  */
-public class DomainItem implements LabeledValue {
+public class DomainItem implements LabeledValue, Comparable<DomainItem> {
 
 	private final String value;
 	private final String label;
@@ -76,6 +76,10 @@ public class DomainItem implements LabeledValue {
 	public String value() {
 		return value;
 	}
+	
+	public int intValue() {
+		return Integer.parseInt(value);
+	}
 
 	@Override
 	public String label() {
@@ -113,6 +117,11 @@ public class DomainItem implements LabeledValue {
 	@Override
 	public String toString() {
 		return asSerial();
+	}
+
+	@Override
+	public int compareTo(DomainItem o) {
+		return value.compareTo(o.value);
 	}
 
 }

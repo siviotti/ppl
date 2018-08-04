@@ -24,7 +24,7 @@ public class Xmen extends Human{
 		WOLVERINE.setSkill("healing");
 	}
 	
-	@PplMetadata(index=4, name="power", size=20)
+	@PplMetadata(index=4, name="power", size=20, tags="'Poder do XMen'")
 	private String skill;
 
 	public String getSkill() {

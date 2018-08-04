@@ -16,9 +16,6 @@
  */
 package br.net.buzu.pplspec.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 import br.net.buzu.pplspec.annotation.PplMetadata;
@@ -63,7 +60,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 	public MetaInfo(String parentId, PplMetadata pplMetadata, String originalFieldName, Subtype originalSubtype) {
 		this(parentId, pplMetadata.index(), getName(pplMetadata, originalFieldName),
 				getSubtype(pplMetadata, originalSubtype), pplMetadata.size(), pplMetadata.scale(),
-				pplMetadata.minOccurs(), pplMetadata.maxOccurs(), Domain.create(pplMetadata.domain()),
+				pplMetadata.minOccurs(), pplMetadata.maxOccurs(), Domain.of(pplMetadata.domain()),
 				pplMetadata.defaultValue(), buildTags(pplMetadata));
 	}
 
@@ -144,20 +141,6 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 		return sb.toString();
 	}
 
-	private static String serializeDomain(Domain domain) {
-		if (domain == null || domain.isEmpty()) {
-			return Syntax.EMPTY;
-		}
-		StringBuilder sb = new StringBuilder();
-		sb.append(Token.DOMAIN_BEGIN);
-		for (DomainItem item : domain.items()) {
-			sb.append(Token.VALUE_BEGIN).append(item.asSerial()).append(Token.VALUE_END).append(Token.DOMAIN_SEPARATOR);
-		}
-		sb.deleteCharAt(sb.length() - 1); // remove last
-		sb.append(Token.DOMAIN_END);
-		return sb.toString();
-	}
-
 	private static String serializeDefaultvalue(String defaultValue) {
 		if (defaultValue == null || defaultValue.trim().isEmpty()) {
 			return Syntax.EMPTY;
@@ -169,7 +152,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 		return !domain.isEmpty() || !defaultValue.isEmpty() || !tags.isEmpty();
 	}
 
-	public static Align getAlign(final Subtype subtype, final String tags) {
+	private static Align getAlign(final Subtype subtype, final String tags) {
 		if (tags != null) {
 			if (tags.indexOf(Token.LEFT) > -1) {
 				return Align.LEFT;
@@ -272,21 +255,16 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 		return tags != null && !tags.isEmpty();
 	}
 
-	public boolean inDomain(String item) {
+	public boolean inDomain(String valueItem) {
 		if (domain.isEmpty()) {
 			// Domain not defined
 			return true;
 		}
-		if (item == null) {
+		if (valueItem == null) {
 			// Domain defined and invalid item
 			return false;
 		}
-		for (DomainItem internalItem : domain.items()) {
-			if (internalItem.value().equals(item)) {
-				return true;
-			}
-		}
-		return false;
+		return domain.containsValue(valueItem);
 	}
 
 	public boolean isTagPresent(String tag) {
@@ -354,7 +332,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 
 	public String ppl() {
 		return name + Token.NAME_END + subtype.getId() + size + Token.OCCURS_BEGIN + minOccurs + Token.OCCURS_RANGE
-				+ maxOccurs + serializeDomain(domain) + serializeDefaultvalue(defaultValue) + tags;
+				+ maxOccurs + domain.asSerial() + serializeDefaultvalue(defaultValue) + tags;
 
 	}
 

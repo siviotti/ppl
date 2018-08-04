@@ -29,7 +29,7 @@ public class SimpleMetadataTest {
 	}
 
 	static SimpleMetadata createSample(String name, Subtype subtype, int size, int minOccurs, int maxOccurs) {
-		Domain domain = Domain.create("white", "black", "red");
+		Domain domain = Domain.of("white", "black", "red");
 		return createSample(name, subtype, size, 0, minOccurs, maxOccurs, domain, "red", "XYZ");
 
 	}

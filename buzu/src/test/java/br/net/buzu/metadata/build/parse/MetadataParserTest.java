@@ -105,7 +105,7 @@ public class MetadataParserTest {
 		BasicMetadataParser parser = new BasicMetadataParser();
 		Metadata metadata = parser.parse("", EXT, 0);
 		assertMetadata(metadata, "color", Subtype.STRING, 10, 0, 1);
-		Domain domain = Domain.create("black", "white", "red");
+		Domain domain = Domain.of("black", "white", "red");
 		assertEquals(domain.items(), metadata.info().domain().items());
 	}
 

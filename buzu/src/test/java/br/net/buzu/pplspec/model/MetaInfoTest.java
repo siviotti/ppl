@@ -39,7 +39,7 @@ public class MetaInfoTest {
 	}
 
 	public static Domain domain(String... items) {
-		return Domain.create(items);
+		return Domain.of(items);
 	}
 	
 
@@ -128,7 +128,7 @@ public class MetaInfoTest {
 
 	@Test
 	public void testDomain() {
-		Domain domain = Domain.create(array);
+		Domain domain = Domain.of(array);
 		MetaInfo metaInfo = new MetaInfo("",31, "nameTest", Subtype.STRING, 100, 0, 1, 20, domain,"Heart",  "XYZ");
 
 		assertTrue(metaInfo.hasDomain());
@@ -172,7 +172,7 @@ public class MetaInfoTest {
 
 	@Test
 	public void testComplete() {
-		Domain domain = Domain.create(array);
+		Domain domain = Domain.of(array);
 		MetaInfo metaInfo = new MetaInfo("",1, "nameTest", Subtype.STRING, 100, 0, 1, 20, domain, "Heart", "XYZ");
 		assertMetainfo(metaInfo, "nameTest", Subtype.STRING, 100, 0, 1, 20, "Heart", domain, "XYZ");
 

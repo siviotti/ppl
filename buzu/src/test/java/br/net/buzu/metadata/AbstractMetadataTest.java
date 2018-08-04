@@ -21,7 +21,7 @@ import br.net.buzu.pplspec.model.Subtype;
 public class AbstractMetadataTest {
 
 	private static Metadata createSample(String name, Subtype subtype, int size, int minOccurs, int maxOccurs) {
-		Domain domain = Domain.create("white", "black", "red");
+		Domain domain = Domain.of("white", "black", "red");
 		MetaInfo metaInfo = new MetaInfo("", 31, name, subtype, size, 0, minOccurs, maxOccurs, domain, "red", "XYZ");
 		return new GenericSimpleMetadata(Kind.ARRAY, metaInfo);
 
@@ -39,7 +39,7 @@ public class AbstractMetadataTest {
 
 	@Test
 	public void test() {
-		Domain domain = Domain.create("Diamons", "white", "black", "red");
+		Domain domain = Domain.of("Diamons", "white", "black", "red");
 		MetaInfo metaInfo = new MetaInfo("", 31, "test", Subtype.STRING, 10, 0, 1, 2, domain, "red", "XYZ");
 
 		Metadata m1 = new GenericSimpleMetadata(Kind.RECORD, metaInfo);

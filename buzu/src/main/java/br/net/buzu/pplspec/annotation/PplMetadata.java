@@ -25,7 +25,7 @@ import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Subtype;
 
 /**
- * Metadata information about some annoted field. This information is mandatoty
+ * Metadata information about some annoted field. This information is mandatory
  * over reflection information.
  *
  * @author Douglas Siviotti

@@ -1,5 +1,5 @@
 (
-name: S 7;
-age: I 2;
-city: S 5;
+name: S 7 'Nome da pessoa';
+age: I 2 'Idade em anos';
+city: S 5 'Nome da cidade';
 )Ladybug15Paris

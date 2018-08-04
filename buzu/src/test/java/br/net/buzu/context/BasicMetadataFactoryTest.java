@@ -40,7 +40,7 @@ public class BasicMetadataFactoryTest {
 
 	@Test
 	public void testSimpleExtended() {
-		Domain domain = Domain.create("Diamond", "Heart", "Club", "Spade");
+		Domain domain = Domain.of("Diamond", "Heart", "Club", "Spade");
 		MetaInfo metaInfo = new MetaInfo("", 0, "simpleComplex", Subtype.STRING, 10, 0, 0, 1, domain, "Club", "K");
 		Metadata metadata = factory.create(metaInfo, null);
 		assertEquals(SimpleStaticMetadata.class, metadata.getClass());

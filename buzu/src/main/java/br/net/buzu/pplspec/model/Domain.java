@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import br.net.buzu.pplspec.lang.Syntax;
+import br.net.buzu.pplspec.lang.Token;
 
 /**
  * Represents the Domain Value of a Metadata.
@@ -44,7 +45,7 @@ public class Domain implements Nameable {
 				: Collections.unmodifiableList(new ArrayList<>());
 	}
 
-	public static List<DomainItem> createItems(String... array) {
+	public static List<DomainItem> list(String... array) {
 		List<DomainItem> list = new ArrayList<>();
 		for (int i = 0; i < array.length; i++) {
 			list.add(DomainItem.parse(array[i]));
@@ -64,13 +65,22 @@ public class Domain implements Nameable {
 		return new Domain(name, items);
 	}
 
-	public static Domain create(String... array) {
-		return create(Syntax.EMPTY, createItems(array));
+	public static Domain of(String... array) {
+		return create(Syntax.EMPTY, list(array));
 	}
 
 	@Override
 	public String name() {
 		return name;
+	}
+	
+	public boolean containsValue(String value) {
+		for (DomainItem item: items) {
+			if (item.value().equals(value)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -85,6 +95,21 @@ public class Domain implements Nameable {
 	public boolean isEmpty() {
 		return items.isEmpty();
 	}
+	
+	public String asSerial() {
+		if (items.isEmpty()) {
+			return Syntax.EMPTY;
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(Token.DOMAIN_BEGIN);
+		for (DomainItem item : items) {
+			sb.append(Token.VALUE_BEGIN).append(item.asSerial()).append(Token.VALUE_END).append(Token.DOMAIN_SEPARATOR);
+		}
+		sb.deleteCharAt(sb.length() - 1); // remove last
+		sb.append(Token.DOMAIN_END);
+		return sb.toString();
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -108,8 +133,7 @@ public class Domain implements Nameable {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return asSerial();
 	}
 
 }
