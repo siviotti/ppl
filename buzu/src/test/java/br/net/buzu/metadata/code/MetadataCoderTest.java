@@ -122,7 +122,6 @@ public class MetadataCoderTest {
 		
 		assertFalse(code.contains(Syntax.DEFAULT_OCCURS));
 		assertFalse(code.contains(""+Syntax.ENTER));
-
 	}
 
 }

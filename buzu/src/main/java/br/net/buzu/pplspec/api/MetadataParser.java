@@ -31,15 +31,6 @@ public interface MetadataParser {
 	/**
 	 * Parses a PPL text to Metadata object.
 	 * 
-	 * @param text
-	 *            The text containing the metadata.
-	 * @return The instance of Metadata.
-	 */
-	Metadata parse(String text);
-	
-	/**
-	 * Parses a PPL text to Metadata object.
-	 * 
 	 * @param pplString
 	 *            The PplString instance containing the metadata.
 	 * @return The instance of Metadata.

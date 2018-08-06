@@ -1,12 +1,12 @@
-(
-number:S10 KI ?encoding="UTF-8";
+($version:="1.0"; $encoding:="UTF-8"; $root:="Order";
+number:S10 KI;
 customer:(
 	name:S7;
 	addresses:(
 		street:S17;
 		city:S6;
 		zip:S7;
-		type:S8
+		type:S8 ["BILLING","DELIVERY"]
 	)#0-2;
 	phones:S8#0-2
 );

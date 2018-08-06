@@ -18,7 +18,9 @@ package br.net.buzu.metadata.build.parse;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.pplspec.api.MetadataParser;
@@ -88,17 +90,12 @@ public class BasicMetadataParser implements MetadataParser {
 	// **************************************************
 
 	@Override
-	public Metadata parse(String text) {
-		return parse(new PplString(text, splitter.getSyntax()));
-	}
-
-	@Override
 	public Metadata parse(PplString pplString) {
 		try {
 			List<ParseNode> nodes = splitter.splitLayout(pplString.getPplMetadata());
 			if (nodes.size() > 1) {
 				ParseNode root = new ParseNode();
-				root.children = nodes;
+				Map<String, String> varMap = createRoot(root, nodes);
 				return parse(Syntax.EMPTY, root, 0);
 			} else {
 				return parse(Syntax.EMPTY, nodes.get(0), 0);
@@ -106,6 +103,22 @@ public class BasicMetadataParser implements MetadataParser {
 		} catch (ParseException e) {
 			throw new PplParseException("Parsing error on text:\n" + pplString, e);
 		}
+	}
+
+	protected Map<String, String> createRoot(ParseNode root, List<ParseNode> nodes) {
+		Map<String, String> map = new HashMap<>();
+		root.children = new ArrayList<>();
+		for (ParseNode child : nodes) {
+			if (child.isVar()) {
+				map.put(child.name.substring(1), child.getDefaultValue());
+			} else {
+				root.children.add(child);
+			}
+		}
+		if (map.containsKey(Syntax.VAR_ROOT)) {
+			root.name = map.get(Syntax.VAR_ROOT);
+		}
+		return map;
 	}
 
 	protected Metadata parse(String parentId, ParseNode node, int index) {
@@ -159,7 +172,7 @@ public class BasicMetadataParser implements MetadataParser {
 		return subtype.fixedSize();
 	}
 
-	private int parseScale(ParseNode node, Subtype subtype) {
+	protected int parseScale(ParseNode node, Subtype subtype) {
 		if (node.hasSize()) {
 			if (subtype.dataType().sizeType().equals(SizeType.FIXED)) {
 				throw new MetadataParseException(subtype + " do not support custom scale." + subtype, node);

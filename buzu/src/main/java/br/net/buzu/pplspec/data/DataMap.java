@@ -43,7 +43,7 @@ public interface DataMap {
 	 *         IllegalArgumentException if not found.
 	 * @throws IllegalArgumentException
 	 */
-	Data<?> get(final String id);
+	<T> Data<T> get(final String id);
 
 	/**
 	 * Sets the value of an existing Data.

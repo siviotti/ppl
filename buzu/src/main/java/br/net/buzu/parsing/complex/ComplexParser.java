@@ -94,8 +94,8 @@ public class ComplexParser extends AbstractComplexParser {
 				parserChild = children.get(j);
 				metaclassChild = fromClass.getChildByName(metadataChild.info().name());
 				if (array[i] != null) {
-					sb.append(parserChild.serialize(metadataChild,
-							Reflect.get(array[i], metaclassChild.fieldName()), metaclassChild));
+					sb.append(parserChild.serialize(metadataChild, Reflect.get(array[i], metaclassChild.fieldName()),
+							metaclassChild));
 				} else {
 					sb.append(serializeNull(metadataChild));
 				}

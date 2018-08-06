@@ -279,7 +279,7 @@ public final class MetaInfo implements Comparable<MetaInfo> {
 
 	public String parentId() {
 		int pos = id.lastIndexOf(Token.PATH_SEP);
-		return pos > -1 ? id.substring(0, pos) : id.substring(0, id.length());
+		return pos > -1 ? id.substring(0, pos) : "";
 	}
 
 	public int index() {

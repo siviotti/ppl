@@ -17,6 +17,7 @@ import br.net.buzu.metadata.code.ShortMetadataCoder;
 import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.Metadata;
+import br.net.buzu.pplspec.model.PplString;
 import br.net.buzu.pplspec.model.StaticMetadata;
 import br.net.buzu.pplspec.model.Subtype;
 
@@ -69,7 +70,7 @@ public class MetadataParserTest {
 	@Test
 	public void testParse() {
 		BasicMetadataParser metaParser = new BasicMetadataParser();
-		Metadata metadata = metaParser.parse("(name:S20#0-1)");
+		Metadata metadata = metaParser.parse(PplString.of("(name:S20#0-1)"));
 		assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1);
 
 	}
@@ -112,7 +113,7 @@ public class MetadataParserTest {
 	@Test
 	public void testEmptyMetadata() {
 		BasicMetadataParser parser = new BasicMetadataParser();
-		StaticMetadata metadada = (StaticMetadata) parser.parse("()");
+		StaticMetadata metadada = (StaticMetadata) parser.parse(PplString.of("()"));
 		assertEquals(Syntax.NO_NAME_START + "0", metadada.name());
 		assertEquals(Subtype.STRING, metadada.info().subtype());
 		assertEquals(Subtype.CHAR.fixedSize(), metadada.info().size());
@@ -126,7 +127,7 @@ public class MetadataParserTest {
 	@Test
 	public void testEmptyLayout() {
 		BasicMetadataParser parser = new BasicMetadataParser();
-		StaticMetadata metadada = (StaticMetadata) parser.parse("(X:(;;))");
+		StaticMetadata metadada = (StaticMetadata) parser.parse(PplString.of("(X:(;;))"));
 		assertEquals(ComplexStaticMetadada.class, metadada.getClass());
 		assertEquals("X", metadada.name());
 		assertEquals(Subtype.OBJ, metadada.info().subtype());
@@ -161,7 +162,7 @@ public class MetadataParserTest {
 	@Test(expected = MetadataParseException.class)
 	public void testParseSubtypeError() {
 		BasicMetadataParser parser = new BasicMetadataParser();
-		Metadata metadata = parser.parse("(name:z20#0-1)");
+		Metadata metadata = parser.parse(PplString.of("(name:z20#0-1)"));
 		assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1);
 	}
 

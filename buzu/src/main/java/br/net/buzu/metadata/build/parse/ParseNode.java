@@ -69,6 +69,10 @@ public final class ParseNode {
 		return children != null;
 	}
 
+	public boolean isVar() {
+		return name.length() > 0 && name.charAt(0) == Token.VAR;
+	}
+
 	public boolean hasName() {
 		return name.length() > 0;
 	}
@@ -93,8 +97,8 @@ public final class ParseNode {
 	public String toString() {
 		return (name != null && !name.isEmpty() ? name + Token.NAME_END : Syntax.EMPTY)
 				+ ((!isComplex()) ? type : getChildrensToString()) + size
-				+ ((Syntax.EMPTY.equals(occurs)) ? Syntax.EMPTY : Token.OCCURS_BEGIN) + occurs + domain + "='"+defaultValue + "'"
-				+ tags;
+				+ ((Syntax.EMPTY.equals(occurs)) ? Syntax.EMPTY : Token.OCCURS_BEGIN) + occurs + domain + "='"
+				+ defaultValue + "'" + tags;
 	}
 
 	private String getChildrensToString() {
@@ -137,7 +141,7 @@ public final class ParseNode {
 	public String getName() {
 		return name;
 	}
-
+	
 	public String getType() {
 		return type;
 	}
@@ -161,5 +165,6 @@ public final class ParseNode {
 	public String getTags() {
 		return tags;
 	}
+
 
 }

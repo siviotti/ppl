@@ -79,7 +79,7 @@ public class MetadataBuilder {
 
 	public Metadata build(Object source) {
 		if (source instanceof PplString) {
-			return buildFromPpl(((PplString) source).getMetadata());
+			return buildFromPpl(((PplString) source));
 		}
 		if (source instanceof Layout) {
 			return buildFromLayout(source);
@@ -111,8 +111,8 @@ public class MetadataBuilder {
 		return context.metadataFactory().create(metaInfo, children);
 	}
 
-	protected Metadata buildFromPpl(String text) {
-		return parser.parse(text);
+	protected Metadata buildFromPpl(PplString pplString) {
+		return parser.parse(pplString);
 	}
 
 	protected Metadata buildFromObject(Object source) {

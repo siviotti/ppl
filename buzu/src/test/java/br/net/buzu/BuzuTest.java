@@ -347,7 +347,7 @@ public class BuzuTest {
 	// ********** Collections **********
 	@Test
 	public void testCollections() {
-		assertEquals(PplString.EMPTY, buzu.toPpl(new ArrayList<>()));
+		assertEquals(PplString.EMPTY.getMetadata(), buzu.toPpl(new ArrayList<>()));
 		List<Person> people = new ArrayList<>();
 		people.add(PERSON_INSTANCE);
 		people.add(PERSON_INSTANCE);

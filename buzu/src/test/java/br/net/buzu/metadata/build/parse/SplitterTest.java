@@ -79,7 +79,7 @@ public class SplitterTest {
 		node = new ParseNode();
 		assertEquals(2, splitter.extractName("   ", 0, node));
 		assertEquals("", node.name);
-
+		
 	}
 
 	@Test
@@ -237,19 +237,19 @@ public class SplitterTest {
 
 		node = new ParseNode();
 		assertEquals(9, splitter.extractDefaultvalue("='black'", 0, node));
-		assertEquals("'black'", node.getDefaultValue());
+		assertEquals("black", node.getDefaultValue());
 
 		node = new ParseNode();
 		assertEquals(13, splitter.extractDefaultvalue("    ='black'", 0, node));
-		assertEquals("'black'", node.getDefaultValue());
+		assertEquals("black", node.getDefaultValue());
 
 		node = new ParseNode();
 		assertEquals(13, splitter.extractDefaultvalue("    ='55555'", 0, node));
-		assertEquals("'55555'", node.getDefaultValue());
+		assertEquals("55555", node.getDefaultValue());
 
 		node = new ParseNode();
 		assertEquals(13, splitter.extractDefaultvalue("    ='black'    ", 0, node));
-		assertEquals("'black'", node.getDefaultValue());
+		assertEquals("black", node.getDefaultValue());
 
 		node = new ParseNode();
 		assertEquals(3, splitter.extractDefaultvalue("   bla", 0, node));
@@ -324,7 +324,7 @@ public class SplitterTest {
 		assertMetaExt("color: S 10 ['White','Red', 'Green']", "color", "S", "10", "", "['White','Red', 'Green']", "",
 				"");
 		assertMetaExt("color: S 10 ['White','Red', 'Green'] ='def' A B C", "color", "S", "10", "",
-				"['White','Red', 'Green']", "'def'", "A B C");
+				"['White','Red', 'Green']", "def", "A B C");
 		// Complex
 		assertMetaChildren("R(f1:STR10;f2:ST20)#2-4dolar", "", "R", "", "2-4", "dolar", 2);
 		assertMetaChildren("(f1:STR10;f2:ST20)#2-4dolar", "", "", "", "2-4", "dolar", 2);

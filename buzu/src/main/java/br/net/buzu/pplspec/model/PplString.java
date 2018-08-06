@@ -37,7 +37,7 @@ public final class PplString implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String EMPTY = "" + Token.SUB_OPEN + Token.SUB_CLOSE;
+	public static final PplString EMPTY = new PplString("" + Token.SUB_OPEN + Token.SUB_CLOSE);
 
 	private final String metadata;
 	private final String payload;
@@ -76,7 +76,14 @@ public final class PplString implements Serializable {
 			throw new PplParseException("PPL Parse error. Text:\n" + text, pe);
 		}
 	}
+	// **************************************************
+	// factory methods
+	// **************************************************
 
+	public static PplString of(String text) {
+		return new PplString(text);
+	}
+	
 	// **************************************************
 	// hashcode, equals, toString
 	// **************************************************

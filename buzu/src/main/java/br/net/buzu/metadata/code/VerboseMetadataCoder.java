@@ -42,12 +42,19 @@ public class VerboseMetadataCoder implements MetadataCoder {
 
 	@Override
 	public String code(Metadata meta) {
-		return serialize(meta, 0);
+		StringBuilder sb = new StringBuilder();
+		sb.append(serialize(meta, 0));
+		return sb.toString();
 	}
 
 	@Override
 	public Dialect dialect() {
 		return Dialect.VERBOSE;
+	}
+
+	protected void addVAr(String varName, String value, StringBuilder sb) {
+		sb.append(Token.VAR).append(varName).append(Token.NAME_END).append(Token.DEFAULT_VALUE).append(Token.VALUE_BEGIN)
+				.append(value).append(Token.VALUE_END).append(Token.METADATA_END);
 	}
 
 	protected String serialize(Metadata meta, int level) {

@@ -174,7 +174,7 @@ public class Buzu implements PplMapper {
 
 	public String toPplFromCollection(Collection<?> source) {
 		if (source.isEmpty()) {
-			return PplString.EMPTY;
+			return PplString.EMPTY.getMetadata();
 		}
 		return toPpl(source, readMetaclass(source.getClass(), source.iterator().next().getClass()));
 	}

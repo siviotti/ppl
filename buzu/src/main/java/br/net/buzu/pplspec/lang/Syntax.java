@@ -94,6 +94,8 @@ public class Syntax implements Serializable {
 	public static final String VAR_VERSION = "version";
 	/** Define the expirition time of a Metadata */
 	public static final String VAR_EXPIRES = "expires";
+	/** Define the root name */
+	public static final String VAR_ROOT = "root";
 
 	// **************************************************
 	// Util

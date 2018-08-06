@@ -185,8 +185,7 @@ public class Splitter {
 		int firstChar = syntax.firstChar(text, 0);
 		char c = text.charAt(firstChar);
 		int count = 0;
-		boolean isVar = c == Token.VAR;
-		if (syntax.isValidFirstCharMetaName(c) || isVar) {
+		if (syntax.isValidFirstCharMetaName(c) || c == Token.VAR) {
 			count++;
 		} else {
 			return (c == Token.NAME_END) ? firstChar + 1 : firstChar;
@@ -204,7 +203,7 @@ public class Splitter {
 		}
 		return firstChar;
 	}
-
+	
 	// ********** TYPE **********
 
 	protected int extractType(final String text, final int beginIndex, final ParseNode node) throws ParseException {
@@ -234,6 +233,7 @@ public class Splitter {
 		return offset;
 
 	}
+	
 
 	// ********** SIZE AND SCALE **********
 
@@ -280,25 +280,25 @@ public class Splitter {
 
 	protected int extractDefaultvalue(final String text, final int beginIndex, ParseNode node) throws ParseException {
 		int firstChar = syntax.firstChar(text, beginIndex);
-		if (text.charAt(firstChar) != Token.DEFAULT_VALUE) {
+		char c = text.charAt(firstChar); 
+		if (c != Token.DEFAULT_VALUE) {
 			return firstChar;
 		}
 		int index = firstChar + 1;
 		if (index > text.length() - 1) {
 			return firstChar;
 		}
-		char c = text.charAt(index);
+		c = text.charAt(index);
 		int endIndex;
 		if (syntax.isStringDelimiter(c)) {
 			endIndex = syntax.nextStringDelimeter(text, index, c)+1;
 		} else {
 			endIndex = syntax.nextCharOrLast(text, index, Syntax.SPACE);
 		} 
-
-		node.defaultValue = text.substring(firstChar + 1, endIndex);
+		node.defaultValue = text.substring(firstChar + 2, endIndex-1);
 		return endIndex+1;
 	}
-	
+
 	// ********** TAGS **********
 
 	protected String extractTags(final String text, final int beginIndex) {
