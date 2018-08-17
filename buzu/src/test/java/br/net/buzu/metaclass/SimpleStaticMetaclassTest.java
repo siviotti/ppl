@@ -17,8 +17,8 @@ import br.net.buzu.pplspec.model.Subtype;
 public class SimpleStaticMetaclassTest {
 	
 	MetaInfo metaInfo = new MetaInfo("",31, "color", Subtype.STRING, 10, 0, 1, 2);
-	SimpleStaticMetaclass ssm1 = new SimpleStaticMetaclass("color", String.class, String.class, Kind.ATOMIC, metaInfo, null);
-	SimpleStaticMetaclass ssm2 = new SimpleStaticMetaclass("color", String.class, String.class, Kind.ATOMIC, metaInfo, null);
+	SimpleStaticMetaclass ssm1 = new SimpleStaticMetaclass(null, String.class, String.class, Kind.ATOMIC, metaInfo, null);
+	SimpleStaticMetaclass ssm2 = new SimpleStaticMetaclass(null, String.class, String.class, Kind.ATOMIC, metaInfo, null);
 	
 	@Test
 	public void testIsStatic() {

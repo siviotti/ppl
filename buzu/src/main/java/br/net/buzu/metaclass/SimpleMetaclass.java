@@ -16,6 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import br.net.buzu.pplspec.api.PayloadParser;
@@ -34,9 +35,9 @@ public class SimpleMetaclass extends BasicMetaclass {
 
 	private static final String SIMPLE_METACLASS_HAS_NO_CHILDREN = "SimpleMetaclass has no children";
 
-	public SimpleMetaclass(String fieldName, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
+	public SimpleMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
 			Class<? extends PayloadParser> parserType) {
-		super(fieldName, fieldType, elementType, kind, metaInfo, parserType);
+		super(field, fieldType, elementType, kind, metaInfo, parserType);
 	}
 
 	@SuppressWarnings("unchecked")

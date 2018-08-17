@@ -71,6 +71,7 @@ public class BuzuTest {
 	public static final String PERSON_PPL_STRING = PERSON_METADATA + PERSON_PAYLOAD;
 
 	public static final Person PERSON_INSTANCE = new Person(PERSON_NAME, PERSON_AGE, PERSON_CITY);
+	public static final StaticPerson STATIC_PERSON_INSTANCE = new StaticPerson(PERSON_NAME, PERSON_AGE, PERSON_CITY);
 	
 	// *** StaticPerson ***
 	
@@ -227,7 +228,7 @@ public class BuzuTest {
 	@Test
 	public void testPersonToPplStaticMetaclass() {
 		Metaclass metaclass = new BasicMetaclassReader().read(StaticPerson.class);
-		String ppl = buzu.toPpl(PERSON_INSTANCE, metaclass);
+		String ppl = buzu.toPpl(STATIC_PERSON_INSTANCE, metaclass);
 		assertEquals(STATIC_PERSON, ppl);
 	}
 

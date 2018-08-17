@@ -72,7 +72,7 @@ public class ComplexParser extends AbstractComplexParser {
 						parsed = parsed.toString().charAt(0);
 					}
 				}
-				callSet(array[i], metaclassChild.fieldName(), metaclassChild.fieldType(), parsed);
+				callSet(array[i], metaclassChild, parsed);
 			}
 		}
 		return fromArray(array, toClass);
@@ -94,7 +94,8 @@ public class ComplexParser extends AbstractComplexParser {
 				parserChild = children.get(j);
 				metaclassChild = fromClass.getChildByName(metadataChild.info().name());
 				if (array[i] != null) {
-					sb.append(parserChild.serialize(metadataChild, Reflect.get(array[i], metaclassChild.fieldName()),
+					
+					sb.append(parserChild.serialize(metadataChild, metaclassChild.get(array[i]),
 							metaclassChild));
 				} else {
 					sb.append(serializeNull(metadataChild));

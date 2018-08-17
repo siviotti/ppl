@@ -21,8 +21,8 @@ import br.net.buzu.pplspec.model.Subtype;
 public class ComplexStaticMetaclassTest {
 
 	static MetaInfo metaInfo = new MetaInfo("",31, "color", Subtype.STRING, 10, 0, 1, 2);
-	static SimpleStaticMetaclass ssm1 = new SimpleStaticMetaclass("color", String.class, String.class, Kind.ATOMIC, metaInfo, null);
-	static SimpleStaticMetaclass ssm2 = new SimpleStaticMetaclass("color", String.class, String.class, Kind.ATOMIC, metaInfo, null);
+	static SimpleStaticMetaclass ssm1 = new SimpleStaticMetaclass(null, String.class, String.class, Kind.ATOMIC, metaInfo, null);
+	static SimpleStaticMetaclass ssm2 = new SimpleStaticMetaclass(null, String.class, String.class, Kind.ATOMIC, metaInfo, null);
 	static List<Metaclass> children = new ArrayList<>();
 	static ComplexStaticMetaclass cmm1;
 	static ComplexStaticMetaclass cmm2;
@@ -31,8 +31,8 @@ public class ComplexStaticMetaclassTest {
 		children.add(ssm1);
 		children.add(ssm2);
 		
-		cmm1 = new ComplexStaticMetaclass("colors", List.class, String.class, Kind.RECORD, metaInfo, null, children);
-		cmm2 = new ComplexStaticMetaclass("colors", List.class, String.class, Kind.RECORD, metaInfo, null, children);
+		cmm1 = new ComplexStaticMetaclass(null, List.class, String.class, Kind.RECORD, metaInfo, null, children);
+		cmm2 = new ComplexStaticMetaclass(null, List.class, String.class, Kind.RECORD, metaInfo, null, children);
 	}
 	
 	

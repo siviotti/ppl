@@ -16,6 +16,8 @@
  */
 package br.net.buzu.metaclass;
 
+import java.lang.reflect.Field;
+
 import br.net.buzu.pplspec.api.PayloadParser;
 import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
@@ -32,9 +34,9 @@ public class SimpleStaticMetaclass extends SimpleMetaclass implements StaticMeta
 
 	private final int serialMaxSize;
 
-	public SimpleStaticMetaclass(String fieldName, Class<?> fieldType, Class<?> elementType, Kind kind,
+	public SimpleStaticMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind,
 			MetaInfo metaInfo, Class<? extends PayloadParser> parserType) {
-		super(fieldName, fieldType, elementType, kind, metaInfo, parserType);
+		super(field, fieldType, elementType, kind, metaInfo, parserType);
 		if (!metaInfo.isComplete()) {
 			throw new IllegalArgumentException("Static Metaclass requires a complete metainfo (has size and maxOccurs):"+metaInfo);
 		}

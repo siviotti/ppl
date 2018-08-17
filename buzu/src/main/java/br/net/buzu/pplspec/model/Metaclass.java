@@ -57,5 +57,9 @@ public interface Metaclass extends Metadata {
 	Metaclass getChildByName(String childName);
 	
 	int getValueSize(Object value);
-
+	
+	Object get(Object object);
+	
+	void set(Object object, Object param);
+	
 }

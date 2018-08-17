@@ -16,6 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import br.net.buzu.pplspec.api.PayloadParser;
@@ -36,9 +37,9 @@ public class ComplexStaticMetaclass extends ComplexMetaclass implements StaticMe
 
 	private final int serialSize;
 
-	public ComplexStaticMetaclass(String fieldName, Class<?> fieldType, Class<?> elementType, Kind kind,
+	public ComplexStaticMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind,
 			MetaInfo metaInfo, Class<? extends PayloadParser> parserType, List<Metaclass> children) {
-		super(fieldName, fieldType, elementType, kind, metaInfo, parserType, children);
+		super(field, fieldType, elementType, kind, metaInfo, parserType, children);
 		int tmp = 0;
 		for (Metaclass child : children) {
 			StaticBehave.checkStaticChild(child);

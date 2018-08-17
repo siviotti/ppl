@@ -16,6 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Date;
 
@@ -25,6 +26,7 @@ import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.PplSerializable;
+import br.net.buzu.util.Reflect;
 
 /**
  * Imutable informations about the target class on a parsing operation.
@@ -35,16 +37,18 @@ import br.net.buzu.pplspec.model.PplSerializable;
 public abstract class BasicMetaclass implements Metaclass {
 
 	private final Kind kind;
+	private final Field field;
 	private final String fieldName;
 	private final Class<?> fieldType;
 	private final Class<?> elementType;
 	private final Class<? extends PayloadParser> parserType;
 	private final MetaInfo metaInfo;
 
-	public BasicMetaclass(String fieldName, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
+	public BasicMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
 			Class<? extends PayloadParser> parserType) {
 		super();
-		this.fieldName = fieldName;
+		this.field = field;
+		this.fieldName = field != null ? field.getName() : "";
 		this.fieldType = fieldType;
 		this.elementType = elementType;
 		this.parserType = parserType;
@@ -165,6 +169,26 @@ public abstract class BasicMetaclass implements Metaclass {
 			str = value.toString();
 		}
 		return str != null ? str.length() : 0;
+	}
+
+	@Override
+	public Object get(Object object) {
+		try {
+			field.setAccessible(true);
+			return field.get(object);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			return Reflect.get(object, fieldName);
+		}
+	}
+
+	@Override
+	public void set(Object object, Object param) {
+		try {
+			field.setAccessible(true);
+			field.set(object, param);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			Reflect.set(object, fieldName, fieldType, param);
+		}
 	}
 
 	// **************************************************

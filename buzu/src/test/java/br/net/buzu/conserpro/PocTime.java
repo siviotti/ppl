@@ -33,7 +33,7 @@ public class PocTime {
 	static Buzu buzu = new Buzu();
 
 	public static void main(String[] args) {
-		int[] arrayLoop = { 1, 10, 100 };
+		int[] arrayLoop = { 1, 100 };
 		round(new Person("Ladybug", 15, "Paris"), arrayLoop);
 		round(createEmpresa(), arrayLoop);
 	}
@@ -118,8 +118,8 @@ public class PocTime {
 		// Ppl recompile
 		t0 = System.currentTimeMillis();
 		for (int i = 0; i < source.size(); i++) {
-			// ppl.fromPpl(empresaPpl, Empresa.class);
-			buzu.fromPpl(empresaPpl1);
+			buzu.fromPpl(empresaPpl1, toClass);
+			//buzu.fromPpl(empresaPpl1);
 		}
 		t1 = System.currentTimeMillis();
 		print("PPL1 time:" + (t1 - t0));

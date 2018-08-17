@@ -93,7 +93,7 @@ public class BasicMetadataLoader implements MetadataLoader {
 		for (Object itemValue : node.getValue()) {
 			for (int i = 0; i < metaclassList.size(); i++) {
 				childMetaclass = metaclassList.get(i);
-				fieldValue = itemValue != null ? Reflect.get(itemValue, childMetaclass.fieldName()) : null;
+				fieldValue = itemValue != null ? childMetaclass.get(itemValue) : null;
 				children[i] = loadChild(fieldValue, childMetaclass, node, maxMap);
 			}
 		}

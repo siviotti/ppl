@@ -57,18 +57,21 @@ public abstract class AbstractPositionalParser implements PayloadParser {
 		return array;
 	}
 
-	protected void callSet(Object object, String fieldName, Class<?> fieldType, Object parsed) {
+	protected void callSet(Object object, Metaclass childMetaclass, Object parsed) {
 		if (parsed == null) {
-			Reflect.set(object, fieldName, fieldType, parsed);
-		} else if (Reflect.isCollection(fieldType) && !(parsed instanceof Collection<?>)) {
+			childMetaclass.set(object, parsed);
+			//Reflect.set(object, childMetaclass.fieldName(), childMetaclass.fieldType(), parsed);
+		} else if (Reflect.isCollection(childMetaclass.fieldType()) && !(parsed instanceof Collection<?>)) {
 			List<Object> list = new ArrayList<>();
 			list.add(parsed);
-			Reflect.set(object, fieldName, fieldType, list);
-		} else if (fieldType.isArray() && !parsed.getClass().isArray()) {
+			//Reflect.set(object, childMetaclass.fieldName(), childMetaclass.fieldType(), list);
+			childMetaclass.set(object, list);
+		} else if (childMetaclass.fieldType().isArray() && !parsed.getClass().isArray()) {
 			// TODO
 			Logger.getLogger(getClass().getCanonicalName()).severe("ARRAY ERROR");
 		} else {
-			Reflect.set(object, fieldName, fieldType, parsed);
+			//Reflect.set(object, childMetaclass.fieldName(), childMetaclass.fieldType(), parsed);
+			childMetaclass.set(object, parsed);
 		}
 	}
 

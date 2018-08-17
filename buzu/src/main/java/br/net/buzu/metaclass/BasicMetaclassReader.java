@@ -82,7 +82,7 @@ public class BasicMetaclassReader implements MetaclassReader {
 		PplMetadata pplMetadata = elementType.getAnnotation(PplMetadata.class);
 		PplParser pplParser = elementType.getAnnotation(PplParser.class);
 		Class<? extends PayloadParser> parserType = pplParser != null ? pplParser.value() : null;
-		return createMetaclass(Syntax.EMPTY, type, elementType, pplMetadata, "", parserType);
+		return createMetaclass(Syntax.EMPTY, type, elementType, pplMetadata, null, parserType);
 	}
 
 	// **************************************************
@@ -100,32 +100,32 @@ public class BasicMetaclassReader implements MetaclassReader {
 		if (pplParser == null) {
 			pplParser = elementType.getAnnotation(PplParser.class);
 		}
-		return createMetaclass(parentId, field.getType(), elementType, pplMetadata, field.getName(),
+		return createMetaclass(parentId, field.getType(), elementType, pplMetadata, field,
 				pplParser != null ? pplParser.value() : null);
 	}
 
 	private Metaclass createMetaclass(String parentId, Class<?> fieldType, Class<?> elementType,
-			PplMetadata pplMetadata, String fieldName, Class<? extends PayloadParser> parserType) {
+			PplMetadata pplMetadata, Field field, Class<? extends PayloadParser> parserType) {
 		boolean multiple = Reflect.isMultiple(fieldType);
 		boolean complex = !context.subtypeManager().isSimple(elementType);
-		MetaInfo metaInfo = createMetaInfo(parentId, pplMetadata, elementType, fieldName);
+		MetaInfo metaInfo = createMetaInfo(parentId, pplMetadata, elementType, field != null ? field.getName() : "");
 		List<Metaclass> children = complex ? createChildren(parentId, elementType) : null;
 
 		if (complex) {
 			return Metadata.isStatic(children)
 
-					? new ComplexStaticMetaclass(fieldName, fieldType, elementType, Kind.get(multiple, complex),
-							metaInfo, parserType, children)
+					? new ComplexStaticMetaclass(field, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
+							parserType, children)
 
-					: new ComplexMetaclass(fieldName, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
+					: new ComplexMetaclass(field, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
 							parserType, children);
 		} else {
 			return metaInfo.isStatic()
 
-					? new SimpleStaticMetaclass(fieldName, fieldType, elementType, Kind.get(multiple, complex),
-							metaInfo, parserType)
+					? new SimpleStaticMetaclass(field, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
+							parserType)
 
-					: new SimpleMetaclass(fieldName, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
+					: new SimpleMetaclass(field, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
 							parserType);
 		}
 	}

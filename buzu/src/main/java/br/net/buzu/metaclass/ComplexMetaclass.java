@@ -16,6 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,9 +41,9 @@ public class ComplexMetaclass extends BasicMetaclass {
 	private final List<Metaclass> children;
 	private final Map<String, Metaclass> internalMap = new HashMap<>();
 
-	public ComplexMetaclass(String fieldName, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
+	public ComplexMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
 			Class<? extends PayloadParser> parserType, List<? extends Metaclass> children) {
-		super(fieldName, fieldType, elementType, kind, metaInfo, parserType);
+		super(field, fieldType, elementType, kind, metaInfo, parserType);
 		this.children = children != null ? Collections.unmodifiableList(children)
 				: Collections.unmodifiableList(new ArrayList<>());
 		this.children.forEach(c -> internalMap.put(c.info().name(), c));
