@@ -51,9 +51,4 @@ public class RegexCoder implements MetadataCoder{
 		return null;
 	}
 
-	@Override
-	public Dialect dialect() {
-		return Dialect.VERBOSE;
-	}
-
 }

@@ -56,6 +56,7 @@ public class Buzu implements PplMapper {
 	private final MetaclassReader reader;
 	private final boolean serializeNulls;
 	private final MetadataCoder coder;
+	private final Dialect dialect;
 
 	/**
 	 * Simple constructor.
@@ -68,8 +69,7 @@ public class Buzu implements PplMapper {
 	/**
 	 * Context constructor.
 	 * 
-	 * @param context
-	 *            The PPL Context [CANNOT BE NULL].
+	 * @param context The PPL Context [CANNOT BE NULL].
 	 */
 	public Buzu(PplContext context) {
 		this(context, new BasicMetadataParser(context), new BasicMetaclassReader(context),
@@ -79,17 +79,13 @@ public class Buzu implements PplMapper {
 	/**
 	 * Complete Constructor (used by the Builder).
 	 * 
-	 * @param context
-	 *            The PPL Context [CANNOT BE NULL].
-	 * @param metadataParser
-	 *            The MetadataParser. If <code>null</code> will be created an
-	 *            instance based on the context.
-	 * @param metaclassReader
-	 *            The MetaclassLoader. If <code>null</code> will be created an
-	 *            instance based on the context.
-	 * @param metadataLoader
-	 *            The MetadataLoader. If <code>null</code> will be created an
-	 *            instance based on the context.
+	 * @param context         The PPL Context [CANNOT BE NULL].
+	 * @param metadataParser  The MetadataParser. If <code>null</code> will be
+	 *                        created an instance based on the context.
+	 * @param metaclassReader The MetaclassLoader. If <code>null</code> will be
+	 *                        created an instance based on the context.
+	 * @param metadataLoader  The MetadataLoader. If <code>null</code> will be
+	 *                        created an instance based on the context.
 	 * 
 	 */
 	Buzu(PplContext context, MetadataParser metadataParser, MetaclassReader metaclassReader,
@@ -100,7 +96,8 @@ public class Buzu implements PplMapper {
 		this.reader = metaclassReader == null ? new BasicMetaclassReader(context) : metaclassReader;
 		this.loader = metadataLoader == null ? new BasicMetadataLoader(context) : metadataLoader;
 		this.serializeNulls = serializeNulls;
-		this.coder = context.coderManager().get(dialect != null ? dialect : Dialect.DEFAULT);
+		this.dialect = dialect != null ? dialect : Dialect.DEFAULT;
+		this.coder = context.coderManager().get(this.dialect);
 	}
 
 	// **************************************************
@@ -118,7 +115,7 @@ public class Buzu implements PplMapper {
 		if (text == null || text.isEmpty()) {
 			return null;
 		}
-		
+
 		PplString pplString = new PplString(text, context.syntax());
 		Metadata metadata = parser.parse(pplString);
 		Metaclass metaclass;
@@ -223,7 +220,7 @@ public class Buzu implements PplMapper {
 	}
 
 	public Dialect dialect() {
-		return coder.dialect();
+		return dialect;
 	}
 
 	public boolean isSerializaNulls() {

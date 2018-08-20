@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -159,6 +160,7 @@ public class ReflectTest {
 		// # Constructors - select no parameters
 		MultiConstructor m = (MultiConstructor) Reflect.newInstance(MultiConstructor.class);
 		assertTrue(m instanceof MultiConstructor);
+		assertTrue(m.getS().equals("DEFAULT"));// Used constructor has 0 parameters
 		// List
 		List<?> list = (List<?>) Reflect.newInstance(List.class);
 		assertTrue(list instanceof ArrayList);
@@ -169,13 +171,19 @@ public class ReflectTest {
 		Map<?,?> map = (Map<?,?>) Reflect.newInstance(Map.class);
 		assertTrue(map instanceof HashMap);
 
+		// Explicit Construtor
+		Elements elements = (Elements) Reflect.newInstance(Elements.class);
+		assertTrue(map instanceof HashMap);
+		// # Constructors - select 1 parameter
+		MultiConstructorNoDefaultNotSerializable m2 = (MultiConstructorNoDefaultNotSerializable) Reflect.newInstance(MultiConstructorNoDefaultNotSerializable.class);
+		assertTrue(m2 instanceof MultiConstructorNoDefaultNotSerializable);
+		assertTrue(m2.getS().equals("ONE-PAR"));// Used constructor has 1 parameter
+		// # Constructors - select none constructor because is serializable
+		MultiConstructorNoDefaultButSerializable m3 = (MultiConstructorNoDefaultButSerializable) Reflect.newInstance(MultiConstructorNoDefaultButSerializable.class);
+		assertTrue(m3 instanceof MultiConstructorNoDefaultButSerializable);
+		assertTrue(m3.getI()!=2);// 2 Parameter constructor sets i == 2
+		assertTrue(!"ONE-PAR".equals(m3.getS()));// 1 parameter constructor sets s = ONE-PAR
 
-		try {
-			Reflect.newInstance(Elements.class);
-			fail();
-		} catch (PplReflectionException e) {
-			assertTrue(e.getMessage().startsWith(Reflect.MISSING_NULLARY_CONSTRUCTOR));
-		}
 	}
 
 	@Test
@@ -342,15 +350,91 @@ class MultiConstructor {
 	public MultiConstructor(String s, int i) {
 		super();
 		this.s = s;
-		this.i = i;
+		this.i = i+1;
 	}
 
 	public MultiConstructor(String s) {
-		this(s, 0);
+		this(s, 1);
 	}
 
+	// THIS CONSTRUCTOR WILL BE CALLED
 	public MultiConstructor() {
-		this("x", 0);
+		this("DEFAULT", 0);
+	}
+
+	public String getS() {
+		return s;
+	}
+
+	public int getI() {
+		return i;
+	}
+
+	public LeafBean getLeafBean() {
+		return leafBean;
+	}
+
+	public void setLeafBean(LeafBean leafBean) {
+		this.leafBean = leafBean;
+	}
+
+}
+
+class MultiConstructorNoDefaultNotSerializable {
+	@PplMetadata(name = "s2")
+	private final String s;
+	private final int i;
+	private LeafBean leafBean;
+
+	// Nou used - 2 parameters
+	public MultiConstructorNoDefaultNotSerializable(String s, int i) {
+		super();
+		this.s = s;
+		this.i = 2;
+	}
+
+	// THIS IS CALLED - less parameters (1)
+	public MultiConstructorNoDefaultNotSerializable(String s) {
+		this("ONE-PAR", 1);
+	}
+
+	public String getS() {
+		return s;
+	}
+
+	public int getI() {
+		return i;
+	}
+
+	public LeafBean getLeafBean() {
+		return leafBean;
+	}
+
+	public void setLeafBean(LeafBean leafBean) {
+		this.leafBean = leafBean;
+	}
+
+}
+
+class MultiConstructorNoDefaultButSerializable implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
+	@PplMetadata(name = "s2")
+	private final String s;
+	private final int i;
+	private LeafBean leafBean;
+
+	// Nou used (2 parameters) because is Serializable
+	public MultiConstructorNoDefaultButSerializable(String s, int i) {
+		super();
+		this.s = s;
+		this.i = 2;
+	}
+
+	// Not used (1 parameter) because is Serializable
+	public MultiConstructorNoDefaultButSerializable(String s) {
+		this("ONE-PAR", 1);
 	}
 
 	public String getS() {

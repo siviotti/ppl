@@ -26,6 +26,7 @@ import br.net.buzu.pplspec.model.Metadata;
  * @since 1.0
  *
  */
+@FunctionalInterface
 public interface MetadataLoader {
 
 	/**

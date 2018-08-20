@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
  * @author Douglas Siviotti
  * @since 1.0
  */
+@FunctionalInterface
 public interface SkipStrategy {
 
 	/**

@@ -26,7 +26,6 @@ import br.net.buzu.pplspec.exception.PplMetaclassViolationException;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.util.Reflect;
 
 /**
  * Default MetadataLoader

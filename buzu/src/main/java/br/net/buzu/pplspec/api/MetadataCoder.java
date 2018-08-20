@@ -16,7 +16,6 @@
  */
 package br.net.buzu.pplspec.api;
 
-import br.net.buzu.pplspec.model.Dialect;
 import br.net.buzu.pplspec.model.Metadata;
 
 /**
@@ -26,6 +25,7 @@ import br.net.buzu.pplspec.model.Metadata;
  * @since 1.0
  *
  */
+@FunctionalInterface
 public interface MetadataCoder {
 
 	/**
@@ -37,11 +37,5 @@ public interface MetadataCoder {
 	 */
 	String code(Metadata meta);
 
-	/**
-	 * Returnathe Dialect used for coding the Metadata.
-	 * 
-	 * @return The instance of <code>Dialect</code>.
-	 */
-	Dialect dialect();
 
 }

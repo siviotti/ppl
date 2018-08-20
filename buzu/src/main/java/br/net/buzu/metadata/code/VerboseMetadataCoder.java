@@ -47,7 +47,6 @@ public class VerboseMetadataCoder implements MetadataCoder {
 		return sb.toString();
 	}
 
-	@Override
 	public Dialect dialect() {
 		return Dialect.VERBOSE;
 	}

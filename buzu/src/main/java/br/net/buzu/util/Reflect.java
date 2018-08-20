@@ -16,10 +16,19 @@
  */
 package br.net.buzu.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectStreamClass;
+import java.io.ObjectStreamConstants;
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -46,6 +55,18 @@ public class Reflect {
 	static final String MISSING_NULLARY_CONSTRUCTOR = "Missing nullary constructor: Class '";
 	static final String UNSAFE_COLLECTION = "Unsafe collection '";
 
+	static final Map<Class<?>, Object> INITIAL_VALUES = new HashMap<>();
+
+	static {
+		INITIAL_VALUES.put(boolean.class, false);
+		INITIAL_VALUES.put(int.class, 0);
+		INITIAL_VALUES.put(long.class, 0L);
+		INITIAL_VALUES.put(short.class, Short.valueOf("0"));
+		INITIAL_VALUES.put(byte.class, Byte.valueOf("0"));
+		INITIAL_VALUES.put(float.class, Float.valueOf("0.0"));
+		INITIAL_VALUES.put(double.class, Double.valueOf("0.0"));
+	}
+
 	/** Private Constructor */
 	private Reflect() {
 	}
@@ -56,10 +77,6 @@ public class Reflect {
 
 	public static boolean isMultiple(Class<?> type) {
 		return type.isArray() || (Collection.class.isAssignableFrom(type));
-	}
-
-	public static boolean isCollection(Class<?> type) {
-		return (Collection.class.isAssignableFrom(type));
 	}
 
 	// **************************************************
@@ -121,9 +138,8 @@ public class Reflect {
 	}
 
 	public static void setField(Object obj, Field field, Object param) {
-		
-	}
 
+	}
 
 	// **************************************************
 	// Fields
@@ -155,36 +171,13 @@ public class Reflect {
 
 	}
 
-	public static Object newInstance(Class<?> toClass) {
-		try {
-			if (List.class.equals(toClass)) {
-				return new ArrayList<Object>();
-			} else if (Set.class.equals(toClass) || Collection.class.equals(toClass)) {
-				return new HashSet<Object>();
-			} else if (Map.class.equals(toClass)) {
-				return new HashMap<String, Object>();
-			}
-			return getNullaryConstructor(toClass).newInstance();
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
-			throw new PplReflectionException(e.getMessage(), e);
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	static Constructor getNullaryConstructor(Class<?> toClass) {
-		try {
-			if (toClass.getDeclaredConstructors().length == 1) {
-				return toClass.getDeclaredConstructors()[0];
-			}
-			return toClass.getConstructor();
-		} catch (NoSuchMethodException e) {
-			throw new PplReflectionException(MISSING_NULLARY_CONSTRUCTOR + toClass.getCanonicalName() + "'", e);
-		} catch (SecurityException e) {
-			throw new PplReflectionException(e.getMessage(), e);
-		}
-	}
-
+	/**
+	 * Returna all fields presents in a class including the superclasses fields.
+	 * 
+	 * @param type
+	 *            The class
+	 * @return The field list.
+	 */
 	public static List<Field> getAllFields(Class<?> type) {
 		if (Object.class.equals(type.getSuperclass()) || type.getSuperclass() == null) {
 			return Arrays.asList(type.getDeclaredFields());
@@ -204,6 +197,113 @@ public class Reflect {
 			return elementType.getAnnotation(PplMetadata.class);
 		}
 		return null;
+	}
+
+	// **************************************************
+	// New Instance
+	// **************************************************
+
+	/**
+	 * Creates a new instance from a type.
+	 * <P>
+	 * Constructor Strategy Precedence:<BR>
+	 * 1 - Try the default constructor <BR>
+	 * 2 - If the type is Serializable try unserialization<BR>
+	 * 3 - Use the constructor with less parameters
+	 * 
+	 * @param type
+	 *            The type
+	 * @return The new instance
+	 */
+	public static Object newInstance(Class<?> type) {
+		try {
+			if (type.isInterface()) {
+				return newInstanceFromInterface(type);
+			}
+			Constructor<?> c = getMostSimpleConstructor(type);
+			if (!Modifier.isPublic(c.getModifiers())) {
+				c.setAccessible(true);
+			}
+			if (c.getParameterCount() == 0) {
+				return c.newInstance();
+			}
+			if (Serializable.class.isAssignableFrom(type)) {
+				return instantiateUsingSerialization(type);
+			} else {
+				return c.newInstance(getInitialParams(c));
+			}
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			throw new PplReflectionException(e.getMessage(), e);
+		}
+	}
+
+	private static Object newInstanceFromInterface(Class<?> type) {
+		if (List.class.equals(type)) {
+			return new ArrayList<Object>();
+		} else if (Set.class.equals(type) || Collection.class.equals(type)) {
+			return new HashSet<Object>();
+		} else if (Map.class.equals(type)) {
+			return new HashMap<String, Object>();
+		}
+		throw new PplReflectionException("Is not possible create a new instance from the interface " + type);
+	}
+
+	public static Object[] getInitialParams(Constructor<?> c) {
+		Object[] params = new Object[c.getParameterCount()];
+		for (int i = 0; i < params.length; i++) {
+			if (c.getParameterTypes()[i].isPrimitive()) {
+				params[i] = INITIAL_VALUES.get(c.getParameterTypes()[i]);
+			} else {
+				params[i] = null;
+			}
+		}
+		return params;
+	}
+
+	// From XStream
+	public static Object instantiateUsingSerialization(Class<?> type) {
+		try {
+			byte[] data;
+			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+			DataOutputStream stream = new DataOutputStream(bytes);
+			stream.writeShort(ObjectStreamConstants.STREAM_MAGIC);
+			stream.writeShort(ObjectStreamConstants.STREAM_VERSION);
+			stream.writeByte(ObjectStreamConstants.TC_OBJECT);
+			stream.writeByte(ObjectStreamConstants.TC_CLASSDESC);
+			stream.writeUTF(type.getName());
+			stream.writeLong(ObjectStreamClass.lookup(type).getSerialVersionUID());
+			stream.writeByte(2); // classDescFlags (2 = Serializable)
+			stream.writeShort(0); // field count
+			stream.writeByte(ObjectStreamConstants.TC_ENDBLOCKDATA);
+			stream.writeByte(ObjectStreamConstants.TC_NULL);
+			data = bytes.toByteArray();
+
+			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data));
+			return in.readObject();
+		} catch (IOException e) {
+			throw new PplReflectionException("Cannot create " + type.getName() + " by JDK serialization", e);
+		} catch (ClassNotFoundException e) {
+			throw new PplReflectionException("Cannot find class " + e.getMessage());
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public static Constructor getMostSimpleConstructor(Class<?> toClass) {
+		try {
+			Constructor<?> c = toClass.getDeclaredConstructors()[0];
+			for (Constructor tmp : toClass.getDeclaredConstructors()) {
+				if (tmp.getParameterCount() == 0) {
+					return tmp;
+				}
+				if (tmp.getParameterCount() < c.getParameterCount()) {
+					c = tmp;
+				}
+			}
+			return c;
+		} catch (SecurityException e) {
+			throw new PplReflectionException(e.getMessage(), e);
+		}
 	}
 
 }

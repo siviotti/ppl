@@ -26,6 +26,7 @@ import br.net.buzu.pplspec.model.PplString;
  * @since 1.0
  *
  */
+@FunctionalInterface
 public interface MetadataParser {
 
 	/**
