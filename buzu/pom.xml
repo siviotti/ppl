@@ -48,6 +48,11 @@
 			<artifactId>ppl-spec</artifactId>
 			<version>1.0.0-RC1</version>
 		</dependency>
+		<dependency>
+			<groupId>br.net.buzu</groupId>
+			<artifactId>ppl-lib</artifactId>
+			<version>1.0.0-RC1</version>
+		</dependency>
 
 		<!-- TEST -->
 		<dependency>
