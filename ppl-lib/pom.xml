@@ -50,6 +50,12 @@
 			<artifactId>kotlin-stdlib</artifactId>
 			<version>${kotlin.version}</version>
 		</dependency>
+		<!-- ppl-spec -->
+		<dependency>
+			<groupId>br.net.buzu</groupId>
+			<artifactId>ppl-spec</artifactId>
+			<version>1.0.0-RC1</version>
+		</dependency>
 
 		<!-- TEST -->
 		<dependency>

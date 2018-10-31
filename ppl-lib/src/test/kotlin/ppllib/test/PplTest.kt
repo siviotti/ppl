@@ -1,5 +1,6 @@
-package br.net.buzu.ppllib
+package ppllib.test
 
+import br.net.buzu.ppllib.add
 import org.junit.Test
 
 class PplTest {

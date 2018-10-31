@@ -26,8 +26,6 @@ import br.net.buzu.pplspec.model.Align;
  */
 public class Text {
 
-	public static final Align DEFAULT_ALIGN = Align.LEFT;
-
 	private Text() {
 	}
 
