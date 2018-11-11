@@ -33,7 +33,7 @@ public class SimpleStaticMetadata extends SimpleMetadata implements StaticMetada
 	public SimpleStaticMetadata(MetaInfo metaInfo) {
 		super(metaInfo);
 		StaticBehave.checkStaticInfo(metaInfo);
-		serialMaxSize = metaInfo.size() * metaInfo.maxOccurs();
+		serialMaxSize = metaInfo.getSize() * metaInfo.getMaxOccurs();
 	}
 
 	@Override

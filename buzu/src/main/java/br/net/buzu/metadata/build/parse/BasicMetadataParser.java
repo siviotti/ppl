@@ -131,7 +131,7 @@ public class BasicMetadataParser implements MetadataParser {
 		Domain domain = parseDomain(node);
 		MetaInfo metaInfo = new MetaInfo(parentId, index, name, subtype, size, scale, minOccurs, maxOccurs, domain,
 				node.defaultValue, node.tags);
-		return context.metadataFactory().create(metaInfo, parseChildren(metaInfo.id(), node));
+		return context.metadataFactory().create(metaInfo, parseChildren(metaInfo.getId(), node));
 
 	}
 

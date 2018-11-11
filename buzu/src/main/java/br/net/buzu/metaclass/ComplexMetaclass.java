@@ -46,7 +46,7 @@ public class ComplexMetaclass extends BasicMetaclass {
 		super(field, fieldType, elementType, kind, metaInfo, parserType);
 		this.children = children != null ? Collections.unmodifiableList(children)
 				: Collections.unmodifiableList(new ArrayList<>());
-		this.children.forEach(c -> internalMap.put(c.info().name(), c));
+		this.children.forEach(c -> internalMap.put(c.info().getName(), c));
 	}
 
 	@SuppressWarnings("unchecked")

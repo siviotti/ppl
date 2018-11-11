@@ -44,7 +44,7 @@ public class LoadNode {
 	 * @param elementType
 	 */
 	public LoadNode(Object value, Metaclass metaclass, String fieldPath) {
-		this.subtype = metaclass.info().subtype();
+		this.subtype = metaclass.info().getSubtype();
 		this.metaclass = metaclass;
 		this.fieldPath = fieldPath;
 		if (value == null) {

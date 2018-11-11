@@ -60,7 +60,7 @@ public class VerboseMetadataCoder implements MetadataCoder {
 		MetaInfo metaInfo = meta.info();
 		StringBuilder sb = new StringBuilder();
 		// Name
-		sb.append(serializeName(metaInfo.name()));
+		sb.append(serializeName(metaInfo.getName()));
 		// Subtype
 		sb.append(serializeType(meta, level, afterMetadataEnd(), indentationElement()));
 		// Size and Precision
@@ -107,7 +107,7 @@ public class VerboseMetadataCoder implements MetadataCoder {
 	}
 
 	protected String serializeSimpleType(MetaInfo meta) {
-		return meta.subtype().getId();
+		return meta.getSubtype().getId();
 	}
 
 	protected String afterMetadataEnd() {
@@ -127,7 +127,7 @@ public class VerboseMetadataCoder implements MetadataCoder {
 	}
 
 	protected String serializeSize(Metadata meta) {
-		if (meta.info().subtype().isFixedSizeType()) {
+		if (meta.info().getSubtype().isFixedSizeType()) {
 			return EMPTY;
 		}
 		return (meta.kind().isComplex()) ? serializeComplexSize(meta.info()) : serializaSimpleSize(meta.info());
@@ -135,13 +135,13 @@ public class VerboseMetadataCoder implements MetadataCoder {
 
 	protected String serializaSimpleSize(MetaInfo meta) {
 		if (meta.hasScale()) {
-			return "" + meta.size() + Token.DECIMAL_SEP + meta.scale() + afterSize();
+			return "" + meta.getSize() + Token.DECIMAL_SEP + meta.getScale() + afterSize();
 		}
-		return meta.size() + afterSize();
+		return meta.getSize() + afterSize();
 	}
 
 	protected String serializeComplexSize(MetaInfo meta) {
-		return meta.size() + afterSize();
+		return meta.getSize() + afterSize();
 	}
 
 	protected String afterSize() {
@@ -149,7 +149,7 @@ public class VerboseMetadataCoder implements MetadataCoder {
 	}
 
 	protected String serializeOccurs(MetaInfo meta) {
-		return "" + Token.OCCURS_BEGIN + meta.minOccurs() + Token.OCCURS_RANGE + meta.maxOccurs();
+		return "" + Token.OCCURS_BEGIN + meta.getMinOccurs() + Token.OCCURS_RANGE + meta.getMaxOccurs();
 	}
 
 	protected String serializeExtension(MetaInfo meta) {
@@ -160,22 +160,22 @@ public class VerboseMetadataCoder implements MetadataCoder {
 		if (meta.hasDomain()) {
 			String valueBegin = "";
 			String valueEnd = "";
-			if (meta.subtype().dataType().group().isDelimited()) {
+			if (meta.getSubtype().dataType().group().isDelimited()) {
 				valueBegin = "" + Token.VALUE_BEGIN;
 				valueEnd = "" + Token.VALUE_END;
 			}
 			sb.append(Token.DOMAIN_BEGIN);
-			for (DomainItem item : meta.domain().items()) {
+			for (DomainItem item : meta.getDomain().items()) {
 				sb.append(valueBegin).append(item.asSerial()).append(valueEnd).append(Token.DOMAIN_SEPARATOR);
 			}
 			sb.deleteCharAt(sb.length() - 1);
 			sb.append(Token.DOMAIN_END);
 		}
 		if (meta.hasDefaultValue()) {
-			sb.append(serializaTag(Token.DEFAULT_VALUE, meta.defaultValue()));
+			sb.append(serializaTag(Token.DEFAULT_VALUE, meta.getDefaultValue()));
 		}
 		if (meta.hasTags()) {
-			sb.append(meta.tags());
+			sb.append(meta.getTags());
 		}
 		return sb.toString();
 	}

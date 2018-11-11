@@ -72,7 +72,7 @@ public class MetadataLoaderTest {
 	public void testEmpresa() {
 		Metaclass metaClass = new BasicMetaclassReader().read(Empresa.class);
 		Metadata meta = new BasicMetadataLoader(new BasicContext()).load(createEmpresa(), metaClass);
-		assertEquals(Subtype.OBJ, meta.info(). subtype());
+		assertEquals(Subtype.OBJ, meta.info(). getSubtype());
 	}
 	
 	@Test

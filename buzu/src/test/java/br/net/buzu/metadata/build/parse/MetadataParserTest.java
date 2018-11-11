@@ -85,10 +85,10 @@ public class MetadataParserTest {
 	private void assertMetadata(Metadata metadata, String name, Subtype subtype, int size, int minOccurs,
 			int maxOccurs) {
 		assertEquals(name, metadata.name());
-		assertEquals(subtype, metadata.info().subtype());
-		assertEquals(size, metadata.info().size());
-		assertEquals(minOccurs, metadata.info().minOccurs());
-		assertEquals(maxOccurs, metadata.info().maxOccurs());
+		assertEquals(subtype, metadata.info().getSubtype());
+		assertEquals(size, metadata.info().getSize());
+		assertEquals(minOccurs, metadata.info().getMinOccurs());
+		assertEquals(maxOccurs, metadata.info().getMaxOccurs());
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class MetadataParserTest {
 		Metadata metadata = parser.parse("", EXT, 0);
 		assertMetadata(metadata, "color", Subtype.STRING, 10, 0, 1);
 		Domain domain = Domain.of("black", "white", "red");
-		assertEquals(domain.items(), metadata.info().domain().items());
+		assertEquals(domain.items(), metadata.info().getDomain().items());
 	}
 
 	@Test
@@ -115,12 +115,12 @@ public class MetadataParserTest {
 		BasicMetadataParser parser = new BasicMetadataParser();
 		StaticMetadata metadada = (StaticMetadata) parser.parse(PplString.of("()"));
 		assertEquals(Syntax.NO_NAME_START + "0", metadada.name());
-		assertEquals(Subtype.STRING, metadada.info().subtype());
-		assertEquals(Subtype.CHAR.fixedSize(), metadada.info().size());
+		assertEquals(Subtype.STRING, metadada.info().getSubtype());
+		assertEquals(Subtype.CHAR.fixedSize(), metadada.info().getSize());
 		assertEquals(Subtype.CHAR.fixedSize(), metadada.serialMaxSize());
-		assertEquals(0, metadada.info().scale());
-		assertEquals(0, metadada.info().minOccurs());
-		assertEquals(1, metadada.info().maxOccurs());
+		assertEquals(0, metadada.info().getScale());
+		assertEquals(0, metadada.info().getMinOccurs());
+		assertEquals(1, metadada.info().getMaxOccurs());
 		assertEquals("S0", ShortMetadataCoder.INSTANCE.code(metadada));
 	}
 
@@ -130,11 +130,11 @@ public class MetadataParserTest {
 		StaticMetadata metadada = (StaticMetadata) parser.parse(PplString.of("(X:(;;))"));
 		assertEquals(ComplexStaticMetadada.class, metadada.getClass());
 		assertEquals("X", metadada.name());
-		assertEquals(Subtype.OBJ, metadada.info().subtype());
-		assertEquals(0, metadada.info().size()); // 2 x 0
+		assertEquals(Subtype.OBJ, metadada.info().getSubtype());
+		assertEquals(0, metadada.info().getSize()); // 2 x 0
 		assertEquals(0, metadada.serialMaxSize());
-		assertEquals(0, metadada.info().minOccurs());
-		assertEquals(1, metadada.info().maxOccurs());
+		assertEquals(0, metadada.info().getMinOccurs());
+		assertEquals(1, metadada.info().getMaxOccurs());
 		assertFalse(metadada.info().isExtended());
 		// assertEquals("C0", Dialect.VERBOSE.serialize(metadada));
 	}

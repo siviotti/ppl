@@ -45,7 +45,7 @@ public class ComplexParser extends AbstractComplexParser {
 
 	@Override
 	protected Object doParse(StaticMetadata metadata, String text, Metaclass toClass) {
-		Object[] array = createAndFillArray(toClass, metadata.info().maxOccurs());
+		Object[] array = createAndFillArray(toClass, metadata.info().getMaxOccurs());
 		int beginIndex = 0;
 		int endIndex = 0;
 		Object parsed = null;
@@ -83,7 +83,7 @@ public class ComplexParser extends AbstractComplexParser {
 	@Override
 	protected String serializeNotNull(StaticMetadata metadata, Object obj, Metaclass fromClass) {
 		StringBuilder sb = new StringBuilder();
-		Object[] array = toMaxArray(obj, metadata.info().maxOccurs());
+		Object[] array = toMaxArray(obj, metadata.info().getMaxOccurs());
 		StaticMetadata metadataChild;
 		PayloadParser parserChild;
 		Metaclass metaclassChild;
@@ -92,7 +92,7 @@ public class ComplexParser extends AbstractComplexParser {
 			for (int j = 0; j < children.size(); j++) {
 				metadataChild = staticMetadataChildren.get(j);
 				parserChild = children.get(j);
-				metaclassChild = fromClass.getChildByName(metadataChild.info().name());
+				metaclassChild = fromClass.getChildByName(metadataChild.info().getName());
 				if (array[i] != null) {
 					
 					sb.append(parserChild.serialize(metadataChild, metaclassChild.get(array[i]),

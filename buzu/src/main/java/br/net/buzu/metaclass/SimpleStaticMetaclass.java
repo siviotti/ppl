@@ -43,7 +43,7 @@ public class SimpleStaticMetaclass extends SimpleMetaclass implements StaticMeta
 		if (metaInfo.isUnbounded()) {
 			throw new IllegalArgumentException("Static Metaclass cannot be Unbounded:" + metaInfo);
 		}
-		serialMaxSize = metaInfo.size() * metaInfo.maxOccurs();
+		serialMaxSize = metaInfo.getSize() * metaInfo.getMaxOccurs();
 	}
 
 	@Override

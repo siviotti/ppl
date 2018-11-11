@@ -51,7 +51,7 @@ public class NumberParser extends AbstractNumericParser {
 		try {
 			if (toClass.match(BigDecimal.class)) {
 				if (metadata.info().hasScale()) {
-					return new BigDecimal(text).setScale(metadata.info().scale(), round);
+					return new BigDecimal(text).setScale(metadata.info().getScale(), round);
 				}
 				return new BigDecimal(text);
 			} else if (toClass.match(Double.class) || toClass.match(double.class)) {
@@ -72,7 +72,7 @@ public class NumberParser extends AbstractNumericParser {
 	protected String asStringFromNotNull(MetaInfo meta, Object obj) {
 		if (obj instanceof BigDecimal) {
 			if (meta.hasScale()) {
-				return ((BigDecimal) obj).setScale(meta.scale(), round).toPlainString();
+				return ((BigDecimal) obj).setScale(meta.getScale(), round).toPlainString();
 			}
 			return ((BigDecimal) obj).toPlainString();
 		}

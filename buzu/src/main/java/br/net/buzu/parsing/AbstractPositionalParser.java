@@ -87,8 +87,8 @@ public abstract class AbstractPositionalParser implements PayloadParser {
 	}
 
 	protected String serializeNull(StaticMetadata metadata) {
-		return Text.fill(metadata.info().align(), "", metadata.serialMaxSize(),
-				metadata.info().subtype().dataType().nullChar());
+		return Text.fill(metadata.info().getAlign(), "", metadata.serialMaxSize(),
+				metadata.info().getSubtype().dataType().nullChar());
 	}
 
 	protected abstract String serializeNotNull(StaticMetadata metadata, Object objNullSafe, Metaclass fromClass);

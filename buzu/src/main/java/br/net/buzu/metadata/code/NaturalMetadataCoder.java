@@ -41,11 +41,11 @@ public class NaturalMetadataCoder extends VerboseMetadataCoder {
 	@Override
 	// Hide default occurs #0-1
 	protected String serializeOccurs(MetaInfo meta) {
-		if (meta.minOccurs() == Syntax.DEFAULT_MIN_OCCURS
-				&& meta.maxOccurs() == Syntax.DEFAULT_MAX_OCCURS) {
+		if (meta.getMinOccurs() == Syntax.DEFAULT_MIN_OCCURS
+				&& meta.getMaxOccurs() == Syntax.DEFAULT_MAX_OCCURS) {
 			return EMPTY;
 		}
-		if (meta.minOccurs() == 1 && meta.maxOccurs() == 1) {
+		if (meta.getMinOccurs() == 1 && meta.getMaxOccurs() == 1) {
 			return "" + Token.OCCURS_BEGIN;
 		}
 		return super.serializeOccurs(meta);

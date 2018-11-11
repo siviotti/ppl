@@ -73,10 +73,10 @@ public class BasicMetadataLoader implements MetadataLoader {
 		int size = max.tryNewMaxSize(node.calcMaxSize()).getMaxSize();
 		int maxOccurs = max.tryNewMaxOccurs(node.getOccurs()).getMaxOccurs();
 		if (metaInfo.hasSize()) {
-			checkLimit("size", fieldPath, metaInfo.size(), size);
+			checkLimit("size", fieldPath, metaInfo.getSize(), size);
 		}
 		if (metaInfo.hasMaxOccurs()) {
-			checkLimit("maxOccurs", fieldPath, metaInfo.maxOccurs(), maxOccurs);
+			checkLimit("maxOccurs", fieldPath, metaInfo.getMaxOccurs(), maxOccurs);
 		}
 		return max;
 	}

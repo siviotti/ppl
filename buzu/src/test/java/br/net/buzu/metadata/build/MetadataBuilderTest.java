@@ -32,7 +32,7 @@ public class MetadataBuilderTest {
 		Metadata metadata = builder.build(new PplString(BuzuTest.PERSON_PPL_STRING));
 		assertEquals(BuzuTest.PERSON_METADATA_NAMES.length, metadata.children().size());
 		for (int i = 0; i < BuzuTest.PERSON_METADATA_NAMES.length; i++) {
-			assertEquals(BuzuTest.PERSON_METADATA_NAMES[i], metadata.children().get(i).info().name());
+			assertEquals(BuzuTest.PERSON_METADATA_NAMES[i], metadata.children().get(i).info().getName());
 		}
 	}
 
@@ -41,7 +41,7 @@ public class MetadataBuilderTest {
 		Metadata metadata = builder.build(BuzuTest.PERSON_INSTANCE);
 		assertEquals(BuzuTest.PERSON_METADATA_NAMES.length, metadata.children().size());
 		for (int i = 0; i < BuzuTest.PERSON_METADATA_NAMES.length; i++) {
-			assertEquals(BuzuTest.PERSON_METADATA_NAMES[i], metadata.children().get(i).info().name());
+			assertEquals(BuzuTest.PERSON_METADATA_NAMES[i], metadata.children().get(i).info().getName());
 		}
 	}
 
@@ -61,7 +61,7 @@ public class MetadataBuilderTest {
 		Metadata metadata = builder.build(BuzuTest.PERSON_INSTANCE);
 		assertEquals(BuzuTest.PERSON_METADATA_NAMES.length, metadata.children().size());
 		for (int i = 0; i < BuzuTest.PERSON_METADATA_NAMES.length; i++) {
-			assertEquals(BuzuTest.PERSON_METADATA_NAMES[i], metadata.children().get(i).info().name());
+			assertEquals(BuzuTest.PERSON_METADATA_NAMES[i], metadata.children().get(i).info().getName());
 		}
 
 	}

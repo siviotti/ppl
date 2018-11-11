@@ -45,7 +45,7 @@ public class ComplexStaticMetaclass extends ComplexMetaclass implements StaticMe
 			StaticBehave.checkStaticChild(child);
 			tmp += ((StaticStructure) child).serialMaxSize();
 		}
-		this.serialSize = tmp * metaInfo.maxOccurs();
+		this.serialSize = tmp * metaInfo.getMaxOccurs();
 	}
 
 	@Override

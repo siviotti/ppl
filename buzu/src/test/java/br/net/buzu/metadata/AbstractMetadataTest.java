@@ -45,12 +45,12 @@ public class AbstractMetadataTest {
 		Metadata m1 = new GenericSimpleMetadata(Kind.RECORD, metaInfo);
 
 		assertEquals("test", m1.name());
-		assertEquals(Subtype.STRING, m1.info().subtype());
-		assertEquals(10, m1.info().size()); // override MetaInfo
-		assertEquals(0, m1.info().scale());
-		assertEquals(1, m1.info().minOccurs());
+		assertEquals(Subtype.STRING, m1.info().getSubtype());
+		assertEquals(10, m1.info().getSize()); // override MetaInfo
+		assertEquals(0, m1.info().getScale());
+		assertEquals(1, m1.info().getMinOccurs());
 		assertEquals(true, m1.info().isRequired());
-		assertEquals(2, m1.info().maxOccurs()); // override MetaInfo
+		assertEquals(2, m1.info().getMaxOccurs()); // override MetaInfo
 	}
 
 	@Test

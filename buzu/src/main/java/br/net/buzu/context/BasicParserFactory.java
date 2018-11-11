@@ -136,7 +136,7 @@ public class BasicParserFactory implements ParserFactory {
 			}
 			return EnumNameParser.INSTANCE;
 		}
-		int parserIndex = metaclass.info().subtype().ordinal();
+		int parserIndex = metaclass.info().getSubtype().ordinal();
 		if (metaclass.isOldDate()) {
 			parserIndex += TIME_OFFSET;
 		}

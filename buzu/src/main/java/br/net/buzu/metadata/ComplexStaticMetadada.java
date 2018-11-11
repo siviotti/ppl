@@ -41,7 +41,7 @@ public class ComplexStaticMetadada extends ComplexMetadata implements StaticMeta
 			StaticBehave.checkStaticChild(child);
 			tmp += ((StaticStructure) child).serialMaxSize();
 		}
-		this.serialSize = tmp * info().maxOccurs();
+		this.serialSize = tmp * info().getMaxOccurs();
 	}
 
 	@Override

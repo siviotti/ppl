@@ -82,8 +82,8 @@ public class ComplexParserTest {
 		dump(metadata);
 		String serial = parser.serialize(metadata, empresa, fromEmpresa);
 		serial(serial);
-		assertEquals(metadata.info().size(), serial.length());
-		assertEquals(metadata.info().size(), metadata.serialMaxSize());
+		assertEquals(metadata.info().getSize(), serial.length());
+		assertEquals(metadata.info().getSize(), metadata.serialMaxSize());
 		Empresa parsedEmpresa = (Empresa) parser.parse(metadata, serial,
 				new BasicMetaclassReader().read(Empresa.class));
 		assertEquals(parsedEmpresa.getRazaoSocial(), new Empresa().getRazaoSocial());

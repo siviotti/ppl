@@ -148,7 +148,7 @@ public class BasicMetaclassReader implements MetaclassReader {
 			}
 			list.add(read(parentId, field));
 		}
-		list.sort(Comparator.comparing(m -> m.info().index()));
+		list.sort(Comparator.comparing(m -> m.info().getIndex()));
 		return list;
 	}
 

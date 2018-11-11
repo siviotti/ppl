@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4f38b2ac-da40-4bee-a17c-145e1d30a055" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_8_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_13_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_common_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk7_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk8_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_common_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ppl-spec.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplMetadata.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetaclassCache.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/PayloadParser.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/PplMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/SkipStrategy.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/Form.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplReflectionException.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/lang/Syntax.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/lang/Token.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DataGroup.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DataType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Dialect.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Domain.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DomainItem.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Kind.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/MetaInfo.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Metadata.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/PplString.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Subtype.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/exception/PplExceptionTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/lang/SyntaxTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainItemTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/MetaInfoTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/PplStringTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/context/BasicParserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/context/BasicParserFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/BasicMetaclass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/BasicMetaclass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/BasicMetaclassReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/BasicMetaclassReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/ComplexMetaclass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/ComplexMetaclass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/ComplexStaticMetaclass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/ComplexStaticMetaclass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/SimpleStaticMetaclass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metaclass/SimpleStaticMetaclass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/BasicMetadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/BasicMetadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/ComplexMetadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/ComplexMetadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/ComplexStaticMetadada.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/ComplexStaticMetadada.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/SimpleStaticMetadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/SimpleStaticMetadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/build/Layout.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/build/Layout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/build/load/BasicMetadataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/build/load/BasicMetadataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/build/load/LoadNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/build/load/LoadNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/build/parse/BasicMetadataParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/build/parse/BasicMetadataParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/code/CompactMetadataCoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/code/CompactMetadataCoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/code/NaturalMetadataCoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/code/NaturalMetadataCoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/code/VerboseMetadataCoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/metadata/code/VerboseMetadataCoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/parsing/AbstractPositionalParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/parsing/AbstractPositionalParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/parsing/complex/ComplexParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/parsing/complex/ComplexParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/parsing/simple/AbstractSimpleParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/parsing/simple/AbstractSimpleParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/parsing/simple/number/NumberParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/parsing/simple/number/NumberParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/util/StaticBehave.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/main/java/br/net/buzu/util/StaticBehave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/AbstractMetadataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/AbstractMetadataTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/build/LayoutTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/build/LayoutTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/build/MetadataBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/build/MetadataBuilderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/build/load/MetadataLoaderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/build/load/MetadataLoaderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/build/parse/MetadataParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/metadata/build/parse/MetadataParserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/parsing/complex/ComplexParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/parsing/complex/ComplexParserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/pplspec/model/MetaInfoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../buzu/src/test/java/br/net/buzu/pplspec/model/MetaInfoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ppl-lib/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../ppl-lib/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ppl-lib/ppl-lib.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../ppl-lib/ppl-lib.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplIgnore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplIgnore.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplMetadata.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplParser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplUse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetaclassCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetaclassReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetaclassReader.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetadataCoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetadataCoder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetadataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetadataLoader.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetadataParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/MetadataParser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/PayloadParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/PplMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/api/SkipStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/CoderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/CoderManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/MetadataFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/MetadataFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/ParserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/ParserFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/PplContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/PplContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/SubtypeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/context/SubtypeManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/Data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/DataFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/DataFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/DataMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/DataMap.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/Field.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/Form.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Align.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/UserInterfaceField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/data/UserInterfaceField.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplConstraintViolationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplConstraintViolationException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplMetaclassViolationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplMetaclassViolationException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplParseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplParseException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplReflectionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplSerializeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplSerializeException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplTypeMismatchException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplTypeMismatchException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/lang/Syntax.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/lang/Token.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Align.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DataGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DataType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Dialect.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Domain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DomainItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DomainType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DomainType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Kind.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/LabeledValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/LabeledValue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/MetaInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Metaclass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Metaclass.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Metadata.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Nameable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Nameable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/PplSerializable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/PplSerializable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/PplString.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/SizeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/SizeType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/StaticMetaclass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/StaticMetadata.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/StaticMetadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/StaticMetaclass.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/StaticStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/StaticStructure.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Subtype.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/package-info.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/exception/PplExceptionTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/lang/SyntaxTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainItemTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/MetaInfoTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/PplStringTest.java" beforeDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-307380817">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.42" value="1" />
+          <entry key="project.open.time.46" value="1" />
+          <entry key="project.opened" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="java" value="12" />
+          <entry key="kt" value="20" />
+          <entry key="xml" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="12" />
+          <entry key="Kotlin" value="20" />
+          <entry key="XML" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="107" />
+          <entry key="kt" value="709" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="107" />
+          <entry key="Kotlin" value="709" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/MetaInfoTest.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="40" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
+              <folding>
+                <element signature="e#35#293#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/exception/PplExceptionTest.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Companion.getEMPTY_INTEGER()</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>EMPTY_INTEGER</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/PplString.java" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Align.java" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Align.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/PplString.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/MetaInfo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/MetaInfo.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/lang/Syntax.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplMetadata.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplParseException.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Subtype.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DomainItem.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/LabeledValue.kt" />
+        <option value="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/MetaInfoTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainItemTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainItemTest.kt" />
+        <option value="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainTest.kt" />
+        <option value="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/lang/SyntaxTest.kt" />
+        <option value="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/PplStringTest.kt" />
+        <option value="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/MetaInfoTest.kt" />
+        <option value="$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/exception/PplExceptionTest.kt" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="67" />
+    <option name="y" value="390" />
+    <option name="width" value="1279" />
+    <option name="height" value="687" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ppl-spec" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ppl-spec" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ppl-spec" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ppl-spec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ppl-spec" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ppl-spec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ppl-spec" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ppl-spec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ppl-spec" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ppl-spec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pplspec" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ppl-spec" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ppl-spec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pplspec" type="462c0819:PsiDirectoryNode" />
+              <item name="exception" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ppl-spec" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ppl-spec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pplspec" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541965249800" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/../ppl-lib/ppl-lib.iml</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.MetaInfoTest.testMissingSubtype">
+    <configuration name="All in ppl-spec (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ppl-spec" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DomainTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ppl-spec" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.net.buzu.pplspec.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.net.buzu.pplspec.model" />
+      <option name="MAIN_CLASS_NAME" value="br.net.buzu.pplspec.model.DomainTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MetaInfoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ppl-spec" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.net.buzu.pplspec.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.net.buzu.pplspec.model" />
+      <option name="MAIN_CLASS_NAME" value="br.net.buzu.pplspec.model.MetaInfoTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MetaInfoTest.testMissingSubtype" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ppl-spec" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.net.buzu.pplspec.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.net.buzu.pplspec.model" />
+      <option name="MAIN_CLASS_NAME" value="br.net.buzu.pplspec.model.MetaInfoTest" />
+      <option name="METHOD_NAME" value="testMissingSubtype" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SyntaxTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ppl-spec" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.net.buzu.pplspec.lang.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.net.buzu.pplspec.lang" />
+      <option name="MAIN_CLASS_NAME" value="br.net.buzu.pplspec.lang.SyntaxTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.All in ppl-spec (1)" />
+      <item itemvalue="JUnit.DomainTest" />
+      <item itemvalue="JUnit.SyntaxTest" />
+      <item itemvalue="JUnit.MetaInfoTest" />
+      <item itemvalue="JUnit.MetaInfoTest.testMissingSubtype" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.MetaInfoTest.testMissingSubtype" />
+        <item itemvalue="JUnit.MetaInfoTest" />
+        <item itemvalue="JUnit.SyntaxTest" />
+        <item itemvalue="JUnit.DomainTest" />
+        <item itemvalue="JUnit.All in ppl-spec (1)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4f38b2ac-da40-4bee-a17c-145e1d30a055" name="Default Changelist" comment="" />
+      <created>1541119028712</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1541119028712</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="All_in_ppl-spec_(1) - 2018.11.01 at 23h 21m 18s.xml">
+      <configuration name="All in ppl-spec (1)" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MetaInfoTest_testMissingSubtype - 2018.11.01 at 23h 21m 41s.xml">
+      <configuration name="MetaInfoTest.testMissingSubtype" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_ppl-spec_(4) - 2018.11.02 at 00h 36m 17s.xml">
+      <configuration name="All in ppl-spec (4)" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DomainItemTest_testNull - 2018.11.02 at 00h 36m 29s.xml">
+      <configuration name="DomainItemTest.testNull" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DomainItemTest - 2018.11.02 at 00h 38m 23s.xml">
+      <configuration name="DomainItemTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DomainItemTest - 2018.11.02 at 00h 38m 59s.xml">
+      <configuration name="DomainItemTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_ppl-spec - 2018.11.02 at 00h 39m 14s.xml">
+      <configuration name="All in ppl-spec" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SyntaxTest - 2018.11.11 at 17h 32m 47s.xml">
+      <configuration name="SyntaxTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MetaInfoTest - 2018.11.11 at 17h 36m 08s.xml">
+      <configuration name="MetaInfoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MetaInfoTest_testMissingSubtype - 2018.11.11 at 17h 37m 12s.xml">
+      <configuration name="MetaInfoTest.testMissingSubtype" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17302378" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32845187" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5004055" side_tool="true" weight="0.32956687" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49959448" weight="0.32956687" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.46966526" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Maven Projects" order="7" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Align.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DataGroup.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="23" column="3" lean-forward="true" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/PplString.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-314">
+          <caret line="44" column="38" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="53" column="37" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Domain.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="108" column="37" lean-forward="true" selection-start-line="108" selection-start-column="37" selection-end-line="108" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/annotation/PplMetadata.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="46" column="14" selection-start-line="46" selection-start-column="14" selection-end-line="46" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/bin/jdk1.8.0_111/src.zip!/java/lang/RuntimeException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="89" column="13" lean-forward="true" selection-start-line="89" selection-start-column="13" selection-end-line="89" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/1.3.0/kotlin-stdlib-1.3.0-sources.jar!/kotlin/TypeAliases.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="12" column="79" lean-forward="true" selection-start-line="12" selection-start-column="79" selection-end-line="12" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/lang/Token.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/DomainItem.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplParseException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="28" column="96" selection-start-line="28" selection-start-column="96" selection-end-line="28" selection-end-column="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/Subtype.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1830">
+          <caret line="140" column="58" selection-start-line="140" selection-start-column="58" selection-end-line="140" selection-end-column="58" />
+          <folding>
+            <element signature="e#738#844#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/lang/Syntax.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3645">
+          <caret line="260" column="41" selection-start-line="260" selection-start-column="41" selection-end-line="260" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/exception/PplException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/LabeledValue.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/DomainItemTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="50" column="10" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/PplStringTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="40" column="10" selection-start-line="40" selection-start-column="10" selection-end-line="40" selection-end-column="10" />
+          <folding>
+            <element signature="e#35#327#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/lang/SyntaxTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="180" column="42" lean-forward="true" selection-start-line="180" selection-start-column="12" selection-end-line="180" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/net/buzu/pplspec/model/MetaInfo.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="46" column="14" selection-start-line="46" selection-start-column="14" selection-end-line="46" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/model/MetaInfoTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="40" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
+          <folding>
+            <element signature="e#35#293#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/br/net/buzu/pplspec/exception/PplExceptionTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

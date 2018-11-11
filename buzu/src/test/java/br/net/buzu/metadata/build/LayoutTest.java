@@ -64,29 +64,29 @@ public class LayoutTest {
 	@Test
 	public void testCreate() {
 		Layout l1 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", null, "XYZ");
-		assertEquals("abc", l1.metaInfo().defaultValue());
+		assertEquals("abc", l1.metaInfo().getDefaultValue());
 		Layout l2 = new Layout("test", Subtype.STRING, 10, 0, 1, 1); // no extension
-		assertEquals(Syntax.EMPTY, l2.metaInfo().defaultValue());
+		assertEquals(Syntax.EMPTY, l2.metaInfo().getDefaultValue());
 		Layout l3 = new Layout("test", Subtype.STRING, 10, 1, 1); // no scale
-		assertEquals(0, l3.metaInfo().scale());
+		assertEquals(0, l3.metaInfo().getScale());
 		Layout l4 = new Layout("test", 10, 1, 1); // no subtype (OBJ)
-		assertEquals(Subtype.OBJ, l4.metaInfo().subtype());
+		assertEquals(Subtype.OBJ, l4.metaInfo().getSubtype());
 		Layout l5 = new Layout("test", 10); // no subtype (OBJ) #0-1
-		assertEquals(0, l5.metaInfo().minOccurs());
-		assertEquals(1, l5.metaInfo().maxOccurs());
+		assertEquals(0, l5.metaInfo().getMinOccurs());
+		assertEquals(1, l5.metaInfo().getMaxOccurs());
 		Layout l6 = new Layout("test", Subtype.STRING); // size -1  #0-1
-		assertEquals(Layout.NO_SIZE, l6.metaInfo().size());
+		assertEquals(Layout.NO_SIZE, l6.metaInfo().getSize());
 		Layout l7 = new Layout("test"); // size -1 (OBJ) #0-1
-		assertEquals(Layout.NO_SIZE, l7.metaInfo().size());
+		assertEquals(Layout.NO_SIZE, l7.metaInfo().getSize());
 		Layout l8 = new Layout(); // "root" size -1 (OBJ) #0-1
-		assertEquals(Layout.ROOT, l8.metaInfo().name());
+		assertEquals(Layout.ROOT, l8.metaInfo().getName());
 		
 	}
 	
 	@Test
 	public void testBasic() {
 		Layout l1 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", null, "XYZ");
-		assertEquals("abc", l1.metaInfo().defaultValue());
+		assertEquals("abc", l1.metaInfo().getDefaultValue());
 		try {
 			l1.end(); // no parent
 			fail();
@@ -98,8 +98,8 @@ public class LayoutTest {
 		l1.atomic("field2", 10);
 		assertEquals(2, l1.getChildren().size());
 		Layout child1 = l1.getChildren().get(0);
-		assertEquals(Subtype.DEFAULT_SINGLE, child1.metaInfo().subtype());
-		assertEquals(Layout.NO_SIZE, child1.metaInfo().size());
+		assertEquals(Subtype.DEFAULT_SINGLE, child1.metaInfo().getSubtype());
+		assertEquals(Layout.NO_SIZE, child1.metaInfo().getSize());
 		
 		Layout l2 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", null, "XYZ");
 		l2.atomic("field1");

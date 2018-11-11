@@ -95,7 +95,7 @@ public class Layout {
 
 	public Layout field(String name, Subtype subtype, int size, int precision, int minOccurs, int maxOccurs,
 			String defaultValue, Domain domain, String tags) {
-		Layout child = new Layout(new MetaInfo(metaInfo.id(), childrenSize(), name, subtype, size, precision, minOccurs,
+		Layout child = new Layout(new MetaInfo(metaInfo.getId(), childrenSize(), name, subtype, size, precision, minOccurs,
 				maxOccurs, domain, defaultValue, tags), this);
 		add(child);
 

@@ -35,20 +35,20 @@ public abstract class AbstractSimpleParser extends AbstractPositionalParser {
 	// ******************** PARSE ********************
 	@Override
 	protected Object doParse(StaticMetadata metadata, String text, Metaclass toClass) {
-		if (isNull(text, metadata.info().subtype().dataType().nullChar())) {
+		if (isNull(text, metadata.info().getSubtype().dataType().nullChar())) {
 			if (metadata.info().hasDefaultValue()) {
-				text = metadata.info().defaultValue();
+				text = metadata.info().getDefaultValue();
 			} else {
 				return null;
 			}
 		}
 		int beginIndex = 0;
 		int endIndex = 0;
-		Object[] array = createAndFillArray(toClass, metadata.info().maxOccurs());
+		Object[] array = createAndFillArray(toClass, metadata.info().getMaxOccurs());
 		for (int i = 0; i < array.length; i++) {
-			endIndex += metadata.info().size();
+			endIndex += metadata.info().getSize();
 			array[i] = asSingleObject(metadata, text.substring(beginIndex, endIndex), toClass);
-			beginIndex += metadata.info().size();
+			beginIndex += metadata.info().getSize();
 		}
 		return fromArray(array, toClass);
 
@@ -69,7 +69,7 @@ public abstract class AbstractSimpleParser extends AbstractPositionalParser {
 
 	protected String serializeNotNull(StaticMetadata metadata, Object obj, Metaclass metaClass) {
 		StringBuilder sb = new StringBuilder();
-		Object[] array = toMaxArray(obj, metadata.info().maxOccurs());
+		Object[] array = toMaxArray(obj, metadata.info().getMaxOccurs());
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] == null) {
 				sb.append(serializeNullElement(metadata.info()));
@@ -81,14 +81,14 @@ public abstract class AbstractSimpleParser extends AbstractPositionalParser {
 	}
 
 	/**
-	 * @see MetaInfo#defaultValue()
+	 * @see MetaInfo#getDefaultValue()
 	 */
 	protected String serializeNullElement(MetaInfo meta) {
-		return Text.fill(meta.align(), meta.defaultValue(), meta.size(), meta.subtype().dataType().nullChar());
+		return Text.fill(meta.getAlign(), meta.getDefaultValue(), meta.getSize(), meta.getSubtype().dataType().nullChar());
 	}
 
 	protected String serializeElement(MetaInfo meta, Object obj) {
-		return Text.fit(meta.align(), asStringFromNotNull(meta, obj), meta.size(), meta.fillChar());
+		return Text.fit(meta.getAlign(), asStringFromNotNull(meta, obj), meta.getSize(), meta.getFillChar());
 	}
 
 	protected abstract String asStringFromNotNull(MetaInfo meta, Object obj);

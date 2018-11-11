@@ -218,7 +218,7 @@ public abstract class BasicMetaclass implements Metaclass {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder().append(metaInfo.name()).append("(").append(fieldName()).append("):");
+		StringBuilder sb = new StringBuilder().append(metaInfo.getName()).append("(").append(fieldName()).append("):");
 		if (!kind.isMultiple()) {
 			sb.append(fieldType.getSimpleName());
 		} else if (isArray()) {

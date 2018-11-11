@@ -33,7 +33,7 @@ public class ComplexMetadata extends BasicMetadata {
 	private final List<Metadata> children;
 
 	public ComplexMetadata(MetaInfo metaInfo, List<Metadata> children) {
-		super(metaInfo.update(complexSize(children), metaInfo.maxOccurs()) );
+		super(metaInfo.update(complexSize(children), metaInfo.getMaxOccurs()) );
 		if (children == null) {
 			throw new IllegalArgumentException("children cannot be null!");
 		}
@@ -43,7 +43,7 @@ public class ComplexMetadata extends BasicMetadata {
 	private static int complexSize(List<? extends Metadata> children) {
 		int complexSize = 0;
 		for (Metadata child : children) {
-			complexSize += child.info().size();
+			complexSize += child.info().getSize();
 		}
 		return complexSize;
 	}

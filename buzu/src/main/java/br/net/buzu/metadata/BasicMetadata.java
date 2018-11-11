@@ -38,7 +38,7 @@ public abstract class BasicMetadata implements Metadata {
 			throw new NullPointerException("metainfo cannot be null!");
 		}
 		this.metaInfo = metaInfo;
-		this.kind = Kind.get(this.metaInfo.isMultiple(), this.metaInfo.subtype().dataType().isComplex());
+		this.kind = Kind.get(this.metaInfo.isMultiple(), this.metaInfo.getSubtype().dataType().isComplex());
 	}
 
 	// **************************************************
@@ -47,7 +47,7 @@ public abstract class BasicMetadata implements Metadata {
 
 	@Override
 	public String name() {
-		return metaInfo.name();
+		return metaInfo.getName();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public abstract class BasicMetadata implements Metadata {
 	@Override
 	public String toPlain() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(info().id()).append("\n");
+		sb.append(info().getId()).append("\n");
 		if (hasChildren()) {
 			children().forEach(c -> sb.append(c.toPlain()));
 		}
