@@ -1,29 +1,27 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.pplspec.model
 
-import java.util.Objects
-
 import br.net.buzu.pplspec.annotation.PplMetadata
-import br.net.buzu.pplspec.lang.Syntax
-import br.net.buzu.pplspec.lang.Token
+import br.net.buzu.pplspec.lang.*
+import java.util.*
 
 /**
- * Basic Pojo resulting of annotations information or manual setting. This class
+ * Basic Pojo resulting domainOf annotations information or manual setting. This class
  * represents the PPL elements: name, type, size, scale, occurs , defaultValue,
  * domain, tags, key and indexed.
  *
@@ -114,9 +112,8 @@ class MetaInfo
 
     constructor(parentId: String, pplMetadata: PplMetadata, originalFieldName: String, originalSubtype: Subtype) : this(parentId, pplMetadata.index, getName(pplMetadata, originalFieldName),
             getSubtype(pplMetadata, originalSubtype), pplMetadata.size, pplMetadata.scale,
-            pplMetadata.minOccurs, pplMetadata.maxOccurs, Domain.of(*pplMetadata.domain),
-            pplMetadata.defaultValue, buildTags(pplMetadata)) {
-    }
+            pplMetadata.minOccurs, pplMetadata.maxOccurs, domainOf(*pplMetadata.domain),
+            pplMetadata.defaultValue, buildTags(pplMetadata))
 
     init {
         this.id = createId(parentId, name)
@@ -182,12 +179,12 @@ class MetaInfo
     }
 
     fun parentId(): String {
-        val pos = id.lastIndexOf(Token.PATH_SEP)
+        val pos = id.lastIndexOf(PATH_SEP)
         return if (pos > -1) id.substring(0, pos) else ""
     }
 
     fun ppl(): String {
-        return (name + Token.NAME_END + subtype.id + size + Token.OCCURS_BEGIN + minOccurs + Token.OCCURS_RANGE
+        return (name + NAME_END + subtype.id + size + OCCURS_BEGIN + minOccurs + OCCURS_RANGE
                 + maxOccurs + domain.asSerial() + serializeDefaultvalue(defaultValue) + tags)
 
     }
@@ -231,7 +228,7 @@ class MetaInfo
         private fun createId(parentId: String?, name: String?): String {
             return if (parentId == null || parentId.isEmpty()) {
                 name ?: Syntax.EMPTY
-            } else parentId + Token.PATH_SEP + name
+            } else parentId + PATH_SEP + name
         }
 
         private fun checkOccurs(minOccurs: Int, maxOccurs: Int) {
@@ -253,13 +250,13 @@ class MetaInfo
             val tags = if (pplMetadata.tags != null) pplMetadata.tags else ""
             val sb = StringBuilder(tags)
             if (tags == null) {
-                return sb.append(Token.KEY).append(Token.INDEXED).toString()
+                return sb.append(KEY).append(INDEXED).toString()
             }
-            if (pplMetadata.key && tags.indexOf(Token.KEY) < 0) {
-                sb.append(Token.KEY)
+            if (pplMetadata.key && tags.indexOf(KEY) < 0) {
+                sb.append(KEY)
             }
-            if (pplMetadata.indexed && tags.indexOf(Token.INDEXED) < 0) {
-                sb.append(Token.INDEXED)
+            if (pplMetadata.indexed && tags.indexOf(INDEXED) < 0) {
+                sb.append(INDEXED)
             }
             if (PplMetadata.EMPTY_CHAR != pplMetadata.align) {
                 sb.append(pplMetadata.align)
@@ -271,7 +268,7 @@ class MetaInfo
         private fun serializeDefaultvalue(defaultValue: String?): String {
             return if (defaultValue == null || defaultValue.trim { it <= ' ' }.isEmpty()) {
                 Syntax.EMPTY
-            } else "" + Token.DEFAULT_VALUE + Token.VALUE_BEGIN + defaultValue + Token.VALUE_END
+            } else "" + DEFAULT_VALUE + VALUE_BEGIN + defaultValue + VALUE_END
         }
 
         private fun isExtended(domain: Domain, defaultValue: String, tags: String): Boolean {
@@ -280,10 +277,10 @@ class MetaInfo
 
         private fun getAlign(subtype: Subtype, tags: String?): Align {
             if (tags != null) {
-                if (tags.indexOf(Token.LEFT) > -1) {
+                if (tags.indexOf(LEFT) > -1) {
                     return Align.LEFT
                 }
-                if (tags.indexOf(Token.RIGHT) > -1) {
+                if (tags.indexOf(RIGHT) > -1) {
                     return Align.RIGHT
                 }
             }

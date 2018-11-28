@@ -1,14 +1,5 @@
 package br.net.buzu.metadata.code;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import br.net.buzu.metadata.BasicMetadata;
 import br.net.buzu.metadata.ComplexMetadata;
 import br.net.buzu.metadata.ComplexMetadataTest;
@@ -18,6 +9,12 @@ import br.net.buzu.pplspec.model.Dialect;
 import br.net.buzu.pplspec.model.MetaInfoTest;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.Subtype;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  *
@@ -51,7 +48,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertTrue(code.contains(Syntax.DEFAULT_OCCURS));
+		assertTrue(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
 		assertTrue(code.contains(""+Syntax.ENTER));
 		assertTrue(code.contains(""+Subtype.STRING.getId()));
 		
@@ -69,7 +66,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(Syntax.DEFAULT_OCCURS));
+		assertFalse(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
 		assertTrue(code.contains(""+Syntax.ENTER));
 		assertTrue(code.contains(""+Subtype.STRING.getId()));
 	}
@@ -86,7 +83,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(Syntax.DEFAULT_OCCURS));
+		assertFalse(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
 		assertFalse(code.contains(""+Syntax.ENTER));
 		assertTrue(code.contains(""+Subtype.STRING.getId()));
 	}
@@ -103,7 +100,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(Syntax.DEFAULT_OCCURS));
+		assertFalse(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
 		assertFalse(code.contains(""+Syntax.ENTER));
 		assertFalse(code.contains(""+Subtype.STRING.getId()));
 	}
@@ -120,7 +117,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(Syntax.DEFAULT_OCCURS));
+		assertFalse(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
 		assertFalse(code.contains(""+Syntax.ENTER));
 	}
 

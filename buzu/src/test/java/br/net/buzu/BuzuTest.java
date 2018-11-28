@@ -1,22 +1,5 @@
 package br.net.buzu;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import br.net.buzu.context.BasicCoderManager;
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.BasicMetaclassReader;
@@ -28,18 +11,22 @@ import br.net.buzu.pplspec.lang.Token;
 import br.net.buzu.pplspec.model.Dialect;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.PplString;
-import br.net.buzu.sample.order.Address;
-import br.net.buzu.sample.order.AddressType;
-import br.net.buzu.sample.order.Customer;
-import br.net.buzu.sample.order.Order;
-import br.net.buzu.sample.order.Product;
-import br.net.buzu.sample.order.Status;
+import br.net.buzu.sample.order.*;
 import br.net.buzu.sample.pojo.Person;
 import br.net.buzu.sample.ppl.Human;
 import br.net.buzu.sample.ppl.StaticPerson;
 import br.net.buzu.sample.ppl.Xmen;
 import br.net.buzu.sample.time.TimePojo;
 import br.net.buzu.util.PplReader;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
+
+import static org.junit.Assert.*;
 
 /**
  * 
@@ -164,7 +151,7 @@ public class BuzuTest {
 		Buzu buzu1 = new Buzu();
 		Buzu buzu2 = new Buzu(new BasicContext());
 		Buzu buzu3 = new Buzu(new BasicContext(), new BasicMetadataParser(), new BasicMetaclassReader(),
-				new BasicMetadataLoader(), Dialect.DEFAULT, false);
+				new BasicMetadataLoader(), Dialect.Companion.getDEFAULT(), false);
 		Buzu buzu4 = new Buzu(new BasicContext(), null, null, null, null, false);
 
 		checkBuzu(buzu1);
@@ -178,9 +165,9 @@ public class BuzuTest {
 		assertEquals(BasicMetadataParser.class, buzu.parser().getClass());
 		assertEquals(BasicMetaclassReader.class, buzu.reader().getClass());
 		assertEquals(BasicMetadataLoader.class, buzu.loader().getClass());
-		MetadataCoder coder = BasicCoderManager.INSTANCE.get(Dialect.DEFAULT);
+		MetadataCoder coder = BasicCoderManager.INSTANCE.get(Dialect.Companion.getDEFAULT());
 		assertEquals(coder.getClass(), buzu.coder().getClass());
-		assertEquals(Dialect.DEFAULT, buzu.dialect());
+		assertEquals(Dialect.Companion.getDEFAULT(), buzu.dialect());
 		assertFalse(buzu.isSerializaNulls());
 	}
 
@@ -348,7 +335,7 @@ public class BuzuTest {
 	// ********** Collections **********
 	@Test
 	public void testCollections() {
-		assertEquals(PplString.EMPTY.getMetadata(), buzu.toPpl(new ArrayList<>()));
+		assertEquals(PplString.Companion.getEMPTY().getMetadata(), buzu.toPpl(new ArrayList<>()));
 		List<Person> people = new ArrayList<>();
 		people.add(PERSON_INSTANCE);
 		people.add(PERSON_INSTANCE);

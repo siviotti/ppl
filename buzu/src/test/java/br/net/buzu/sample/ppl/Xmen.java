@@ -1,8 +1,8 @@
 package br.net.buzu.sample.ppl;
 
-import java.time.LocalDate;
-
 import br.net.buzu.pplspec.annotation.PplMetadata;
+
+import java.time.LocalDate;
 
 /**
  * Extension sample.

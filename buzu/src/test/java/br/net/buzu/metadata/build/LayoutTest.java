@@ -1,19 +1,17 @@
 package br.net.buzu.metadata.build;
 
-import static br.net.buzu.metadata.build.Layout.NO_PRECISION;
-
-import static br.net.buzu.metadata.build.Layout.NO_SIZE;
-import static br.net.buzu.pplspec.model.MetaInfoTest.domain;
-import static org.junit.Assert.*;
-
-import java.util.List;
-
-import org.junit.Test;
-
 import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.MetaInfoTest;
 import br.net.buzu.pplspec.model.Subtype;
+import org.junit.Test;
+
+import java.util.List;
+
+import static br.net.buzu.metadata.build.Layout.NO_PRECISION;
+import static br.net.buzu.metadata.build.Layout.NO_SIZE;
+import static br.net.buzu.pplspec.model.MetaInfoTest.domain;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -98,7 +96,7 @@ public class LayoutTest {
 		l1.atomic("field2", 10);
 		assertEquals(2, l1.getChildren().size());
 		Layout child1 = l1.getChildren().get(0);
-		assertEquals(Subtype.DEFAULT_SINGLE, child1.metaInfo().getSubtype());
+		assertEquals(Subtype.Companion.getDEFAULT_SINGLE(), child1.metaInfo().getSubtype());
 		assertEquals(Layout.NO_SIZE, child1.metaInfo().getSize());
 		
 		Layout l2 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", null, "XYZ");

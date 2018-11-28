@@ -1,18 +1,13 @@
 package br.net.buzu.metadata;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import br.net.buzu.pplspec.model.*;
+import br.net.buzu.util.StaticBehave;
+import org.junit.Test;
 
 import java.util.List;
 
-import org.junit.Test;
-
-import br.net.buzu.pplspec.model.Domain;
-import br.net.buzu.pplspec.model.Kind;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.Subtype;
+import static br.net.buzu.pplspec.model.DomainKt.domainOf;
+import static org.junit.Assert.*;
 
 /**
  * @author Douglas Siviotti
@@ -21,7 +16,7 @@ import br.net.buzu.pplspec.model.Subtype;
 public class AbstractMetadataTest {
 
 	private static Metadata createSample(String name, Subtype subtype, int size, int minOccurs, int maxOccurs) {
-		Domain domain = Domain.of("white", "black", "red");
+		Domain domain = domainOf("white", "black", "red");
 		MetaInfo metaInfo = new MetaInfo("", 31, name, subtype, size, 0, minOccurs, maxOccurs, domain, "red", "XYZ");
 		return new GenericSimpleMetadata(Kind.ARRAY, metaInfo);
 
@@ -39,7 +34,7 @@ public class AbstractMetadataTest {
 
 	@Test
 	public void test() {
-		Domain domain = Domain.of("Diamons", "white", "black", "red");
+		Domain domain = domainOf("Diamons", "white", "black", "red");
 		MetaInfo metaInfo = new MetaInfo("", 31, "test", Subtype.STRING, 10, 0, 1, 2, domain, "red", "XYZ");
 
 		Metadata m1 = new GenericSimpleMetadata(Kind.RECORD, metaInfo);
@@ -86,6 +81,12 @@ class GenericSimpleMetadata extends BasicMetadata {
 	public boolean hasChildren() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	@Override
+	public boolean isStatic() {
+		return StaticBehave.isStatic(this);
 	}
 
 }

@@ -1,27 +1,16 @@
 package br.net.buzu.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import br.net.buzu.pplspec.annotation.PplMetadata;
+import br.net.buzu.pplspec.exception.PplReflectionException;
+import org.junit.Test;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-
-import br.net.buzu.pplspec.annotation.PplMetadata;
-import br.net.buzu.pplspec.exception.PplReflectionException;
+import static org.junit.Assert.*;
 
 /**
  * @author Douglas Siviotti

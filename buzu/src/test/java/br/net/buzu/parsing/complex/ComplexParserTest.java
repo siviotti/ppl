@@ -1,22 +1,6 @@
 package br.net.buzu.parsing.complex;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.junit.Test;
-
-import br.net.buzu.conserpro.Empresa;
-import br.net.buzu.conserpro.MockFactory;
-import br.net.buzu.conserpro.NaturezaJuridica;
-import br.net.buzu.conserpro.PJ;
-import br.net.buzu.conserpro.Socio;
-import br.net.buzu.conserpro.Telefone;
+import br.net.buzu.conserpro.*;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.example.Address;
 import br.net.buzu.example.Customer;
@@ -28,6 +12,12 @@ import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.StaticMetadata;
 import br.net.buzu.sample.pojo.Person;
+import org.junit.Test;
+
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Douglas Siviotti

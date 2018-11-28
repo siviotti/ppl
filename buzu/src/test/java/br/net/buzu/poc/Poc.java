@@ -1,9 +1,6 @@
 package br.net.buzu.poc;
 
-import com.google.gson.Gson;
-
 import br.net.buzu.Buzu;
-import br.net.buzu.context.BasicMetadataFactory;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
@@ -12,6 +9,9 @@ import br.net.buzu.pplspec.api.PayloadParser;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.PplString;
 import br.net.buzu.pplspec.model.StaticMetadata;
+import com.google.gson.Gson;
+
+import static br.net.buzu.pplspec.model.PplStringKt.pplStringOf;
 
 public class Poc {
 
@@ -25,7 +25,7 @@ public class Poc {
 			true);
     static final String REQUEST_JSON = GSON.toJson(REQUEST);
     static final String REQUEST_PPL = BUZU.toPpl(REQUEST);
-    static final PplString PPL_STRING = PplString.of(REQUEST_PPL);
+    static final PplString PPL_STRING = pplStringOf(REQUEST_PPL);
     static final StaticMetadata STATIC_METADATA = (StaticMetadata) new BasicMetadataParser().parse(PPL_STRING);
     static final Metaclass METACLASS = new BasicMetaclassReader().read(Request.class);
     static final PayloadParser PARSER = new BasicParserFactory().create(METACLASS);

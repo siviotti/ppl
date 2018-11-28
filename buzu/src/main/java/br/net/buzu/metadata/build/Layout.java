@@ -1,28 +1,28 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.metadata.build;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Subtype;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -124,7 +124,7 @@ public class Layout {
 	// Atomic
 
 	public Layout atomic(String name) {
-		return atomic(name, Subtype.DEFAULT_SINGLE);
+		return atomic(name, Subtype.Companion.getDEFAULT_SINGLE());
 	}
 
 	public Layout atomic(String name, Subtype subtype) {
@@ -132,7 +132,7 @@ public class Layout {
 	}
 
 	public Layout atomic(String name, int size) {
-		return atomic(name, Subtype.DEFAULT_SINGLE, size);
+		return atomic(name, Subtype.Companion.getDEFAULT_SINGLE(), size);
 	}
 
 	public Layout atomic(String name, Subtype subtype, int size) {

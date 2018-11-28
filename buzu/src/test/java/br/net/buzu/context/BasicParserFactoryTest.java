@@ -1,9 +1,5 @@
 package br.net.buzu.context;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
 import br.net.buzu.metaclass.SimpleMetaclass;
 import br.net.buzu.parsing.simple.text.StringParser;
 import br.net.buzu.pplspec.api.PayloadParser;
@@ -12,6 +8,9 @@ import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.Subtype;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *

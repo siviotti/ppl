@@ -1,16 +1,15 @@
 package br.net.buzu.parsing.simple.number;
 
-import static org.junit.Assert.assertEquals;
-
-import java.math.BigDecimal;
-
-import org.junit.Test;
-
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.PplString;
 import br.net.buzu.pplspec.model.StaticMetadata;
+import org.junit.Test;
+
+import java.math.BigDecimal;
+
+import static br.net.buzu.pplspec.model.PplStringKt.pplStringOf;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Douglas Siviotti
@@ -28,7 +27,7 @@ public class NumberParserTest {
 		String text = "123.456";
 		BigDecimal number = new BigDecimal(text);
 		assertEquals(text, number.toPlainString());
-		StaticMetadata metadata = (StaticMetadata) new BasicMetadataParser().parse(PplString.of("(N6)"));
+		StaticMetadata metadata = (StaticMetadata) new BasicMetadataParser().parse(pplStringOf("(N6)"));
 		// Parse
 		BigDecimal parsedNumber = (BigDecimal) parser.asSingleObject(metadata, text, bigDecimalClass);
 		assertEquals(number, parsedNumber);
@@ -44,7 +43,7 @@ public class NumberParserTest {
 		String text = "123.456";
 		BigDecimal number = new BigDecimal(text);
 		assertEquals(text, number.toPlainString());
-		StaticMetadata metadata = (StaticMetadata) new BasicMetadataParser().parse(PplString.of("(N6,3)"));
+		StaticMetadata metadata = (StaticMetadata) new BasicMetadataParser().parse(pplStringOf("(N6,3)"));
 		// Parse
 		BigDecimal parsedNumber = (BigDecimal) parser.asSingleObject(metadata, text, bigDecimalClass);
 		assertEquals(number, parsedNumber);
@@ -56,7 +55,7 @@ public class NumberParserTest {
 		assertEquals(number, new BigDecimal(serializedText));
 		// Complete Zero
 		assertEquals("123.400", parser.asStringFromNotNull(metadata.info(), new BigDecimal("123.4")));
-		// Out of Range - ignore
+		// Out domainOf Range - ignore
 		assertEquals("1234.123", parser.asStringFromNotNull(metadata.info(), new BigDecimal("1234.123")));
 
 	}
@@ -66,7 +65,7 @@ public class NumberParserTest {
 		String text = "123.456";
 		BigDecimal number = new BigDecimal(text);
 		assertEquals(text, number.toPlainString());
-		StaticMetadata metadata = (StaticMetadata) new BasicMetadataParser().parse(PplString.of("(N6,2)")); // Truncate!
+		StaticMetadata metadata = (StaticMetadata) new BasicMetadataParser().parse(pplStringOf("(N6,2)")); // Truncate!
 		// Parse
 		BigDecimal parsedNumber = (BigDecimal) parser.asSingleObject(metadata, text, bigDecimalClass);
 		assertEquals(new BigDecimal("123.45"), parsedNumber);

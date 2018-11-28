@@ -1,14 +1,8 @@
 package br.net.buzu.pplspec.model
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotSame
-import org.junit.Assert.assertTrue
-
+import org.junit.Assert.*
 import org.junit.Ignore
 import org.junit.Test
-
-import br.net.buzu.pplspec.model.DomainItem
 
 /**
  *

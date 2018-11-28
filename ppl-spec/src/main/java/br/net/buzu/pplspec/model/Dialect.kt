@@ -1,17 +1,17 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.pplspec.model
@@ -22,17 +22,17 @@ package br.net.buzu.pplspec.model
  * @author Douglas Siviotti
  * @since 1.0
  */
-enum class Dialect private constructor(val isHumanReadable: Boolean) {
+enum class Dialect(val isHumanReadable: Boolean) {
 
     /**
-     * [Human Readable] Includes all information of Metadatas like occurs and
-     * default values. Use \n at end of each Metadata and \t for children metadatas.
+     * [Human Readable] Includes all information domainOf Metadatas like occurs and
+     * default values. Use \n at end domainOf each Metadata and \t for children metadatas.
      */
     VERBOSE(true),
 
     /**
      * [Human Readable] Hides some redundant informations like #0-1 Occurs. Uses
-     * spaces for separate tha atributes, add '\n' at end of each Metadata and '\t'
+     * spaces for separate tha atributes, add '\n' at end domainOf each Metadata and '\t'
      * for children metadatas.
      */
     NATURAL(true),
@@ -45,12 +45,12 @@ enum class Dialect private constructor(val isHumanReadable: Boolean) {
 
     /**
      * [Machine Readable] Hides all redundant informations and uses links to reuse
-     * Metadata information (No lost of information).
+     * Metadata information (No lost domainOf information).
      */
     COMPACT(false),
 
     /**
-     * [Machine Readable] Maximun compactation and some lost of information like
+     * [Machine Readable] Maximun compactation and some lost domainOf information like
      * attribute names
      */
     STRUCTURAL(false);

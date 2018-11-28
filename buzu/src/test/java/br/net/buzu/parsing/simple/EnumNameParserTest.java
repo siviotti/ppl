@@ -1,16 +1,12 @@
 package br.net.buzu.parsing.simple;
 
-import static org.junit.Assert.*;
-
+import br.net.buzu.Buzu;
+import br.net.buzu.sample.enums.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.net.buzu.Buzu;
-import br.net.buzu.sample.enums.Animal;
-import br.net.buzu.sample.enums.Card;
-import br.net.buzu.sample.enums.Gender;
-import br.net.buzu.sample.enums.Species;
-import br.net.buzu.sample.enums.Suit;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit Test for EnumNameParser.

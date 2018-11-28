@@ -1,24 +1,20 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu;
-
-import java.lang.annotation.Annotation;
-import java.util.HashSet;
-import java.util.Set;
 
 import br.net.buzu.context.ContextBuilder;
 import br.net.buzu.metaclass.AnnotationSkipStrategy;
@@ -34,6 +30,10 @@ import br.net.buzu.pplspec.api.SkipStrategy;
 import br.net.buzu.pplspec.context.PplContext;
 import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Dialect;
+
+import java.lang.annotation.Annotation;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Builder to specific PplMapper (Buzu).
@@ -57,9 +57,9 @@ public class BuzuBuilder {
 	private boolean serializaNulls;
 
 	/**
-	 * Build and returns a instance of <code>Buzu</code>.
+	 * Build and returns a instance domainOf <code>Buzu</code>.
 	 * 
-	 * @return The instance of <code>Buzu</code> created based on internal
+	 * @return The instance domainOf <code>Buzu</code> created based on internal
 	 *         objects.
 	 */
 	public Buzu build() {
@@ -88,7 +88,7 @@ public class BuzuBuilder {
 			metadataLoader = new BasicMetadataLoader(context);
 		}
 		if (dialect == null) {
-			dialect = Dialect.DEFAULT;
+			dialect = Buzu.DEFAULT_DIALECT;
 		}
 		return new Buzu(context, metadataParser, metaclassReader, metadataLoader, dialect, serializaNulls);
 	}

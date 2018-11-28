@@ -1,15 +1,12 @@
 package br.net.buzu.parsing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import br.net.buzu.metaclass.BasicMetaclassReader;
+import br.net.buzu.pplspec.model.Metaclass;
+import org.junit.Test;
 
 import java.util.List;
 
-import org.junit.Test;
-
-import br.net.buzu.metaclass.BasicMetaclassReader;
-import br.net.buzu.pplspec.model.Metaclass;
+import static org.junit.Assert.*;
 
 /**
  * Unit test for Metaclass

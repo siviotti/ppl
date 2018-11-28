@@ -42,7 +42,7 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return "" + number + " of " + suit;
+		return "" + number + " domainOf " + suit;
 	}
 
 	public Suit getSuit() {

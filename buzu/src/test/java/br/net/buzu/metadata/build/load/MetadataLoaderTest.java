@@ -1,17 +1,5 @@
 package br.net.buzu.metadata.build.load;
 
-import static org.junit.Assert.assertEquals;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import br.net.buzu.conserpro.Empresa;
 import br.net.buzu.conserpro.NaturezaJuridica;
 import br.net.buzu.conserpro.Socio;
@@ -22,6 +10,13 @@ import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.Subtype;
 import br.net.buzu.sample.pojo.Person;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.math.BigDecimal;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class MetadataLoaderTest {
 	

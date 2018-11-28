@@ -1,10 +1,9 @@
 package br.net.buzu.context;
 
-import static org.junit.Assert.assertEquals;
-
+import br.net.buzu.pplspec.lang.Syntax;
 import org.junit.Test;
 
-import br.net.buzu.pplspec.lang.Syntax;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Douglas Siviotti

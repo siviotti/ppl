@@ -1,14 +1,8 @@
 package br.net.buzu.pplspec.lang
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
-
-import java.text.ParseException
-
-import org.junit.Before
+import org.junit.Assert.*
 import org.junit.Test
+import java.text.ParseException
 
 /**
  *
@@ -17,13 +11,7 @@ import org.junit.Test
  */
 class SyntaxTest {
 
-    private var syntax: Syntax? = null
-
-    @Before
-    fun before() {
-        syntax = Syntax()
-    }
-
+    private val syntax= Syntax()
 
     @Test
     fun testIgnoreChar() {
@@ -228,15 +216,15 @@ class SyntaxTest {
 
     @Test
     fun testLastNumberIndex() {
-        assertEquals(10, syntax!!.lastNumberIndex("NAME:STR20", 8, Token.DECIMAL_SEP).toLong())
-        assertEquals(13, syntax!!.lastNumberIndex("NAME:STR20,02", 8, Token.DECIMAL_SEP).toLong())
-        assertEquals(13, syntax!!.lastNumberIndex("NAME:STR20,02*", 8, Token.DECIMAL_SEP).toLong())
-        assertEquals(12, syntax!!.lastNumberIndex("NAME:STR20,2,3", 8, Token.DECIMAL_SEP).toLong())
-        assertEquals(4, syntax!!.lastNumberIndex("#1-5", 1, Token.OCCURS_RANGE).toLong())
-        assertEquals(14, syntax!!.lastNumberIndex("name:STR20#1-5", 11, Token.OCCURS_RANGE).toLong())
-        assertEquals(14, syntax!!.lastNumberIndex("name:STR20#1-5xpto", 11, Token.OCCURS_RANGE).toLong())
-        assertEquals(14, syntax!!.lastNumberIndex("name:STR20#1-5-2", 11, Token.OCCURS_RANGE).toLong())
-        assertEquals(15, syntax!!.lastNumberIndex("name:STR20#1-55", 11, Token.OCCURS_RANGE).toLong())
+        assertEquals(10, syntax!!.lastNumberIndex("NAME:STR20", 8, DECIMAL_SEP).toLong())
+        assertEquals(13, syntax!!.lastNumberIndex("NAME:STR20,02", 8, DECIMAL_SEP).toLong())
+        assertEquals(13, syntax!!.lastNumberIndex("NAME:STR20,02*", 8, DECIMAL_SEP).toLong())
+        assertEquals(12, syntax!!.lastNumberIndex("NAME:STR20,2,3", 8, DECIMAL_SEP).toLong())
+        assertEquals(4, syntax!!.lastNumberIndex("#1-5", 1, OCCURS_RANGE).toLong())
+        assertEquals(14, syntax!!.lastNumberIndex("name:STR20#1-5", 11, OCCURS_RANGE).toLong())
+        assertEquals(14, syntax!!.lastNumberIndex("name:STR20#1-5xpto", 11, OCCURS_RANGE).toLong())
+        assertEquals(14, syntax!!.lastNumberIndex("name:STR20#1-5-2", 11, OCCURS_RANGE).toLong())
+        assertEquals(15, syntax!!.lastNumberIndex("name:STR20#1-55", 11, OCCURS_RANGE).toLong())
 
     }
 

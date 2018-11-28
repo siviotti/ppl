@@ -1,7 +1,7 @@
 package br.net.buzu.pplspec.model;
 
+import static br.net.buzu.pplspec.model.DomainKt.domainOf;
 import static org.junit.Assert.assertEquals;
-
 /**
  * MetaInfo Unit Test.
  *
@@ -29,7 +29,7 @@ public class MetaInfoTest {
 	}
 
 	public static Domain domain(String... items) {
-		return Domain.of(items);
+		return domainOf(items);
 	}
 
 }

@@ -1,15 +1,10 @@
 package br.net.buzu.pplspec.model
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-
-import org.junit.Test
-
 import br.net.buzu.pplspec.exception.PplParseException
 import br.net.buzu.pplspec.lang.Syntax
-import br.net.buzu.pplspec.model.PplString
+import org.junit.Assert.*
 import org.junit.Ignore
+import org.junit.Test
 
 /**
  * PplString unit test

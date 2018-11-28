@@ -1,19 +1,20 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
+@file:JvmName("Syntax")
 package br.net.buzu.pplspec.lang
 
 import java.io.Serializable
@@ -26,20 +27,19 @@ import java.util.regex.Pattern
  * @author Douglas Siviotti
  * @since 1.0
  *
- * @see Token
- */
-class Syntax : Serializable {
+  */
+open class Syntax : Serializable {
 
     // **************************************************
     // Metadata
     // **************************************************
 
     /**
-     * Indicates if the char 'c' is ignored as part of Metadata.
+     * Indicates if the char 'c' is ignored as part domainOf Metadata.
      *
      * @param c
      * the Character to check.
-     * @return `true` if the Character 'c' is ignored as part of a
+     * @return `true` if the Character 'c' is ignored as part domainOf a
      * Metadata, `false` otherwise.
      */
     fun isIgnored(c: Char): Boolean {
@@ -54,7 +54,7 @@ class Syntax : Serializable {
      * @return `true` if the name is valid, `false` otherwise.
      */
     fun isValidMetaName(name: String?): Boolean {
-        if (name == null || name.length < 1) {
+        if (name == null || name.isEmpty()) {
             return false
         }
         if (name.length > NAME_MAX_SIZE) {
@@ -72,11 +72,11 @@ class Syntax : Serializable {
     }
 
     /**
-     * Indicates if the char 'c' can be the first char of a Metadata name.
+     * Indicates if the char 'c' can be the first char domainOf a Metadata name.
      *
      * @param c
      * the Character to check.
-     * @return `true` if the Character c can be the first char of a
+     * @return `true` if the Character c can be the first char domainOf a
      * Metadata. name, `false` otherwise.
      */
     fun isValidFirstCharMetaName(c: Char): Boolean {
@@ -84,11 +84,11 @@ class Syntax : Serializable {
     }
 
     /**
-     * Indicates if the char 'c' can be part of a Metadata name.
+     * Indicates if the char 'c' can be part domainOf a Metadata name.
      *
      * @param c
      * the Character to check.
-     * @return `true` if the Character c can be part of a Metadata. name,
+     * @return `true` if the Character c can be part domainOf a Metadata. name,
      * `false` otherwise.
      */
     fun isValidCharMetaName(c: Char): Boolean {
@@ -105,9 +105,9 @@ class Syntax : Serializable {
      * @return The String PPL on format "(METADATA)PAYLOAD".
      */
     fun asPplString(metadata: String, payload: String): String {
-        return if (metadata[0] == Token.SUB_OPEN && metadata[metadata.length - 1] == Token.SUB_CLOSE) {
+        return if (metadata[0] == SUB_OPEN && metadata[metadata.length - 1] == SUB_CLOSE) {
             metadata + payload
-        } else Token.SUB_OPEN + metadata + Token.SUB_CLOSE + payload
+        } else SUB_OPEN + metadata + SUB_CLOSE + payload
     }
 
     /**
@@ -120,10 +120,10 @@ class Syntax : Serializable {
      */
     @Throws(ParseException::class)
     fun extractMetadata(text: String): String {
-        if (text[0] != Token.SUB_OPEN) {
-            throw ParseException("PPL String must start with '" + Token.SUB_OPEN + "'.", 0)
+        if (text[0] != SUB_OPEN) {
+            throw ParseException("PPL String must start with '$SUB_OPEN'.", 0)
         }
-        val endIndex = blockEndIndex(text, 0, Token.SUB_OPEN, Token.SUB_CLOSE)
+        val endIndex = blockEndIndex(text, 0, SUB_OPEN, SUB_CLOSE)
         return text.substring(0, endIndex + 1)
     }
 
@@ -144,7 +144,7 @@ class Syntax : Serializable {
         var c: Char
         for (i in beginIndex until text.length) {
             c = text[i]
-            if (c >= '0' && c <= '9') { // 0-9
+            if (c in '0'..'9') { // 0-9
                 endIndex++
             } else if (c == separator && !separatorFound) {
                 endIndex++
@@ -198,7 +198,7 @@ class Syntax : Serializable {
     // **************************************************
 
     fun isStringDelimiter(c: Char): Boolean {
-        return c == Token.PLIC || c == Token.QUOTE
+        return c == PLIC || c == QUOTE
     }
 
     fun isString(text: String?): Boolean {
@@ -240,78 +240,76 @@ class Syntax : Serializable {
 
         private const val serialVersionUID = 1L
 
-        val INSTANCE = Syntax()
-
         // **************************************************
         // Constants
         // **************************************************
 
         const val EMPTY = ""
-        val ENTER = '\n'
-        val TAB = '\t'
-        val SPACE = ' '
+        const val ENTER = '\n'
+        const val TAB = '\t'
+        const val SPACE = ' '
         /** Prefix used when the Metadata has no name.  */
-        val NO_NAME_START = "__"
-        val UNBOUNDED = 0
+        const val NO_NAME_START = "__"
+        const val UNBOUNDED = 0
 
         // **************************************************
         // Defaults
         // **************************************************
 
-        val DEFAULT_TYPE = Token.TYPE_STRING
-        val DEFAULT_SIZE = 0
-        val DEFAULT_MIN_OCCURS = 0
-        val DEFAULT_MAX_OCCURS = 1
-        val DEFAULT_OCCURS = ("" + Token.OCCURS_BEGIN + Syntax.DEFAULT_MIN_OCCURS + Token.OCCURS_RANGE
+        const val DEFAULT_TYPE = TYPE_STRING
+        const val DEFAULT_SIZE = 0
+        const val DEFAULT_MIN_OCCURS = 0
+        const val DEFAULT_MAX_OCCURS = 1
+        val DEFAULT_OCCURS = ("" + OCCURS_BEGIN + Syntax.DEFAULT_MIN_OCCURS + OCCURS_RANGE
                 + Syntax.DEFAULT_MAX_OCCURS)
-        val SINGLE_OCCURS = 1
-        val SINGLE_REQUIRED_OCCURS_VALUE = "" + SINGLE_OCCURS + Token.OCCURS_RANGE + SINGLE_OCCURS
-        val SINGLE_REQUIRED_OCCURS = Token.OCCURS_BEGIN + SINGLE_REQUIRED_OCCURS_VALUE
+        const val SINGLE_OCCURS = 1
+        val SINGLE_REQUIRED_OCCURS_VALUE = "" + SINGLE_OCCURS + OCCURS_RANGE + SINGLE_OCCURS
+        val SINGLE_REQUIRED_OCCURS = OCCURS_BEGIN + SINGLE_REQUIRED_OCCURS_VALUE
 
         // **************************************************
         // Regex
         // **************************************************
 
-        val PPL_SPEC = "(METADATA)PAYLOAD"
-        val META = "[NAME]:[TYPE(SUB)][SIZE|{FORMAT}]#[OCCURS][EXTENSION]"
+        const val PPL_SPEC = "(METADATA)PAYLOAD"
+        const val META = "[NAME]:[TYPE(SUB)][SIZE|{FORMAT}]#[OCCURS][EXTENSION]"
 
-        val NAME_REGEX = "[a-zA-Z_][a-zA-Z0-9-_]{0,49}:"
-        val NAME_PATTERN = Pattern.compile(NAME_REGEX)
-        val NAME_MAX_SIZE = 50
+        const val NAME_REGEX = "[a-zA-Z_][a-zA-Z0-9-_]{0,49}:"
+        val NAME_PATTERN: Pattern = Pattern.compile(NAME_REGEX)
+        const val NAME_MAX_SIZE = 50
 
-        val TYPE_REGEX = "[a-zA-Z]{1,50}(\\(.*\\))?"
-        val TYPE_PATTERN = Pattern.compile(TYPE_REGEX)
+        const val TYPE_REGEX = "[a-zA-Z]{1,50}(\\(.*\\))?"
+        val TYPE_PATTERN: Pattern = Pattern.compile(TYPE_REGEX)
 
-        val SIZE_REGEX = "[0-9]{1,9}(,[0-9]{1,9})?"
-        val SIZE_PATTERN = Pattern.compile(SIZE_REGEX)
+        const val SIZE_REGEX = "[0-9]{1,9}(,[0-9]{1,9})?"
+        val SIZE_PATTERN: Pattern = Pattern.compile(SIZE_REGEX)
 
-        val OCCURS_REGEX = "[0-9]{1,9}(-[0-9]{1,9})?"
-        val OCCURS_PATTERN = Pattern.compile(OCCURS_REGEX)
+        const val OCCURS_REGEX = "[0-9]{1,9}(-[0-9]{1,9})?"
+        val OCCURS_PATTERN: Pattern = Pattern.compile(OCCURS_REGEX)
 
         val META_REGEX = ("(" + NAME_REGEX + ")?(" + TYPE_REGEX + ")?((" + SIZE_REGEX + ")" + ")?("
                 + OCCURS_REGEX + ")?.*;")
-        val META_PATTERN = Pattern.compile(META_REGEX)
+        val META_PATTERN: Pattern = Pattern.compile(META_REGEX)
 
         // **************************************************
         // Var
         // **************************************************
 
         /** Define the PPL encoding  */
-        val VAR_ENCODING = "encoding"
+        const val VAR_ENCODING = "encoding"
         /** Define the PPL version  */
-        val VAR_VERSION = "version"
-        /** Define the expirition time of a Metadata  */
-        val VAR_EXPIRES = "expires"
+        const val VAR_VERSION = "version"
+        /** Define the expirition time domainOf a Metadata  */
+        const val VAR_EXPIRES = "expires"
         /** Define the root name  */
-        val VAR_ROOT = "root"
+        const val VAR_ROOT = "root"
 
         // **************************************************
         // Util
         // **************************************************
 
-        val UNTERMINATED_STRING = "Unterminated String. Close delimiter not found:"
-        val BLOCK_ERROR = "Block Error:"
-        val BLOCK_ERROR_INVALID_OPEN_CHAR = "Block Error: Invalid openChar '"
+        const val UNTERMINATED_STRING = "Unterminated String. Close delimiter not found:"
+        const val BLOCK_ERROR = "Block Error:"
+        const val BLOCK_ERROR_INVALID_OPEN_CHAR = "Block Error: Invalid openChar '"
     }
 
 }

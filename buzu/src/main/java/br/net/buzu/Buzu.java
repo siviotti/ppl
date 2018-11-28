@@ -1,46 +1,37 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu;
+
+import br.net.buzu.context.BasicContext;
+import br.net.buzu.metaclass.BasicMetaclassReader;
+import br.net.buzu.metadata.build.load.BasicMetadataLoader;
+import br.net.buzu.metadata.build.parse.BasicMetadataParser;
+import br.net.buzu.pplspec.api.*;
+import br.net.buzu.pplspec.context.PplContext;
+import br.net.buzu.pplspec.exception.PplParseException;
+import br.net.buzu.pplspec.model.*;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import br.net.buzu.context.BasicContext;
-import br.net.buzu.metaclass.BasicMetaclassReader;
-import br.net.buzu.metadata.build.load.BasicMetadataLoader;
-import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.pplspec.api.MetaclassReader;
-import br.net.buzu.pplspec.api.MetadataCoder;
-import br.net.buzu.pplspec.api.MetadataLoader;
-import br.net.buzu.pplspec.api.MetadataParser;
-import br.net.buzu.pplspec.api.PayloadParser;
-import br.net.buzu.pplspec.api.PplMapper;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.exception.PplParseException;
-import br.net.buzu.pplspec.model.Dialect;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.PplString;
-import br.net.buzu.pplspec.model.StaticMetadata;
-
 /**
- * Buzu Façade class. Basic implementation of <code>PplMapper</code>.
+ * Buzu Façade class. Basic implementation domainOf <code>PplMapper</code>.
  * 
  * @author Douglas Siviotti
  * @since 1.0
@@ -50,6 +41,8 @@ import br.net.buzu.pplspec.model.StaticMetadata;
 public class Buzu implements PplMapper {
 
 	static final String PARSE_REQUIRES_STATIC_METADATA = "The 'parse' operation (fromPPL) requires a StaticMetadata";
+	static final Dialect DEFAULT_DIALECT = Dialect.Companion.getDEFAULT();
+
 	private final PplContext context;
 	private final MetadataParser parser;
 	private final MetadataLoader loader;
@@ -73,7 +66,7 @@ public class Buzu implements PplMapper {
 	 */
 	public Buzu(PplContext context) {
 		this(context, new BasicMetadataParser(context), new BasicMetaclassReader(context),
-				new BasicMetadataLoader(context), Dialect.DEFAULT, false);
+				new BasicMetadataLoader(context), DEFAULT_DIALECT, false);
 	}
 
 	/**
@@ -96,7 +89,7 @@ public class Buzu implements PplMapper {
 		this.reader = metaclassReader == null ? new BasicMetaclassReader(context) : metaclassReader;
 		this.loader = metadataLoader == null ? new BasicMetadataLoader(context) : metadataLoader;
 		this.serializeNulls = serializeNulls;
-		this.dialect = dialect != null ? dialect : Dialect.DEFAULT;
+		this.dialect = dialect != null ? dialect : DEFAULT_DIALECT;
 		this.coder = context.coderManager().get(this.dialect);
 	}
 
@@ -171,7 +164,7 @@ public class Buzu implements PplMapper {
 
 	public String toPplFromCollection(Collection<?> source) {
 		if (source.isEmpty()) {
-			return PplString.EMPTY.getMetadata();
+			return PplString.Companion.getEMPTY().getMetadata();
 		}
 		return toPpl(source, readMetaclass(source.getClass(), source.iterator().next().getClass()));
 	}

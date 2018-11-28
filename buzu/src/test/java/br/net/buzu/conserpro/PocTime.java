@@ -1,25 +1,20 @@
 package br.net.buzu.conserpro;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import com.google.gson.Gson;
-import com.thoughtworks.xstream.XStream;
-
 import br.net.buzu.Buzu;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import br.net.buzu.parsing.Text;
+import static br.net.buzu.lib.TextKt.*;
 import br.net.buzu.pplspec.api.PayloadParser;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.PplString;
 import br.net.buzu.pplspec.model.StaticMetadata;
 import br.net.buzu.sample.pojo.Person;
+import com.google.gson.Gson;
+import com.thoughtworks.xstream.XStream;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  *
@@ -145,7 +140,7 @@ public class PocTime {
 	}
 
 	static void dump(String format, String text, int size) {
-		System.out.println(format + "[" + Text.leftFit("" + text.length(), 8, '0') + "]" + ((size == 1) ? text : ""));
+		System.out.println(format + "[" + leftFit("" + text.length(), 8, '0') + "]" + ((size == 1) ? text : ""));
 	}
 
 	public static XStream getXStream() {

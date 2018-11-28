@@ -1,11 +1,11 @@
 package br.net.buzu.metaclass;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.sample.order.Order;
+import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Douglas Siviotti

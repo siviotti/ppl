@@ -1,29 +1,20 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.metaclass;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
 
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.pplspec.annotation.PplMetadata;
@@ -34,15 +25,21 @@ import br.net.buzu.pplspec.api.SkipStrategy;
 import br.net.buzu.pplspec.context.PplContext;
 import br.net.buzu.pplspec.exception.PplException;
 import br.net.buzu.pplspec.lang.Syntax;
-import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.Subtype;
 import br.net.buzu.util.Reflect;
+import br.net.buzu.util.StaticBehave;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.*;
+
+import static br.net.buzu.pplspec.model.KindKt.getKing;
 
 /**
- * Basic implementation of <code>MetaclassReader</code>.
+ * Basic implementation domainOf <code>MetaclassReader</code>.
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -112,20 +109,18 @@ public class BasicMetaclassReader implements MetaclassReader {
 		List<Metaclass> children = complex ? createChildren(parentId, elementType) : null;
 
 		if (complex) {
-			return Metadata.isStatic(children)
-
-					? new ComplexStaticMetaclass(field, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
+			return StaticBehave.isStaticChidren(children)
+					? new ComplexStaticMetaclass(field, fieldType, elementType, getKing (multiple, complex), metaInfo,
 							parserType, children)
 
-					: new ComplexMetaclass(field, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
+					: new ComplexMetaclass(field, fieldType, elementType, getKing (multiple, complex), metaInfo,
 							parserType, children);
 		} else {
 			return metaInfo.isStatic()
-
-					? new SimpleStaticMetaclass(field, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
+					? new SimpleStaticMetaclass(field, fieldType, elementType, getKing (multiple, complex), metaInfo,
 							parserType)
 
-					: new SimpleMetaclass(field, fieldType, elementType, Kind.get(multiple, complex), metaInfo,
+					: new SimpleMetaclass(field, fieldType, elementType, getKing (multiple, complex), metaInfo,
 							parserType);
 		}
 	}

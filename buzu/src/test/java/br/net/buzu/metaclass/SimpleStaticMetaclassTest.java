@@ -1,15 +1,14 @@
 package br.net.buzu.metaclass;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Subtype;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
- * Unit Test of SimpleStaticMetadata
+ * Unit Test domainOf SimpleStaticMetadata
  * 
  * @author Dougla Siviotti
  *

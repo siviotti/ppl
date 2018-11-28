@@ -1,14 +1,13 @@
 package br.net.buzu.util;
 
-import static org.junit.Assert.assertTrue;
+import br.net.buzu.pplspec.exception.PplException;
+import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.junit.Test;
-
-import br.net.buzu.pplspec.exception.PplException;
+import static org.junit.Assert.assertTrue;
 
 public class PplReader {
 

@@ -1,11 +1,11 @@
 package br.net.buzu.sample.ppl;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
 import br.net.buzu.pplspec.annotation.PplMetadata;
 import br.net.buzu.pplspec.annotation.PplUse;
 import br.net.buzu.pplspec.model.Subtype;
+
+import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Plain annotation sample.

@@ -1,25 +1,20 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.metadata.build;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.BasicMetaclassReader;
@@ -34,6 +29,11 @@ import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.PplString;
 import br.net.buzu.pplspec.model.StaticMetadata;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Metadata Builder. Builds a Metadata from an Object source.
@@ -119,7 +119,7 @@ public class MetadataBuilder {
 		if (source instanceof Collection<?>) {
 			Collection<?> collection = (Collection<?>) source;
 			if (collection.isEmpty()) {
-				return buildFromPpl(PplString.EMPTY);
+				return buildFromPpl(PplString.Companion.getEMPTY());
 			}
 			return loader.load(source, reader.read(source.getClass(), collection.iterator().next().getClass()));
 		}

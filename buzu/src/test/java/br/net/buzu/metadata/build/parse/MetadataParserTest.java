@@ -1,28 +1,25 @@
 package br.net.buzu.metadata.build.parse;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.metadata.ComplexStaticMetadada;
 import br.net.buzu.metadata.code.ShortMetadataCoder;
 import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.PplString;
 import br.net.buzu.pplspec.model.StaticMetadata;
 import br.net.buzu.pplspec.model.Subtype;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static br.net.buzu.pplspec.model.DomainKt.domainOf;
+import static br.net.buzu.pplspec.model.PplStringKt.pplStringOf;
+import static org.junit.Assert.*;
 
 /**
- * Unit Test of MetadataParser
+ * Unit Test domainOf MetadataParser
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -70,7 +67,7 @@ public class MetadataParserTest {
 	@Test
 	public void testParse() {
 		BasicMetadataParser metaParser = new BasicMetadataParser();
-		Metadata metadata = metaParser.parse(PplString.of("(name:S20#0-1)"));
+		Metadata metadata = metaParser.parse(pplStringOf("(name:S20#0-1)"));
 		assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1);
 
 	}
@@ -106,14 +103,14 @@ public class MetadataParserTest {
 		BasicMetadataParser parser = new BasicMetadataParser();
 		Metadata metadata = parser.parse("", EXT, 0);
 		assertMetadata(metadata, "color", Subtype.STRING, 10, 0, 1);
-		Domain domain = Domain.of("black", "white", "red");
+		Domain domain = domainOf("black", "white", "red");
 		assertEquals(domain.items(), metadata.info().getDomain().items());
 	}
 
 	@Test
 	public void testEmptyMetadata() {
 		BasicMetadataParser parser = new BasicMetadataParser();
-		StaticMetadata metadada = (StaticMetadata) parser.parse(PplString.of("()"));
+		StaticMetadata metadada = (StaticMetadata) parser.parse(pplStringOf("()"));
 		assertEquals(Syntax.NO_NAME_START + "0", metadada.name());
 		assertEquals(Subtype.STRING, metadada.info().getSubtype());
 		assertEquals(Subtype.CHAR.fixedSize(), metadada.info().getSize());
@@ -127,7 +124,7 @@ public class MetadataParserTest {
 	@Test
 	public void testEmptyLayout() {
 		BasicMetadataParser parser = new BasicMetadataParser();
-		StaticMetadata metadada = (StaticMetadata) parser.parse(PplString.of("(X:(;;))"));
+		StaticMetadata metadada = (StaticMetadata) parser.parse(pplStringOf("(X:(;;))"));
 		assertEquals(ComplexStaticMetadada.class, metadada.getClass());
 		assertEquals("X", metadada.name());
 		assertEquals(Subtype.OBJ, metadada.info().getSubtype());
@@ -159,10 +156,10 @@ public class MetadataParserTest {
 		assertEquals(Subtype.INTEGER, parser.parseSubtype(AGE));
 	}
 
-	@Test(expected = MetadataParseException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testParseSubtypeError() {
 		BasicMetadataParser parser = new BasicMetadataParser();
-		Metadata metadata = parser.parse(PplString.of("(name:z20#0-1)"));
+		Metadata metadata = parser.parse(pplStringOf("(name:z20#0-1)"));
 		assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1);
 	}
 

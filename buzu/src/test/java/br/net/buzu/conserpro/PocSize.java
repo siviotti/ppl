@@ -1,5 +1,11 @@
 package br.net.buzu.conserpro;
 
+import br.net.buzu.Buzu;
+import static br.net.buzu.lib.TextKt.*;
+import br.net.buzu.pplspec.model.PplString;
+import com.google.gson.Gson;
+import com.thoughtworks.xstream.XStream;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -7,13 +13,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.Gson;
-import com.thoughtworks.xstream.XStream;
-
-import br.net.buzu.Buzu;
-import br.net.buzu.parsing.Text;
-import br.net.buzu.pplspec.model.PplString;
 
 /**
  *
@@ -95,9 +94,9 @@ public class PocSize {
 	}
 
 	private static String dump(String format, String text, int size) {
-		String sizeStr = Text.leftFit("" + size, 4, '0');
+		String sizeStr = leftFit("" + size, 4, '0');
 		save(text, "-" + sizeStr + "-"+ "-" + format.trim());
-		return format + "[" + Text.leftFit("" + text.length(), 8, '0') + "]";
+		return format + "[" + leftFit("" + text.length(), 8, '0') + "]";
 	}
 
 	private static void save(String text, String format) {

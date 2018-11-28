@@ -1,13 +1,12 @@
 package br.net.buzu.metadata.build.parse;
 
-import static org.junit.Assert.*;
+import br.net.buzu.pplspec.lang.Syntax;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-
-import br.net.buzu.pplspec.lang.Syntax;
+import static org.junit.Assert.*;
 
 /**
  *

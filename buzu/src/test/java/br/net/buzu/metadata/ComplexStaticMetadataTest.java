@@ -1,19 +1,14 @@
 package br.net.buzu.metadata;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import br.net.buzu.pplspec.model.MetaInfo;
+import br.net.buzu.pplspec.model.Metadata;
+import br.net.buzu.pplspec.model.Subtype;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-
-import br.net.buzu.metadata.ComplexStaticMetadada;
-import br.net.buzu.metadata.SimpleStaticMetadata;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.Subtype;
+import static org.junit.Assert.*;
 
 /**
  * @author Douglas siviotti

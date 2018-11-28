@@ -1,17 +1,13 @@
 package br.net.buzu.metadata.build.parse;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import br.net.buzu.pplspec.exception.PplParseException;
+import br.net.buzu.pplspec.lang.Syntax;
+import org.junit.Test;
 
 import java.text.ParseException;
 import java.util.List;
 
-import org.junit.Test;
-
-import br.net.buzu.pplspec.exception.PplParseException;
-import br.net.buzu.pplspec.lang.Syntax;
+import static org.junit.Assert.*;
 
 /**
  * 

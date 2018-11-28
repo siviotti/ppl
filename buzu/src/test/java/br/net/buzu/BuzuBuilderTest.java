@@ -1,10 +1,5 @@
 package br.net.buzu;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.AnnotationSkipStrategy;
 import br.net.buzu.metaclass.BasicMetaclassReader;
@@ -16,6 +11,10 @@ import br.net.buzu.pplspec.api.PplMapper;
 import br.net.buzu.pplspec.context.PplContext;
 import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Dialect;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * BuzuBuilder Unit Test.

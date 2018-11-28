@@ -1,13 +1,12 @@
 package br.net.buzu.metadata;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.PplString;
+import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Douglas Siviotti

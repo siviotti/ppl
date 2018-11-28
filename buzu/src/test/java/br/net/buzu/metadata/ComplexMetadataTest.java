@@ -1,18 +1,16 @@
 package br.net.buzu.metadata;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.Subtype;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static br.net.buzu.pplspec.model.DomainKt.domainOf;
+import static org.junit.Assert.*;
 
 /**
  * @author Douglas Siviotti
@@ -28,7 +26,7 @@ public class ComplexMetadataTest {
 	}
 
 	static ComplexMetadata createSample(String name, Subtype subtype, int size, int minOccurs, int maxOccurs) {
-		Domain domain = Domain.of("white", "black", "red");
+		Domain domain = domainOf("white", "black", "red");
 		return createSample(name, subtype, size, 0, minOccurs, maxOccurs, domain, "red", "XYZ", null);
 
 	}

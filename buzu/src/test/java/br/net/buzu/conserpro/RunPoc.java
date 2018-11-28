@@ -1,20 +1,20 @@
 package br.net.buzu.conserpro;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import com.google.gson.Gson;
-import com.thoughtworks.xstream.XStream;
+import static br.net.buzu.lib.TextKt.*;
 
 import br.net.buzu.Buzu;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import br.net.buzu.parsing.Text;
 import br.net.buzu.pplspec.api.PayloadParser;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.StaticMetadata;
+import com.google.gson.Gson;
+import com.thoughtworks.xstream.XStream;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class RunPoc {
 
@@ -101,7 +101,7 @@ public class RunPoc {
 	}
 
 	private static String dif(long t1, long t0) {
-		return Text.leftFill("" + (t1 - t0), 6, '0');
+		return leftFill("" + (t1 - t0), 6, '0');
 	}
 
 	// ********** serialize **********

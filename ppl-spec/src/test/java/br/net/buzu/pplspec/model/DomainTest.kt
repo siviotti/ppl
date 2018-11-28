@@ -1,10 +1,8 @@
 package br.net.buzu.pplspec.model
 
-import org.junit.Assert.*
-
-import org.junit.Test
-
 import br.net.buzu.pplspec.lang.Syntax
+import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * @author Douglas Siviotti
@@ -14,7 +12,7 @@ class DomainTest {
 
     @Test
     fun testAnonymousSimple() {
-        val domain = Domain.of(WHITE, BLACK, RED)
+        val domain = domainOf(WHITE, BLACK, RED)
         assertEquals(3, domain.items().size.toLong())
         assertEquals(Syntax.EMPTY, domain.name())
         assertEquals(WHITE, domain.items()[0].value())
@@ -29,7 +27,7 @@ class DomainTest {
 
     @Test
     fun testAnonymousLabel() {
-        val domain = Domain.of(_01_WHITE, _02_BLACK, _03_RED)
+        val domain = domainOf(_01_WHITE, _02_BLACK, _03_RED)
         assertEquals(3, domain.items().size.toLong())
         assertEquals(Syntax.EMPTY, domain.name())
         assertEquals(_01_WHITE, domain.items()[0].asSerial())
@@ -54,7 +52,7 @@ class DomainTest {
 
     @Test
     fun testEmptyOf() {
-        val domain = Domain.of()
+        val domain = domainOf()
         assertEquals(0, domain.items().size.toLong())
         assertEquals(Syntax.EMPTY, domain.name())
         assertEquals(Syntax.EMPTY, domain.asSerial())

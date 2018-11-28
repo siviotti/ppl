@@ -1,32 +1,28 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.context;
 
-import java.util.Objects;
-
-import br.net.buzu.pplspec.context.CoderManager;
-import br.net.buzu.pplspec.context.MetadataFactory;
-import br.net.buzu.pplspec.context.ParserFactory;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.context.SubtypeManager;
+import br.net.buzu.pplspec.context.*;
 import br.net.buzu.pplspec.lang.Syntax;
 
+import java.util.Objects;
+
 /**
- * Context of parsing/serialization with Factories used to create objects and
+ * Context domainOf parsing/serialization with Factories used to create objects and
  * others extension points.
  * 
  *
@@ -43,7 +39,7 @@ public class BasicContext implements PplContext {
 	private final ParserFactory parserFactory;
 
 	public BasicContext() {
-		this(Syntax.INSTANCE, BasicSubtypeManager.INSTANCE, BasicMetadataFactory.INSTANCE, BasicCoderManager.INSTANCE,
+		this(new Syntax(), BasicSubtypeManager.INSTANCE, BasicMetadataFactory.INSTANCE, BasicCoderManager.INSTANCE,
 				BasicParserFactory.INSTANCE);
 	}
 

@@ -1,29 +1,30 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.parsing.simple;
 
+import static br.net.buzu.lib.TextKt.*;
+
 import br.net.buzu.parsing.AbstractPositionalParser;
-import br.net.buzu.parsing.Text;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.StaticMetadata;
 
 /**
- * Superclass of simple parsers (String, Integer Boolean etc).
+ * Superclass domainOf simple parsers (String, Integer Boolean etc).
  *
  *
  * @author Douglas Siviotti
@@ -84,11 +85,11 @@ public abstract class AbstractSimpleParser extends AbstractPositionalParser {
 	 * @see MetaInfo#getDefaultValue()
 	 */
 	protected String serializeNullElement(MetaInfo meta) {
-		return Text.fill(meta.getAlign(), meta.getDefaultValue(), meta.getSize(), meta.getSubtype().dataType().nullChar());
+		return fill(meta.getAlign(), meta.getDefaultValue(), meta.getSize(), meta.getSubtype().dataType().nullChar());
 	}
 
 	protected String serializeElement(MetaInfo meta, Object obj) {
-		return Text.fit(meta.getAlign(), asStringFromNotNull(meta, obj), meta.getSize(), meta.getFillChar());
+		return fit(meta.getAlign(), asStringFromNotNull(meta, obj), meta.getSize(), meta.getFillChar());
 	}
 
 	protected abstract String asStringFromNotNull(MetaInfo meta, Object obj);

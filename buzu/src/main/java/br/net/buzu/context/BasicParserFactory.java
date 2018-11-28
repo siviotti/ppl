@@ -1,62 +1,40 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.context;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.net.buzu.parsing.complex.ComplexParser;
 import br.net.buzu.parsing.simple.EnumNameParser;
 import br.net.buzu.parsing.simple.EnumPplSerializableParser;
-import br.net.buzu.parsing.simple.bool.BooleanParser;
-import br.net.buzu.parsing.simple.bool.BozParser;
-import br.net.buzu.parsing.simple.bool.BsnParser;
-import br.net.buzu.parsing.simple.bool.BtfParser;
-import br.net.buzu.parsing.simple.bool.BynParser;
+import br.net.buzu.parsing.simple.bool.*;
 import br.net.buzu.parsing.simple.number.IntegerParser;
 import br.net.buzu.parsing.simple.number.LongParser;
 import br.net.buzu.parsing.simple.number.NumberParser;
-import br.net.buzu.parsing.simple.oldtime.OldDateParser;
-import br.net.buzu.parsing.simple.oldtime.OldIsoDateParser;
-import br.net.buzu.parsing.simple.oldtime.OldIsoTimeParser;
-import br.net.buzu.parsing.simple.oldtime.OldIsoTimestampParser;
-import br.net.buzu.parsing.simple.oldtime.OldTimeParser;
-import br.net.buzu.parsing.simple.oldtime.OldTimestampAndMillisParser;
-import br.net.buzu.parsing.simple.oldtime.OldTimestampParser;
-import br.net.buzu.parsing.simple.oldtime.OldUtcDateParser;
-import br.net.buzu.parsing.simple.oldtime.OldUtcTimeParser;
-import br.net.buzu.parsing.simple.oldtime.OldUtcTimestampParser;
+import br.net.buzu.parsing.simple.oldtime.*;
 import br.net.buzu.parsing.simple.text.CharParser;
 import br.net.buzu.parsing.simple.text.StringParser;
-import br.net.buzu.parsing.simple.time.DateParser;
-import br.net.buzu.parsing.simple.time.IsoDateParser;
-import br.net.buzu.parsing.simple.time.IsoTimeParser;
-import br.net.buzu.parsing.simple.time.IsoTimestampParser;
-import br.net.buzu.parsing.simple.time.TimeParser;
-import br.net.buzu.parsing.simple.time.TimestampAndMillisParser;
-import br.net.buzu.parsing.simple.time.TimestampParser;
-import br.net.buzu.parsing.simple.time.UtcDateParser;
-import br.net.buzu.parsing.simple.time.UtcTimeParser;
-import br.net.buzu.parsing.simple.time.UtcTimestampParser;
+import br.net.buzu.parsing.simple.time.*;
 import br.net.buzu.pplspec.api.PayloadParser;
 import br.net.buzu.pplspec.context.ParserFactory;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.Subtype;
 import br.net.buzu.util.Reflect;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Basic Implementation for ParserFactory

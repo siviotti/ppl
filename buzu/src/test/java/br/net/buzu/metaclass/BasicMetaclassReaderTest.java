@@ -1,19 +1,5 @@
 package br.net.buzu.metaclass;
 
-import static br.net.buzu.pplspec.annotation.PplMetadata.EMPTY_INTEGER;
-import static br.net.buzu.pplspec.model.MetaInfo.NO_SCALE;
-import static org.junit.Assert.assertEquals;
-
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.parsing.simple.EnumNameParser;
 import br.net.buzu.parsing.simple.oldtime.OldTimestampParser;
@@ -21,6 +7,7 @@ import br.net.buzu.parsing.simple.time.DateParser;
 import br.net.buzu.pplspec.annotation.PplParser;
 import br.net.buzu.pplspec.api.MetaclassReader;
 import br.net.buzu.pplspec.api.PayloadParser;
+import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.MetaInfoTest;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.Subtype;
@@ -29,6 +16,18 @@ import br.net.buzu.sample.order.Status;
 import br.net.buzu.sample.pojo.Person;
 import br.net.buzu.sample.ppl.Human;
 import br.net.buzu.sample.ppl.Xmen;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static br.net.buzu.pplspec.annotation.PplMetadata.EMPTY_INTEGER;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -36,6 +35,8 @@ import br.net.buzu.sample.ppl.Xmen;
  * @since 1.0
  */
 public class BasicMetaclassReaderTest {
+
+	private static final int NO_SCALE = MetaInfo.Companion.getNO_SCALE();
 
 	private MetaclassReader reader;
 

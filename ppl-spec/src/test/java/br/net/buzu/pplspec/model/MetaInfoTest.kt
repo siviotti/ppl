@@ -1,15 +1,10 @@
 package br.net.buzu.pplspec.model
 
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotSame
-import org.junit.Assert.assertTrue
-
-import org.junit.Test
-
 import br.net.buzu.pplspec.annotation.PplMetadata
 import br.net.buzu.pplspec.lang.Syntax
+import org.junit.Assert.*
+import org.junit.Test
 
 
 /**
@@ -108,7 +103,7 @@ class MetaInfoTest {
 
     @Test
     fun testDomain() {
-        val domain = Domain.of(*array)
+        val domain = domainOf(*array)
         val metaInfo = MetaInfo("", 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, domain, "Heart", "XYZ")
 
         assertTrue(metaInfo.hasDomain())
@@ -152,7 +147,7 @@ class MetaInfoTest {
 
     @Test
     fun testComplete() {
-        val domain = Domain.of(*array)
+        val domain = domainOf(*array)
         val metaInfo = MetaInfo("", 1, "nameTest", Subtype.STRING, 100, 0, 1, 20, domain, "Heart", "XYZ")
         assertMetainfo(metaInfo, "nameTest", Subtype.STRING, 100, 0, 1, 20, "Heart", domain, "XYZ")
 
@@ -202,7 +197,7 @@ class MetaInfoTest {
         }
 
         fun domain(vararg items: String): Domain {
-            return Domain.of(*items)
+            return domainOf(*items)
         }
     }
 

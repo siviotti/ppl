@@ -1,17 +1,16 @@
 package br.net.buzu.metaclass;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import br.net.buzu.pplspec.annotation.PplIgnore;
+import br.net.buzu.pplspec.annotation.PplUse;
+import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-
-import br.net.buzu.pplspec.annotation.PplIgnore;
-import br.net.buzu.pplspec.annotation.PplUse;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Douglas Siviotti

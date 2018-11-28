@@ -1,20 +1,23 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part domainOf Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms domainOf the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 domainOf the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
+ *   You should have received a copy domainOf the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.context;
+
+import br.net.buzu.pplspec.context.SubtypeManager;
+import br.net.buzu.pplspec.model.Subtype;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -25,9 +28,6 @@ import java.time.Period;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import br.net.buzu.pplspec.context.SubtypeManager;
-import br.net.buzu.pplspec.model.Subtype;
 
 /**
  * Stateless SubType Manager.
@@ -42,6 +42,8 @@ public class BasicSubtypeManager implements SubtypeManager {
 
 	static final String SUBTYPE_NOT_FOUND = "Subtype not found:";
 	private static final Map<Class<?>, Subtype> INTERNAL_MAP = new HashMap<>();
+	private static final Subtype DEFAULT_COMPLEX = Subtype.Companion.getDEFAULT_COMPLEX();
+	private static final Subtype DEFAULT_SINGLE = Subtype.Companion.getDEFAULT_SINGLE();
 	static {
 		// Simple Types
 		INTERNAL_MAP.put(String.class, Subtype.STRING);
@@ -72,7 +74,7 @@ public class BasicSubtypeManager implements SubtypeManager {
 	}
 
 	/**
-	 * Creates a instance of <code>SubType</code> based on a Class.
+	 * Creates a instance domainOf <code>SubType</code> based on a Class.
 	 * 
 	 * @param typeClass
 	 *            The class
@@ -91,20 +93,20 @@ public class BasicSubtypeManager implements SubtypeManager {
 	}
 
 	/**
-	 * Creates a instance of <code>SubType</code> based on a text
+	 * Creates a instance domainOf <code>SubType</code> based on a text
 	 * representation.
 	 * 
 	 * @param text
 	 *            The text representation
-	 * @param indicates
+	 * @param complex indicates
 	 *            if the Metadata is complex
 	 * @return The correct instance relative to text or <code>null</code> if the
 	 *         text is invalid.
 	 */
 	public Subtype fromText(String text, boolean complex) {
 		if (text == null || text.isEmpty()) {
-			return complex ? Subtype.DEFAULT_COMPLEX : Subtype.DEFAULT_SINGLE;
+			return complex ? DEFAULT_COMPLEX  : DEFAULT_SINGLE;
 		}
-		return Subtype.get(text);
+		return Subtype.Companion.get(text);
 	}
 }
