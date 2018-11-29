@@ -24,15 +24,10 @@ package br.net.buzu.pplspec.lang
  * @author Douglas Siviotti
  * @since 1.0
  */
-
-const val SUB_OPEN = '('
-
-
 // **************************************************
 // Basic
 // **************************************************
-
-
+const val SUB_OPEN = '('
 const val SUB_CLOSE = ')'
 const val PLIC = '\''
 const val QUOTE = '"'

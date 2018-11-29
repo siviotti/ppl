@@ -92,7 +92,7 @@ public class Buzu implements PplMapper {
 		this.loader = metadataLoader == null ? new BasicMetadataLoader(context) : metadataLoader;
 		this.serializeNulls = serializeNulls;
 		this.dialect = dialect != null ? dialect : DEFAULT_DIALECT;
-		this.coder = context.coderManager().get(this.dialect);
+		this.coder = context.coderManager().getCoder(this.dialect);
 	}
 
 	// **************************************************
@@ -218,7 +218,7 @@ public class Buzu implements PplMapper {
 		return dialect;
 	}
 
-	public boolean isSerializaNulls() {
+	public boolean isSerializeNulls() {
 		return serializeNulls;
 	}
 

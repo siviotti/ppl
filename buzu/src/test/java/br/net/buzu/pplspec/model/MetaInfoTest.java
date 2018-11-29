@@ -1,6 +1,6 @@
 package br.net.buzu.pplspec.model;
 
-import static br.net.buzu.pplspec.model.DomainKt.domainOf;
+import static br.net.buzu.pplspec.model.Domains.domainOf;
 import static org.junit.Assert.assertEquals;
 /**
  * MetaInfo Unit Test.

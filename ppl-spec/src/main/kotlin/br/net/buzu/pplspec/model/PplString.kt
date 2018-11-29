@@ -30,7 +30,7 @@ fun pplStringOf(text: String): PplString {
 }
 
 /**
- * **Immutable** representation domainOf a PPL String.
+ * **Immutable** representation of a PPL String.
  *
  * <pre>
  * (METADATA) PAYLOAD
@@ -39,25 +39,15 @@ fun pplStringOf(text: String): PplString {
  * @author Douglas Siviotti
  * @since 1.0
  */
-class PplString
-/**
- * Context constructor.
- *
- * @param text
- * The PPL String as text.
- * @param syntax
- * The alternative Syntax.
- */
-@JvmOverloads constructor(text: String) : Serializable {
+class PplString internal constructor(val text: String) : Serializable {
 
     val metadata: String
     val payload: String
-
     val pplMetadata: String
         get() = metadata.substring(1, metadata.length - 1)
 
     init {
-        if (text == null || text.isEmpty()) {
+        if (text.isEmpty()) {
             throw IllegalArgumentException("text cannot be 'null' or Empty!")
         }
         try {
@@ -66,7 +56,6 @@ class PplString
         } catch (pe: ParseException) {
             throw PplParseException("PPL Parse error. Text:\n$text", pe)
         }
-
     }
 
     // **************************************************
@@ -77,15 +66,13 @@ class PplString
         return metadata.hashCode() * 31 + payload.hashCode()
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (this === obj) {
-            return true
-        }
-        if (obj == null) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null) {
             return false
         }
-        if (obj is PplString) {
-            val other = obj as PplString?
+        if (other is PplString) {
+            val other = other as PplString?
             return metadata == other!!.metadata && payload == other.payload
         }
         return false

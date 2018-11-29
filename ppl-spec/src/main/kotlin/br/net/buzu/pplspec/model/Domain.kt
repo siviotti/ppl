@@ -19,9 +19,6 @@ package br.net.buzu.pplspec.model
 import br.net.buzu.pplspec.lang.*
 import java.util.*
 
-fun domainOf(vararg array: String): Domain {
-    return Domain.create(EMPTY, Domain.list(*array))
-}
 
 /**
  * Represents the Domain Value domainOf a Metadata.
@@ -104,24 +101,9 @@ class Domain protected constructor(private val name: String, items: List<DomainI
 
         val EMPTY = Domain(br.net.buzu.pplspec.lang.EMPTY, null)
 
-        fun create(name: String, items: List<DomainItem>): Domain {
+        internal fun create(name: String, items: List<DomainItem>): Domain {
             return Domain(name, items)
 
-        }
-        fun list(vararg array: String): List<DomainItem> {
-            val list = ArrayList<DomainItem>()
-            for (i in array.indices) {
-                list.add(DomainItem.parse(array[i]))
-            }
-            return list
-        }
-
-        fun createItems(stringList: List<String>): List<DomainItem> {
-            val list = ArrayList<DomainItem>()
-            for (item in stringList) {
-                list.add(DomainItem.parse(item))
-            }
-            return list
         }
 
     }

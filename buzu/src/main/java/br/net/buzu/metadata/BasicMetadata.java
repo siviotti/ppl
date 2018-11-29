@@ -21,7 +21,7 @@ import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metadata;
 
-import static br.net.buzu.pplspec.model.KindKt.getKind;
+import static br.net.buzu.pplspec.model.KindKt.kindOf;
 
 /**
  * Most basic abstract implementation domainOf <code>Metadata</code>.
@@ -40,7 +40,7 @@ public abstract class BasicMetadata implements Metadata {
 			throw new NullPointerException("metainfo cannot be null!");
 		}
 		this.metaInfo = metaInfo;
-		this.kind = getKind(this.metaInfo.isMultiple(), this.metaInfo.getSubtype().dataType().isComplex());
+		this.kind = kindOf(this.metaInfo.isMultiple(), this.metaInfo.getSubtype().dataType().isComplex());
 	}
 
 	// **************************************************

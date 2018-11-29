@@ -61,10 +61,10 @@ class DomainTest {
 
     @Test
     fun testNamed() {
-        val domain1 = Domain.create(DOMAIN_NAME1, Domain.list(WHITE, BLACK, RED))
-        val clone = Domain.create(DOMAIN_NAME1, Domain.list(WHITE, BLACK, RED))
-        val domain2 = Domain.create(DOMAIN_NAME2, Domain.list(WHITE, BLACK, RED))
-        val domain3 = Domain.create(DOMAIN_NAME1, Domain.list(WHITE, BLACK))
+        val domain1 = Domain.create(DOMAIN_NAME1, domainItemListOf(WHITE, BLACK, RED))
+        val clone = Domain.create(DOMAIN_NAME1, domainItemListOf(WHITE, BLACK, RED))
+        val domain2 = Domain.create(DOMAIN_NAME2, domainItemListOf(WHITE, BLACK, RED))
+        val domain3 = Domain.create(DOMAIN_NAME1, domainItemListOf(WHITE, BLACK))
         assertEquals(3, domain1.items().size.toLong())
         assertEquals(DOMAIN_NAME1, domain1.name())
         assertEquals(WHITE, domain1.items()[0].value())

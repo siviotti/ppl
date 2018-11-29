@@ -16,6 +16,8 @@
  */
 package br.net.buzu.metadata.build.parse;
 
+import static br.net.buzu.pplspec.model.Domains.*;
+
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.pplspec.api.MetadataParser;
 import br.net.buzu.pplspec.context.PplContext;
@@ -253,7 +255,7 @@ public class BasicMetadataParser implements MetadataParser {
 		}
 		list.add(extractItem(domainStr, beginIndex, domainStr.length()));
 
-		return Domain.Companion.create(node.name + Token.PATH_SEP + "domain", Domain.Companion.createItems(list));
+		return createDomain(node.name + Token.PATH_SEP + "domain", toDomainItemList(list));
 	}
 
 	private String extractItem(final String domain, int beginIndex, int endIndex) {

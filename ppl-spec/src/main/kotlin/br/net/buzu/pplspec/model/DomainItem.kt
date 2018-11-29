@@ -18,6 +18,7 @@ package br.net.buzu.pplspec.model
 
 import br.net.buzu.pplspec.lang.LABEL_VALUE
 
+
 /**
  * Generic implementation to `LabelValue`.
  *
@@ -52,7 +53,7 @@ class DomainItem
     }
 
     override fun label(): String? {
-        return label
+    return label
     }
 
     override fun hasLabel(): Boolean {
@@ -87,17 +88,5 @@ class DomainItem
         return value.compareTo(o.value)
     }
 
-    companion object {
-
-        fun parse(text: String): DomainItem {
-            val pos = text.indexOf(LABEL_VALUE)
-            if (pos < 0) {
-                return DomainItem(text)
-            }
-            val value = text.substring(0, pos)
-            val label = text.substring(pos + 1, text.length)
-            return DomainItem(value, label)
-        }
-    }
 
 }

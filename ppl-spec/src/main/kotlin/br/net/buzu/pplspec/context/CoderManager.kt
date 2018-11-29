@@ -27,5 +27,5 @@ import br.net.buzu.pplspec.model.Dialect
  */
 interface CoderManager {
 
-    operator fun get(dialect: Dialect): MetadataCoder
+    fun getCoder(dialect: Dialect): MetadataCoder
 }

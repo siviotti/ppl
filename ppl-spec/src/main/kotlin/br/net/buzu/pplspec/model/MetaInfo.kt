@@ -21,7 +21,7 @@ import br.net.buzu.pplspec.lang.*
 import java.util.*
 
 /**
- * Basic Pojo resulting domainOf annotations information or manual setting. This class
+ * Basic Pojo resulting of annotations information or manual setting. This class
  * represents the PPL elements: name, type, size, scale, occurs , defaultValue,
  * domain, tags, key and indexed.
  *
@@ -46,8 +46,6 @@ class MetaInfo
                           val maxOccurs: Int, domain: Domain? = null, defaultValue: String? = EMPTY, tags: String? = EMPTY) : Comparable<MetaInfo> {
 
     // Basic
-    // att
-
     val id: String
     val subtype: Subtype
     val size: Int

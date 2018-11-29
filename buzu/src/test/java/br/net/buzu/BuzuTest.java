@@ -165,10 +165,10 @@ public class BuzuTest {
 		assertEquals(BasicMetadataParser.class, buzu.parser().getClass());
 		assertEquals(BasicMetaclassReader.class, buzu.reader().getClass());
 		assertEquals(BasicMetadataLoader.class, buzu.loader().getClass());
-		MetadataCoder coder = BasicCoderManager.INSTANCE.get(Dialect.Companion.getDEFAULT());
+		MetadataCoder coder = BasicCoderManager.INSTANCE.getCoder(Dialect.Companion.getDEFAULT());
 		assertEquals(coder.getClass(), buzu.coder().getClass());
 		assertEquals(Dialect.Companion.getDEFAULT(), buzu.dialect());
-		assertFalse(buzu.isSerializaNulls());
+		assertFalse(buzu.isSerializeNulls());
 	}
 
 	@Test(expected = IllegalArgumentException.class)

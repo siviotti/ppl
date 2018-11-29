@@ -32,18 +32,17 @@ const val SPACE = ' '
 /** Prefix used when the Metadata has no name.  */
 const val NO_NAME_START = "__"
 const val UNBOUNDED = 0
+const val SINGLE_OCCURS = 1
 
 // **************************************************
 // Defaults
 // **************************************************
-
 const val DEFAULT_TYPE = TYPE_STRING
 const val DEFAULT_SIZE = 0
 const val DEFAULT_MIN_OCCURS = 0
 const val DEFAULT_MAX_OCCURS = 1
 val DEFAULT_OCCURS = ("" + OCCURS_BEGIN + DEFAULT_MIN_OCCURS + OCCURS_RANGE
         + DEFAULT_MAX_OCCURS)
-const val SINGLE_OCCURS = 1
 val SINGLE_REQUIRED_OCCURS_VALUE = "" + SINGLE_OCCURS + OCCURS_RANGE + SINGLE_OCCURS
 val SINGLE_REQUIRED_OCCURS = OCCURS_BEGIN + SINGLE_REQUIRED_OCCURS_VALUE
 
@@ -98,7 +97,7 @@ const val BLOCK_ERROR_INVALID_OPEN_CHAR = "Block Error: Invalid openChar '"
 // **************************************************
 
 /**
- * Indicates if the char 'c' is ignored as part domainOf Metadata.
+ * Indicates if the char 'c' is ignored as part of Metadata.
  *
  * @param c
  * the Character to check.

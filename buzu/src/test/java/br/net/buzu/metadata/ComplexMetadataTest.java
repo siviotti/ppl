@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.net.buzu.pplspec.model.DomainKt.domainOf;
+import static br.net.buzu.pplspec.model.Domains.domainOf;
 import static org.junit.Assert.*;
 
 /**

@@ -16,7 +16,7 @@
  */
 package br.net.buzu.pplspec.model
 
-fun getKind(multiple: Boolean, complex: Boolean): Kind {
+fun kindOf(multiple: Boolean, complex: Boolean): Kind {
     return if (multiple) {
         if (complex) Kind.TABLE else Kind.ARRAY
     } else {

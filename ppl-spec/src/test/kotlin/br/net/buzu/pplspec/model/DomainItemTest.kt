@@ -14,27 +14,27 @@ class DomainItemTest {
     @Test
     @Ignore // Kotlin not null
     fun testNull() {
-        val item = DomainItem.parse(null!!)
+        val item = domainItemOf(null!!)
         assertEquals(null, item)
     }
 
     @Test
     fun testBlank() {
-        val item = DomainItem.parse("")
+        val item = domainItemOf("")
         assertEquals("", item.value())
         assertEquals(null, item.label())
     }
 
     @Test
     fun testValueLabel() {
-        val item = DomainItem.parse("01=abc")
+        val item = domainItemOf("01=abc")
         assertEquals("01", item.value())
         assertEquals("abc", item.label())
     }
 
     @Test
     fun testOnlyValue() {
-        val item = DomainItem.parse("345")
+        val item = domainItemOf("345")
         assertEquals("345", item.value())
         assertEquals(null, item.label())
     }
@@ -47,10 +47,10 @@ class DomainItemTest {
 
     @Test
     fun testObjectMethods() {
-        val item1 = DomainItem.parse("01=abc")
-        val item2 = DomainItem.parse("01=abc")
-        val item3 = DomainItem.parse("01=xyz")
-        val item4 = DomainItem.parse("02=xyz")
+        val item1 = domainItemOf("01=abc")
+        val item2 = domainItemOf("01=abc")
+        val item3 = domainItemOf("01=xyz")
+        val item4 = domainItemOf("02=xyz")
         assertEquals(item1, item2)
         assertEquals(item2, item1)
         assertFalse(item1 == null)

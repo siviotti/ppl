@@ -20,6 +20,7 @@ import br.net.buzu.metadata.code.*;
 import br.net.buzu.pplspec.api.MetadataCoder;
 import br.net.buzu.pplspec.context.CoderManager;
 import br.net.buzu.pplspec.model.Dialect;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Simple CoderManager
@@ -42,7 +43,8 @@ public class BasicCoderManager implements CoderManager {
 		CODER_ARRAY[Dialect.STRUCTURAL.ordinal()]= StructuralMetadataCoder.INSTANCE;
 	}
 
-	public MetadataCoder get(Dialect dialect) {
+	public MetadataCoder getCoder(Dialect dialect) {
 		return CODER_ARRAY[dialect.ordinal()];
 	}
+
 }

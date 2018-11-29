@@ -7,7 +7,7 @@ import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Subtype;
 import org.junit.Test;
 
-import static br.net.buzu.pplspec.model.DomainKt.domainOf;
+import static br.net.buzu.pplspec.model.Domains.domainOf;
 import static org.junit.Assert.*;
 
 /**
