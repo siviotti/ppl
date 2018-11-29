@@ -77,7 +77,7 @@ public class NumberParser extends AbstractNumericParser {
 			return ((BigDecimal) obj).toPlainString();
 		}
 		if (obj instanceof Number) {
-			return ((Number) obj).toString();
+			return obj.toString();
 		}
 		throw new PplTypeMismatchException(
 				"The value '" + obj + "' is not a valid number! The class '" + obj.getClass().getCanonicalName()

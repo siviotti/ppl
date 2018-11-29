@@ -59,7 +59,7 @@ public class ComplexParserTest {
 		dump(metadata);
 		String s = parser.serialize(metadata, customer, from);
 		serial(s);
-		Customer c2 = (Customer) parser.parse(metadata, s, from);
+		Customer c2 = parser.parse(metadata, s, from);
 		assertTrue(c2.getName().equals("John"));
 	}
 
@@ -74,7 +74,7 @@ public class ComplexParserTest {
 		serial(serial);
 		assertEquals(metadata.info().getSize(), serial.length());
 		assertEquals(metadata.info().getSize(), metadata.serialMaxSize());
-		Empresa parsedEmpresa = (Empresa) parser.parse(metadata, serial,
+		Empresa parsedEmpresa = parser.parse(metadata, serial,
 				new BasicMetaclassReader().read(Empresa.class));
 		assertEquals(parsedEmpresa.getRazaoSocial(), new Empresa().getRazaoSocial());
 	}
@@ -98,7 +98,7 @@ public class ComplexParserTest {
 		serial(serial);
 		assertEquals(metadata.serialMaxSize(), serial.length());
 		// assertEquals(metadata.getSize(), metadata.getMaxSize());
-		Empresa parsedEmpresa = (Empresa) parser.parse(metadata, serial, from);
+		Empresa parsedEmpresa = parser.parse(metadata, serial, from);
 		assertEquals("Banco do Basil", parsedEmpresa.getRazaoSocial());
 		assertEquals("00000000000191", parsedEmpresa.getCnpj());
 		assertEquals(aberturaBB, parsedEmpresa.getDtAbertura());
@@ -118,7 +118,7 @@ public class ComplexParserTest {
 		serial(serial);
 		assertEquals(metadata.serialMaxSize(), serial.length());
 		// Parse
-		Empresa parsed = (Empresa) parser.parse(metadata, serial, new BasicMetaclassReader().read(Empresa.class));
+		Empresa parsed = parser.parse(metadata, serial, new BasicMetaclassReader().read(Empresa.class));
 		assertEquals(MockFactory.EMPRESA_NOME, parsed.getRazaoSocial());
 		assertEquals(MockFactory.EMPRESA_CNPJ, parsed.getCnpj());
 		assertEquals(MockFactory.NJ_CODIGO, parsed.getNj().getCodigo());
@@ -135,7 +135,7 @@ public class ComplexParserTest {
 		String serial = parser.serialize(metadata, empresa, new BasicMetaclassReader().read(Empresa.class));
 		serial(serial);
 		assertEquals(metadata.serialMaxSize(), serial.length());
-		Empresa parsed = (Empresa) parser.parse(metadata, serial, new BasicMetaclassReader().read(Empresa.class));
+		Empresa parsed = parser.parse(metadata, serial, new BasicMetaclassReader().read(Empresa.class));
 		assertEquals("Banco do Basil", parsed.getRazaoSocial());
 		assertEquals("00000000000191", parsed.getCnpj());
 		assertEquals(2, parsed.getSocios().size());
@@ -192,7 +192,7 @@ public class ComplexParserTest {
 		dump(metadata);
 		String serial = parser.serialize(metadata, pj, from);
 		serial(serial);
-		PJ parsedEmpresa = (PJ) parser.parse(metadata, serial, new BasicMetaclassReader().read(PJ.class));
+		PJ parsedEmpresa = parser.parse(metadata, serial, new BasicMetaclassReader().read(PJ.class));
 		assertTrue(parsedEmpresa instanceof PJ);
 	}
 
@@ -204,7 +204,7 @@ public class ComplexParserTest {
 		dump(metadata);
 		String s = parser.serialize(metadata, person, new BasicMetaclassReader().read(Person.class));
 		serial(s);
-		Person clone = (Person) parser.parse(metadata, s, new BasicMetaclassReader().read(Person.class));
+		Person clone = parser.parse(metadata, s, new BasicMetaclassReader().read(Person.class));
 		assertEquals("Ladybug", clone.getName());
 		assertEquals(new Integer(15), clone.getAge());
 		assertEquals("Paris", clone.getCity());

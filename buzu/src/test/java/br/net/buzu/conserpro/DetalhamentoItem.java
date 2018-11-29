@@ -307,11 +307,8 @@ public class DetalhamentoItem implements Serializable {
 		} else if (!tipoDetalhamento.equals(other.tipoDetalhamento))
 			return false;
 		if (tipoVeiculo == null) {
-			if (other.tipoVeiculo != null)
-				return false;
-		} else if (!tipoVeiculo.equals(other.tipoVeiculo))
-			return false;
-		return true;
-	}
+            return other.tipoVeiculo == null;
+		} else return tipoVeiculo.equals(other.tipoVeiculo);
+    }
 		
 }

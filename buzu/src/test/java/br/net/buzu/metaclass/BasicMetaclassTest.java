@@ -26,7 +26,7 @@ public class BasicMetaclassTest {
 		assertTrue(mc2.toTree(0).equals(mc1.toTree(0)));
 		assertTrue(mc1.equals(mc1));
 		assertFalse(mc1.equals(null));
-		Object o = new String("abc");
+		Object o = "abc";
 		assertFalse(mc1.equals(o));
 	}
 

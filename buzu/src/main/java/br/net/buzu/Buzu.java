@@ -16,6 +16,8 @@
  */
 package br.net.buzu;
 
+import static br.net.buzu.pplspec.lang.Syntax.pplToString;
+
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
@@ -109,7 +111,7 @@ public class Buzu implements PplMapper {
 			return null;
 		}
 
-		PplString pplString = new PplString(text, context.syntax());
+		PplString pplString = new PplString(text);
 		Metadata metadata = parser.parse(pplString);
 		Metaclass metaclass;
 		if (metadata.kind().isMultiple()) {
@@ -130,7 +132,7 @@ public class Buzu implements PplMapper {
 		if (text == null || text.isEmpty()) {
 			return null;
 		}
-		PplString pplString = new PplString(text, context.syntax());
+		PplString pplString = new PplString(text);
 		Metadata metadata = parser.parse(pplString);
 		return fromPayload(asStatic(metadata), pplString.getPayload(), toClass);
 	}
@@ -180,8 +182,8 @@ public class Buzu implements PplMapper {
 	@Override
 	public String toPpl(StaticMetadata metadata, Object source, Metaclass fromClass) {
 		PayloadParser payloadParser = context.parserFactory().create(fromClass);
-		return context.syntax().asPplString(coder.code(metadata),
-				payloadParser.serialize((StaticMetadata) metadata, source, fromClass));
+		return pplToString(coder.code(metadata),
+				payloadParser.serialize(metadata, source, fromClass));
 	}
 
 	private Metaclass readMetaclass(Class<?> fieldType) {

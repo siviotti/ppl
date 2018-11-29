@@ -73,11 +73,8 @@ public class Animal {
 		} else if (!name.equals(other.name)) {
 			return false;
 		}
-		if (species != other.species) {
-			return false;
-		}
-		return true;
-	}
+        return species == other.species;
+    }
 
 	@Override
 	public String toString() {

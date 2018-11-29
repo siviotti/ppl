@@ -107,6 +107,6 @@ public class BasicSubtypeManager implements SubtypeManager {
 		if (text == null || text.isEmpty()) {
 			return complex ? DEFAULT_COMPLEX  : DEFAULT_SINGLE;
 		}
-		return Subtype.Companion.get(text);
+		return Subtype.Companion.of(text);
 	}
 }

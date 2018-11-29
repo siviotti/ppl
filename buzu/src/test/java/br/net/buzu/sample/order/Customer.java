@@ -74,12 +74,9 @@ public class Customer {
 		} else if (!name.equals(other.name))
 			return false;
 		if (phones == null) {
-			if (other.phones != null)
-				return false;
-		} else if (!phones.equals(other.phones))
-			return false;
-		return true;
-	}
+            return other.phones == null;
+		} else return phones.equals(other.phones);
+    }
 
 	@Override
 	public String toString() {

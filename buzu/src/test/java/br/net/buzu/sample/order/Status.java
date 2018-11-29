@@ -4,6 +4,6 @@ public enum Status {
 	
 	OPENED,
 	CLOSED,
-	DELIVERED;
+	DELIVERED
 
 }

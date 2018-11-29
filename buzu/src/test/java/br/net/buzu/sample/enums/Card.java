@@ -35,10 +35,8 @@ public class Card {
 		Card other = (Card) obj;
 		if (number != other.number)
 			return false;
-		if (suit != other.suit)
-			return false;
-		return true;
-	}
+        return suit == other.suit;
+    }
 
 	@Override
 	public String toString() {

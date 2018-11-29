@@ -44,7 +44,6 @@ import java.util.Set;
  */
 public class BuzuBuilder {
 
-	private Syntax syntax;
 	private PplContext context;
 	private Splitter splitter;
 	private MetadataParser metadataParser;
@@ -63,14 +62,11 @@ public class BuzuBuilder {
 	 *         objects.
 	 */
 	public Buzu build() {
-		if (syntax == null) {
-			syntax = new Syntax();
-		}
 		if (context == null) {
-			context = new ContextBuilder().syntax(syntax).build();
+			context = new ContextBuilder().build();
 		}
 		if (splitter == null) {
-			splitter = new Splitter(syntax);
+			splitter = new Splitter();
 		}
 		if (metadataParser == null) {
 			metadataParser = new BasicMetadataParser(context, splitter);
@@ -97,14 +93,6 @@ public class BuzuBuilder {
 		return !ignoreAnnotations.isEmpty() || !useAnnotations.isEmpty();
 	}
 
-	public Syntax getSyntax() {
-		return syntax;
-	}
-
-	public BuzuBuilder syntax(Syntax syntax) {
-		this.syntax = syntax;
-		return this;
-	}
 
 	public PplContext getContext() {
 		return context;

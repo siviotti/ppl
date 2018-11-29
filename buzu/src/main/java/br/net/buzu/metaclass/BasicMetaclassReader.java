@@ -36,7 +36,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
-import static br.net.buzu.pplspec.model.KindKt.getKing;
+import static br.net.buzu.pplspec.model.KindKt.getKind;
 
 /**
  * Basic implementation domainOf <code>MetaclassReader</code>.
@@ -110,17 +110,17 @@ public class BasicMetaclassReader implements MetaclassReader {
 
 		if (complex) {
 			return StaticBehave.isStaticChidren(children)
-					? new ComplexStaticMetaclass(field, fieldType, elementType, getKing (multiple, complex), metaInfo,
+					? new ComplexStaticMetaclass(field, fieldType, elementType, getKind(multiple, complex), metaInfo,
 							parserType, children)
 
-					: new ComplexMetaclass(field, fieldType, elementType, getKing (multiple, complex), metaInfo,
+					: new ComplexMetaclass(field, fieldType, elementType, getKind(multiple, complex), metaInfo,
 							parserType, children);
 		} else {
 			return metaInfo.isStatic()
-					? new SimpleStaticMetaclass(field, fieldType, elementType, getKing (multiple, complex), metaInfo,
+					? new SimpleStaticMetaclass(field, fieldType, elementType, getKind(multiple, complex), metaInfo,
 							parserType)
 
-					: new SimpleMetaclass(field, fieldType, elementType, getKing (multiple, complex), metaInfo,
+					: new SimpleMetaclass(field, fieldType, elementType, getKind(multiple, complex), metaInfo,
 							parserType);
 		}
 	}

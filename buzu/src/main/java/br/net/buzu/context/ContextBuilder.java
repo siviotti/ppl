@@ -30,28 +30,18 @@ import br.net.buzu.pplspec.lang.Syntax;
  */
 public class ContextBuilder {
 
-	private Syntax syntax = new Syntax();
 	private SubtypeManager subtypeManager = new BasicSubtypeManager();
 	private MetadataFactory metadataFactory = new BasicMetadataFactory();
 	private CoderManager coderManager = new BasicCoderManager();
 	private ParserFactory parserFactory = new BasicParserFactory();
 
 	public PplContext build() {
-		return new BasicContext(syntax, subtypeManager, metadataFactory, coderManager, parserFactory);
+		return new BasicContext(subtypeManager, metadataFactory, coderManager, parserFactory);
 	}
 
 	// **************************************************
 	// SET
 	// **************************************************
-
-	public ContextBuilder syntax(Syntax syntax) {
-		if (syntax == null) {
-			throw new NullPointerException("[PPL Context] syntax cannot be null!");
-		}
-		this.syntax = syntax;
-		return this;
-	}
-
 
 	public ContextBuilder subtypeManager(SubtypeManager subtypeManager) {
 		if (subtypeManager == null) {

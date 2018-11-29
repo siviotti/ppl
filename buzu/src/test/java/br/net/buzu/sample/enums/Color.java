@@ -9,6 +9,6 @@ package br.net.buzu.sample.enums;
  */
 public enum Color {
 
-	BLACK, RED;
+	BLACK, RED
 
 }

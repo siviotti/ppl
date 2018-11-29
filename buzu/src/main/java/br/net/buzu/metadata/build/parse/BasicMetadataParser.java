@@ -20,7 +20,7 @@ import br.net.buzu.context.BasicContext;
 import br.net.buzu.pplspec.api.MetadataParser;
 import br.net.buzu.pplspec.context.PplContext;
 import br.net.buzu.pplspec.exception.PplParseException;
-import br.net.buzu.pplspec.lang.Syntax;
+
 import br.net.buzu.pplspec.lang.Token;
 import br.net.buzu.pplspec.model.*;
 
@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static br.net.buzu.pplspec.lang.Syntax.*;
 
 /**
  * Metadata parser to transform <code>Text</code> to <code>Metadata</code>.
@@ -43,7 +45,7 @@ public class BasicMetadataParser implements MetadataParser {
 	static final String INVALID_DOMAIN = "Invalid domain:";
 	static final String INVALID_DEFAULTVALUE = "Invalid default value:";
 
-	private static final Domain EMPTY=Domain.Companion.getEMPTY();
+	private static final Domain EMPTY_DOMAIN =Domain.Companion.getEMPTY();
 
 	private final Splitter splitter;
 	private final PplContext context;
@@ -93,9 +95,9 @@ public class BasicMetadataParser implements MetadataParser {
 			if (nodes.size() > 1) {
 				ParseNode root = new ParseNode();
 				Map<String, String> varMap = createRoot(root, nodes);
-				return parse(Syntax.EMPTY, root, 0);
+				return parse(EMPTY, root, 0);
 			} else {
-				return parse(Syntax.EMPTY, nodes.get(0), 0);
+				return parse(EMPTY, nodes.get(0), 0);
 			}
 		} catch (ParseException e) {
 			throw new PplParseException("Parsing error on text:\n" + pplString, e);
@@ -112,8 +114,8 @@ public class BasicMetadataParser implements MetadataParser {
 				root.children.add(child);
 			}
 		}
-		if (map.containsKey(Syntax.VAR_ROOT)) {
-			root.name = map.get(Syntax.VAR_ROOT);
+		if (map.containsKey(VAR_ROOT)) {
+			root.name = map.get(VAR_ROOT);
 		}
 		return map;
 	}
@@ -144,8 +146,8 @@ public class BasicMetadataParser implements MetadataParser {
 	}
 
 	protected String parseName(ParseNode node) {
-		String name = (node.hasName()) ? node.getName() : Syntax.NO_NAME_START + count++;
-		if (!splitter.getSyntax().isValidMetaName(name)) {
+		String name = (node.hasName()) ? node.getName() : NO_NAME_START + count++;
+		if (!pplIsValidMetaName(name)) {
 			throw new MetadataParseException("Invalid Metadata name:" + name, node);
 		}
 		return name;
@@ -192,7 +194,7 @@ public class BasicMetadataParser implements MetadataParser {
 		String scale = node.getSize();
 		int index = scale.indexOf(Token.DECIMAL_SEP);
 		if (index > 0) {
-			scale = scale.substring(index + 1, scale.length());
+			scale = scale.substring(index + 1);
 			return scale.length() > 0 ? Integer.parseInt(scale) : 0;
 		}
 		return 0;
@@ -204,7 +206,7 @@ public class BasicMetadataParser implements MetadataParser {
 
 	protected int extractMinOccurs(String occurs) {
 		int index = occurs.indexOf(Token.OCCURS_RANGE);
-		return (index < 0) ? Syntax.DEFAULT_MIN_OCCURS : Integer.parseInt(occurs.substring(0, index));
+		return (index < 0) ? DEFAULT_MIN_OCCURS : Integer.parseInt(occurs.substring(0, index));
 	}
 
 	protected int parseMaxOccurs(ParseNode node) {
@@ -213,20 +215,20 @@ public class BasicMetadataParser implements MetadataParser {
 
 	protected int extractMaxOccurs(String occurs) {
 		int index = occurs.indexOf(Token.OCCURS_RANGE);
-		return (index < -1) ? Integer.parseInt(occurs) : Integer.parseInt(occurs.substring(index + 1, occurs.length()));
+		return (index < -1) ? Integer.parseInt(occurs) : Integer.parseInt(occurs.substring(index + 1));
 	}
 
 	protected Domain parseDomain(ParseNode node) {
 		String domainStr = node.getDomain();
 		if (domainStr == null || domainStr.length() < 3) {
-			return EMPTY;
+			return EMPTY_DOMAIN;
 		}
 		if (domainStr.charAt(0) != Token.DOMAIN_BEGIN || domainStr.charAt(domainStr.length() - 1) != Token.DOMAIN_END) {
 			throw new MetadataParseException(INVALID_DOMAIN + domainStr, node);
 		}
 		domainStr = domainStr.substring(1, domainStr.length() - 1);
 		if (domainStr.trim().isEmpty()) {
-			return EMPTY;
+			return EMPTY_DOMAIN;
 		}
 		List<String> list = new ArrayList<>();
 		char c;
@@ -236,7 +238,7 @@ public class BasicMetadataParser implements MetadataParser {
 			c = domainStr.charAt(i);
 			if (c == Token.PLIC || c == Token.QUOTE) {
 				try {
-					i = context.syntax().nextStringDelimeter(domainStr, i, c);
+					i = pplNextStringDelimiter(domainStr, i, c);
 				} catch (ParseException e) {
 					throw new MetadataParseException(INVALID_DOMAIN + domainStr, node, e);
 				}

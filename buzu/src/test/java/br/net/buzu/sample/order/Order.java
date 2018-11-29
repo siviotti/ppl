@@ -126,10 +126,8 @@ public class Order {
 				return false;
 		} else if (!products.equals(other.products))
 			return false;
-		if (status != other.status)
-			return false;
-		return true;
-	}
+        return status == other.status;
+    }
 
 	@Override
 	public String toString() {

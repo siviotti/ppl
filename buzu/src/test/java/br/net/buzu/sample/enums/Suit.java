@@ -24,7 +24,7 @@ public enum Suit {
 		return color;
 	}
 
-	private Suit(Color color) {
+	Suit(Color color) {
 		this.color = color;
 	}
 	

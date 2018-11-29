@@ -93,7 +93,7 @@ public class BasicSkipStrategy implements SkipStrategy {
 			return true;
 		}
 
-		return next != null ? next.skip(field) : false;
+		return next != null && next.skip(field);
 	}
 
 }

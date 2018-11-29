@@ -18,17 +18,6 @@ import static org.junit.Assert.*;
 public class SplitterTest {
 
 	@Test
-	public void testNew() {
-		Splitter splitter = new Splitter();
-		assertEquals(Syntax.class, splitter.getSyntax().getClass());
-		Syntax alternativeSyntax = new Syntax() {
-			private static final long serialVersionUID = 1L;
-		};
-		Splitter splitter2 = new Splitter(alternativeSyntax);
-		assertNotSame(Syntax.class, splitter2.getSyntax().getClass());
-	}
-
-	@Test
 	public void testExtractName() throws ParseException {
 		Splitter splitter = new Splitter();
 		

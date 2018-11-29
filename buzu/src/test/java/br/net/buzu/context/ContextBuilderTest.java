@@ -24,11 +24,6 @@ public class ContextBuilderTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void testNullSyntax() {
-		contextBuilder.syntax(null);
-	}
-
-	@Test(expected = NullPointerException.class)
 	public void testSubtypeManager() {
 		contextBuilder.subtypeManager(null);
 	}
@@ -56,10 +51,10 @@ public class ContextBuilderTest {
 
 	@Test
 	public void testCustomBuild() {
-		PplContext context = contextBuilder.syntax(new CustomSyntax()).metadataFactory(new CustomMetadataFactory()).coderManager(new CustomCoderManager())
+		PplContext context = contextBuilder.metadataFactory(new CustomMetadataFactory()).coderManager(new CustomCoderManager())
 				.subtypeManager(new CustomSubtypeManager()).parserFactory(new CustomParserFactory()).build();
 		assertEquals(BasicContext.class, context.getClass());
-		assertEquals(CustomSyntax.class, context.syntax().getClass());
+
 		assertEquals(CustomSubtypeManager.class, context.subtypeManager().getClass());
 		assertEquals(CustomMetadataFactory.class, context.metadataFactory().getClass());
 		assertEquals(CustomParserFactory.class, context.parserFactory().getClass());
@@ -67,10 +62,6 @@ public class ContextBuilderTest {
 
 }
 
-class CustomSyntax extends Syntax {
-
-	private static final long serialVersionUID = 1L;
-}
 
 
 class CustomSubtypeManager extends BasicSubtypeManager {

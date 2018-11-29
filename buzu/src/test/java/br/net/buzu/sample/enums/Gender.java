@@ -9,7 +9,7 @@ public enum Gender implements PplSerializable {
 	private final char code;
 	private final String description;
 
-	private Gender(char code, String descriptio) {
+	Gender(char code, String descriptio) {
 		this.code = code;
 		this.description = descriptio;
 	}

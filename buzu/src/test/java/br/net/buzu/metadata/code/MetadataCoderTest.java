@@ -1,5 +1,7 @@
 package br.net.buzu.metadata.code;
 
+import static br.net.buzu.pplspec.lang.Syntax.*;
+
 import br.net.buzu.metadata.BasicMetadata;
 import br.net.buzu.metadata.ComplexMetadata;
 import br.net.buzu.metadata.ComplexMetadataTest;
@@ -48,8 +50,8 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertTrue(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
-		assertTrue(code.contains(""+Syntax.ENTER));
+		assertTrue(code.contains(getDEFAULT_OCCURS()));
+		assertTrue(code.contains(""+ENTER));
 		assertTrue(code.contains(""+Subtype.STRING.getId()));
 		
 	}
@@ -66,7 +68,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
+		assertFalse(code.contains(getDEFAULT_OCCURS()));
 		assertTrue(code.contains(""+Syntax.ENTER));
 		assertTrue(code.contains(""+Subtype.STRING.getId()));
 	}
@@ -83,7 +85,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
+		assertFalse(code.contains(getDEFAULT_OCCURS()));
 		assertFalse(code.contains(""+Syntax.ENTER));
 		assertTrue(code.contains(""+Subtype.STRING.getId()));
 	}
@@ -100,7 +102,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
+		assertFalse(code.contains(getDEFAULT_OCCURS()));
 		assertFalse(code.contains(""+Syntax.ENTER));
 		assertFalse(code.contains(""+Subtype.STRING.getId()));
 	}
@@ -117,7 +119,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(Syntax.Companion.getDEFAULT_OCCURS()));
+		assertFalse(code.contains(getDEFAULT_OCCURS()));
 		assertFalse(code.contains(""+Syntax.ENTER));
 	}
 

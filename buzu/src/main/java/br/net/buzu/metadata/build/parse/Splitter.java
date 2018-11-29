@@ -16,9 +16,11 @@
  */
 package br.net.buzu.metadata.build.parse;
 
+import static br.net.buzu.pplspec.lang.Syntax.*;
+
 import br.net.buzu.pplspec.exception.PplParseException;
-import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.lang.Token;
+
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -37,25 +39,6 @@ public class Splitter {
 	static final String WRONG_USE_OF_BLOCK = "Wrong use domainOf block ";
 	static final String WRONG_USE_OF_KEYWORD = "Wrong use domainOf keyword '";
 
-	private Syntax syntax;
-
-	/**
-	 * Default constructor.
-	 */
-	public Splitter() {
-		this(new Syntax());
-	}
-
-	/**
-	 * Complete constructor.
-	 * 
-	 * @param syntax
-	 *            The Syntax used to split.
-	 */
-	public Splitter(Syntax syntax) {
-		super();
-		this.syntax = syntax;
-	}
 
 	// **************************************************
 	// Split
@@ -134,8 +117,8 @@ public class Splitter {
 			sub = countBlock(sub, c, Token.SUB_OPEN, Token.SUB_CLOSE);
 			brace = countBlock(brace, c, Token.BRACE_OPEN, Token.BRACE_CLOSE);
 			array = countBlock(array, c, Token.ARRAY_OPEN, Token.ARRAY_CLOSE);
-			if (syntax.isStringDelimiter(c)) {
-				i = syntax.nextStringDelimeter(text, i, c) + 1;
+			if (pplIsStringDelimiter(c)) {
+				i = pplNextStringDelimiter(text, i, c) + 1;
 				continue;
 			}
 			if (c == Token.METADATA_END && (sub + brace + array) == 0) {
@@ -182,17 +165,17 @@ public class Splitter {
 		if (text.isEmpty()) {
 			return 0;
 		}	
-		int firstChar = syntax.firstChar(text, 0);
+		int firstChar = pplFirstChar(text, 0);
 		char c = text.charAt(firstChar);
 		int count = 0;
-		if (syntax.isValidFirstCharMetaName(c) || c == Token.VAR) {
+		if (pplIsValidFirstCharMetaName(c) || c == Token.VAR) {
 			count++;
 		} else {
 			return (c == Token.NAME_END) ? firstChar + 1 : firstChar;
 		}
 		for (int i = firstChar + 1; i < text.length(); i++) {
 			c = text.charAt(i);
-			if (syntax.isValidCharMetaName(c)) {
+			if (pplIsValidCharMetaName(c)) {
 				count++;
 			} else if (c == Token.NAME_END) {
 				node.name = text.substring(firstChar, firstChar + count);
@@ -207,7 +190,7 @@ public class Splitter {
 	// ********** TYPE **********
 
 	protected int extractType(final String text, final int beginIndex, final ParseNode node) throws ParseException {
-		int firstChar = syntax.firstChar(text, beginIndex);
+		int firstChar = pplFirstChar(text, beginIndex);
 		int endIndex = firstChar;
 		int offset = 0;
 		int endBlock = 0;
@@ -217,7 +200,7 @@ public class Splitter {
 			if (Character.isLetter(c)) { // A-Za-z c >= 'A' && c <= 'Z'
 				endIndex++;
 			} else if (c == Token.SUB_OPEN) {
-				endBlock = syntax.blockEndIndex(text, i, Token.SUB_OPEN, Token.SUB_CLOSE);
+				endBlock = pplBlockEndIndex(text, i, Token.SUB_OPEN, Token.SUB_CLOSE);
 				node.children = splitLayout(text.substring(i + 1, endBlock));
 				offset = endBlock + 1;// primeiro após )
 				break;
@@ -238,8 +221,8 @@ public class Splitter {
 	// ********** SIZE AND SCALE **********
 
 	protected int extractSize(final String text, final int beginIndex, ParseNode node) {
-		int firstChar = syntax.firstChar(text, beginIndex);
-		int endIndex = syntax.lastNumberIndex(text, firstChar, Token.DECIMAL_SEP);
+		int firstChar = pplFirstChar(text, beginIndex);
+		int endIndex = pplLastNumberIndex(text, firstChar, Token.DECIMAL_SEP);
 		if (endIndex > beginIndex) {
 			node.size = text.substring(firstChar, endIndex);
 		}
@@ -249,7 +232,7 @@ public class Splitter {
 	// ********** OCCURS **********
 
 	protected int extractOccurs(final String text, final int beginIndex, ParseNode node) {
-		int firstChar = syntax.firstChar(text, beginIndex);
+		int firstChar = pplFirstChar(text, beginIndex);
 		if (text.charAt(firstChar) != Token.OCCURS_BEGIN) {
 			return firstChar;
 		}
@@ -257,7 +240,7 @@ public class Splitter {
 		if (firstChar == text.length()) {
 			return firstChar; // returns the # index
 		}
-		int endIndex = syntax.lastNumberIndex(text, firstChar, Token.OCCURS_RANGE);
+		int endIndex = pplLastNumberIndex(text, firstChar, Token.OCCURS_RANGE);
 		if (endIndex > beginIndex) {
 			node.occurs = text.substring(firstChar, endIndex);
 		}
@@ -267,11 +250,11 @@ public class Splitter {
 	// ********** DOMAIN **********
 
 	protected int extractDomain(final String text, final int beginIndex, ParseNode node) throws ParseException {
-		int firstChar = syntax.firstChar(text, beginIndex);
+		int firstChar = pplFirstChar(text, beginIndex);
 		if (text.charAt(firstChar) != Token.DOMAIN_BEGIN) {
 			return firstChar;
 		}
-		int endIndex = syntax.blockEndIndex(text, firstChar, Token.DOMAIN_BEGIN, Token.DOMAIN_END);
+		int endIndex = pplBlockEndIndex(text, firstChar, Token.DOMAIN_BEGIN, Token.DOMAIN_END);
 		node.domain = text.substring(firstChar, endIndex + 1);
 		return endIndex + 1;
 	}
@@ -279,7 +262,7 @@ public class Splitter {
 	// ********** DEFAULT **********
 
 	protected int extractDefaultvalue(final String text, final int beginIndex, ParseNode node) throws ParseException {
-		int firstChar = syntax.firstChar(text, beginIndex);
+		int firstChar = pplFirstChar(text, beginIndex);
 		char c = text.charAt(firstChar); 
 		if (c != Token.DEFAULT_VALUE) {
 			return firstChar;
@@ -290,10 +273,10 @@ public class Splitter {
 		}
 		c = text.charAt(index);
 		int endIndex;
-		if (syntax.isStringDelimiter(c)) {
-			endIndex = syntax.nextStringDelimeter(text, index, c)+1;
+		if (pplIsStringDelimiter(c)) {
+			endIndex = pplNextStringDelimiter(text, index, c)+1;
 		} else {
-			endIndex = syntax.nextCharOrLast(text, index, Syntax.SPACE);
+			endIndex = pplNextCharOrLast(text, index, SPACE);
 		} 
 		node.defaultValue = text.substring(firstChar + 2, endIndex-1);
 		return endIndex+1;
@@ -302,23 +285,13 @@ public class Splitter {
 	// ********** TAGS **********
 
 	protected String extractTags(final String text, final int beginIndex) {
-		int firstChar = syntax.firstChar(text, beginIndex);
+		int firstChar = pplFirstChar(text, beginIndex);
 		int endIndex = firstChar;
 		for (int i = firstChar; i < text.length(); i++) {
-			if (!syntax.isIgnored(text.charAt(i))) {
+			if (!pplIsIgnored(text.charAt(i))) {
 				endIndex = i;
 			}
 		}
 		return text.substring(firstChar, endIndex + 1);
 	}
-
-
-	// **************************************************
-	// GET / SET
-	// **************************************************
-
-	public Syntax getSyntax() {
-		return syntax;
-	}
-
 }

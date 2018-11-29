@@ -28,7 +28,6 @@ public class BuzuBuilderTest {
 	public void test01DefaultsAfterSimpleCreate() {
 		Buzu buzu = new BuzuBuilder().build();
 		assertEquals(Buzu.class, buzu.getClass());
-		assertEquals(Syntax.class, buzu.context().syntax().getClass());
 		assertEquals(BasicContext.class, buzu.context().getClass());
 		assertEquals(BasicMetadataParser.class, buzu.parser().getClass());
 		assertEquals(Splitter.class, ((BasicMetadataParser) buzu.parser()).getSplitter().getClass());
@@ -40,10 +39,9 @@ public class BuzuBuilderTest {
 
 	@Test
 	public void test02DefaultsAfterNulls() {
-		Buzu buzu = new BuzuBuilder().syntax(null).context(null).splitter(null).metaclassReader(null)
+		Buzu buzu = new BuzuBuilder().context(null).splitter(null).metaclassReader(null)
 				.metadataLoader(null).metadataParser(null).skipStrategy(null).dialect(null).build();
 		assertEquals(Buzu.class, buzu.getClass());
-		assertEquals(Syntax.class, buzu.context().syntax().getClass());
 		assertEquals(BasicContext.class, buzu.context().getClass());
 		assertEquals(BasicMetadataParser.class, buzu.parser().getClass());
 		assertEquals(Splitter.class, ((BasicMetadataParser) buzu.parser()).getSplitter().getClass());
@@ -56,14 +54,11 @@ public class BuzuBuilderTest {
 	@Test
 	public void test03Custom() {
 		BuzuBuilder builder = new BuzuBuilder();
-		Buzu buzu = builder.syntax(new CustomSyntax()).context(new CustomContext()).splitter(new CustomSplitter())
+		Buzu buzu = builder.context(new CustomContext()).splitter(new CustomSplitter())
 				.metaclassReader(new CustomReader()).metadataLoader(new CustomLoader())
 				.metadataParser(new CustomParser()).skipStrategy(new CustomSkipStrategy()).dialect(Dialect.VERBOSE)
 				.addIgnore(CustomIfgnore.class).addUse(CustomUse.class).build();
 		assertEquals(Buzu.class, buzu.getClass());
-
-		assertEquals(Syntax.class, buzu.context().syntax().getClass());
-		assertEquals(CustomSyntax.class, builder.getSyntax().getClass());
 
 		assertEquals(CustomContext.class, buzu.context().getClass());
 
@@ -75,16 +70,6 @@ public class BuzuBuilderTest {
 		assertEquals(AnnotationSkipStrategy.class, builder.getSkipStrategy().getClass());
 		assertEquals(CustomLoader.class, buzu.loader().getClass());
 		assertTrue(buzu instanceof PplMapper);
-	}
-
-	@Test
-	public void testSyntax() {
-		Syntax syntax = new CustomSyntax() ;
-		BuzuBuilder builder = new BuzuBuilder().syntax(syntax);
-		Buzu buzu = builder.build();
-		assertEquals(Buzu.class, buzu.getClass());
-		assertEquals(syntax, buzu.context().syntax());
-		assertEquals(syntax, builder.getContext().syntax());
 	}
 
 	@Test
@@ -102,12 +87,6 @@ public class BuzuBuilderTest {
 	public void testAnnotationStrategy() {
 
 	}
-
-}
-
-class CustomSyntax extends Syntax {
-
-	private static final long serialVersionUID = 1L;
 
 }
 

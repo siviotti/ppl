@@ -53,10 +53,8 @@ public class Product {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
-			return false;
-		return true;
-	}
+        return Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price);
+    }
 
 	@Override
 	public String toString() {
