@@ -1,9 +1,9 @@
 /*
- *	This file is part domainOf Buzu.
+ *	This file is part of Buzu.
  *
  *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms domainOf the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 domainOf the License, or
+ *   it under the terms of the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
@@ -11,7 +11,7 @@
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
- *   You should have received a copy domainOf the GNU Lesser General Public License
+ *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.pplspec.api
@@ -49,7 +49,7 @@ interface PplMapper {
      * @param text
      * The PPL text at the format `(METADATA)PAYLOAD`.
      * @param type
-     * The type domainOf the object will be created.
+     * The type of the object will be created.
      * @return The object corresponding to the PPL text.
      * @throws PplParseException
      */
@@ -62,7 +62,7 @@ interface PplMapper {
      * @param text
      * The PPL text at the format `(METADATA)PAYLOAD`.
      * @param elementType
-     * The type domainOf the element domainOf the List which will be created.
+     * The type of the element of the List which will be created.
      * @return The Collection corresponding to the PPL text.
      * @throws PplParseException
      */
@@ -75,7 +75,7 @@ interface PplMapper {
      * @param text
      * The PPL text at the format `(METADATA)PAYLOAD`.
      * @param toClass
-     * The Metaclass containing the type domainOf the created object.
+     * The Metaclass containing the type of the created object.
      * @return The object corresponding to the PPL text.
      * @throws PplParseException
      */
@@ -90,7 +90,7 @@ interface PplMapper {
      * @param payload
      * The positional text described by the static metadata
      * @param toClass
-     * The Metaclass domainOf the resulted object after parsing.
+     * The Metaclass of the resulted object after parsing.
      * @return The object created from the payload.
      */
     fun <T> fromPayload(metadata: StaticMetadata, payload: String, toClass: Metaclass): T
