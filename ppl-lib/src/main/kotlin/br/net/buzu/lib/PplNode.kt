@@ -6,6 +6,8 @@ data class PplNode(val name: String = EMPTY, val type: String= EMPTY, val size: 
                    val domain: String= EMPTY, val defaultValue: String= EMPTY, val tags: String= EMPTY,
                    val children: Array<PplNode> = arrayOf()) {
 
+    fun hasChildren() = children.isNotEmpty()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
