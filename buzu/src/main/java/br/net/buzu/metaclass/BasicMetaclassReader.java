@@ -20,7 +20,7 @@ import br.net.buzu.context.BasicContext;
 import br.net.buzu.pplspec.annotation.PplMetadata;
 import br.net.buzu.pplspec.annotation.PplParser;
 import br.net.buzu.pplspec.api.MetaclassReader;
-import br.net.buzu.pplspec.api.PayloadParser;
+import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.api.SkipStrategy;
 import br.net.buzu.pplspec.context.PplContext;
 import br.net.buzu.pplspec.exception.PplException;
@@ -78,7 +78,7 @@ public class BasicMetaclassReader implements MetaclassReader {
 	public Metaclass read(Class<?> type, Class<?> elementType) {
 		PplMetadata pplMetadata = elementType.getAnnotation(PplMetadata.class);
 		PplParser pplParser = elementType.getAnnotation(PplParser.class);
-		Class<? extends PayloadParser> parserType = pplParser != null ? pplParser.value() : null;
+		Class<? extends PayloadMapper> parserType = pplParser != null ? pplParser.value() : null;
 		return createMetaclass(Syntax.EMPTY, type, elementType, pplMetadata, null, parserType);
 	}
 
@@ -102,7 +102,7 @@ public class BasicMetaclassReader implements MetaclassReader {
 	}
 
 	private Metaclass createMetaclass(String parentId, Class<?> fieldType, Class<?> elementType,
-			PplMetadata pplMetadata, Field field, Class<? extends PayloadParser> parserType) {
+			PplMetadata pplMetadata, Field field, Class<? extends PayloadMapper> parserType) {
 		boolean multiple = Reflect.isMultiple(fieldType);
 		boolean complex = !context.subtypeManager().isSimple(elementType);
 		MetaInfo metaInfo = createMetaInfo(parentId, pplMetadata, elementType, field != null ? field.getName() : "");

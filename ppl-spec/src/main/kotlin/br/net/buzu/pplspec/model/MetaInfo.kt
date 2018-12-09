@@ -20,14 +20,14 @@ import br.net.buzu.pplspec.annotation.PplMetadata
 import br.net.buzu.pplspec.lang.*
 import java.util.*
 
-/**
- * Basic Pojo resulting of annotations information or manual setting. This class
- * represents the PPL elements: name, type, size, scale, occurs , defaultValue,
- * domain, tags, key and indexed.
- *
- * @author Douglas Siviotti
- * @since 1.0
- */
+    /**
+     * Basic Pojo resulting of annotations information or manual setting. This class
+     * represents the PPL elements: name, type, size, scale, occurs , defaultValue,
+     * domain, tags, key and indexed.
+     *
+     * @author Douglas Siviotti
+     * @since 1.0
+     */
 class MetaInfo
 /**
  * @param index
@@ -42,7 +42,7 @@ class MetaInfo
  * @param domain
  * @param tags
  */
-@JvmOverloads constructor(parentId: String, val index: Int, val name: String?, subtype: Subtype, size: Int, scale: Int, minOccurs: Int,
+@JvmOverloads constructor(parentId: String, val index: Int, val name: String, subtype: Subtype, size: Int, scale: Int, minOccurs: Int,
                           val maxOccurs: Int, domain: Domain? = null, defaultValue: String? = EMPTY, tags: String? = EMPTY) : Comparable<MetaInfo> {
 
     // Basic

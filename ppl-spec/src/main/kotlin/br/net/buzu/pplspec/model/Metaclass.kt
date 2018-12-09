@@ -16,7 +16,7 @@
  */
 package br.net.buzu.pplspec.model
 
-import br.net.buzu.pplspec.api.PayloadParser
+import br.net.buzu.pplspec.api.PayloadMapper
 
 /**
  * Imutable informations about the target class on a parsing operation.
@@ -48,7 +48,7 @@ interface Metaclass : Metadata {
 
     fun elementType(): Class<*>
 
-    fun parserType(): Class<out PayloadParser>
+    fun parserType(): Class<out PayloadMapper>
 
     fun hasCustomParser(): Boolean
 

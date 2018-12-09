@@ -16,6 +16,8 @@
  */
 package br.net.buzu.pplspec.context
 
+import br.net.buzu.pplspec.api.MetadataFactory
+
 /**
  * Context domainOf parsing/serialization with Factories and Managers used to create
  * objects and others extension points.

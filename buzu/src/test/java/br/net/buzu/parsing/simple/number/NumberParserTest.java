@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class NumberParserTest {
 
 	BasicMetaclassReader reader = new BasicMetaclassReader();
-	NumberParser parser = NumberParser.INSTANCE;
+	NumberMapper parser = NumberMapper.INSTANCE;
 	Metaclass bigDecimalClass = reader.read(BigDecimal.class);
 
 	@Test

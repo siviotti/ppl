@@ -6,7 +6,7 @@ import br.net.buzu.Buzu;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import br.net.buzu.pplspec.api.PayloadParser;
+import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.model.Metaclass;
 import br.net.buzu.pplspec.model.StaticMetadata;
 import com.google.gson.Gson;
@@ -139,7 +139,7 @@ public class RunPoc {
 	private static void serializePpl2(Object object, int loop) {
 		StaticMetadata metadata = (StaticMetadata) new MetadataBuilder().build(object);
 		Metaclass metaclass = new BasicMetaclassReader().read(object.getClass());
-		PayloadParser parser = new BasicParserFactory().create(metaclass);
+		PayloadMapper parser = new BasicParserFactory().create(metaclass);
 		t0 = System.currentTimeMillis();
 		for (int i = 0; i < loop; i++) {
 			parser.serialize(metadata, object, metaclass);
@@ -186,7 +186,7 @@ public class RunPoc {
 	private static void parsePpl2(Object object, int loop) {
 		StaticMetadata metadata = (StaticMetadata) new MetadataBuilder().build(object);
 		Metaclass metaclass = new BasicMetaclassReader().read(object.getClass());
-		PayloadParser parser = new BasicParserFactory().create( metaclass);
+		PayloadMapper parser = new BasicParserFactory().create( metaclass);
 		String str = parser.serialize(metadata, object, metaclass);
 		t0 = System.currentTimeMillis();
 		for (int i = 0; i < loop; i++) {

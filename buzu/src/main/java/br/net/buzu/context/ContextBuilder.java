@@ -16,8 +16,8 @@
  */
 package br.net.buzu.context;
 
+import br.net.buzu.pplspec.api.MetadataFactory;
 import br.net.buzu.pplspec.context.*;
-import br.net.buzu.pplspec.lang.Syntax;
 
 /**
  * Context domainOf parsing/serialization with Factories used to create objects and

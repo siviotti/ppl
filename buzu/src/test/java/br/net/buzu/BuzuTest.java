@@ -5,6 +5,7 @@ import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
+import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
 import br.net.buzu.pplspec.api.MetadataCoder;
 import br.net.buzu.pplspec.exception.PplParseException;
 import br.net.buzu.pplspec.lang.Token;
@@ -141,7 +142,8 @@ public class BuzuTest {
 
 	@Before
 	public void before() {
-		buzu = new Buzu();
+		//buzu = new Buzu();
+		buzu = new BuzuBuilder().metadataParser(new GenericMetadataParser()).build();
 	}
 
 	// ********** CREATE **********

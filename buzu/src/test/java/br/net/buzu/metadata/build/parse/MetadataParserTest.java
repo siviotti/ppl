@@ -90,7 +90,6 @@ public class MetadataParserTest {
 
 	@Test
 	public void testParseComplex() {
-		BasicMetadataParser parser = new BasicMetadataParser();
 		Metadata metadata = parser.parse("", PERSON, 0);
 		assertEquals(3, metadata.children().size());
 		assertMetadata(metadata.children().get(0), "name", Subtype.STRING, 20, 0, 1);
@@ -100,7 +99,6 @@ public class MetadataParserTest {
 
 	@Test
 	public void testParseExtension() {
-		BasicMetadataParser parser = new BasicMetadataParser();
 		Metadata metadata = parser.parse("", EXT, 0);
 		assertMetadata(metadata, "color", Subtype.STRING, 10, 0, 1);
 		Domain domain = domainOf("black", "white", "red");
@@ -109,7 +107,6 @@ public class MetadataParserTest {
 
 	@Test
 	public void testEmptyMetadata() {
-		BasicMetadataParser parser = new BasicMetadataParser();
 		StaticMetadata metadada = (StaticMetadata) parser.parse(pplStringOf("()"));
 		assertEquals(Syntax.NO_NAME_START + "0", metadada.name());
 		assertEquals(Subtype.STRING, metadada.info().getSubtype());
@@ -123,7 +120,6 @@ public class MetadataParserTest {
 
 	@Test
 	public void testEmptyLayout() {
-		BasicMetadataParser parser = new BasicMetadataParser();
 		StaticMetadata metadada = (StaticMetadata) parser.parse(pplStringOf("(X:(;;))"));
 		assertEquals(ComplexStaticMetadada.class, metadada.getClass());
 		assertEquals("X", metadada.name());
@@ -138,18 +134,16 @@ public class MetadataParserTest {
 
 	@Test(expected = MetadataParseException.class)
 	public void testParseNameErrorTooLong() {
-		new BasicMetadataParser()
-				.parseName(new ParseNode("name5678901234567890123456789012345678901234567890xyz", "", "", "", null));
+		parser.parseName(new ParseNode("name5678901234567890123456789012345678901234567890xyz", "", "", "", null));
 	}
 
 	@Test(expected = MetadataParseException.class)
 	public void testParseNameErrorInvalidChar() {
-		new BasicMetadataParser().parseName(new ParseNode("name@xyz", "", "", "", null));
+		parser.parseName(new ParseNode("name@xyz", "", "", "", null));
 	}
 
 	@Test
 	public void testParseSubtype() {
-		BasicMetadataParser parser = new BasicMetadataParser();
 		assertEquals(Subtype.STRING, parser.parseSubtype(new ParseNode("", "", "", "", null)));
 		assertEquals(Subtype.STRING, parser.parseSubtype(new ParseNode("", "S", "", "", null)));
 		assertEquals(Subtype.STRING, parser.parseSubtype(NAME));
@@ -158,7 +152,6 @@ public class MetadataParserTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testParseSubtypeError() {
-		BasicMetadataParser parser = new BasicMetadataParser();
 		Metadata metadata = parser.parse(pplStringOf("(name:z20#0-1)"));
 		assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1);
 	}

@@ -16,6 +16,7 @@
  */
 package br.net.buzu.context;
 
+import br.net.buzu.pplspec.api.MetadataFactory;
 import br.net.buzu.pplspec.context.*;
 
 import java.util.Objects;

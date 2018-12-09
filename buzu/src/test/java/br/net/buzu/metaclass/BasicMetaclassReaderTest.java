@@ -1,12 +1,12 @@
 package br.net.buzu.metaclass;
 
 import br.net.buzu.context.BasicParserFactory;
-import br.net.buzu.parsing.simple.EnumNameParser;
-import br.net.buzu.parsing.simple.oldtime.OldTimestampParser;
-import br.net.buzu.parsing.simple.time.DateParser;
+import br.net.buzu.parsing.simple.EnumNameMapper;
+import br.net.buzu.parsing.simple.oldtime.OldTimestampMapper;
+import br.net.buzu.parsing.simple.time.DateMapper;
 import br.net.buzu.pplspec.annotation.PplParser;
 import br.net.buzu.pplspec.api.MetaclassReader;
-import br.net.buzu.pplspec.api.PayloadParser;
+import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.MetaInfoTest;
 import br.net.buzu.pplspec.model.Metaclass;
@@ -171,25 +171,25 @@ public class BasicMetaclassReaderTest {
 		Metaclass metaclass = reader.read(Bean.class);
 		
 		Metaclass field2Metaclass = metaclass.getChildByName("field2");
-		assertEquals(EnumNameParser.class, field2Metaclass.parserType());
+		assertEquals(EnumNameMapper.class, field2Metaclass.parserType());
 		
 		BasicParserFactory factory = new BasicParserFactory();
 		Metaclass field4Metaclass = metaclass.getChildByName("field4");
-		PayloadParser parser4 = factory.create(field4Metaclass);
-		assertEquals(OldTimestampParser.class, parser4.getClass());
+		PayloadMapper parser4 = factory.create(field4Metaclass);
+		assertEquals(OldTimestampMapper.class, parser4.getClass());
 		
 		Metaclass field5Metaclass = metaclass.getChildByName("field5");
-		PayloadParser parser5 = factory.create(field5Metaclass);
-		assertEquals(OldTimestampParser.class, parser5.getClass());
+		PayloadMapper parser5 = factory.create(field5Metaclass);
+		assertEquals(OldTimestampMapper.class, parser5.getClass());
 
 		Metaclass field6Metaclass = metaclass.getChildByName("field6");
-		PayloadParser parser6 = factory.create(field6Metaclass);
-		assertEquals(DateParser.class, parser6.getClass());
+		PayloadMapper parser6 = factory.create(field6Metaclass);
+		assertEquals(DateMapper.class, parser6.getClass());
 	}
 
 }
 
-@PplParser(EnumNameParser.class)
+@PplParser(EnumNameMapper.class)
 class CustomType{
 	
 	
@@ -200,7 +200,7 @@ class Bean{
 	private CustomType field2;
 	private String field3;
 	private Date field4;
-	@PplParser(OldTimestampParser.class)
+	@PplParser(OldTimestampMapper.class)
 	private Date field5;
 	private LocalDate field6;
 	public int getField1() {

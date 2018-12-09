@@ -16,7 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.pplspec.api.PayloadParser;
+import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.model.*;
 import br.net.buzu.util.StaticBehave;
 
@@ -34,7 +34,7 @@ public class ComplexStaticMetaclass extends ComplexMetaclass implements StaticMe
 	private final int serialSize;
 
 	public ComplexStaticMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind,
-			MetaInfo metaInfo, Class<? extends PayloadParser> parserType, List<Metaclass> children) {
+                                  MetaInfo metaInfo, Class<? extends PayloadMapper> parserType, List<Metaclass> children) {
 		super(field, fieldType, elementType, kind, metaInfo, parserType, children);
 		int tmp = 0;
 		for (Metaclass child : children) {

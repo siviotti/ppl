@@ -17,7 +17,7 @@
 package br.net.buzu.context;
 
 import br.net.buzu.metadata.*;
-import br.net.buzu.pplspec.context.MetadataFactory;
+import br.net.buzu.pplspec.api.MetadataFactory;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.util.StaticBehave;

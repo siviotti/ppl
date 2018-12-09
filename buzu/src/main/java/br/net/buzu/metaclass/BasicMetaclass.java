@@ -16,7 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.pplspec.api.PayloadParser;
+import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.lang.Token;
 import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
@@ -41,11 +41,11 @@ public abstract class BasicMetaclass implements Metaclass {
 	private final String fieldName;
 	private final Class<?> fieldType;
 	private final Class<?> elementType;
-	private final Class<? extends PayloadParser> parserType;
+	private final Class<? extends PayloadMapper> parserType;
 	private final MetaInfo metaInfo;
 
 	public BasicMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
-			Class<? extends PayloadParser> parserType) {
+			Class<? extends PayloadMapper> parserType) {
 		super();
 		this.field = field;
 		this.fieldName = field != null ? field.getName() : "";
@@ -80,7 +80,7 @@ public abstract class BasicMetaclass implements Metaclass {
 	}
 
 	@Override
-	public Class<? extends PayloadParser> parserType() {
+	public Class<? extends PayloadMapper> parserType() {
 		return parserType;
 	}
 

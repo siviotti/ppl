@@ -17,7 +17,7 @@
 package br.net.buzu.metaclass;
 
 
-import br.net.buzu.pplspec.api.PayloadParser;
+import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metaclass;
@@ -39,14 +39,13 @@ public class ComplexMetaclass extends BasicMetaclass {
 	private final Map<String, Metaclass> internalMap = new HashMap<>();
 
 	public ComplexMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
-			Class<? extends PayloadParser> parserType, List<? extends Metaclass> children) {
+                            Class<? extends PayloadMapper> parserType, List<? extends Metaclass> children) {
 		super(field, fieldType, elementType, kind, metaInfo, parserType);
 		this.children = children != null ? Collections.unmodifiableList(children)
 				: Collections.unmodifiableList(new ArrayList<>());
 		this.children.forEach(c -> internalMap.put(c.info().getName(), c));
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Metaclass> children() {
 		return children;

@@ -259,7 +259,7 @@ fun pplBlockEndIndex(text: String, beginIndex: Int, openChar: Char, closeChar: C
 // String
 // **************************************************
 
-fun pplIsStringDelimiter(c: Char): Boolean {
+inline fun pplIsStringDelimiter(c: Char): Boolean {
     return c == PLIC || c == QUOTE
 }
 

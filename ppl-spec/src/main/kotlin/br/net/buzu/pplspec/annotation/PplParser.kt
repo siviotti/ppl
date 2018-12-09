@@ -16,7 +16,7 @@
  */
 package br.net.buzu.pplspec.annotation
 
-import br.net.buzu.pplspec.api.PayloadParser
+import br.net.buzu.pplspec.api.PayloadMapper
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import kotlin.reflect.KClass
@@ -30,4 +30,4 @@ import kotlin.reflect.KClass
  */
 @Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS, AnnotationTarget.FILE)
 @Retention(RetentionPolicy.RUNTIME)
-annotation class PplParser(val value: KClass<out PayloadParser>)
+annotation class PplParser(val value: KClass<out PayloadMapper>)

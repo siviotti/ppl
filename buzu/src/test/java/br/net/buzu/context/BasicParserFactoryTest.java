@@ -1,8 +1,8 @@
 package br.net.buzu.context;
 
 import br.net.buzu.metaclass.SimpleMetaclass;
-import br.net.buzu.parsing.simple.text.StringParser;
-import br.net.buzu.pplspec.api.PayloadParser;
+import br.net.buzu.parsing.simple.text.StringMapper;
+import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.context.ParserFactory;
 import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
@@ -24,8 +24,8 @@ public class BasicParserFactoryTest {
 		ParserFactory parserFactory = new BasicParserFactory();
 		MetaInfo metaInfo = new MetaInfo("", 0, "testname", Subtype.STRING, 10,0, 0, 1);
 		Metaclass metaclass = new SimpleMetaclass(null, String.class, String.class, Kind.ATOMIC, metaInfo, null);
-		PayloadParser parser = parserFactory.create(metaclass);
-		assertEquals(StringParser.class, parser.getClass());
+		PayloadMapper parser = parserFactory.create(metaclass);
+		assertEquals(StringMapper.class, parser.getClass());
 	}
 
 }

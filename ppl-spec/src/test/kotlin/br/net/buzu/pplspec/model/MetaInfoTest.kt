@@ -20,43 +20,43 @@ class MetaInfoTest {
     @Test(expected = KotlinNullPointerException::class)
     fun testMissingSubtype() {
         // null!! creates a KotlinNullPointerException
-        MetaInfo("", 0, null, null!!, 0, 0, 0, 0)
+        MetaInfo("", 0, EMPTY, null!!, 0, 0, 0, 0)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun testInvalidOccurs() {
-        MetaInfo("", 0, null, Subtype.STRING, 0, 0, 5, 0) // 5 > 0, Unbounded
-        MetaInfo("", 0, null, Subtype.STRING, 0, 0, 5, 4) // 5 > 4, invalid
+        MetaInfo("", 0, EMPTY, Subtype.STRING, 0, 0, 5, 0) // 5 > 0, Unbounded
+        MetaInfo("", 0, EMPTY, Subtype.STRING, 0, 0, 5, 4) // 5 > 4, invalid
     }
 
     @Test
     fun testEmptyMetaInfo() {
-        val metaInfo = MetaInfo("", 0, null, Subtype.STRING, 0, 0, 0, 0)
+        val metaInfo = MetaInfo("", 0, EMPTY, Subtype.STRING, 0, 0, 0, 0)
         assertFalse(metaInfo.hasDomain())
-        assertMetainfo(metaInfo, null, Subtype.STRING, 0, 0, 0, 0, EMPTY, Domain.EMPTY, EMPTY)
+        assertMetainfo(metaInfo, EMPTY, Subtype.STRING, 0, 0, 0, 0, EMPTY, Domain.EMPTY, EMPTY)
         assertEquals("", metaInfo.id)
     }
 
     @Test
     fun testIncomplete() {
-        val metaInfo1 = MetaInfo("", 0, null, Subtype.STRING, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
+        val metaInfo1 = MetaInfo("", 0, EMPTY, Subtype.STRING, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
                 0, PplMetadata.EMPTY_INTEGER)
-        assertMetainfo(metaInfo1, null, Subtype.STRING, PplMetadata.EMPTY_INTEGER, MetaInfo.NO_SCALE, 0,
+        assertMetainfo(metaInfo1, EMPTY, Subtype.STRING, PplMetadata.EMPTY_INTEGER, MetaInfo.NO_SCALE, 0,
                 PplMetadata.EMPTY_INTEGER, EMPTY, Domain.EMPTY, EMPTY)
         assertFalse(metaInfo1.isComplete)
         assertFalse(metaInfo1.hasSize())
         assertFalse(metaInfo1.hasMaxOccurs())
         //
-        val metaInfo2 = MetaInfo("", 0, null, Subtype.STRING, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
+        val metaInfo2 = MetaInfo("", 0, EMPTY, Subtype.STRING, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
                 0, 5)
-        assertMetainfo(metaInfo2, null, Subtype.STRING, PplMetadata.EMPTY_INTEGER, MetaInfo.NO_SCALE, 0, 5,
+        assertMetainfo(metaInfo2, EMPTY, Subtype.STRING, PplMetadata.EMPTY_INTEGER, MetaInfo.NO_SCALE, 0, 5,
                 EMPTY, Domain.EMPTY, EMPTY)
         assertFalse(metaInfo2.isComplete)
         assertFalse(metaInfo2.hasSize()) // PplMetadata.EMPTY_INTEGER
         assertTrue(metaInfo2.hasMaxOccurs()) // 5
         //
-        val metaInfo3 = MetaInfo("", 0, null, Subtype.STRING, 10, 0, 0, PplMetadata.EMPTY_INTEGER)
-        assertMetainfo(metaInfo3, null, Subtype.STRING, 10, 0, 0, PplMetadata.EMPTY_INTEGER, EMPTY,
+        val metaInfo3 = MetaInfo("", 0, EMPTY, Subtype.STRING, 10, 0, 0, PplMetadata.EMPTY_INTEGER)
+        assertMetainfo(metaInfo3, EMPTY, Subtype.STRING, 10, 0, 0, PplMetadata.EMPTY_INTEGER, EMPTY,
                 Domain.EMPTY, EMPTY)
         assertFalse(metaInfo3.isComplete)
         assertTrue(metaInfo3.hasSize()) // PplMetadata.EMPTY_INTEGER
@@ -65,8 +65,8 @@ class MetaInfoTest {
 
     @Test
     fun testCompleteMetaInfo() {
-        val metaInfo2 = MetaInfo("", 0, null, Subtype.STRING, 10, 0, 0, 5)
-        assertMetainfo(metaInfo2, null, Subtype.STRING, 10, 0, 0, 5, EMPTY, Domain.EMPTY, EMPTY)
+        val metaInfo2 = MetaInfo("", 0, EMPTY, Subtype.STRING, 10, 0, 0, 5)
+        assertMetainfo(metaInfo2, EMPTY, Subtype.STRING, 10, 0, 0, 5, EMPTY, Domain.EMPTY, EMPTY)
         assertTrue(metaInfo2.isComplete)
         assertTrue(metaInfo2.hasSize()) // 10
         assertTrue(metaInfo2.hasMaxOccurs()) // 5
@@ -74,29 +74,29 @@ class MetaInfoTest {
 
     @Test
     fun testRequired() {
-        val metaInfo1 = MetaInfo("", 0, null, Subtype.STRING, 10, 0, 0, 5)
+        val metaInfo1 = MetaInfo("", 0, EMPTY, Subtype.STRING, 10, 0, 0, 5)
         assertFalse(metaInfo1.isRequired) // min = 0 - not required
-        val metaInfo2 = MetaInfo("", 0, null, Subtype.STRING, 10, 0, 1, 5)
+        val metaInfo2 = MetaInfo("", 0, EMPTY, Subtype.STRING, 10, 0, 1, 5)
         assertTrue(metaInfo2.isRequired) // min = 1 = requered
-        val metaInfo3 = MetaInfo("", 0, null, Subtype.STRING, 10, 0, 5, 5)
+        val metaInfo3 = MetaInfo("", 0, EMPTY, Subtype.STRING, 10, 0, 5, 5)
         assertTrue(metaInfo3.isRequired) // min = 5 = requered
     }
 
     @Test
     fun testMultiple() {
-        val metaInfo1 = MetaInfo("", 0, null, Subtype.STRING, 10, 0, 0, 5)
+        val metaInfo1 = MetaInfo("", 0, EMPTY, Subtype.STRING, 10, 0, 0, 5)
         assertTrue(metaInfo1.isMultiple) // 5
-        val metaInfo2 = MetaInfo("", 0, null, Subtype.STRING, 10, 0, 0, 1)
+        val metaInfo2 = MetaInfo("", 0, EMPTY, Subtype.STRING, 10, 0, 0, 1)
         assertFalse(metaInfo2.isMultiple) // 1
     }
 
     @Test
     fun testUnbounded() {
-        val metaInfo1 = MetaInfo("", 0, null, Subtype.STRING, 10, 0, 0, 0)
+        val metaInfo1 = MetaInfo("", 0, EMPTY, Subtype.STRING, 10, 0, 0, 0)
         assertTrue(metaInfo1.isMultiple) // 5
         assertTrue(metaInfo1.isUnbounded) // 0 = many
 
-        val metaInfo2 = MetaInfo("", 0, null, Subtype.STRING, 10, 0, 0, 1)
+        val metaInfo2 = MetaInfo("", 0, EMPTY, Subtype.STRING, 10, 0, 0, 1)
         assertFalse(metaInfo2.isMultiple) // 1
         assertFalse(metaInfo2.isUnbounded) // 1 = unique
     }

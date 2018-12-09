@@ -16,7 +16,7 @@
  */
 package br.net.buzu.pplspec.context
 
-import br.net.buzu.pplspec.api.PayloadParser
+import br.net.buzu.pplspec.api.PayloadMapper
 import br.net.buzu.pplspec.model.Metaclass
 
 /**
@@ -34,5 +34,5 @@ interface ParserFactory {
      * The metadata
      * @return The instance domainOf Parser.
      */
-    fun create(metaClass: Metaclass): PayloadParser
+    fun create(metaClass: Metaclass): PayloadMapper
 }

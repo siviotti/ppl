@@ -16,7 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.pplspec.api.PayloadParser;
+import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.model.Kind;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metaclass;
@@ -37,7 +37,7 @@ public class SimpleMetaclass extends BasicMetaclass {
 	private static final String SIMPLE_METACLASS_HAS_NO_CHILDREN = "SimpleMetaclass has no children";
 
 	public SimpleMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
-			Class<? extends PayloadParser> parserType) {
+			Class<? extends PayloadMapper> parserType) {
 		super(field, fieldType, elementType, kind, metaInfo, parserType);
 	}
 

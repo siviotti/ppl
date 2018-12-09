@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Unit Test for EnumNameParser.
+ * Unit Test for EnumNameMapper.
  * 
  * @author Douglas Siviotti (073.116.317-69) #21 3509-7585
  * @since 1.0
