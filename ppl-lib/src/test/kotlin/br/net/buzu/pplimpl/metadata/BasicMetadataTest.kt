@@ -1,7 +1,5 @@
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.pplspec.model.Metadata
-import br.net.buzu.pplspec.model.PplString
 import br.net.buzu.pplspec.model.pplStringOf
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -14,8 +12,8 @@ class BasicMetadataTest {
     @Test
     fun test() {
         val pplString = pplStringOf("(name:S10;age:I3;city:S10)")
-        val bm1 = parse(pplString)
-        val bm2 = parse(pplString)
+        val bm1 = parseMetadata(pplString)
+        val bm2 = parseMetadata(pplString)
 
         assertTrue(bm1 == bm2)
         assertTrue(bm2 == bm1)

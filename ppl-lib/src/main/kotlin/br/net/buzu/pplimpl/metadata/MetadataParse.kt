@@ -32,17 +32,17 @@ val createSpecificMetadata : CreateMetadata = { metaInfo, children ->
     }
 }
 
-fun parse(pplString: PplString): Metadata {
-    return parse(pplString, createMetadata = createSpecificMetadata)
+fun parseMetadata(pplString: PplString): Metadata {
+    return parseMetadata(pplString, createMetadata = createSpecificMetadata)
 }
 
-fun parse(pplString: PplString, createMetadata: CreateMetadata): Metadata {
+fun parseMetadata(pplString: PplString, createMetadata: CreateMetadata): Metadata {
     try {
         val nodes = splitNodes(pplString.pplMetadata)
         if (nodes.size > 1) {
-            return parse(EMPTY, createRoot(nodes), 0, createMetadata)
+            return parseMetadata(EMPTY, createRoot(nodes), 0, createMetadata)
         } else {
-            return parse(EMPTY, nodes[0], 0, createMetadata)
+            return parseMetadata(EMPTY, nodes[0], 0, createMetadata)
         }
     } catch (e: ParseException) {
         throw PplParseException("Parsing error on text:\n$pplString", e)
@@ -64,7 +64,7 @@ internal fun createRoot(nodes: List<PplNode>): PplNode {
     return PplNode(name = rootName, children = children)
 }
 
-internal fun parse(parentId: String, node: PplNode, index: Int, createMetadata: CreateMetadata): Metadata {
+internal fun parseMetadata(parentId: String, node: PplNode, index: Int, createMetadata: CreateMetadata): Metadata {
     val name = parseName(node, index)
     val subtype = parseSubtype(node)
     val size = parseSize(node, subtype)
@@ -83,7 +83,7 @@ internal fun parseChildren(parentId: String, node: PplNode, createMetadata: Crea
     }
     val metas = mutableListOf<Metadata>()
     for (i in 0 until node.children.size) {
-        metas.add(parse(parentId, node.children.get(i), i, createMetadata))
+        metas.add(parseMetadata(parentId, node.children.get(i), i, createMetadata))
     }
     return metas
 }
@@ -218,6 +218,6 @@ private fun extractItem(domain: String, beginIndex: Int, endIndex: Int): String 
 
 class GenericMetadataParser: MetadataParser {
     override fun parse(pplString: PplString): Metadata {
-        return br.net.buzu.pplimpl.metadata.parse(pplString)
+        return br.net.buzu.pplimpl.metadata.parseMetadata(pplString)
     }
 }

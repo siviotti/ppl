@@ -38,7 +38,7 @@ public class CompactMetadataCoder extends ShortMetadataCoder{
 
 
 	@Override
-	// Hide default type (C)
+	// Hide default type (S)
 	protected String serializeSimpleType(MetaInfo meta) {
 		if (DEFAULT_SINGLE.equals(meta.getSubtype())) {
 			return EMPTY;

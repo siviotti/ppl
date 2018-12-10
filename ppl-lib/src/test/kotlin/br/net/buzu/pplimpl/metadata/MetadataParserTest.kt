@@ -20,13 +20,13 @@ class MetadataParserTest {
 
     @Test
     fun testParse() {
-        val metadata = parse(pplStringOf("(name:S20#0-1)"))
+        val metadata = parseMetadata(pplStringOf("(name:S20#0-1)"))
         assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1)
     }
 
     @Test
     fun testParseSingle() {
-        val metadata = parse("", NAME, 0, createSpecificMetadata)
+        val metadata = parseMetadata("", NAME, 0, createSpecificMetadata)
         assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1)
     }
 
@@ -41,7 +41,7 @@ class MetadataParserTest {
 
     @Test
     fun testParseComplex() {
-        val metadata = parse("", PERSON, 0, createSpecificMetadata)
+        val metadata = parseMetadata("", PERSON, 0, createSpecificMetadata)
         assertEquals(3, metadata.children<Metadata>().size)
         assertMetadata(metadata.children<Metadata>()[0], "name", Subtype.STRING, 20, 0, 1)
         assertMetadata(metadata.children<Metadata>()[1], "age", Subtype.INTEGER, 2, 0, 1)
@@ -50,7 +50,7 @@ class MetadataParserTest {
 
     @Test
     fun testParseExtension() {
-        val metadata = parse("", EXT, 0, createSpecificMetadata)
+        val metadata = parseMetadata("", EXT, 0, createSpecificMetadata)
         assertMetadata(metadata, "color", Subtype.STRING, 10, 0, 1)
         val domain = domainOf("black", "white", "red")
         assertEquals(domain.items(), metadata.info().domain.items())
@@ -58,7 +58,7 @@ class MetadataParserTest {
 
     @Test
     fun testEmptyMetadata() {
-        val metadada = parse(pplStringOf("()")) as StaticMetadata
+        val metadada = parseMetadata(pplStringOf("()")) as StaticMetadata
         assertEquals(NO_NAME_START + "0", metadada.name())
         assertEquals(Subtype.STRING, metadada.info().subtype)
         assertEquals(Subtype.CHAR.fixedSize(), metadada.info().size)
@@ -71,7 +71,7 @@ class MetadataParserTest {
 
     @Test
     fun testEmptyLayout() {
-        val metadada = parse(pplStringOf("(X:(;;))")) as StaticMetadata
+        val metadada = parseMetadata(pplStringOf("(X:(;;))")) as StaticMetadata
         //assertEquals(ComplexStaticMetadada.class, metadada.getClass());
         assertEquals("X", metadada.name())
         assertEquals(Subtype.OBJ, metadada.info().subtype)
@@ -104,7 +104,7 @@ class MetadataParserTest {
     @Test
     fun testParseSubtypeError() {
         assertThrows(IllegalArgumentException::class.java) {
-            val metadata = parse(pplStringOf("(name:z20#0-1)"))
+            val metadata = parseMetadata(pplStringOf("(name:z20#0-1)"))
             assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1)
         }
     }

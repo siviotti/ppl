@@ -42,7 +42,7 @@ import java.util.Objects;
  */
 public class Buzu implements PplMapper {
 
-	static final String PARSE_REQUIRES_STATIC_METADATA = "The 'parse' operation (fromPPL) requires a StaticMetadata";
+	static final String PARSE_REQUIRES_STATIC_METADATA = "The 'parseMetadata' operation (fromPPL) requires a StaticMetadata";
 	static final Dialect DEFAULT_DIALECT = Dialect.Companion.getDEFAULT();
 
 	private final PplContext context;

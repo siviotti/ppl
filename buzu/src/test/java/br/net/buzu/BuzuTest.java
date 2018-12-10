@@ -2,11 +2,14 @@ package br.net.buzu;
 
 import br.net.buzu.context.BasicCoderManager;
 import br.net.buzu.context.BasicContext;
+import br.net.buzu.context.ContextBuilder;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
+import br.net.buzu.pplimpl.metadata.GenericCodeManager;
 import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
 import br.net.buzu.pplspec.api.MetadataCoder;
+import br.net.buzu.pplspec.context.PplContext;
 import br.net.buzu.pplspec.exception.PplParseException;
 import br.net.buzu.pplspec.lang.Token;
 import br.net.buzu.pplspec.model.Dialect;
@@ -143,7 +146,12 @@ public class BuzuTest {
 	@Before
 	public void before() {
 		//buzu = new Buzu();
-		buzu = new BuzuBuilder().metadataParser(new GenericMetadataParser()).build();
+		buzu = kotlinBuzu();
+	}
+
+	private static Buzu kotlinBuzu(){
+		PplContext context = new ContextBuilder().coderManager(new GenericCodeManager()).build();
+		return new BuzuBuilder().context(context).metadataParser(new GenericMetadataParser()).build();
 	}
 
 	// ********** CREATE **********
@@ -378,11 +386,11 @@ public class BuzuTest {
 		people.add(new Person("Catnoir", 16, "London"));
 		String ppl = buzu.toPpl(people);
 
-		// Explicit collection parse - List.size = 2
+		// Explicit collection parseMetadata - List.size = 2
 		List<Person> list = buzu.fromPplList(ppl, Person.class);
 		assertEquals(2, list.size());
 
-		// Explicit collection parse - List.size = 1
+		// Explicit collection parseMetadata - List.size = 1
 		people.remove(1);
 		ppl = buzu.toPpl(people);
 		list = buzu.fromPplList(ppl, Person.class);

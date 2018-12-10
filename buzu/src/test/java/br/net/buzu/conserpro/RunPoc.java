@@ -148,7 +148,7 @@ public class RunPoc {
 		System.out.println("serialize PPL2:" + dif(t1, t0) + resume(object, loop));
 	}
 
-	// ********** parse **********
+	// ********** parseMetadata **********
 
 	private static void parseXml(Object object, int loop) {
 		XStream xstream = PocTime.getXStream();
@@ -158,7 +158,7 @@ public class RunPoc {
 			xstream.fromXML(str);
 		}
 		t1 = System.currentTimeMillis();
-		System.out.println("parse  XML:" + dif(t1, t0) + resume(object, loop));
+		System.out.println("parseMetadata  XML:" + dif(t1, t0) + resume(object, loop));
 	}
 
 	private static void parseJson(Object object, int loop) {
@@ -169,7 +169,7 @@ public class RunPoc {
 			gson.fromJson(str, object.getClass());
 		}
 		t1 = System.currentTimeMillis();
-		System.out.println("parse JSON:" + dif(t1, t0) + resume(object, loop));
+		System.out.println("parseMetadata JSON:" + dif(t1, t0) + resume(object, loop));
 	}
 
 	private static void parsePpl1(Object object, int loop) {
@@ -180,7 +180,7 @@ public class RunPoc {
 			buzu.fromPpl(str, object.getClass());
 		}
 		t1 = System.currentTimeMillis();
-		System.out.println("parse PPL1:" + dif(t1, t0) + resume(object, loop));
+		System.out.println("parseMetadata PPL1:" + dif(t1, t0) + resume(object, loop));
 	}
 
 	private static void parsePpl2(Object object, int loop) {
@@ -193,7 +193,7 @@ public class RunPoc {
 			parser.parse(metadata, str, metaclass);
 		}
 		t1 = System.currentTimeMillis();
-		System.out.println("parse PPL2:" + dif(t1, t0) + resume(object, loop));
+		System.out.println("parseMetadata PPL2:" + dif(t1, t0) + resume(object, loop));
 	}
 
 }

@@ -58,7 +58,7 @@ public class ComplexMapper extends AbstractComplexMapper {
 				parserChild = children.get(j);
 				// Def types
 				metaclassChild = getMetaclassChild(metadataChild, toClass);
-				// Split and parse
+				// Split and parseMetadata
 				endIndex += metadataChild.serialMaxSize();
 				parsed = parserChild.parse(metadataChild, text.substring(beginIndex, endIndex), metaclassChild);
 				beginIndex += metadataChild.serialMaxSize();

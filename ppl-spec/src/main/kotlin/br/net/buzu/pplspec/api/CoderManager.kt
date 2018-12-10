@@ -14,7 +14,7 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplspec.context
+package br.net.buzu.pplspec.api
 
 import br.net.buzu.pplspec.api.MetadataCoder
 import br.net.buzu.pplspec.model.Dialect
