@@ -32,9 +32,9 @@ internal const val INVALID_DOMAIN = "Invalid domain:"
 private val EMPTY_DOMAIN = Domain.EMPTY
 private val EMPTY_CHILDREN: List<Metadata> = listOf()
 
-typealias CreateMetadata= (MetaInfo, List<Metadata>)-> Metadata
+typealias CreateMetadata = (MetaInfo, List<Metadata>) -> Metadata
 
-val createSpecificMetadata : CreateMetadata = { metaInfo, children ->
+val createSpecificMetadata: CreateMetadata = { metaInfo, children ->
     if (children.isEmpty())
         if (metaInfo.isStatic)
             SimpleStaticMetadata(metaInfo)
@@ -232,8 +232,17 @@ private fun extractItem(domain: String, beginIndex: Int, endIndex: Int): String 
     return s
 }
 
-class GenericMetadataParser: MetadataParser {
+class GenericMetadataParser : MetadataParser {
     override fun parse(pplString: PplString): Metadata {
         return br.net.buzu.pplimpl.metadata.parseMetadata(pplString)
     }
+}
+
+private fun isStaticChildren(children: List<Metadata>): Boolean {
+    for (child in children) {
+        if (child !is StaticStructure) {
+            return false
+        }
+    }
+    return true
 }
