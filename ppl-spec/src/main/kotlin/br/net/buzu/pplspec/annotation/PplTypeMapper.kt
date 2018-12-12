@@ -14,22 +14,21 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplspec.api
+package br.net.buzu.pplspec.annotation
 
-import br.net.buzu.pplspec.exception.PplParseException
-import br.net.buzu.pplspec.exception.PplSerializeException
-import br.net.buzu.pplspec.model.Metaclass
-import br.net.buzu.pplspec.model.StaticMetadata
+import br.net.buzu.pplspec.api.PayloadMapper
+import br.net.buzu.pplspec.api.TypeMapper
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
+import kotlin.reflect.KClass
 
 /**
- * Specification of simple value parser (text to Object)
+ * An annotation that indicates this member should be parsed/serialized with a
+ * given TypeMapper.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-@FunctionalInterface
-interface ValueParser {
-
-fun parse(source: String): Any
-
-}
+@Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Retention(RetentionPolicy.RUNTIME)
+annotation class PplTypeMapper(val value: KClass<out TypeMapper>)

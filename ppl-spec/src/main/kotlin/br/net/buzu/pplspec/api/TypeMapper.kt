@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -16,20 +16,20 @@
  */
 package br.net.buzu.pplspec.api
 
-import br.net.buzu.pplspec.exception.PplParseException
-import br.net.buzu.pplspec.exception.PplSerializeException
-import br.net.buzu.pplspec.model.Metaclass
-import br.net.buzu.pplspec.model.StaticMetadata
+import br.net.buzu.pplspec.model.MetaInfo
+import br.net.buzu.pplspec.model.Metadata
 
 /**
- * Specification of simple value serializer (Object to Text)
+ * Mapper able make the convertion beetwen a Type and a Payload
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-@FunctionalInterface
-interface ValueSerializer {
+interface TypeMapper {
 
-fun parse(value: Any): String
+    fun toPayload(typedObject: Any): String
 
+    fun fromPayload(payload: String): Any
+
+    fun toMetadata(createMetadata:(MetaInfo, List<Metadata>) -> Metadata)
 }

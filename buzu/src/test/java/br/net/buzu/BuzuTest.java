@@ -308,20 +308,20 @@ public class BuzuTest {
 
 	@Test
 	public void testXmenToPpl() {
-		String ppl = buzu.toPpl(Xmen.WOLVERINE);
+		String ppl = buzu.toPpl(Xmen.Companion.getWOLVERINE());
 		assertEquals(XMEN_PPL_STRING, ppl);
 	}
 
 	@Test
 	public void testXmenFromPpl() {
 		Xmen wolverine = buzu.fromPpl(XMEN_PPL_STRING, Xmen.class);
-		assertEquals(Xmen.WOLVERINE.getName(), wolverine.getName());
-		assertEquals(Xmen.WOLVERINE.getSkill(), wolverine.getSkill());
-		assertEquals(Xmen.WOLVERINE.getBirth(), wolverine.getBirth());
+		assertEquals(Xmen.Companion.getWOLVERINE().getName(), wolverine.getName());
+		assertEquals(Xmen.Companion.getWOLVERINE().getSkill(), wolverine.getSkill());
+		assertEquals(Xmen.Companion.getWOLVERINE().getBirth(), wolverine.getBirth());
 
 		Human human = buzu.fromPpl(XMEN_PPL_STRING, Human.class);
-		assertEquals(Xmen.WOLVERINE.getName(), human.getName());
-		assertEquals(Xmen.WOLVERINE.getBirth(), human.getBirth());
+		assertEquals(Xmen.Companion.getWOLVERINE().getName(), human.getName());
+		assertEquals(Xmen.Companion.getWOLVERINE().getBirth(), human.getBirth());
 	}
 
 	// ********** Date fields **********

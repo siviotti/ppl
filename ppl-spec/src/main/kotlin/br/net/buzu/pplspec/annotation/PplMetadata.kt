@@ -34,10 +34,23 @@ import java.lang.annotation.RetentionPolicy
 annotation class PplMetadata(
         // Basic
 
-        val index: Int = EMPTY_INTEGER, val name: String = EMPTY_NAME, val subtype: Subtype = Subtype.EMPTY_SUBTYPE, val size: Int = EMPTY_INTEGER, val scale: Int = EMPTY_INTEGER, val minOccurs: Int = EMPTY_INTEGER, val maxOccurs: Int = EMPTY_INTEGER,
+        val index: Int = EMPTY_INTEGER,
+        val name: String = EMPTY_NAME,
+        val subtype: Subtype = Subtype.EMPTY_SUBTYPE,
+        val size: Int = EMPTY_INTEGER,
+        val scale: Int = EMPTY_INTEGER,
+        val minOccurs: Int = EMPTY_INTEGER,
+        val maxOccurs: Int = EMPTY_INTEGER,
         // Extension
 
-        val defaultValue: String = EMPTY_STRING, val domain: Array<String> = arrayOf(), val tags: String = EMPTY_STRING, val key: Boolean = false, val indexed: Boolean = false, val align: Char = EMPTY_CHAR, val fillChar: Char = EMPTY_CHAR, val nullChar: Char = EMPTY_CHAR) {
+        val defaultValue: String = EMPTY_STRING,
+        val domain: Array<String> = arrayOf(),
+        val tags: String = EMPTY_STRING,
+        val key: Boolean = false,
+        val indexed: Boolean = false,
+        val align: Char = EMPTY_CHAR,
+        val fillChar: Char = EMPTY_CHAR,
+        val nullChar: Char = EMPTY_CHAR) {
     companion object {
 
         const val EMPTY_NAME = "EMPTY NAME"
