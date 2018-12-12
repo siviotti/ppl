@@ -28,4 +28,33 @@ import br.net.buzu.pplspec.model.StaticMetadata
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface PayloadMapper : PayloadParser, PayloadSerializer
+interface PayloadMapper  {
+    /**
+     * Convets the payload text to object based on Metadata.
+     *
+     * @param metadata
+     * The StaticMetadata used to parse the object.
+     * @param text
+     * The text to be parsed.
+     * @param toClass
+     * The class of the resulting object.
+     * @return The object resulting domainOf parsing process.
+     * @throws PplParseException
+     */
+    fun <T> parse(metadata: StaticMetadata, text: String, toClass: Metaclass): T
+
+    /**
+     * Convert the payload object to text based on Metadata.
+     *
+     * @param metadata
+     * The StaticMetadata used to serialize the object.
+     * @param obj
+     * The serializable object.
+     * @param fromClass
+     * Class information for serialization
+     * @return A String containing the object as text.
+     * @throws PplSerializeException
+     */
+    fun serialize(metadata: StaticMetadata, obj: Any, fromClass: Metaclass): String
+
+}

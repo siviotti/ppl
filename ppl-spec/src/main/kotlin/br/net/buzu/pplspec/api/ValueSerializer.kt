@@ -22,26 +22,14 @@ import br.net.buzu.pplspec.model.Metaclass
 import br.net.buzu.pplspec.model.StaticMetadata
 
 /**
- * Specification of a parser based on Metadata and positional split to
- * parse/serialize a Payload.
+ * Specification of simple value serializer (Object to Text)
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface PayloadParser {
+@FunctionalInterface
+interface ValueSerializer {
 
-    /**
-     * Convets the payload text to object based on Metadata.
-     *
-     * @param metadata
-     * The StaticMetadata used to parse the object.
-     * @param text
-     * The text to be parsed.
-     * @param toClass
-     * The class of the resulting object.
-     * @return The object resulting domainOf parsing process.
-     * @throws PplParseException
-     */
-    fun <T> parse(metadata: StaticMetadata, text: String, toClass: Metaclass): T
+fun parse(value: Any): String
 
 }

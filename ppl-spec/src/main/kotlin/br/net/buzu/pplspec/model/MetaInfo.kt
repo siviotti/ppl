@@ -113,6 +113,10 @@ class MetaInfo
             pplMetadata.minOccurs, pplMetadata.maxOccurs, domainOf(*pplMetadata.domain),
             pplMetadata.defaultValue, buildTags(pplMetadata))
 
+        fun hasSize(): Boolean {
+            return PplMetadata.EMPTY_INTEGER != size
+        }
+
     init {
         this.id = createId(parentId, name)
         this.subtype = Objects.requireNonNull(subtype, "'subtype' cannot be null")
@@ -126,10 +130,6 @@ class MetaInfo
         this.isExtended = isExtended(this.domain, this.defaultValue, this.tags)
         this.align = getAlign(subtype, tags)
         this.fillChar = subtype.dataType().fillChar()
-    }
-
-    fun hasSize(): Boolean {
-        return PplMetadata.EMPTY_INTEGER != size
     }
 
     fun hasMaxOccurs(): Boolean {

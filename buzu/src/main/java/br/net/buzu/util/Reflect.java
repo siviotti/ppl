@@ -117,10 +117,6 @@ public class Reflect {
 		}
 	}
 
-	public static void setField(Object obj, Field field, Object param) {
-
-	}
-
 	// **************************************************
 	// Fields
 	// **************************************************

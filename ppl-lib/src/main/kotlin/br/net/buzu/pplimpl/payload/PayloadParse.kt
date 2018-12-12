@@ -14,34 +14,27 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplimpl.metadata
+package br.net.buzu.pplimpl.payload
 
-import br.net.buzu.pplspec.model.MetaInfo
+import br.net.buzu.pplspec.api.ValueParser
 import br.net.buzu.pplspec.model.Metadata
+import br.net.buzu.pplspec.model.StaticMetadata
 
-/**
- * No complex metadata.
- *
- * @author Douglas Siviotti
- * @since 1.0 (15/05/2017)
- */
-open class SimpleMetadata(metaInfo: MetaInfo) : BasicMetadata(metaInfo) {
-
-    override fun <T: Metadata> children(): List<T> {
-        throw UnsupportedOperationException(SIMPLE_METADATA_HAS_NO_CHILDREN)
+fun parsePayload(text: String, metadata: StaticMetadata, valueParser: ValueParser): Any {
+    return if (metadata.hasChildren()) {
+        parseComplexPayload(text, 0, metadata, valueParser)
+    } else {
+        parseSimplePayload(text, 0, metadata, valueParser)
     }
+}
 
-    override fun hasChildren(): Boolean {
-        return false
+fun parseComplexPayload(text: String, index: Int, metadata: StaticMetadata, valueParser: ValueParser): Any {
+    for (metadataChild in metadata.children<Metadata>()){
+
     }
+    return ""
+}
 
-
-    override fun isStatic(): Boolean {
-        return false
-    }
-
-    companion object {
-
-        private val SIMPLE_METADATA_HAS_NO_CHILDREN = "SimpleMetadata has no children!"
-    }
+fun parseSimplePayload(text: String, index: Int, metadata: StaticMetadata, valueParser: ValueParser): Any {
+    return valueParser.parse(text.substring(index,metadata.serialMaxSize()))
 }

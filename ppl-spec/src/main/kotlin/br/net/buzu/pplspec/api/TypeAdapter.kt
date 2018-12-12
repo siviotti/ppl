@@ -14,34 +14,20 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplimpl.metadata
+package br.net.buzu.pplspec.api
 
-import br.net.buzu.pplspec.model.MetaInfo
 import br.net.buzu.pplspec.model.Metadata
 
 /**
- * No complex metadata.
+ * Imutable informations about the target class on a parsing operation.
  *
  * @author Douglas Siviotti
- * @since 1.0 (15/05/2017)
+ * @since 1.0
  */
-open class SimpleMetadata(metaInfo: MetaInfo) : BasicMetadata(metaInfo) {
+interface TypeAdapter {
 
-    override fun <T: Metadata> children(): List<T> {
-        throw UnsupportedOperationException(SIMPLE_METADATA_HAS_NO_CHILDREN)
-    }
+    fun toPositional(metadata: Metadata, source: Any): String
 
-    override fun hasChildren(): Boolean {
-        return false
-    }
+    fun fromPositional(metadata: Metadata, positional: String): Any
 
-
-    override fun isStatic(): Boolean {
-        return false
-    }
-
-    companion object {
-
-        private val SIMPLE_METADATA_HAS_NO_CHILDREN = "SimpleMetadata has no children!"
-    }
 }

@@ -80,7 +80,7 @@ public abstract class BasicMetaclass implements Metaclass {
 	}
 
 	@Override
-	public Class<? extends PayloadMapper> parserType() {
+	public Class<? extends PayloadMapper> mapperType() {
 		return parserType;
 	}
 

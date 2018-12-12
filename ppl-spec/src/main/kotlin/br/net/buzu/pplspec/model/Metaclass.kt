@@ -48,7 +48,7 @@ interface Metaclass : Metadata {
 
     fun elementType(): Class<*>
 
-    fun parserType(): Class<out PayloadMapper>
+    fun mapperType(): Class<out PayloadMapper>
 
     fun hasCustomParser(): Boolean
 

@@ -102,7 +102,7 @@ public class BasicParserFactory implements ParserFactory {
 	@Override
 	public PayloadMapper create(Metaclass metaclass) {
 		if (metaclass.hasCustomParser()) {
-			return (PayloadMapper) Reflect.newInstance(metaclass.parserType());
+			return (PayloadMapper) Reflect.newInstance(metaclass.mapperType());
 		}
 		return metaclass.kind().isComplex() ? createComplex(metaclass) : createSimple(metaclass);
 	}

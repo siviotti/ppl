@@ -171,7 +171,7 @@ public class BasicMetaclassReaderTest {
 		Metaclass metaclass = reader.read(Bean.class);
 		
 		Metaclass field2Metaclass = metaclass.getChildByName("field2");
-		assertEquals(EnumNameMapper.class, field2Metaclass.parserType());
+		assertEquals(EnumNameMapper.class, field2Metaclass.mapperType());
 		
 		BasicParserFactory factory = new BasicParserFactory();
 		Metaclass field4Metaclass = metaclass.getChildByName("field4");
