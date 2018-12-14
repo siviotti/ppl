@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public class ComplexStaticMetaclassTest {
 
-	static MetaInfo metaInfo = new MetaInfo("",31, "color", Subtype.STRING, 10, 0, 1, 2);
+	static MetaInfo metaInfo = new MetaInfo(31, "color", Subtype.STRING, 10, 0, 1, 2);
 	static SimpleStaticMetaclass ssm1 = new SimpleStaticMetaclass(null, String.class, String.class, Kind.ATOMIC, metaInfo, null);
 	static SimpleStaticMetaclass ssm2 = new SimpleStaticMetaclass(null, String.class, String.class, Kind.ATOMIC, metaInfo, null);
 	static List<Metaclass> children = new ArrayList<>();

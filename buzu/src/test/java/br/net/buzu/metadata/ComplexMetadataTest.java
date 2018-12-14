@@ -20,7 +20,7 @@ public class ComplexMetadataTest {
 
 	public static ComplexMetadata createSample(String name, Subtype subtype, int size, int scale, int minOccurs,
 			int maxOccurs, Domain domain, String defaultValue, String tags, List<Metadata> children) {
-		MetaInfo metaInfo = new MetaInfo("",31, name, subtype, size, 0, minOccurs, maxOccurs, domain, defaultValue, tags);
+		MetaInfo metaInfo = new MetaInfo(31, name, subtype, size, 0, minOccurs, maxOccurs, domain, defaultValue, tags);
 		return new ComplexMetadata(metaInfo, children);
 
 	}

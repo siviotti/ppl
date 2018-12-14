@@ -130,9 +130,9 @@ public class BasicMetadataParser implements MetadataParser {
 		int minOccurs = parseMinOccurs(node);
 		int maxOccurs = parseMaxOccurs(node);
 		Domain domain = parseDomain(node);
-		MetaInfo metaInfo = new MetaInfo(parentId, index, name, subtype, size, scale, minOccurs, maxOccurs, domain,
+		MetaInfo metaInfo = new MetaInfo(index, name, subtype, size, scale, minOccurs, maxOccurs, domain,
 				node.defaultValue, node.tags);
-		return context.metadataFactory().create(metaInfo, parseChildren(metaInfo.getId(), node));
+		return context.metadataFactory().create(metaInfo, parseChildren("", node));
 
 	}
 

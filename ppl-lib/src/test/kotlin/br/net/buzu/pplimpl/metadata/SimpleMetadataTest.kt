@@ -45,7 +45,7 @@ class SimpleMetadataTest {
 
         fun createSample(name: String, subtype: Subtype, size: Int, scale: Int, minOccurs: Int,
                          maxOccurs: Int, domain: Domain, defaultValue: String, tags: String): SimpleMetadata {
-            val metaInfo = MetaInfo("", 31, name, subtype, size, 0, minOccurs, maxOccurs, domain, defaultValue, tags)
+            val metaInfo = MetaInfo( 31, name, subtype, size, 0, minOccurs, maxOccurs, domain, defaultValue, tags)
             return genericCreateMetadata (metaInfo, listOf()) as SimpleMetadata
 
         }

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
  */
 class SimpleStaticMetadataTest {
 
-    internal var metaInfo = MetaInfo("", 31, "color", Subtype.STRING, 10, 0, 1, 2)
+    internal var metaInfo = MetaInfo(31, "color", Subtype.STRING, 10, 0, 1, 2)
     internal var ssm1 = SimpleStaticMetadata(metaInfo)
     internal var ssm2 = SimpleStaticMetadata(metaInfo)
 

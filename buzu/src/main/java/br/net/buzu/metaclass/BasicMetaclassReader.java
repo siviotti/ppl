@@ -128,7 +128,7 @@ public class BasicMetaclassReader implements MetaclassReader {
 	private MetaInfo createMetaInfo(String parentId, PplMetadata pplMetadata, Class<?> elementType, String fieldName) {
 		Subtype subtype = context.subtypeManager().fromType(elementType);
 		return pplMetadata != null ? new MetaInfo(parentId, pplMetadata, fieldName, subtype)
-				: new MetaInfo(parentId, 0, fieldName, subtype, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
+				: new MetaInfo(0, fieldName, subtype, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
 						Syntax.DEFAULT_MIN_OCCURS, PplMetadata.EMPTY_INTEGER);
 	}
 

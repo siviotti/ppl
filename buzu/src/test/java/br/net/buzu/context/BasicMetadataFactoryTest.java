@@ -29,7 +29,7 @@ public class BasicMetadataFactoryTest {
 
 	@Test
 	public void testSimpleBasic() {
-		MetaInfo metaInfo = new MetaInfo("", 0, "simpleBasic", Subtype.STRING, 10, 0, 0, 1);
+		MetaInfo metaInfo = new MetaInfo(0, "simpleBasic", Subtype.STRING, 10, 0, 0, 1);
 		Metadata metadata = factory.create(metaInfo, null);
 		assertEquals(SimpleStaticMetadata.class, metadata.getClass());
 	}
@@ -41,7 +41,7 @@ public class BasicMetadataFactoryTest {
 	@Test
 	public void testSimpleExtended() {
 		Domain domain = domainOf("Diamond", "Heart", "Club", "Spade");
-		MetaInfo metaInfo = new MetaInfo("", 0, "simpleComplex", Subtype.STRING, 10, 0, 0, 1, domain, "Club", "K");
+		MetaInfo metaInfo = new MetaInfo( 0, "simpleComplex", Subtype.STRING, 10, 0, 0, 1, domain, "Club", "K");
 		Metadata metadata = factory.create(metaInfo, null);
 		assertEquals(SimpleStaticMetadata.class, metadata.getClass());
 	}

@@ -66,7 +66,7 @@ abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
 
     override fun toPlain(): String {
         val sb = StringBuilder()
-        sb.append(info().id).append("\n")
+        sb.append(info()).append("\n")
         if (hasChildren()) {
             children<Metadata>().forEach { c -> sb.append(c.toPlain()) }
         }

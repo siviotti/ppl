@@ -42,11 +42,10 @@ class MetaInfo
  * @param domain
  * @param tags
  */
-@JvmOverloads constructor(parentId: String, val index: Int, val name: String, val subtype: Subtype, size: Int, scale: Int, minOccurs: Int,
+@JvmOverloads constructor(val index: Int, val name: String, val subtype: Subtype, size: Int, scale: Int, minOccurs: Int,
                           val maxOccurs: Int, domain: Domain? = null, defaultValue: String? = EMPTY, tags: String? = EMPTY) : Comparable<MetaInfo> {
 
     // Basic
-    val id: String
     val size: Int
     val scale: Int
     val minOccurs: Int
@@ -107,7 +106,7 @@ class MetaInfo
     val isRequired: Boolean
         get() = minOccurs > 0
 
-    constructor(parentId: String, pplMetadata: PplMetadata, originalFieldName: String, originalSubtype: Subtype) : this(parentId, pplMetadata.index, getName(pplMetadata, originalFieldName),
+    constructor(parentId: String, pplMetadata: PplMetadata, originalFieldName: String, originalSubtype: Subtype) : this(pplMetadata.index, getName(pplMetadata, originalFieldName),
             getSubtype(pplMetadata, originalSubtype), pplMetadata.size, pplMetadata.scale,
             pplMetadata.minOccurs, pplMetadata.maxOccurs, domainOf(*pplMetadata.domain),
             pplMetadata.defaultValue, buildTags(pplMetadata))
@@ -117,7 +116,6 @@ class MetaInfo
         }
 
     init {
-        this.id = createId(parentId, name)
         this.size = if (subtype.isFixedSizeType) subtype.fixedSize() else size
         this.scale = if (scale > NO_SCALE) scale else 0
         checkOccurs(minOccurs, maxOccurs)
@@ -139,7 +137,7 @@ class MetaInfo
     }
 
     fun update(newSize: Int, newMaxOccurs: Int): MetaInfo {
-        return MetaInfo(parentId(), index, name, subtype, newSize, scale, minOccurs, newMaxOccurs, domain,
+        return MetaInfo(index, name, subtype, newSize, scale, minOccurs, newMaxOccurs, domain,
                 defaultValue, tags)
     }
 
@@ -170,11 +168,6 @@ class MetaInfo
         return tags != null && tag != null && tags.contains(tag)
     }
 
-    fun parentId(): String {
-        val pos = id.lastIndexOf(PATH_SEP)
-        return if (pos > -1) id.substring(0, pos) else ""
-    }
-
     fun ppl(): String {
         return (name + NAME_END + subtype.id + size + OCCURS_BEGIN + minOccurs + OCCURS_RANGE
                 + maxOccurs + domain.asSerial() + serializeDefaultvalue(defaultValue) + tags)
@@ -191,11 +184,11 @@ class MetaInfo
     }
 
     override fun toString(): String {
-        return id + "[" + index + "] " + ppl()
+        return "[" + index + "] " + ppl()
     }
 
     override fun hashCode(): Int {
-        return id.hashCode()
+        return ppl().hashCode()
     }
 
     override fun equals(obj: Any?): Boolean {
@@ -206,8 +199,9 @@ class MetaInfo
             return false
         }
         return if (this.javaClass == obj.javaClass) {
-            id == (obj as MetaInfo).id
+            ppl().equals((obj as MetaInfo).ppl())
         } else false
+
 
     }
 

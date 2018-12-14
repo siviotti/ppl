@@ -18,7 +18,7 @@ public class SimpleMetadataTest {
 
 	public static SimpleMetadata createSample(String name, Subtype subtype, int size, int scale, int minOccurs,
 			int maxOccurs, Domain domain, String defaultValue, String tags) {
-		MetaInfo metaInfo = new MetaInfo("",31, name, subtype, size, 0, minOccurs, maxOccurs, domain, defaultValue, tags);
+		MetaInfo metaInfo = new MetaInfo(31, name, subtype, size, 0, minOccurs, maxOccurs, domain, defaultValue, tags);
 		return (SimpleMetadata) new BasicMetadataFactory().create(metaInfo, null);
 
 	}

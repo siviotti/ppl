@@ -51,7 +51,7 @@ public final class StaticBehave {
 	public static void checkStaticChild(Metadata child) {
 		if (!(child instanceof StaticStructure)) {
 			throw new IllegalArgumentException(
-					INVALID_STATIC_CHILD + child.info().getId() + " is not a " + StaticStructure.class.getSimpleName());
+					INVALID_STATIC_CHILD + child.info()+ " is not a " + StaticStructure.class.getSimpleName());
 		}
 	}
 

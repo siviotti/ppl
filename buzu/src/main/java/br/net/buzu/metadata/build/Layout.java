@@ -42,39 +42,39 @@ public class Layout {
 	private final int level;
 
 	public Layout() {
-		this(new MetaInfo("", 0, ROOT, Subtype.OBJ, NO_SIZE, NO_PRECISION, 0, 0), null);
+		this(new MetaInfo( 0, ROOT, Subtype.OBJ, NO_SIZE, NO_PRECISION, 0, 0), null);
 	}
 
 	public Layout(String name) {
-		this(new MetaInfo("", 0, name, Subtype.OBJ, NO_SIZE, NO_PRECISION, Syntax.DEFAULT_MIN_OCCURS,
+		this(new MetaInfo( 0, name, Subtype.OBJ, NO_SIZE, NO_PRECISION, Syntax.DEFAULT_MIN_OCCURS,
 				Syntax.DEFAULT_MAX_OCCURS), null);
 	}
 
 	public Layout(String name, Subtype subtype) {
-		this(new MetaInfo("", 0, name, subtype, NO_SIZE, NO_PRECISION, Syntax.DEFAULT_MIN_OCCURS,
+		this(new MetaInfo( 0, name, subtype, NO_SIZE, NO_PRECISION, Syntax.DEFAULT_MIN_OCCURS,
 				Syntax.DEFAULT_MAX_OCCURS), null);
 	}
 
 	public Layout(String name, int size) {
-		this(new MetaInfo("", 0, name, Subtype.OBJ, size, 0, Syntax.DEFAULT_MIN_OCCURS, Syntax.DEFAULT_MAX_OCCURS),
+		this(new MetaInfo( 0, name, Subtype.OBJ, size, 0, Syntax.DEFAULT_MIN_OCCURS, Syntax.DEFAULT_MAX_OCCURS),
 				null);
 	}
 
 	public Layout(String name, int size, int minOccurs, int maxOccurs) {
-		this(new MetaInfo("", 0, name, Subtype.OBJ, size, NO_PRECISION, minOccurs, maxOccurs), null);
+		this(new MetaInfo( 0, name, Subtype.OBJ, size, NO_PRECISION, minOccurs, maxOccurs), null);
 	}
 
 	public Layout(String name, Subtype subtype, int size, int minOccurs, int maxOccurs) {
-		this(new MetaInfo("", 0, name, subtype, size, NO_PRECISION, minOccurs, maxOccurs), null);
+		this(new MetaInfo( 0, name, subtype, size, NO_PRECISION, minOccurs, maxOccurs), null);
 	}
 
 	public Layout(String name, Subtype subtype, int size, int scale, int minOccurs, int maxOccurs) {
-		this(new MetaInfo("", 0, name, subtype, size, scale, minOccurs, maxOccurs), null);
+		this(new MetaInfo( 0, name, subtype, size, scale, minOccurs, maxOccurs), null);
 	}
 
 	public Layout(String name, Subtype subtype, int size, int scale, int minOccurs, int maxOccurs, String defaultValue,
 			Domain domain, String tags) {
-		this(new MetaInfo("", 0, name, subtype, size, scale, minOccurs, maxOccurs, domain, defaultValue, tags), null);
+		this(new MetaInfo( 0, name, subtype, size, scale, minOccurs, maxOccurs, domain, defaultValue, tags), null);
 	}
 
 	Layout(MetaInfo metaInfo, Layout parent) {
@@ -95,7 +95,7 @@ public class Layout {
 
 	public Layout field(String name, Subtype subtype, int size, int precision, int minOccurs, int maxOccurs,
 			String defaultValue, Domain domain, String tags) {
-		Layout child = new Layout(new MetaInfo(metaInfo.getId(), childrenSize(), name, subtype, size, precision, minOccurs,
+		Layout child = new Layout(new MetaInfo(childrenSize(), name, subtype, size, precision, minOccurs,
 				maxOccurs, domain, defaultValue, tags), this);
 		add(child);
 

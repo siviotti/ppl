@@ -50,7 +50,7 @@ fun checkStaticInfo(metaInfo: MetaInfo): MetaInfo {
 fun checkStaticChild(child: Metadata) {
     if (child !is StaticStructure) {
         throw IllegalArgumentException(
-                INVALID_STATIC_CHILD + child.info().id + " is not a " + StaticStructure::class.java.simpleName)
+                INVALID_STATIC_CHILD + child.info() + " is not a " + StaticStructure::class.java.simpleName)
     }
 }
 

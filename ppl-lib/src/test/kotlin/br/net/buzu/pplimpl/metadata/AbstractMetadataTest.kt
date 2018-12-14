@@ -13,7 +13,7 @@ class AbstractMetadataTest {
 
     private fun createSample(name: String, subtype: Subtype, size: Int, minOccurs: Int, maxOccurs: Int): Metadata {
         val domain = domainOf("white", "black", "red")
-        val metaInfo = MetaInfo("", 31, name, subtype, size, 0, minOccurs, maxOccurs, domain, "red", "XYZ")
+        val metaInfo = MetaInfo(31, name, subtype, size, 0, minOccurs, maxOccurs, domain, "red", "XYZ")
         return GenericSimpleMetadata(Kind.ARRAY, metaInfo)
 
     }
@@ -21,7 +21,7 @@ class AbstractMetadataTest {
     @Test
     fun test() {
         val domain = domainOf("Diamons", "white", "black", "red")
-        val metaInfo = MetaInfo("", 31, "test", Subtype.STRING, 10, 0, 1, 2, domain, "red", "XYZ")
+        val metaInfo = MetaInfo(31, "test", Subtype.STRING, 10, 0, 1, 2, domain, "red", "XYZ")
 
         val m1 = GenericSimpleMetadata(Kind.RECORD, metaInfo)
 

@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  */
 public class SimpleStaticMetaclassTest {
 	
-	MetaInfo metaInfo = new MetaInfo("",31, "color", Subtype.STRING, 10, 0, 1, 2);
+	MetaInfo metaInfo = new MetaInfo(31, "color", Subtype.STRING, 10, 0, 1, 2);
 	SimpleStaticMetaclass ssm1 = new SimpleStaticMetaclass(null, String.class, String.class, Kind.ATOMIC, metaInfo, null);
 	SimpleStaticMetaclass ssm2 = new SimpleStaticMetaclass(null, String.class, String.class, Kind.ATOMIC, metaInfo, null);
 	

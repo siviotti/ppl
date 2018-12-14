@@ -82,7 +82,7 @@ public abstract class BasicMetadata implements Metadata {
 	@Override
 	public String toPlain() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(info().getId()).append("\n");
+		sb.append(info()).append("\n");
 		if (hasChildren()) {
 			children().forEach(c -> sb.append(c.toPlain()));
 		}

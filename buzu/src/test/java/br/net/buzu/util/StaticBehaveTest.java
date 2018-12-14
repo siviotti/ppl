@@ -17,9 +17,9 @@ import static org.junit.Assert.fail;
 public class StaticBehaveTest {
 
 	private PplContext context = new BasicContext();
-	private MetaInfo staticMetaInfo = new MetaInfo("", 11, "color", Subtype.STRING, 10, 0, 1, 2);
-	private MetaInfo uncompleteMetaInfo = new MetaInfo("", 11, "color", Subtype.STRING, -1, 0, 1, 2);
-	private MetaInfo unboundedMetaInfo = new MetaInfo("", 11, "color", Subtype.STRING, 10, 0, 1, 0);
+	private MetaInfo staticMetaInfo = new MetaInfo( 11, "color", Subtype.STRING, 10, 0, 1, 2);
+	private MetaInfo uncompleteMetaInfo = new MetaInfo( 11, "color", Subtype.STRING, -1, 0, 1, 2);
+	private MetaInfo unboundedMetaInfo = new MetaInfo( 11, "color", Subtype.STRING, 10, 0, 1, 0);
 
 	@Test
 	public void testCheckMetainfo() {

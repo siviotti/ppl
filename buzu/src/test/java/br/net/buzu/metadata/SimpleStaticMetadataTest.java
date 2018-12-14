@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  */
 public class SimpleStaticMetadataTest {
 	
-	MetaInfo metaInfo = new MetaInfo("",31, "color", Subtype.STRING, 10, 0, 1, 2);
+	MetaInfo metaInfo = new MetaInfo(31, "color", Subtype.STRING, 10, 0, 1, 2);
 	SimpleStaticMetadata ssm1 = new SimpleStaticMetadata(metaInfo);
 	SimpleStaticMetadata ssm2 = new SimpleStaticMetadata(metaInfo);
 	

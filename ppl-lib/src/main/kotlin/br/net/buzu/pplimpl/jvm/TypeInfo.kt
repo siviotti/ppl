@@ -131,7 +131,7 @@ private fun createMetaInfo(parentId: String, pplMetadata: PplMetadata?, elementT
     return if (pplMetadata != null)
         MetaInfo(parentId, pplMetadata, fieldName, subtype)
     else
-        MetaInfo(parentId, index, fieldName, subtype, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
+        MetaInfo( index, fieldName, subtype, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
                 DEFAULT_MIN_OCCURS, PplMetadata.EMPTY_INTEGER)
 }
 
