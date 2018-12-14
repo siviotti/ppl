@@ -26,8 +26,8 @@ internal class MetadataLoadKtTest {
         val metadataOrder=loadMetadata(order)
         println(metadataOrder.toTree(0))
         assertMetadata(metadataOrder, "", Subtype.OBJ, 96, 0,1)
-        val metadataCustomer = metadataOrder.children<Metadata>()[0]
-        assertMetadata(metadataCustomer, "customer", Subtype.OBJ, 96, 0,1)
+        val metadataCustomer = metadataOrder.children<Metadata>()[1]
+        assertMetadata(metadataCustomer, "customer", Subtype.OBJ, 53, 0,1)
         "(" +
                 "number:S10;" +
                 "customer:(" +

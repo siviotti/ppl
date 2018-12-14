@@ -144,9 +144,8 @@ fun getPplMetadata(field: Field): PplMetadata? {
     } else null
 }
 
-fun getValueFromInstanceField(field: Field, instance: Any): Any? {
+fun getValue(field: Field, instance: Any): Any? {
     try {
-        //println("field:${field.name} = $instance" )
         field.setAccessible(true)
         return field.get(instance)
     } catch (e: IllegalArgumentException) {
@@ -157,7 +156,7 @@ fun getValueFromInstanceField(field: Field, instance: Any): Any? {
 
 }
 
-fun setValueToInstanceField(field: Field, instance: Any, param: Any?) {
+fun setValue(field: Field, instance: Any, param: Any?) {
     try {
         field.setAccessible(true)
         field.set(instance, param)

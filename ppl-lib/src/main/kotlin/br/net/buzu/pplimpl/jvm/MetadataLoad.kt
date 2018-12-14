@@ -15,10 +15,7 @@
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.pplimpl.jvm
-import br.net.buzu.pplimpl.jvm.fromType
-import br.net.buzu.pplimpl.jvm.getAllFields
-import br.net.buzu.pplimpl.jvm.getElementType
-import br.net.buzu.pplimpl.jvm.getValueFromInstanceField
+
 import br.net.buzu.pplimpl.metadata.CreateMetadata
 import br.net.buzu.pplimpl.metadata.genericCreateMetadata
 import br.net.buzu.pplspec.annotation.PplIgnore
@@ -34,7 +31,7 @@ import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 import java.util.*
 
-val genericSkip : (Field)-> Boolean = {skip(it)}
+val genericSkip: (Field) -> Boolean = { skip(it) }
 
 // ********** API **********
 
@@ -42,46 +39,47 @@ fun loadMetadata(rootInstance: Any): Metadata {
     return loadMetadata(rootInstance, genericCreateMetadata, genericSkip)
 }
 
-fun loadMetadata(rootInstance: Any, createMetadata: CreateMetadata = genericCreateMetadata, skip:(Field)->Boolean= genericSkip): Metadata {
-    val node = loadNodeOf(rootInstance)
+fun loadMetadata(rootInstance: Any, createMetadata: CreateMetadata = genericCreateMetadata, skip: (Field) -> Boolean = genericSkip): Metadata {
+    val typeInfo = read(rootInstance.javaClass, skip)
+    val node = loadNodeOf(rootInstance, typeInfo, "")
     val maxMap = MaxMap()
-    val rootClass = rootInstance.javaClass
-    var pplMetadata: PplMetadata? = rootClass.getAnnotation(PplMetadata::class.java)
-    val metaInfo = createMetaInfo(node.fieldPath, node.pplMetadata, node.elementType, node.fieldName)
+    val metaInfo = typeInfo.metaInfo
     val max = getMax(maxMap, node, metaInfo)
-    return createMetadata(metaInfo.update(max.maxSize, max.maxOccurs), createChildren(node, maxMap, createMetadata, skip))
+    return createMetadata(metaInfo.update(max.maxSize, max.maxOccurs), createMetaChildren(node, maxMap, createMetadata, skip))
 }
 
 // ********** INTERNAL **********
-private fun createChildren(node: LoadNode, maxMap: MaxMap, createMetadata: CreateMetadata, skip: (Field)-> Boolean): List<Metadata> {
-    if (!node.hasChildren) {
+private fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: CreateMetadata, skip: (Field) -> Boolean): List<Metadata> {
+    val typeInfo = node.typeInfo
+    if (!typeInfo.hasChildren) {
         return listOf()
     }
-    //println("HAS Children:"+node.elementType + " subtype: ${node.subtype}")
-    val fields = getAllFields(node.elementType).filterNot(skip)
-    val children = arrayOfNulls<Metadata>(fields.size)
+    val typeList = typeInfo.children
+    val children = arrayOfNulls<Metadata>(typeList.size)
     var fieldValue: Any?
-    var field: Field
+    var childTypeInfo: TypeInfo
     for (itemValue in node.value) {
-        for (i in fields.indices) {
-            field = fields[i]
-            fieldValue = if (itemValue != null) getValueFromInstanceField(field, itemValue) else null
-            children[i] = loadChild(fieldValue, field, node, maxMap, createMetadata, skip)
+        for (i in typeList.indices) {
+            childTypeInfo = typeList[i]
+            fieldValue = if (itemValue != null) childTypeInfo.getValue(itemValue) else null
+            children[i] = loadChild(fieldValue, childTypeInfo, node, maxMap, createMetadata, skip)
         }
     }
-    val childrenList = Arrays.asList<Metadata>(*children)
-    return childrenList.sortedBy { it.info().index }
+    return Arrays.asList<Metadata>(*children)
 }
 
-private fun loadChild(fieldValue: Any?, field: Field, parentNode: LoadNode, maxMap: MaxMap,
-                      createMetadata: CreateMetadata, skip: (Field)-> Boolean): Metadata {
-    val fieldPath = getFieldPath(field.name, parentNode)
-    val node = loadNodeOf(fieldValue, field, fieldPath)
-    val metaInfo = createMetaInfo(node.fieldPath, node.pplMetadata, node.elementType, node.fieldName)
-    val max = getMax(maxMap, node, metaInfo)
-    val children= createChildren(node, maxMap, createMetadata, skip)
-    return createMetadata(metaInfo.update(max.maxSize, max.maxOccurs), children)
+private fun loadChild(fieldValue: Any?, typeInfo: TypeInfo, parentNode: LoadNode, maxMap: MaxMap,
+                      createMetadata: CreateMetadata, skip: (Field) -> Boolean): Metadata {
+
+    val fieldPath = getFieldPath(typeInfo.fieldName, parentNode)
+    val fieldNode = loadNodeOf(fieldValue, typeInfo, fieldPath)
+    var metaInfo = typeInfo.metaInfo
+    val max = getMax(maxMap, fieldNode, metaInfo)
+    metaInfo = metaInfo.update(max.maxSize, max.maxOccurs)
+    val children = createMetaChildren(fieldNode, maxMap, createMetadata, skip)
+    return createMetadata(metaInfo, children)
 }
+
 
 private fun createMetaInfo(parentId: String, pplMetadata: PplMetadata?, elementType: Class<*>, fieldName: String): MetaInfo {
     val subtype = fromType(elementType)
@@ -119,12 +117,6 @@ fun getFieldPath(fieldName: String, node: LoadNode): String {
     return if (node.fieldPath.isEmpty()) {
         fieldName
     } else node.fieldPath + PATH_SEP + fieldName
-}
-
-fun getFieldPath(fieldName: String, parentPath: String): String {
-    return if (parentPath.isEmpty()) {
-        fieldName
-    } else parentPath+ PATH_SEP + fieldName
 }
 
 private fun skip(field: Field): Boolean {

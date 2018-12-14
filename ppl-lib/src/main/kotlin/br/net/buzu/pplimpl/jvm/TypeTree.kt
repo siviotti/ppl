@@ -1,8 +1,5 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.pplimpl.jvm.fromType
-import br.net.buzu.pplimpl.jvm.getElementType
-import br.net.buzu.pplimpl.jvm.isMultiple
 import br.net.buzu.pplspec.annotation.PplMetadata
 import br.net.buzu.pplspec.exception.PplException
 import br.net.buzu.pplspec.model.PplSerializable
@@ -10,48 +7,32 @@ import br.net.buzu.pplspec.model.SizeType
 import br.net.buzu.pplspec.model.Subtype
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
-import java.util.HashMap
+import java.math.BigDecimal
+import java.util.*
 
 
-fun loadNodeOf(rootInstance: Any): LoadNode {
-    val elementType = extractElementType(rootInstance.javaClass)
-    val pplMetadata = elementType.javaClass.getAnnotation(PplMetadata::class.java)
-    return if (isMultiple(rootInstance.javaClass)) {
-        LoadNode(rootInstance, rootInstance.javaClass, elementType, "", "", pplMetadata)
-    } else {
-        LoadNode(rootInstance, rootInstance.javaClass, rootInstance.javaClass, "", "", pplMetadata)
-    }
+fun loadNodeOf(rootInstance: Any?, typeInfo: TypeInfo, fieldPath: String): LoadNode {
+    return LoadNode(rootInstance, typeInfo, fieldPath)
 }
 
-fun loadNodeOf(fieldValue: Any?, field: Field, fieldPath: String): LoadNode {
-    return LoadNode(fieldValue, field.type, getElementType(field), fieldPath, field.name, field.getAnnotation(PplMetadata::class.java))
-}
-
-
-class LoadNode(originalValue: Any?, val fieldType: Class<*>, val elementType: Class<*>, val fieldPath: String, val fieldName: String, val pplMetadata: PplMetadata?) {
+class LoadNode(originalValue: Any?, val typeInfo: TypeInfo, val fieldPath: String) {
 
     val value: Array<Any?>
     val subtype: Subtype
-    val hasChildren: Boolean
-
-    val isEnum: Boolean
-        get() = elementType.isEnum
-
     val occurs: Int
         get() = value.size
 
     init {
-        subtype = fromType(elementType)
-        hasChildren = subtype.dataType().isComplex && !elementType.isEnum
+        subtype = fromType(typeInfo.elementType)
         if (originalValue == null) {
             this.value = arrayOf(1)
-        } else if (Collection::class.java.isAssignableFrom(fieldType)) {
+        } else if (typeInfo.isCollection) {
             if ((originalValue as Collection<*>).isEmpty()) {
                 this.value = arrayOf(1)
             } else {
                 this.value = originalValue.toTypedArray()
             }
-        } else if (fieldType.isArray) {
+        } else if (typeInfo.isArray) {
             if ((originalValue as Array<Any>).size == 0) {
                 this.value = arrayOf(1)
             } else {
@@ -62,7 +43,6 @@ class LoadNode(originalValue: Any?, val fieldType: Class<*>, val elementType: Cl
             this.value[0] = originalValue
         }
     }
-
 
 
     fun calcMaxSize(): Int {
@@ -113,7 +93,7 @@ class MaxMap {
     }
 }
 
-private fun extractElementType(fieldType: Class<*>): Class<*> {
+internal fun extractElementType(fieldType: Class<*>): Class<*> {
     if (Collection::class.java.isAssignableFrom(fieldType)) {
         if (fieldType.genericSuperclass !is ParameterizedType) {
             return Any::class.java
@@ -143,7 +123,11 @@ internal fun getValueSize(value: Any): Int {
     if (PplSerializable::class.java.isAssignableFrom(value.javaClass)) {
         str = (value as PplSerializable).asPplSerial()
     } else {
-        str = value.toString()
+        if (value is BigDecimal){
+            str = value.toPlainString()
+        } else {
+            str = value.toString()
+        }
     }
     return str?.length ?: 0
 }
