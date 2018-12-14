@@ -6,15 +6,14 @@ import br.net.buzu.context.ContextBuilder;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
+import br.net.buzu.metadata.code.ShortMetadataCoder;
 import br.net.buzu.pplimpl.metadata.GenericCodeManager;
 import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
 import br.net.buzu.pplspec.api.MetadataCoder;
 import br.net.buzu.pplspec.context.PplContext;
 import br.net.buzu.pplspec.exception.PplParseException;
 import br.net.buzu.pplspec.lang.Token;
-import br.net.buzu.pplspec.model.Dialect;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.PplString;
+import br.net.buzu.pplspec.model.*;
 import br.net.buzu.sample.order.*;
 import br.net.buzu.sample.pojo.Person;
 import br.net.buzu.sample.ppl.Human;
@@ -31,11 +30,13 @@ import java.time.LocalTime;
 import java.util.*;
 
 import static org.junit.Assert.*;
+import static br.net.buzu.pplimpl.jvm.MetadataLoadKt.loadMetadata;
+
 
 /**
- * 
+ *
  * Unit Test for Buzu. [REGRESSION TEST]
- * 
+ *
  * @author Douglas Siviotti
  * @since 1.0
  *
@@ -63,9 +64,9 @@ public class BuzuTest {
 
 	public static final Person PERSON_INSTANCE = new Person(PERSON_NAME, PERSON_AGE, PERSON_CITY);
 	public static final StaticPerson STATIC_PERSON_INSTANCE = new StaticPerson(PERSON_NAME, PERSON_AGE, PERSON_CITY);
-	
+
 	// *** StaticPerson ***
-	
+
 	private static final String STATIC_PERSON = "(personName:C10;personAge:I10;personCity:C10)Ladybug   0000000015Paris     ";
 	public static final String STATIC_PERSON_NAME = "Ladybug   ";
 	public static final Integer STATIC_PERSON_AGE = 15;
@@ -195,21 +196,21 @@ public class BuzuTest {
 			assertNull(buzu.fromPpl("  ", Object.class));
 		} catch (PplParseException ppe) {
 
-		}	
+		}
 		Metaclass metaclass = new BasicMetaclassReader().read(Order.class);
 		assertNull(buzu.fromPpl(null, metaclass));
 		assertNull(buzu.fromPpl("", metaclass));
 		try { // empty
 			assertNull(buzu.fromPpl("  ", metaclass));
 		} catch (PplParseException ppe) {
-		}	
+		}
 
 		try { // Not Static Metadata
 			assertNull(buzu.fromPpl("(S10#1-0)1234567890", metaclass));
 		} catch (PplParseException ppe) {
 			assertEquals(Buzu.PARSE_REQUIRES_STATIC_METADATA, ppe.getMessage());
-		}	
-		
+		}
+
 		// toPpl
 		assertNull(buzu.toPpl(null));
 	}
@@ -308,20 +309,20 @@ public class BuzuTest {
 
 	@Test
 	public void testXmenToPpl() {
-		String ppl = buzu.toPpl(Xmen.Companion.getWOLVERINE());
+		String ppl = buzu.toPpl(Xmen.WOLVERINE);
 		assertEquals(XMEN_PPL_STRING, ppl);
 	}
 
 	@Test
 	public void testXmenFromPpl() {
 		Xmen wolverine = buzu.fromPpl(XMEN_PPL_STRING, Xmen.class);
-		assertEquals(Xmen.Companion.getWOLVERINE().getName(), wolverine.getName());
-		assertEquals(Xmen.Companion.getWOLVERINE().getSkill(), wolverine.getSkill());
-		assertEquals(Xmen.Companion.getWOLVERINE().getBirth(), wolverine.getBirth());
+		assertEquals(Xmen.WOLVERINE.getName(), wolverine.getName());
+		assertEquals(Xmen.WOLVERINE.getSkill(), wolverine.getSkill());
+		assertEquals(Xmen.WOLVERINE.getBirth(), wolverine.getBirth());
 
 		Human human = buzu.fromPpl(XMEN_PPL_STRING, Human.class);
-		assertEquals(Xmen.Companion.getWOLVERINE().getName(), human.getName());
-		assertEquals(Xmen.Companion.getWOLVERINE().getBirth(), human.getBirth());
+		assertEquals(Xmen.WOLVERINE.getName(), human.getName());
+		assertEquals(Xmen.WOLVERINE.getBirth(), human.getBirth());
 	}
 
 	// ********** Date fields **********
@@ -335,7 +336,7 @@ public class BuzuTest {
 		timePojo.setDate(OLD_DATE);
 
 		String ppl = buzu.toPpl(timePojo);
-		
+
 		assertTrue(ppl.contains("localDate:D"));
 		assertTrue(ppl.contains("localTime:t"));
 		assertTrue(ppl.contains("localDateTime:T"));
@@ -395,7 +396,34 @@ public class BuzuTest {
 		ppl = buzu.toPpl(people);
 		list = buzu.fromPplList(ppl, Person.class);
 		assertEquals(1, list.size());
-
 	}
+
+	@Test
+    public void testLoad(){
+        assertJavaVersusKotlin(PERSON_INSTANCE);
+	    assertJavaVersusKotlin(ORDER_INSTANCE);
+        assertJavaVersusKotlin(HUMAN);
+        assertJavaVersusKotlin(Xmen.WOLVERINE);
+    }
+
+    private void assertJavaVersusKotlin(Object o){
+        ShortMetadataCoder coder = new ShortMetadataCoder();
+        BasicMetaclassReader reader = new BasicMetaclassReader();
+        Metaclass metaclass = reader.read(o.getClass());
+        BasicMetadataLoader loader = new BasicMetadataLoader();
+        Metadata javaMetadata = loader.load(o, metaclass);
+
+        Metadata kotlinMetadata = loadMetadata(o);
+
+        assertEquals(javaMetadata.info(), kotlinMetadata.info());
+        assertEquals(javaMetadata.children().size(), kotlinMetadata.children().size());
+
+        // Test serial size (Record size)
+        int javaSerialSize = ((StaticStructure)javaMetadata).serialMaxSize();
+        int kotlinSerialSize = ((StaticStructure)kotlinMetadata).serialMaxSize();
+        System.out.println("  java:"+coder.code(javaMetadata));
+        System.out.println("kotlin:"+coder.code(kotlinMetadata));
+        assertEquals(coder.code(javaMetadata),coder.code(kotlinMetadata));
+    }
 
 }

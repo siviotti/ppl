@@ -161,6 +161,7 @@ public class Reflect {
 		List<Field> fields = new ArrayList<>();
 		fields.addAll(getAllFields(type.getSuperclass()));
 		fields.addAll(Arrays.asList(type.getDeclaredFields()));
+		System.out.println(fields);
 		return fields;
 	}
 

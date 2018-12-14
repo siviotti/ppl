@@ -5,6 +5,7 @@ import br.net.buzu.pplspec.exception.PplReflectionException
 import java.io.*
 import java.lang.reflect.*
 import java.util.*
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 internal const val UNSAFE_COLLECTION = "Unsafe collection '"
 
@@ -57,9 +58,9 @@ internal fun findMethod(methodName: String, obj: Any, vararg params: Class<*>): 
 
 }
 
-fun <T> invokeGet(obj: Any, attributeName: String): T {
+fun <T> findAndInvokeGet(instance: Any, fieldName: String): T {
     try {
-        return findGet(attributeName, obj).invoke(obj) as T
+        return findGet(fieldName, instance).invoke(instance) as T
     } catch (e: IllegalAccessException) {
         throw PplReflectionException(e)
     } catch (e: IllegalArgumentException) {
@@ -70,17 +71,17 @@ fun <T> invokeGet(obj: Any, attributeName: String): T {
 
 }
 
-fun invokeSet(obj: Any, fieldName: String, fieldType: Class<*>, param: Any) {
+fun findAndInvokeSet(instance: Any, fieldName: String, fieldType: Class<*>, param: Any?) {
     try {
-        findSet(fieldName, obj, fieldType).invoke(obj, param)
+        findSet(fieldName, instance, fieldType).invoke(instance, param)
     } catch (e: IllegalAccessException) {
         throw PplReflectionException(e)
     } catch (e: InvocationTargetException) {
         throw PplReflectionException(e)
     } catch (e: IllegalArgumentException) {
         throw PplReflectionException(
-                "Bad param: class:" + obj.javaClass.simpleName + " field:" + fieldName + "("
-                        + fieldType.simpleName + ") param(" + param.javaClass.simpleName + "):" + param,
+                "Bad param: class:" + instance.javaClass.simpleName + " field:" + fieldName + "("
+                        + fieldType.simpleName + ") param(" + param!!.javaClass.simpleName + "):" + param,
                 e)
     }
 
@@ -124,7 +125,7 @@ fun getElementType(field: Field): Class<*> {
  * @return The field list.
  */
 fun getAllFields(type: Class<*>): List<Field> {
-    if (Any::class.java == type.superclass || type.superclass == null) {
+    if (type.superclass == Any::class.java || type.superclass== JvmType.Object::class.java || type.superclass==null) {
         return Arrays.asList(*type.declaredFields)
     }
     val fields = ArrayList<Field>()
@@ -141,6 +142,31 @@ fun getPplMetadata(field: Field): PplMetadata? {
     return if (elementType.isAnnotationPresent(PplMetadata::class.java)) {
         elementType.getAnnotation(PplMetadata::class.java)
     } else null
+}
+
+fun getValueFromInstanceField(field: Field, instance: Any): Any? {
+    try {
+        //println("field:${field.name} = $instance" )
+        field.setAccessible(true)
+        return field.get(instance)
+    } catch (e: IllegalArgumentException) {
+        return findAndInvokeGet(instance, field.name)
+    } catch (e: IllegalAccessException) {
+        return findAndInvokeGet(instance, field.name)
+    }
+
+}
+
+fun setValueToInstanceField(field: Field, instance: Any, param: Any?) {
+    try {
+        field.setAccessible(true)
+        field.set(instance, param)
+    } catch (e: IllegalArgumentException) {
+        findAndInvokeSet(instance, field.name, field.type, param)
+    } catch (e: IllegalAccessException) {
+        findAndInvokeSet(instance, field.name, field.type, param)
+    }
+
 }
 
 

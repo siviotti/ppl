@@ -9,7 +9,7 @@ internal class MetadataCodeKtTest {
 
     @Test
     fun metadataAsVerbose() {
-        val metadata: Metadata = parseMetadata("", PERSON, 0, createSpecificMetadata)
+        val metadata: Metadata = parseMetadata("", PERSON, 0, genericCreateMetadata)
         println(metadata)
         println(metadataAsVerbose(metadata))
         println(metadataAsNatural(metadata))

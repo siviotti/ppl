@@ -1,6 +1,6 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.pplspec.api.TypeMapper
+import br.net.buzu.pplspec.model.TypeMapper
 import br.net.buzu.pplspec.model.Kind
 import br.net.buzu.pplspec.model.MetaInfo
 import br.net.buzu.pplspec.model.Metadata

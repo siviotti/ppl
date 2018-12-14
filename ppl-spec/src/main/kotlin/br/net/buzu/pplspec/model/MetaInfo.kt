@@ -141,7 +141,7 @@ class MetaInfo
     }
 
     fun update(newSize: Int, newMaxOccurs: Int): MetaInfo {
-        return MetaInfo(parentId(), maxOccurs, name, subtype, newSize, scale, minOccurs, newMaxOccurs, domain,
+        return MetaInfo(parentId(), index, name, subtype, newSize, scale, minOccurs, newMaxOccurs, domain,
                 defaultValue, tags)
     }
 

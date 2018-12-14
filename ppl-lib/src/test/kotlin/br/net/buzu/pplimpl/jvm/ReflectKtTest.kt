@@ -75,14 +75,14 @@ internal class ReflectKtTest {
         val bean = Bean()
         bean.name="Paul"
         bean.size=5
-        val s: String = invokeGet(bean, "name")
+        val s: String = findAndInvokeGet(bean, "name")
         assertEquals("Paul", s)
-        val i : Int = invokeGet(bean, "size")
+        val i : Int = findAndInvokeGet(bean, "size")
         assertEquals(5, i.toLong())
-        val b : Boolean = invokeGet(bean, "active")
+        val b : Boolean = findAndInvokeGet(bean, "active")
         assertEquals(false, b)
         try {
-            val c: String=invokeGet(bean, "color")
+            val c: String=findAndInvokeGet(bean, "color")
             fail("fail")
         } catch (e: PplReflectionException) {
             assertTrue(e.message!!.contains("getColor"))
@@ -93,13 +93,13 @@ internal class ReflectKtTest {
     @Test
     fun testSet() {
         val bean = Bean()
-        invokeSet(bean, "name", String::class.java, "Paul")
+        findAndInvokeSet(bean, "name", String::class.java, "Paul")
         assertEquals("Paul", bean.name)
-        invokeSet(bean, "size", Int::class.java, 5)
+        findAndInvokeSet(bean, "size", Int::class.java, 5)
         assertEquals(5, bean.size.toLong())
 
         try {
-            invokeSet(bean, "color", String::class.java, "red")
+            findAndInvokeSet(bean, "color", String::class.java, "red")
             fail("fail")
         } catch (e: PplReflectionException) {
             assertTrue(e.message!!.contains("setColor"))

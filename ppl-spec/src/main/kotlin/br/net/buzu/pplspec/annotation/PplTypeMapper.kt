@@ -16,8 +16,7 @@
  */
 package br.net.buzu.pplspec.annotation
 
-import br.net.buzu.pplspec.api.PayloadMapper
-import br.net.buzu.pplspec.api.TypeMapper
+import br.net.buzu.pplspec.model.TypeMapper
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import kotlin.reflect.KClass

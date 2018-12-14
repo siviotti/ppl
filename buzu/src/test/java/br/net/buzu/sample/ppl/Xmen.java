@@ -17,11 +17,11 @@ public class Xmen extends Human{
 	public static final Xmen WOLVERINE;
 	
 	static{
-		Companion.setWOLVERINE(new Xmen());
-		Companion.getWOLVERINE().setName("Wolverine");
-		Companion.getWOLVERINE().setBirth(LocalDate.of(1882, 04, 5));
-		Companion.getWOLVERINE().setWeight(99);
-		Companion.getWOLVERINE().setSkill("healing");
+		WOLVERINE = new Xmen();
+		WOLVERINE.setName("Wolverine");
+		WOLVERINE.setBirth(LocalDate.of(1882, 04, 5));
+		WOLVERINE.setWeight(99);
+		WOLVERINE.setSkill("healing");
 	}
 	
 	@PplMetadata(index=4, name="power", size=20)

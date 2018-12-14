@@ -16,28 +16,21 @@
  */
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.pplspec.context.SubtypeManager
 import br.net.buzu.pplspec.model.Subtype
-
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.Period
-import java.util.Date
-import java.util.HashMap
+import java.util.*
 
-internal val SUBTYPE_NOT_FOUND = "Subtype not found:"
-
-private val DEFAULT_COMPLEX = Subtype.DEFAULT_COMPLEX
-private val DEFAULT_SINGLE = Subtype.DEFAULT_SINGLE
 
 private val INTERNAL_MAP :Map<Class<*>, Subtype> = mapOf(
         String::class.java to Subtype.STRING,
         Int::class.java to Subtype.INTEGER,
-        BigInteger::class.java to Subtype.INTEGER,
         Int::class.javaPrimitiveType!! to Subtype.INTEGER,
+        Integer::class.java to Subtype.INTEGER,
         Boolean::class.java to Subtype.BOOLEAN,
         Boolean::class.javaPrimitiveType!! to Subtype.BOOLEAN,
         Date::class.java to Subtype.TIMESTAMP,

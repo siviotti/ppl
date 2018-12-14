@@ -34,7 +34,7 @@ private val EMPTY_CHILDREN: List<Metadata> = listOf()
 
 typealias CreateMetadata = (MetaInfo, List<Metadata>) -> Metadata
 
-val createSpecificMetadata: CreateMetadata = { metaInfo, children ->
+val genericCreateMetadata: CreateMetadata = { metaInfo, children ->
     if (children.isEmpty())
         if (metaInfo.isStatic)
             SimpleStaticMetadata(metaInfo)
@@ -49,7 +49,7 @@ val createSpecificMetadata: CreateMetadata = { metaInfo, children ->
 }
 
 fun parseMetadata(pplString: PplString): Metadata {
-    return parseMetadata(pplString, createMetadata = createSpecificMetadata)
+    return parseMetadata(pplString, createMetadata = genericCreateMetadata)
 }
 
 fun parseMetadata(pplString: PplString, createMetadata: CreateMetadata): Metadata {
