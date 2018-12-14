@@ -20,6 +20,7 @@ import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Subtype;
+import com.sun.java.browser.plugin2.DOM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,11 +104,11 @@ public class Layout {
 	}
 
 	public Layout field(String name, Subtype subtype, int size, int minOccurs, int maxOccurs) {
-		return field(name, subtype, size, NO_PRECISION, minOccurs, maxOccurs, Syntax.EMPTY, null, Syntax.EMPTY);
+		return field(name, subtype, size, NO_PRECISION, minOccurs, maxOccurs, Syntax.EMPTY, Domain.Companion.getEMPTY(), Syntax.EMPTY);
 	}
 
 	public Layout field(String name, Subtype subtype, int size, int precision, int minOccurs, int maxOccurs) {
-		return field(name, subtype, size, precision, minOccurs, maxOccurs, Syntax.EMPTY, null, Syntax.EMPTY);
+		return field(name, subtype, size, precision, minOccurs, maxOccurs, Syntax.EMPTY, Domain.Companion.getEMPTY(), Syntax.EMPTY);
 	}
 
 	public Layout end() {

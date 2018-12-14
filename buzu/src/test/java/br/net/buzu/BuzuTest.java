@@ -144,8 +144,8 @@ public class BuzuTest {
 
     @Before
     public void before() {
-        //buzu = new Buzu();
-        buzu = kotlinBuzu();
+        buzu = new Buzu();
+        //buzu = kotlinBuzu();
     }
 
     private static Buzu kotlinBuzu() {

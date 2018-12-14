@@ -1,9 +1,11 @@
 package br.net.buzu.metadata;
 
+import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.Metadata;
 import br.net.buzu.pplspec.model.Subtype;
+import kotlin.reflect.jvm.internal.impl.util.ModuleVisibilityHelper;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -38,14 +40,14 @@ public class ComplexMetadataTest {
 		List<Metadata> children = new ArrayList<>();
 		children.add(m1);
 		children.add(m2);
-		ComplexMetadata c1 = createSample("complex", Subtype.OBJ, 0, 0, 0, 1, null, null, null, children);
+		ComplexMetadata c1 = createSample("complex", Subtype.OBJ, 0, 0, 0, 1, Domain.Companion.getEMPTY(), Syntax.EMPTY, Syntax.EMPTY, children);
 
 		assertEquals(m1, c1.children().get(0));
 		assertEquals(m2, c1.children().get(1));
 		//assertEquals(30, c1.serialMaxSize()); // m1 = 10 m2 = 20
 
 		// Basic Methods
-		ComplexMetadata c2 = createSample("complex", Subtype.OBJ, 0, 0, 0, 1, null, null, null, children);
+		ComplexMetadata c2 = createSample("complex", Subtype.OBJ, 0, 0, 0, 1, Domain.Companion.getEMPTY(), Syntax.EMPTY, Syntax.EMPTY, children);
 
 		assertTrue(c1.equals(c2));
 		assertTrue(c1.hashCode() == c2.hashCode());

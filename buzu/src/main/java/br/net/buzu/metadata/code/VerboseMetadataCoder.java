@@ -173,6 +173,7 @@ public class VerboseMetadataCoder implements MetadataCoder {
 			sb.append(serializaTag(Token.DEFAULT_VALUE, meta.getDefaultValue()));
 		}
 		if (meta.hasTags()) {
+			System.out.println("TAGS" + meta.getTags());
 			sb.append(meta.getTags());
 		}
 		return sb.toString();

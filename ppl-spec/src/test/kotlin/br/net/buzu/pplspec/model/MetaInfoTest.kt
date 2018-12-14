@@ -117,7 +117,7 @@ class MetaInfoTest {
         assertFalse(metaInfo.inDomain("xyz"))
         assertFalse(metaInfo.inDomain("club"))
 
-        val other = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, null, null, null)
+        val other = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, Domain.EMPTY, EMPTY, EMPTY)
         assertFalse(other.hasDomain())
         assertTrue(other.inDomain("Diamond"))
         assertTrue(other.domain == Domain.EMPTY)
@@ -125,22 +125,41 @@ class MetaInfoTest {
 
     @Test
     fun testDefaultValue() {
-        val metaInfo = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, null, "DefaultValue", "XYZ")
+        val metaInfo = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, Domain.EMPTY, "DefaultValue", "XYZ")
         assertEquals("DefaultValue", metaInfo.defaultValue)
     }
 
     @Test
+    fun testFillChar() {
+        val metaInfo = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, Domain.EMPTY, "DefaultValue", "XYZ!%")
+        assertEquals('%', metaInfo.fillChar)
+        val metaInfo2 = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, Domain.EMPTY, "DefaultValue", "XYZ!#!$")
+        assertEquals('#', metaInfo2.fillChar)
+
+    }
+
+    @Test
+    fun testNullChar() {
+        val metaInfo = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, Domain.EMPTY, "DefaultValue", "XYZ?%")
+        assertEquals('%', metaInfo.nullChar)
+        assertEquals(' ', metaInfo.fillChar)
+        val metaInfo2 = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, Domain.EMPTY, "DefaultValue", "XYZ!#?$")
+        assertEquals('$', metaInfo2.nullChar)
+        assertEquals('#', metaInfo2.fillChar)
+    }
+
+    @Test
     fun testTags() {
-        val metaInfo = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, null, null, "XYZ")
+        val metaInfo = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, Domain.EMPTY, EMPTY, "XYZ")
 
         assertTrue(metaInfo.isTagPresent("X"))
         assertTrue(metaInfo.isTagPresent("XY"))
         assertTrue(metaInfo.isTagPresent("XYZ"))
 
         assertFalse(metaInfo.isTagPresent("XZ"))
-        assertFalse(metaInfo.isTagPresent(null))
+        //assertFalse(metaInfo.isTagPresent(null))
 
-        val other = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, null, null, null)
+        val other = MetaInfo( 31, "nameTest", Subtype.STRING, 100, 0, 1, 20, Domain.EMPTY, EMPTY, EMPTY)
         assertFalse(other.isTagPresent("X"))
         assertTrue(other.tags === EMPTY)
     }
@@ -203,3 +222,4 @@ class MetaInfoTest {
 
 
 }
+

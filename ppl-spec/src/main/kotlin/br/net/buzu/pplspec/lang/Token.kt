@@ -93,7 +93,7 @@ const val LABEL_VALUE = '='
 
 const val FILL_CHAR = '!'
 
-const val PROPERTY = '?'
+const val NULL_CHAR = '?'
 
 const val ALIAS = '@'
 

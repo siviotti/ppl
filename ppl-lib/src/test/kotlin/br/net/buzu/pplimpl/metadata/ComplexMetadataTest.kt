@@ -1,5 +1,6 @@
 package br.net.buzu.pplimpl.metadata
 
+import br.net.buzu.pplspec.lang.EMPTY
 import br.net.buzu.pplspec.model.*
 import java.util.*
 import org.junit.jupiter.api.Assertions.*
@@ -19,14 +20,14 @@ class ComplexMetadataTest {
         val children = ArrayList<Metadata>()
         children.add(m1)
         children.add(m2)
-        val c1 = createSample("complex", Subtype.OBJ, 0, 0, 0, 1, null, null, null, children)
+        val c1 = createSample("complex", Subtype.OBJ, 0, 0, 0, 1, Domain.EMPTY, EMPTY, EMPTY, children)
 
         assertEquals(m1, c1.children<Metadata>()[0])
         assertEquals(m2, c1.children<Metadata>()[1])
         //assertEquals(30, c1.serialMaxSize()); // m1 = 10 m2 = 20
 
         // Basic Methods
-        val c2 = createSample("complex", Subtype.OBJ, 0, 0, 0, 1, null, null, null, children)
+        val c2 = createSample("complex", Subtype.OBJ, 0, 0, 0, 1, Domain.EMPTY, EMPTY, EMPTY, children)
 
         assertTrue(c1 == c2)
         assertTrue(c1.hashCode() == c2.hashCode())
@@ -41,7 +42,7 @@ class ComplexMetadataTest {
     companion object {
 
         fun createSample(name: String, subtype: Subtype, size: Int, scale: Int, minOccurs: Int,
-                         maxOccurs: Int, domain: Domain?, defaultValue: String?, tags: String?, children: List<Metadata>?): ComplexMetadata {
+                         maxOccurs: Int, domain: Domain, defaultValue: String, tags: String, children: List<Metadata>?): ComplexMetadata {
             val metaInfo = MetaInfo(31, name, subtype, size, 0, minOccurs, maxOccurs, domain, defaultValue, tags)
             return ComplexMetadata(metaInfo, children!!)
 

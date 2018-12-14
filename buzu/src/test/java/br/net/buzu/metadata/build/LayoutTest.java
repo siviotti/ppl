@@ -1,6 +1,7 @@
 package br.net.buzu.metadata.build;
 
 import br.net.buzu.pplspec.lang.Syntax;
+import br.net.buzu.pplspec.model.Domain;
 import br.net.buzu.pplspec.model.MetaInfo;
 import br.net.buzu.pplspec.model.MetaInfoTest;
 import br.net.buzu.pplspec.model.Subtype;
@@ -61,7 +62,7 @@ public class LayoutTest {
 	
 	@Test
 	public void testCreate() {
-		Layout l1 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", null, "XYZ");
+		Layout l1 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", Domain.Companion.getEMPTY(), "XYZ");
 		assertEquals("abc", l1.metaInfo().getDefaultValue());
 		Layout l2 = new Layout("test", Subtype.STRING, 10, 0, 1, 1); // no extension
 		assertEquals(Syntax.EMPTY, l2.metaInfo().getDefaultValue());
@@ -83,7 +84,7 @@ public class LayoutTest {
 	
 	@Test
 	public void testBasic() {
-		Layout l1 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", null, "XYZ");
+		Layout l1 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", Domain.Companion.getEMPTY(), "XYZ");
 		assertEquals("abc", l1.metaInfo().getDefaultValue());
 		try {
 			l1.end(); // no parent
@@ -99,7 +100,7 @@ public class LayoutTest {
 		assertEquals(Subtype.Companion.getDEFAULT_SINGLE(), child1.metaInfo().getSubtype());
 		assertEquals(Layout.NO_SIZE, child1.metaInfo().getSize());
 		
-		Layout l2 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", null, "XYZ");
+		Layout l2 = new Layout("test", Subtype.STRING, 10, 0, 1, 1, "abc", Domain.Companion.getEMPTY(), "XYZ");
 		l2.atomic("field1");
 		l2.atomic("field2", 10);
 		assertEquals(l1.toTree(0), l2.toTree(0));

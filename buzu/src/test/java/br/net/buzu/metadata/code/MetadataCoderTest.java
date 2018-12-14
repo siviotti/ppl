@@ -7,10 +7,7 @@ import br.net.buzu.metadata.ComplexMetadata;
 import br.net.buzu.metadata.ComplexMetadataTest;
 import br.net.buzu.metadata.SimpleMetadataTest;
 import br.net.buzu.pplspec.lang.Syntax;
-import br.net.buzu.pplspec.model.Dialect;
-import br.net.buzu.pplspec.model.MetaInfoTest;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.Subtype;
+import br.net.buzu.pplspec.model.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -28,14 +25,14 @@ public class MetadataCoderTest {
 	private static final BasicMetadata COLOR = SimpleMetadataTest.createSample("color", Subtype.STRING, 10, 0, 0, 1,
 			MetaInfoTest.domain("black", "white", "red"), "red", "KIX");
 	private static final BasicMetadata SIZE = SimpleMetadataTest.createSample("size", Subtype.INTEGER, 10, 0, 1, 1,
-			null, null, null);
+			Domain.Companion.getEMPTY(), Syntax.EMPTY, Syntax.EMPTY);
 	private static final List<Metadata> CHILDREN = new ArrayList<>();
 
 	static {
 		CHILDREN.add(COLOR);
 		CHILDREN.add(SIZE);
 	}
-	private static final ComplexMetadata BOOK = ComplexMetadataTest.createSample("book", Subtype.OBJ, 0, 0, 0, 0, null, null, null, CHILDREN);
+	private static final ComplexMetadata BOOK = ComplexMetadataTest.createSample("book", Subtype.OBJ, 0, 0, 0, 0, Domain.Companion.getEMPTY(), Syntax.EMPTY, Syntax.EMPTY, CHILDREN);
 	
 	@Test
 	public void testVerbose() {

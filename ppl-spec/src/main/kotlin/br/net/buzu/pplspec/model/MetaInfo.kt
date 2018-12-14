@@ -18,50 +18,27 @@ package br.net.buzu.pplspec.model
 
 import br.net.buzu.pplspec.annotation.PplMetadata
 import br.net.buzu.pplspec.lang.*
-import java.util.*
 
-    /**
-     * Basic Pojo resulting of annotations information or manual setting. This class
-     * represents the PPL elements: name, type, size, scale, occurs , defaultValue,
-     * domain, tags, key and indexed.
-     *
-     * @author Douglas Siviotti
-     * @since 1.0
-     */
-class MetaInfo
 /**
- * @param index
- * @param name
- * @param subtype
- * The subtype based on Subtype enum. [CANNOT BE NULL]
- * @param size
- * @param scale
- * @param minOccurs
- * @param maxOccurs
- * @param defaultValue
- * @param domain
- * @param tags
+ * Basic Pojo resulting of annotations information or manual setting. This class
+ * represents the PPL elements: name, type, size, scale, occurs , defaultValue,
+ * domain, tags, key, indexed, align, fillChar, nullChar
+ *
+ * @author Douglas Siviotti
+ * @since 1.0
  */
-@JvmOverloads constructor(val index: Int, val name: String, val subtype: Subtype, size: Int, scale: Int, minOccurs: Int,
-                          val maxOccurs: Int, domain: Domain? = null, defaultValue: String? = EMPTY, tags: String? = EMPTY) : Comparable<MetaInfo> {
-
+class MetaInfo @JvmOverloads constructor(val index: Int, val name: String, val subtype: Subtype, size: Int, scale:
+Int, minOccurs: Int, val maxOccurs: Int, val domain: Domain = Domain.EMPTY, val defaultValue: String = EMPTY,
+                                         val tags: String = EMPTY) : Comparable<MetaInfo> {
     // Basic
     val size: Int
     val scale: Int
     val minOccurs: Int
     // Extension
-    /**
-     * Returns if the MetaInfo has domain, defaultValue or some tag defined.
-     *
-     * @return `true` if use any extension property or `false`
-     * if has no extension.
-     */
     val isExtended: Boolean
-    val domain: Domain
-    val defaultValue: String?
-    val tags: String?
     val align: Align
     val fillChar: Char
+    val nullChar: Char
 
     // API
 
@@ -103,7 +80,7 @@ class MetaInfo
      *
      * @return `true` if is required or `false`otherwise.
      */
-    val isRequired: Boolean
+    val isRequired
         get() = minOccurs > 0
 
     constructor(parentId: String, pplMetadata: PplMetadata, originalFieldName: String, originalSubtype: Subtype) : this(pplMetadata.index, getName(pplMetadata, originalFieldName),
@@ -111,21 +88,25 @@ class MetaInfo
             pplMetadata.minOccurs, pplMetadata.maxOccurs, domainOf(*pplMetadata.domain),
             pplMetadata.defaultValue, buildTags(pplMetadata))
 
-        fun hasSize(): Boolean {
-            return PplMetadata.EMPTY_INTEGER != size
-        }
+    fun hasSize(): Boolean {
+        return PplMetadata.EMPTY_INTEGER != size
+    }
 
     init {
         this.size = if (subtype.isFixedSizeType) subtype.fixedSize() else size
         this.scale = if (scale > NO_SCALE) scale else 0
         checkOccurs(minOccurs, maxOccurs)
         this.minOccurs = if (minOccurs < 0) 0 else minOccurs
-        this.domain = domain ?: Domain.EMPTY
-        this.defaultValue = defaultValue ?: EMPTY
-        this.tags = tags ?: EMPTY
         this.isExtended = isExtended(this.domain, this.defaultValue, this.tags)
-        this.align = getAlign(subtype, tags)
-        this.fillChar = subtype.dataType().fillChar()
+        if (tags.isNotEmpty()) {
+            this.align = getAlign(subtype, tags)
+            this.fillChar = getTagChar(FILL_CHAR, subtype.dataType().fillChar(), tags)
+            this.nullChar = getTagChar(NULL_CHAR, subtype.dataType().nullChar(), tags)
+        } else {
+            this.align = subtype.dataType().align()
+            this.fillChar = subtype.dataType().fillChar()
+            this.nullChar = subtype.dataType().nullChar()
+        }
     }
 
     fun hasMaxOccurs(): Boolean {
@@ -164,23 +145,22 @@ class MetaInfo
         } else domain.containsValue(valueItem)
     }
 
-    fun isTagPresent(tag: String?): Boolean {
-        return tags != null && tag != null && tags.contains(tag)
+    fun isTagPresent(tag: String): Boolean {
+        return tags.contains(tag)
     }
 
     fun ppl(): String {
         return (name + NAME_END + subtype.id + size + OCCURS_BEGIN + minOccurs + OCCURS_RANGE
                 + maxOccurs + domain.asSerial() + serializeDefaultvalue(defaultValue) + tags)
-
     }
 
     // Common Methods
 
-    override fun compareTo(o: MetaInfo): Int {
-        if (index == o.index) {
+    override fun compareTo(other: MetaInfo): Int {
+        if (index == other.index) {
             return 0
         }
-        return if (index < o.index) -1 else 1
+        return if (index < other.index) -1 else 1
     }
 
     override fun toString(): String {
@@ -201,15 +181,11 @@ class MetaInfo
         return if (this.javaClass == obj.javaClass) {
             ppl().equals((obj as MetaInfo).ppl())
         } else false
-
-
     }
 
     companion object {
 
         val NO_SCALE = 0
-
-        // static
 
         private fun createId(parentId: String?, name: String?): String {
             return if (parentId == null || parentId.isEmpty()) {
@@ -233,10 +209,10 @@ class MetaInfo
         }
 
         private fun buildTags(pplMetadata: PplMetadata): String {
-            val tags = if (pplMetadata.tags != null) pplMetadata.tags else ""
+            val tags = if (pplMetadata.tags.isNotEmpty()) pplMetadata.tags else EMPTY
             val sb = StringBuilder(tags)
-            if (tags == null) {
-                return sb.append(KEY).append(INDEXED).toString()
+            if (tags.isEmpty()) {
+                return EMPTY
             }
             if (pplMetadata.key && tags.indexOf(KEY) < 0) {
                 sb.append(KEY)
@@ -247,7 +223,9 @@ class MetaInfo
             if (PplMetadata.EMPTY_CHAR != pplMetadata.align) {
                 sb.append(pplMetadata.align)
             }
-
+            if (PplMetadata.EMPTY_CHAR != pplMetadata.fillChar) {
+                sb.append(pplMetadata.fillChar)
+            }
             return sb.toString()
         }
 
@@ -261,17 +239,13 @@ class MetaInfo
             return !domain.isEmpty || !defaultValue.isEmpty() || !tags.isEmpty()
         }
 
-        private fun getAlign(subtype: Subtype, tags: String?): Align {
-            if (tags != null) {
-                if (tags.indexOf(LEFT) > -1) {
-                    return Align.LEFT
-                }
-                if (tags.indexOf(RIGHT) > -1) {
-                    return Align.RIGHT
-                }
-            }
-            return subtype.dataType().align()
+        private fun getAlign(subtype: Subtype, tags: String): Align {
+            return if (tags.indexOf(LEFT) > -1) Align.LEFT else Align.RIGHT
+        }
+
+        private fun getTagChar(tagChar: Char, defaulChar: Char, tags: String): Char {
+            val index = tags.indexOf(tagChar)
+            return if (index > -1 && index <= tags.length - 2) tags[index + 1] else defaulChar
         }
     }
-
 }

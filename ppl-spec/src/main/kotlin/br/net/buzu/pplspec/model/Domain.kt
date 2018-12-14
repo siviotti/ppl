@@ -26,19 +26,11 @@ import java.util.*
  * @author Douglas Siviotti
  * @since 1.0
  */
-class Domain protected constructor(private val name: String, items: List<DomainItem>?) : Nameable {
+class Domain protected constructor(private val name: String, val items: List<DomainItem> = listOf()) : Nameable {
 
-    private val items: List<DomainItem>
 
     val isEmpty: Boolean
         get() = items.isEmpty()
-
-    init {
-        this.items = if (items != null)
-            Collections.unmodifiableList(items)
-        else
-            Collections.unmodifiableList(ArrayList())
-    }
 
     override fun name(): String {
         return name
@@ -99,7 +91,7 @@ class Domain protected constructor(private val name: String, items: List<DomainI
 
     companion object {
 
-        val EMPTY = Domain(br.net.buzu.pplspec.lang.EMPTY, null)
+        val EMPTY = Domain(br.net.buzu.pplspec.lang.EMPTY, listOf())
 
         internal fun create(name: String, items: List<DomainItem>): Domain {
             return Domain(name, items)
