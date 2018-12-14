@@ -238,7 +238,7 @@ public class Splitter {
 		}
 		firstChar++; // skip #
 		if (firstChar == text.length()) {
-			return firstChar; // returns the # index
+			return firstChar; // returns the # treeIndex
 		}
 		int endIndex = pplLastNumberIndex(text, firstChar, Token.OCCURS_RANGE);
 		if (endIndex > beginIndex) {

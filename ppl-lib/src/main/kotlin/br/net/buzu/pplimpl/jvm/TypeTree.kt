@@ -1,29 +1,21 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.pplspec.annotation.PplMetadata
 import br.net.buzu.pplspec.exception.PplException
 import br.net.buzu.pplspec.model.PplSerializable
 import br.net.buzu.pplspec.model.SizeType
 import br.net.buzu.pplspec.model.Subtype
-import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
 import java.math.BigDecimal
-import java.util.*
 
-
-fun loadNodeOf(rootInstance: Any?, typeInfo: TypeInfo, fieldPath: String): LoadNode {
-    return LoadNode(rootInstance, typeInfo, fieldPath)
-}
 
 class LoadNode(originalValue: Any?, val typeInfo: TypeInfo, val fieldPath: String) {
 
     val value: Array<Any?>
-    val subtype: Subtype
+    val subtype: Subtype =typeInfo.metaInfo.subtype
     val occurs: Int
         get() = value.size
 
     init {
-        subtype = fromType(typeInfo.elementType)
         if (originalValue == null) {
             this.value = arrayOf(1)
         } else if (typeInfo.isCollection) {
@@ -50,7 +42,7 @@ class LoadNode(originalValue: Any?, val typeInfo: TypeInfo, val fieldPath: Strin
             var max = 0
             var tmp = 0
             for (obj in value) {
-                tmp = getValueSize(obj!!)
+                tmp = typeInfo.getValueSize(obj!!)
                 if (tmp > max) {
                     max = tmp
                 }
@@ -81,53 +73,11 @@ data class Max(var maxSize: Int = 0, var maxOccurs: Int = 0) {
 
 }
 
-class MaxMap {
+class MaxMap (val size: Int){
+    private val map = Array(size, {Max()})
 
-    private val map = HashMap<String, Max>()
-
-    fun getOrCreate(fieldPath: String): Max {
-        if (!map.containsKey(fieldPath)) {
-            map[fieldPath] = Max()
-        }
-        return map[fieldPath]!!
+    fun getMaxByIndex(index: Int): Max {
+        return map[index]
     }
 }
 
-internal fun extractElementType(fieldType: Class<*>): Class<*> {
-    if (Collection::class.java.isAssignableFrom(fieldType)) {
-        if (fieldType.genericSuperclass !is ParameterizedType) {
-            return Any::class.java
-        }
-        val parType = fieldType.genericSuperclass as ParameterizedType
-        if (parType.actualTypeArguments.size < 1) {
-            return Any::class.java
-        }
-        val itemType = parType.actualTypeArguments[0]
-        try {
-            return Class.forName(itemType.typeName)
-        } catch (e: ClassNotFoundException) {
-            throw PplException(e)
-        }
-    } else return if (fieldType.isArray) {
-        fieldType.componentType
-    } else {
-        fieldType
-    }
-}
-
-internal fun getValueSize(value: Any): Int {
-    if (value == null) {
-        return 0
-    }
-    val str: String?
-    if (PplSerializable::class.java.isAssignableFrom(value.javaClass)) {
-        str = (value as PplSerializable).asPplSerial()
-    } else {
-        if (value is BigDecimal){
-            str = value.toPlainString()
-        } else {
-            str = value.toString()
-        }
-    }
-    return str?.length ?: 0
-}

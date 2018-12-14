@@ -1,6 +1,7 @@
 package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.pplspec.annotation.PplMetadata
+import br.net.buzu.pplspec.exception.PplException
 import br.net.buzu.pplspec.exception.PplReflectionException
 import java.io.*
 import java.lang.reflect.*
@@ -255,7 +256,7 @@ internal fun instantiateUsingSerialization(type: Class<*>): Any {
         stream.writeUTF(type.name)
         stream.writeLong(ObjectStreamClass.lookup(type).serialVersionUID)
         stream.writeByte(2) // classDescFlags (2 = Serializable)
-        stream.writeShort(0) // field count
+        stream.writeShort(0) // field size
         stream.writeByte(ObjectStreamConstants.TC_ENDBLOCKDATA.toInt())
         stream.writeByte(ObjectStreamConstants.TC_NULL.toInt())
         data = bytes.toByteArray()
@@ -285,7 +286,33 @@ internal fun getMostSimpleConstructor(toClass: Class<*>): Constructor<*> {
     } catch (e: SecurityException) {
         throw PplReflectionException(e.message!!, e)
     }
-
 }
+
+// **************************************************
+// Etc
+// **************************************************
+
+internal fun extractElementType(fieldType: Class<*>): Class<*> {
+    if (Collection::class.java.isAssignableFrom(fieldType)) {
+        if (fieldType.genericSuperclass !is ParameterizedType) {
+            return Any::class.java
+        }
+        val parType = fieldType.genericSuperclass as ParameterizedType
+        if (parType.actualTypeArguments.size < 1) {
+            return Any::class.java
+        }
+        val itemType = parType.actualTypeArguments[0]
+        try {
+            return Class.forName(itemType.typeName)
+        } catch (e: ClassNotFoundException) {
+            throw PplException(e)
+        }
+    } else return if (fieldType.isArray) {
+        fieldType.componentType
+    } else {
+        fieldType
+    }
+}
+
 
 

@@ -26,7 +26,7 @@ class MetadataParserTest {
 
     @Test
     fun testParseSingle() {
-        val metadata = parseMetadata("", NAME, 0, genericCreateMetadata)
+        val metadata = parseMetadata("", NAME, genericCreateMetadata, IndexSequence())
         assertMetadata(metadata, "name", Subtype.STRING, 20, 0, 1)
     }
 
@@ -41,16 +41,21 @@ class MetadataParserTest {
 
     @Test
     fun testParseComplex() {
-        val metadata = parseMetadata("", PERSON, 0, genericCreateMetadata)
+        val metadata = parseMetadata("", PERSON, genericCreateMetadata, IndexSequence())
         assertEquals(3, metadata.children<Metadata>().size)
         assertMetadata(metadata.children<Metadata>()[0], "name", Subtype.STRING, 20, 0, 1)
         assertMetadata(metadata.children<Metadata>()[1], "age", Subtype.INTEGER, 2, 0, 1)
         assertMetadata(metadata.children<Metadata>()[2], "city", Subtype.STRING, 5, 0, 1)
+        // treeIndex 0, 1, 2, 3
+        assertEquals(0, metadata.info().index)
+        assertEquals(1, metadata.children<Metadata>()[0].info().index)
+        assertEquals(2, metadata.children<Metadata>()[1].info().index)
+        assertEquals(3, metadata.children<Metadata>()[2].info().index)
     }
 
     @Test
     fun testParseExtension() {
-        val metadata = parseMetadata("", EXT, 0, genericCreateMetadata)
+        val metadata = parseMetadata("", EXT, genericCreateMetadata, IndexSequence())
         assertMetadata(metadata, "color", Subtype.STRING, 10, 0, 1)
         val domain = domainOf("black", "white", "red")
         assertEquals(domain.items(), metadata.info().domain.items())

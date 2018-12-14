@@ -1,19 +1,3 @@
-/*
- *	This file is part of Buzu.
- *
- *   Buzu is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License
- *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
- */
 package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.pplspec.model.Subtype
@@ -25,8 +9,7 @@ import java.time.LocalTime
 import java.time.Period
 import java.util.*
 
-
-private val INTERNAL_MAP :Map<Class<*>, Subtype> = mapOf(
+private val INTERNAL_SIMPLE_MAPPING :Map<Class<*>, Subtype> = mapOf(
         String::class.java to Subtype.STRING,
         Int::class.java to Subtype.INTEGER,
         Int::class.javaPrimitiveType!! to Subtype.INTEGER,
@@ -54,22 +37,20 @@ private val INTERNAL_MAP :Map<Class<*>, Subtype> = mapOf(
         Char::class.javaPrimitiveType!! to Subtype.CHAR
 )
 
+val genericSubTypeOf: (Class<*>)-> Subtype = {type-> subTypeOf(type)}
 /**
- * Creates a instance domainOf `SubType` based on a Class.
+ * Creates a instance of `SubType` based on a Class.
  *
  * @param typeClass
  * The class
  * @return The correct instance relative to the class.
  */
-fun fromType(typeClass: Class<*>): Subtype {
+fun subTypeOf(typeClass: Class<*>): Subtype {
     if (typeClass.isEnum) {
         return Subtype.STRING
     }
-    val simpleType = INTERNAL_MAP[typeClass]
-    return simpleType ?: Subtype.OBJ
+    val simpleType = INTERNAL_SIMPLE_MAPPING[typeClass]
+    return simpleType ?: Subtype.DEFAULT_COMPLEX
 }
 
-fun isSimple(type: Class<*>): Boolean {
-    return INTERNAL_MAP.containsKey(type) || type.isEnum
-}
-
+fun isSimpleType(type: Class<*>): Boolean = INTERNAL_SIMPLE_MAPPING.containsKey(type) || type.isEnum

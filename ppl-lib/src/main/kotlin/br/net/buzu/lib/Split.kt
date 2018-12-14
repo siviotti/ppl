@@ -184,7 +184,7 @@ internal fun splitOccurs(text: String, beginIndex: Int): Split {
     }
     firstChar++ // skip #
     if (firstChar == text.length) {
-        return Split(firstChar) // returns the # index
+        return Split(firstChar) // returns the # treeIndex
     }
     val endIndex = pplLastNumberIndex(text, firstChar, OCCURS_RANGE)
     if (endIndex > beginIndex) {

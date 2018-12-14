@@ -251,7 +251,7 @@ public class Reflect {
 			stream.writeUTF(type.getName());
 			stream.writeLong(ObjectStreamClass.lookup(type).getSerialVersionUID());
 			stream.writeByte(2); // classDescFlags (2 = Serializable)
-			stream.writeShort(0); // field count
+			stream.writeShort(0); // field size
 			stream.writeByte(ObjectStreamConstants.TC_ENDBLOCKDATA);
 			stream.writeByte(ObjectStreamConstants.TC_NULL);
 			data = bytes.toByteArray();

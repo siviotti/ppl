@@ -41,8 +41,8 @@ fun loadMetadata(rootInstance: Any): Metadata {
 
 fun loadMetadata(rootInstance: Any, createMetadata: CreateMetadata = genericCreateMetadata, skip: (Field) -> Boolean = genericSkip): Metadata {
     val typeInfo = read(rootInstance.javaClass, skip)
-    val node = loadNodeOf(rootInstance, typeInfo, "")
-    val maxMap = MaxMap()
+    val node = LoadNode(rootInstance, typeInfo, "")
+    val maxMap = MaxMap(typeInfo.nodeCount() + 1)
     val metaInfo = typeInfo.metaInfo
     val max = getMax(maxMap, node, metaInfo)
     return createMetadata(metaInfo.update(max.maxSize, max.maxOccurs), createMetaChildren(node, maxMap, createMetadata, skip))
@@ -70,9 +70,7 @@ private fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: C
 
 private fun loadChild(fieldValue: Any?, typeInfo: TypeInfo, parentNode: LoadNode, maxMap: MaxMap,
                       createMetadata: CreateMetadata, skip: (Field) -> Boolean): Metadata {
-
-    val fieldPath = getFieldPath(typeInfo.fieldName, parentNode)
-    val fieldNode = loadNodeOf(fieldValue, typeInfo, fieldPath)
+    val fieldNode = LoadNode(fieldValue, typeInfo, getFieldPath(typeInfo.fieldName, parentNode))
     var metaInfo = typeInfo.metaInfo
     val max = getMax(maxMap, fieldNode, metaInfo)
     metaInfo = metaInfo.update(max.maxSize, max.maxOccurs)
@@ -80,19 +78,9 @@ private fun loadChild(fieldValue: Any?, typeInfo: TypeInfo, parentNode: LoadNode
     return createMetadata(metaInfo, children)
 }
 
-
-private fun createMetaInfo(parentId: String, pplMetadata: PplMetadata?, elementType: Class<*>, fieldName: String): MetaInfo {
-    val subtype = fromType(elementType)
-    return if (pplMetadata != null)
-        MetaInfo(parentId, pplMetadata, fieldName, subtype)
-    else
-        MetaInfo(parentId, 0, fieldName, subtype, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
-                DEFAULT_MIN_OCCURS, PplMetadata.EMPTY_INTEGER)
-}
-
 private fun getMax(maxMap: MaxMap, node: LoadNode, metaInfo: MetaInfo): Max {
     val fieldPath = node.fieldPath
-    val max = maxMap.getOrCreate(fieldPath)
+    val max = maxMap.getMaxByIndex(node.typeInfo.treeIndex)
     val size = max.tryNewMaxSize(node.calcMaxSize()).maxSize
     val maxOccurs = max.tryNewMaxOccurs(node.occurs).maxOccurs
     if (metaInfo.hasSize()) {
@@ -113,10 +101,8 @@ private fun checkLimit(info: String, fieldPath: String, maxValue: Int, newValue:
     }
 }
 
-fun getFieldPath(fieldName: String, node: LoadNode): String {
-    return if (node.fieldPath.isEmpty()) {
-        fieldName
-    } else node.fieldPath + PATH_SEP + fieldName
+private inline fun getFieldPath(fieldName: String, node: LoadNode): String {
+    return if (node.fieldPath.isEmpty()) fieldName else node.fieldPath + PATH_SEP + fieldName
 }
 
 private fun skip(field: Field): Boolean {

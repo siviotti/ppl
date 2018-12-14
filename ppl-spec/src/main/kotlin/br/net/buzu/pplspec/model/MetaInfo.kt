@@ -42,12 +42,11 @@ class MetaInfo
  * @param domain
  * @param tags
  */
-@JvmOverloads constructor(parentId: String, val index: Int, val name: String, subtype: Subtype, size: Int, scale: Int, minOccurs: Int,
+@JvmOverloads constructor(parentId: String, val index: Int, val name: String, val subtype: Subtype, size: Int, scale: Int, minOccurs: Int,
                           val maxOccurs: Int, domain: Domain? = null, defaultValue: String? = EMPTY, tags: String? = EMPTY) : Comparable<MetaInfo> {
 
     // Basic
     val id: String
-    val subtype: Subtype
     val size: Int
     val scale: Int
     val minOccurs: Int
@@ -119,7 +118,6 @@ class MetaInfo
 
     init {
         this.id = createId(parentId, name)
-        this.subtype = Objects.requireNonNull(subtype, "'subtype' cannot be null")
         this.size = if (subtype.isFixedSizeType) subtype.fixedSize() else size
         this.scale = if (scale > NO_SCALE) scale else 0
         checkOccurs(minOccurs, maxOccurs)
@@ -143,10 +141,6 @@ class MetaInfo
     fun update(newSize: Int, newMaxOccurs: Int): MetaInfo {
         return MetaInfo(parentId(), index, name, subtype, newSize, scale, minOccurs, newMaxOccurs, domain,
                 defaultValue, tags)
-    }
-
-    fun hasIndex(): Boolean {
-        return PplMetadata.EMPTY_INTEGER != index
     }
 
     fun hasDomain(): Boolean {

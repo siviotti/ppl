@@ -52,13 +52,13 @@ fun parseMetadata(pplString: PplString): Metadata {
     return parseMetadata(pplString, createMetadata = genericCreateMetadata)
 }
 
-fun parseMetadata(pplString: PplString, createMetadata: CreateMetadata): Metadata {
+fun parseMetadata(pplString: PplString, createMetadata: CreateMetadata, seq: IndexSequence = IndexSequence()): Metadata {
     try {
         val nodes = splitNodes(pplString.pplMetadata)
         if (nodes.size > 1) {
-            return parseMetadata(EMPTY, createRoot(nodes), 0, createMetadata)
+            return parseMetadata(EMPTY, createRoot(nodes), createMetadata, seq)
         } else {
-            return parseMetadata(EMPTY, nodes[0], 0, createMetadata)
+            return parseMetadata(EMPTY, nodes[0], createMetadata, seq)
         }
     } catch (e: ParseException) {
         throw PplParseException("Parsing error on text:\n$pplString", e)
@@ -80,7 +80,8 @@ internal fun createRoot(nodes: List<PplNode>): PplNode {
     return PplNode(name = rootName, children = children)
 }
 
-internal fun parseMetadata(parentId: String, node: PplNode, index: Int, createMetadata: CreateMetadata): Metadata {
+internal fun parseMetadata(parentId: String, node: PplNode, createMetadata: CreateMetadata, seq: IndexSequence): Metadata {
+    val index = seq.next()
     val name = parseName(node, index)
     val subtype = parseSubtype(node)
     val size = parseSize(node, subtype)
@@ -90,16 +91,16 @@ internal fun parseMetadata(parentId: String, node: PplNode, index: Int, createMe
     val domain = parseDomain(node)
     val metaInfo = MetaInfo(parentId, index, name, subtype, size, scale, minOccurs, maxOccurs, domain,
             node.defaultValue, node.tags)
-    return createMetadata(metaInfo, parseChildren(metaInfo.id, node, createMetadata))
+    return createMetadata(metaInfo, parseChildren(metaInfo.id, node, createMetadata, seq))
 }
 
-internal fun parseChildren(parentId: String, node: PplNode, createMetadata: CreateMetadata): List<Metadata> {
+internal fun parseChildren(parentId: String, node: PplNode, createMetadata: CreateMetadata, seq: IndexSequence): List<Metadata> {
     if (!node.isComplex()) {
         return EMPTY_CHILDREN
     }
     val metas = mutableListOf<Metadata>()
     for (i in 0 until node.children.size) {
-        metas.add(parseMetadata(parentId, node.children.get(i), i, createMetadata))
+        metas.add(parseMetadata(parentId, node.children.get(i), createMetadata, seq))
     }
     return metas
 }
@@ -237,6 +238,8 @@ class GenericMetadataParser : MetadataParser {
         return br.net.buzu.pplimpl.metadata.parseMetadata(pplString)
     }
 }
+
+class IndexSequence() {  private var internalValue = 0;    fun next() = internalValue++ }
 
 private fun isStaticChildren(children: List<Metadata>): Boolean {
     for (child in children) {
