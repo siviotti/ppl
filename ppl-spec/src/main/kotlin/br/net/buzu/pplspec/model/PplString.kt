@@ -43,12 +43,13 @@ class PplString internal constructor(val text: String) : Serializable {
 
     val metadata: String
     val payload: String
+
     val pplMetadata: String
         get() = metadata.substring(1, metadata.length - 1)
 
     init {
         if (text.isEmpty()) {
-            throw IllegalArgumentException("text cannot be 'null' or Empty!")
+            throw IllegalArgumentException("text cannot be Empty!")
         }
         try {
             metadata = pplExtractMetadata(text)
@@ -58,19 +59,11 @@ class PplString internal constructor(val text: String) : Serializable {
         }
     }
 
-    // **************************************************
-    // hashcode, equals, toString
-    // **************************************************
-
-    override fun hashCode(): Int {
-        return metadata.hashCode() * 31 + payload.hashCode()
-    }
+    override fun hashCode(): Int = metadata.hashCode() * 31 + payload.hashCode()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other == null) {
-            return false
-        }
+        if (other == null) return false
         if (other is PplString) {
             val other = other as PplString?
             return metadata == other!!.metadata && payload == other.payload
@@ -78,9 +71,7 @@ class PplString internal constructor(val text: String) : Serializable {
         return false
     }
 
-    override fun toString(): String {
-        return pplToString(metadata, payload)
-    }
+    override fun toString(): String = pplToString(metadata, payload)
 
     companion object {
 

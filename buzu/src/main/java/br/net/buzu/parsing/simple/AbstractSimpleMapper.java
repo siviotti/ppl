@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -36,7 +36,7 @@ public abstract class AbstractSimpleMapper extends AbstractPositionalMapper {
 	// ******************** PARSE ********************
 	@Override
 	protected Object doParse(StaticMetadata metadata, String text, Metaclass toClass) {
-		if (isNull(text, metadata.info().getSubtype().dataType().nullChar())) {
+		if (isNull(text, metadata.info().getSubtype().getDataType().getNullChar())) {
 			if (metadata.info().hasDefaultValue()) {
 				text = metadata.info().getDefaultValue();
 			} else {
@@ -85,7 +85,7 @@ public abstract class AbstractSimpleMapper extends AbstractPositionalMapper {
 	 * @see MetaInfo#getDefaultValue()
 	 */
 	protected String serializeNullElement(MetaInfo meta) {
-		return fill(meta.getAlign(), meta.getDefaultValue(), meta.getSize(), meta.getSubtype().dataType().nullChar());
+		return fill(meta.getAlign(), meta.getDefaultValue(), meta.getSize(), meta.getSubtype().getDataType().getNullChar());
 	}
 
 	protected String serializeElement(MetaInfo meta, Object obj) {

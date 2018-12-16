@@ -7,32 +7,43 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplspec.context
+package br.net.buzu.pplspec.api
 
-import br.net.buzu.pplspec.api.PayloadMapper
 import br.net.buzu.pplspec.model.Metaclass
 
 /**
- * Parser Factory creates Parser from Metadata.
+ *
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface ParserFactory {
+interface MetaclassReader {
 
     /**
-     * Creates a Parser from a metadata.
+     * Reads the type and returns a Metaclass based on it.
      *
-     * @param metadata
-     * The metadata
-     * @return The instance domainOf Parser.
+     * @param type
+     * The original type.
+     * @return The instance domainOf Metaclass.
      */
-    fun create(metaClass: Metaclass): PayloadMapper
+    fun read(type: Class<*>): Metaclass
+
+    /**
+     * Reads the type and the elementType and returns a Metaclass based on it.
+     *
+     * @param type
+     * The original type (root object).
+     * @param elementType
+     * The type domainOf each item if type is multiple or root type if not.
+     * @return The instance domainOf Metaclass.
+     */
+    fun read(type: Class<*>, elementType: Class<*>): Metaclass
+
 }

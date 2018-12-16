@@ -17,15 +17,9 @@
 package br.net.buzu.pplspec.model
 
 /**
- * Lista de alinhamentos possíveis.
+ * Text align
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-enum class Align(val id: Char) {
-
-
-    LEFT(br.net.buzu.pplspec.lang.LEFT), RIGHT(br.net.buzu.pplspec.lang.RIGHT)
-
-
-}
+enum class Align(val id: Char) { LEFT(br.net.buzu.pplspec.lang.LEFT), RIGHT(br.net.buzu.pplspec.lang.RIGHT) }

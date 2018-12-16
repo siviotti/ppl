@@ -5,9 +5,7 @@ class Card {
     var suit: Suit? = null
     var number: Int = 0
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(suit: Suit, number: Int) : super() {
         this.suit = suit

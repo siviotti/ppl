@@ -19,9 +19,7 @@ class StaticPerson {
     @PplMetadata(name = "personCity", size = 10, maxOccurs = 1, subtype = Subtype.CHAR)
     var city: String? = null
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(name: String, age: Int, city: String) : super() {
         this.name = name

@@ -7,9 +7,7 @@ class Address {
     var zip: String? = null
     var type: AddressType? = null
 
-    constructor() {
-
-    }
+    constructor()
 
     @JvmOverloads
     constructor(street: String, city: String, zip: String, type: AddressType? = null) : super() {

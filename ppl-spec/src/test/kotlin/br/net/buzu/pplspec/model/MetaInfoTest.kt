@@ -2,7 +2,7 @@ package br.net.buzu.pplspec.model
 
 
 import br.net.buzu.pplspec.annotation.PplMetadata
-import br.net.buzu.pplspec.lang.EMPTY
+import br.net.buzu.pplspec.lang.*
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -165,6 +165,53 @@ class MetaInfoTest {
     }
 
     @Test
+    fun testSimpleAnnotation() {
+        @PplMetadata(index = 31, name = "nameTest", subtype = Subtype.STRING, size = 10, scale = 2, minOccurs = 1, maxOccurs = 20,
+                domain = ["black", "white", "red"], defaultValue = "abc", tags =  "#")
+        class C
+
+        val pplMetadata= C::class.java.getAnnotation(PplMetadata::class.java)
+
+        val metaInfo = MetaInfo(pplMetadata, "otherName", Subtype.CHAR)
+
+        assertEquals(31, metaInfo.index)
+        assertEquals("nameTest", metaInfo.name)
+        assertEquals(Subtype.STRING, metaInfo.subtype)
+        assertEquals(10, metaInfo.size)
+        assertEquals(2, metaInfo.scale)
+        assertEquals(1, metaInfo.minOccurs)
+        assertEquals(20, metaInfo.maxOccurs)
+        assertEquals(domainOf("black","white","red"), metaInfo.domain)
+        assertEquals("abc", metaInfo.defaultValue)
+        assertEquals("#", metaInfo.tags)
+        assertEquals(metaInfo.subtype.dataType.align, metaInfo.align)
+        assertEquals(false, metaInfo.isKey())
+        assertEquals(false, metaInfo.isIndexd())
+
+    }
+
+    @Test
+    fun testTagsByAnnotation() {
+
+        @PplMetadata(index = 31, name = "nameTest", subtype = Subtype.STRING, size = 10, scale = 2, minOccurs = 1, maxOccurs = 20,
+                domain = ["black", "white", "red"], defaultValue = "abc", tags =  "#", align = RIGHT, key = true, indexed = true)
+        class C
+
+        val pplMetadata= C::class.java.getAnnotation(PplMetadata::class.java)
+        val metaInfo = MetaInfo(pplMetadata, "otherName", Subtype.CHAR)
+
+        assertEquals(true, metaInfo.isTagPresent(KEY))
+        assertEquals(true, metaInfo.isTagPresent(INDEXED))
+        assertEquals(Align.RIGHT, metaInfo.align)
+        assertEquals(true, metaInfo.isKey())
+        assertEquals(true, metaInfo.isIndexd())
+        assertTrue(metaInfo.tags.contains("#"))
+        assertTrue(metaInfo.tags.contains("K"))
+        assertTrue(metaInfo.tags.contains("I"))
+        assertTrue(metaInfo.tags.contains("R"))
+    }
+
+    @Test
     fun testComplete() {
         val domain = domainOf(*array)
         val metaInfo = MetaInfo( 1, "nameTest", Subtype.STRING, 100, 0, 1, 20, domain, "Heart", "XYZ")
@@ -222,4 +269,6 @@ class MetaInfoTest {
 
 
 }
+
+
 

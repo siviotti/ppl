@@ -16,8 +16,7 @@
  */
 package br.net.buzu.pplspec.model
 
-import br.net.buzu.pplspec.lang.LABEL_VALUE
-
+import br.net.buzu.pplspec.lang.VALUE_LABEL_SEPARATOR
 
 /**
  * Generic implementation to `LabelValue`.
@@ -26,47 +25,22 @@ import br.net.buzu.pplspec.lang.LABEL_VALUE
  * @since 10 de abr de 2018 - Construção da Duimp (Release 1)
  * @see LabeledValue
  */
-class DomainItem
-/**
- * Complete constructor.
- *
- * @param value
- * The internal value.
- * @param label
- * The correspondent label.
- */
-@JvmOverloads constructor(private val value: String, private val label: String? = null) : LabeledValue, Comparable<DomainItem> {
-
-    init {
-        if (value == null) {
-            throw NullPointerException("'value' cannot be null!")
-        }
-    }
+data class DomainItem @JvmOverloads
+constructor(private val value: String, private val label: String?=null) : LabeledValue, Comparable<DomainItem> {
 
 
-    override fun value(): String {
-        return value
-    }
+    override fun value(): String = value
+    override fun label(): String? = label
 
-    fun intValue(): Int {
-        return Integer.parseInt(value)
-    }
+    fun intValue(): Int = Integer.parseInt(value)
 
-    override fun label(): String? {
-    return label
-    }
-
-    override fun hasLabel(): Boolean {
-        return label != null
-    }
+    override fun hasLabel(): Boolean =label != null
 
     override fun hashCode(): Int {
         return value.hashCode() * 31 + (label?.hashCode() ?: 0)
     }
 
-    fun asSerial(): String {
-        return if (hasLabel()) value + LABEL_VALUE + label else value
-    }
+    fun asSerial(): String =if (hasLabel()) value + VALUE_LABEL_SEPARATOR + label else value
 
     override fun equals(obj: Any?): Boolean {
         if (this === obj) {

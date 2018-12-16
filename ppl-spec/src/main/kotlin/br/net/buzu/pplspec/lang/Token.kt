@@ -89,7 +89,7 @@ const val DOMAIN_END = ']'
 
 const val DEFAULT_VALUE = '='
 
-const val LABEL_VALUE = '='
+const val VALUE_LABEL_SEPARATOR = '='
 
 const val FILL_CHAR = '!'
 

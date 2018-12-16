@@ -25,7 +25,7 @@ fun kindOf(multiple: Boolean, complex: Boolean): Kind {
 }
 
 /**
- * List domainOf Metadata Kind: ATOMIC, ARRAY, RECORD and TABLE
+ * List of Metadata Kind: ATOMIC, ARRAY, RECORD and TABLE
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -52,9 +52,8 @@ enum class Kind(
     ARRAY(true, false),
     /** One complex value. Customer, Person etc.  */
     RECORD(false, true),
-    /** Many complex values. List[Customer], Set[Person] etc.  */
+    /** Many complex values. List(Customer), Set(Person) etc.  */
     TABLE(true, true);
-
 
 
 }

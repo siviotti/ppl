@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -35,14 +35,6 @@ public class LoadNode {
 	private final Subtype subtype;
 	private final String fieldPath;
 
-	/**
-	 * Multiple Node Constructor.
-	 * 
-	 * @param value
-	 * @param fieldType
-	 * @param subtype
-	 * @param elementType
-	 */
 	public LoadNode(Object value, Metaclass metaclass, String fieldPath) {
 		this.subtype = metaclass.info().getSubtype();
 		this.metaclass = metaclass;
@@ -68,7 +60,7 @@ public class LoadNode {
 	}
 
 	public int calcMaxSize() {
-		if (subtype.dataType().sizeType().equals(SizeType.CUSTOM)) {
+		if (subtype.getDataType().getSizeType().equals(SizeType.CUSTOM)) {
 			int max = 0;
 			int tmp = 0;
 			for (Object obj : value) {
@@ -87,7 +79,7 @@ public class LoadNode {
 	}
 
 	public boolean isComplex() {
-		return subtype.dataType().isComplex();
+		return subtype.getDataType().isComplex();
 	}
 
 	public boolean isEnum() {

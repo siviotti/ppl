@@ -1,7 +1,6 @@
 package br.net.buzu.context;
 
 import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.lang.Syntax;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -24,18 +24,6 @@ internal val META_INFO_CANNOT_BE_UNBOUNDED = "MetaInfo cannot be Unbounded (no l
 internal val INVALID_STATIC_CHILD = "Invalid Static child:"
 
 
-fun calcSimpleSerialMaxSize(metaInfo: MetaInfo): Int = metaInfo.size * metaInfo.maxOccurs
-
-fun calcComplexSerialMaxSize(metaInfo: MetaInfo, children: List<Metadata>): Int {
-    var tmp = 0
-    for (child in children) {
-        checkStaticChild(child)
-        tmp += (child as StaticStructure).serialMaxSize()
-    }
-    return tmp * metaInfo.maxOccurs
-
-}
-
 fun checkStaticInfo(metaInfo: MetaInfo): MetaInfo {
     if (!metaInfo.isComplete) {
         throw IllegalArgumentException(META_INFO_MUST_BE_COMPLETE + metaInfo)

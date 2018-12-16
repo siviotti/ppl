@@ -17,7 +17,7 @@
 package br.net.buzu.pplspec.exception
 
 /**
- * Generic Exception for the serialization process.
+ * Generic Exception rised during the Parsing process. From Text to Object.
  *
  * @author Douglas Siviotti
  */

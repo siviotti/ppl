@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -165,7 +165,7 @@ public class BasicMetadataParser implements MetadataParser {
 
 	protected int parseSize(ParseNode node, Subtype subtype) {
 		if (node.hasSize()) {
-			if (subtype.dataType().sizeType().equals(SizeType.FIXED)) {
+			if (subtype.getDataType().getSizeType().equals(SizeType.FIXED)) {
 				throw new MetadataParseException(subtype + " do not support custom size." + subtype, node);
 			}
 			return extractSize(node);
@@ -175,7 +175,7 @@ public class BasicMetadataParser implements MetadataParser {
 
 	protected int parseScale(ParseNode node, Subtype subtype) {
 		if (node.hasSize()) {
-			if (subtype.dataType().sizeType().equals(SizeType.FIXED)) {
+			if (subtype.getDataType().getSizeType().equals(SizeType.FIXED)) {
 				throw new MetadataParseException(subtype + " do not support custom scale." + subtype, node);
 			}
 			return extractScale(node);

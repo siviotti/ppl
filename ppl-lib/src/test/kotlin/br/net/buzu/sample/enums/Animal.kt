@@ -6,9 +6,7 @@ class Animal {
     var species: Species? = null
     var gender: Gender? = null
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(name: String, species: Species, gender: Gender) : super() {
         this.name = name

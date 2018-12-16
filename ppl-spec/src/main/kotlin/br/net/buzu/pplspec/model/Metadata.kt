@@ -17,7 +17,7 @@
 package br.net.buzu.pplspec.model
 
 /**
- * Represents a element domainOf a positional tree.
+ * Represents a element of a positional tree.
  *
  * @author Douglas Siviotti
  * @since 1.0

@@ -17,7 +17,7 @@
 package br.net.buzu.pplspec.exception
 
 /**
- * Exception rised durng the Parsing process. From Text to Object.
+ * Exception rised during the Parsing process. From Text to Object.
  *
  * @author Douglas Siviotti
  * @since 1.0

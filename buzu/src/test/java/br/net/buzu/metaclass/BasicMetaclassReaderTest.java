@@ -4,7 +4,7 @@ import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.parsing.simple.EnumNameMapper;
 import br.net.buzu.parsing.simple.oldtime.OldTimestampMapper;
 import br.net.buzu.parsing.simple.time.DateMapper;
-import br.net.buzu.pplspec.annotation.PplParser;
+import br.net.buzu.pplspec.api.PplParser;
 import br.net.buzu.pplspec.api.MetaclassReader;
 import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.model.MetaInfo;

@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -100,7 +100,7 @@ public class Layout {
 				maxOccurs, domain, defaultValue, tags), this);
 		add(child);
 
-		return subtype.dataType().isComplex() ? child : this;
+		return subtype.getDataType().isComplex() ? child : this;
 	}
 
 	public Layout field(String name, Subtype subtype, int size, int minOccurs, int maxOccurs) {

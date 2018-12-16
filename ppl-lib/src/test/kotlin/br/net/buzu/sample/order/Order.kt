@@ -18,9 +18,7 @@ class Order {
     var status: Status? = null
     var isCanceled: Boolean = false
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(number: String?, customer: Customer?, date: LocalDate?, products: List<Product>?, status: Status?,
                 canceled: Boolean = false) : super() {

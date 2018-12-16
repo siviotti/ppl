@@ -116,7 +116,6 @@ internal fun parseName(node: PplNode, index: Int): String {
 internal fun parseSubtype(node: PplNode): Subtype {
     if (node.hasType()) {
         val subtype = Subtype.of(node.type)
-                ?: throw MetadataParseException(SUBTYPE_NOT_FOUND + node.type, node)
         return subtype
     }
     return if (node.isComplex()) Subtype.DEFAULT_COMPLEX else Subtype.DEFAULT_SINGLE
@@ -124,7 +123,7 @@ internal fun parseSubtype(node: PplNode): Subtype {
 
 internal fun parseSize(node: PplNode, subtype: Subtype): Int {
     if (node.hasSize()) {
-        if (subtype.dataType().sizeType() == SizeType.FIXED) {
+        if (subtype.dataType.sizeType == SizeType.FIXED) {
             throw MetadataParseException(subtype.toString() + " do not support custom size." + subtype, node)
         }
         return extractSize(node)
@@ -134,7 +133,7 @@ internal fun parseSize(node: PplNode, subtype: Subtype): Int {
 
 internal fun parseScale(node: PplNode, subtype: Subtype): Int {
     if (node.hasSize()) {
-        if (subtype.dataType().sizeType() == SizeType.FIXED) {
+        if (subtype.dataType.sizeType == SizeType.FIXED) {
             throw MetadataParseException(subtype.toString() + " do not support custom scale." + subtype, node)
         }
         return extractScale(node)
@@ -181,28 +180,28 @@ internal fun extractMaxOccurs(occurs: String): Int {
 
 internal fun parseDomain(node: PplNode): Domain {
     var domainStr = node.domain
-    if (domainStr == null || domainStr!!.length < 3) {
+    if (domainStr == null || domainStr.length < 3) {
         return EMPTY_DOMAIN
     }
-    if (domainStr!!.get(0) != DOMAIN_BEGIN || domainStr!!.get(domainStr!!.length - 1) != DOMAIN_END) {
-        throw MetadataParseException(INVALID_DOMAIN + domainStr!!, node)
+    if (domainStr.get(0) != DOMAIN_BEGIN || domainStr.get(domainStr.length - 1) != DOMAIN_END) {
+        throw MetadataParseException(INVALID_DOMAIN + domainStr, node)
     }
-    domainStr = domainStr!!.substring(1, domainStr!!.length - 1)
-    if (domainStr!!.trim({ it <= ' ' }).isEmpty()) {
+    domainStr = domainStr.substring(1, domainStr.length - 1)
+    if (domainStr.trim({ it <= ' ' }).isEmpty()) {
         return EMPTY_DOMAIN
     }
     val list = ArrayList<String>()
     var c: Char
     var beginIndex = 0
-    var endIndex = domainStr!!.length
+    var endIndex = domainStr.length
     var i = 0
-    while (i < domainStr!!.length) {
-        c = domainStr!!.get(i)
+    while (i < domainStr.length) {
+        c = domainStr.get(i)
         if (c == PLIC || c == QUOTE) {
             try {
-                i = pplNextStringDelimiter(domainStr!!, i, c)
+                i = pplNextStringDelimiter(domainStr, i, c)
             } catch (e: ParseException) {
-                throw MetadataParseException(INVALID_DOMAIN + domainStr!!, node, e)
+                throw MetadataParseException(INVALID_DOMAIN + domainStr, node, e)
             }
 
             i++
@@ -210,13 +209,13 @@ internal fun parseDomain(node: PplNode): Domain {
         }
         if (c == DOMAIN_SEPARATOR) {
             endIndex = i
-            list.add(extractItem(domainStr!!, beginIndex, endIndex))
+            list.add(extractItem(domainStr, beginIndex, endIndex))
             beginIndex = endIndex + 1
         }
         i++
 
     }
-    list.add(extractItem(domainStr!!, beginIndex, domainStr!!.length))
+    list.add(extractItem(domainStr, beginIndex, domainStr.length))
 
     return createDomain(node.name + PATH_SEP + "domain", toDomainItemList(list))
 }
@@ -239,7 +238,7 @@ class GenericMetadataParser : MetadataParser {
     }
 }
 
-class IndexSequence() {  private var internalValue = 0;    fun next() = internalValue++ }
+class IndexSequence {  private var internalValue = 0;    fun next() = internalValue++ }
 
 private fun isStaticChildren(children: List<Metadata>): Boolean {
     for (child in children) {

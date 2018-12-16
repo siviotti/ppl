@@ -56,7 +56,7 @@ open class ComplexMetadata(metaInfo: MetaInfo, children: List<Metadata>) : Basic
     override fun hashCode(): Int {
         val prime = 31
         var result = super.hashCode()
-        result = prime * result + children!!.hashCode()
+        result = prime * result + children.hashCode()
         return result
     }
 
@@ -73,7 +73,7 @@ open class ComplexMetadata(metaInfo: MetaInfo, children: List<Metadata>) : Basic
     }
 
     override fun isStatic(): Boolean {
-        for (child in children!!) {
+        for (child in children) {
             if (!child.isStatic()) {
                 return false
             }

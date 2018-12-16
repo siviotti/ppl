@@ -19,22 +19,6 @@ package br.net.buzu.lib
 import br.net.buzu.pplspec.model.Align
 
 /**
- * Informa se a String é nula, vazia ou toda formada por espaços.
- *
- * <pre>
- * return text == null || text.trim().length() == 0;
-</pre> *
- *
- * @param text
- * O texto a ser avaliado.
- * @return `true` se é vazia (Blank) ou `false` se não
- * for.
- */
-fun isBlank(text: String?): Boolean {
-	return text == null || text.trim { it <= ' ' }.length == 0
-}
-
-/**
  * Completa ou corta uma String de forma que ela fique com um tamanho fixo
  * definido como parâmetro.
  *
@@ -164,8 +148,8 @@ fun rightCut(original: String, finalSize: Int): String {
  * O caractere que preenche possíveis buracos.
  * @return A String no tamanho certo, preenchida de acordo com o tamanho.
  */
-fun fill(align: Align, original: String, fnalSize: Int, c: Char): String {
-	return if (Align.RIGHT == align) leftFill(original, fnalSize, c) else rightFill(original, fnalSize, c)
+fun fill(align: Align, original: String, finalSize: Int, c: Char): String {
+	return if (Align.RIGHT == align) leftFill(original, finalSize, c) else rightFill(original, finalSize, c)
 }
 
 /**

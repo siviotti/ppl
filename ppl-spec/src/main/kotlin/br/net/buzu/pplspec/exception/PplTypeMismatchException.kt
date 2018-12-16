@@ -28,7 +28,6 @@ class PplTypeMismatchException : PplException {
 
     constructor(toClass: Class<*>, text: String, vararg expected: Class<*>) : super("Type mismatch:" + text + "\nSupported list : " + Arrays.asList<Class<*>>(*expected) + " \nfound (toClass): " + toClass.canonicalName)
 
-
     constructor(message: String, cause: Throwable) : super(message, cause)
 
     constructor(message: String) : super(message)

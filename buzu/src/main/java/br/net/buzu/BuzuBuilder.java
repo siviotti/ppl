@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -28,7 +28,6 @@ import br.net.buzu.pplspec.api.MetadataLoader;
 import br.net.buzu.pplspec.api.MetadataParser;
 import br.net.buzu.pplspec.api.SkipStrategy;
 import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Dialect;
 
 import java.lang.annotation.Annotation;

@@ -17,12 +17,12 @@
 package br.net.buzu.pplspec.model
 
 /**
- * List domainOf DataType group.
+ * List of DataType group.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-enum class DataGroup(private val sizeType: SizeType, private val align: Align, private val fillChar: Char, private val nullChar: Char, val isDelimited: Boolean) {
+enum class DataGroup(val sizeType: SizeType, val align: Align, val fillChar: Char, val nullChar: Char, val isDelimited: Boolean) {
 
     /**  */
     TEXT(SizeType.CUSTOM, Align.LEFT, ' ', ' ', true),
@@ -34,21 +34,4 @@ enum class DataGroup(private val sizeType: SizeType, private val align: Align, p
     TIME(SizeType.FIXED, Align.LEFT, ' ', ' ', true),
     /**  */
     COMPLEX(SizeType.SUM, Align.LEFT, ' ', ' ', true);
-
-    fun sizeType(): SizeType {
-        return sizeType
-    }
-
-    fun align(): Align {
-        return align
-    }
-
-    fun fillChar(): Char {
-        return fillChar
-    }
-
-    fun nullChar(): Char {
-        return nullChar
-    }
-
 }

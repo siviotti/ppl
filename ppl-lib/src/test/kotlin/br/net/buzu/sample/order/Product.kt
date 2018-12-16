@@ -5,9 +5,7 @@ class Product {
     var description: String? = null
     var price: Double = 0.toDouble()
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(description: String, price: Double) : super() {
         this.description = description

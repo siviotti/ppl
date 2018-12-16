@@ -30,9 +30,7 @@ open class Human : Serializable {
         this.weight = weight
     }
 
-    constructor() {
-
-    }
+    constructor()
 
     companion object {
 

@@ -19,13 +19,14 @@ package br.net.buzu.pplspec.model
 import br.net.buzu.pplspec.lang.*
 
 /**
- * Fundamental data types domainOf PPL. A SuperType can define many SubTypes.
+ * Fundamental data types of PPL. A DataType can define many SubTypes.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-enum class DataType(private val id: Char, private val group: DataGroup, val isComplex: Boolean = DataGroup.COMPLEX == group, private val sizeType: SizeType = group.sizeType(), private val align: Align = group.align(), private val fillChar: Char = group.fillChar(),
-                    private val nullChar: Char = group.nullChar()) {
+enum class DataType(val id: Char, val group: DataGroup, val isComplex: Boolean = DataGroup.COMPLEX == group,
+                    val sizeType: SizeType = group.sizeType, val align: Align = group.align,
+                    val fillChar: Char = group.fillChar, val nullChar: Char = group.nullChar) {
 
     // SINGLE (Fields)
 
@@ -71,30 +72,6 @@ enum class DataType(private val id: Char, private val group: DataGroup, val isCo
     MAP(TYPE_MAP, DataGroup.COMPLEX),
     /** Hierarquical Complex Object  */
     OBJECT(TYPE_OBJECT, DataGroup.COMPLEX);
-
-    fun id(): Char {
-        return id
-    }
-
-    fun sizeType(): SizeType {
-        return sizeType
-    }
-
-    fun align(): Align {
-        return align
-    }
-
-    fun fillChar(): Char {
-        return fillChar
-    }
-
-    fun nullChar(): Char {
-        return nullChar
-    }
-
-    fun group(): DataGroup {
-        return group
-    }
 
     companion object {
 

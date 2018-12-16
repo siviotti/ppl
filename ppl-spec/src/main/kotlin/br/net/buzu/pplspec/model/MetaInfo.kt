@@ -27,9 +27,9 @@ import br.net.buzu.pplspec.lang.*
  * @author Douglas Siviotti
  * @since 1.0
  */
-class MetaInfo @JvmOverloads constructor(val index: Int, val name: String, val subtype: Subtype, size: Int, scale:
-Int, minOccurs: Int, val maxOccurs: Int, val domain: Domain = Domain.EMPTY, val defaultValue: String = EMPTY,
-                                         val tags: String = EMPTY) : Comparable<MetaInfo> {
+class MetaInfo @JvmOverloads
+constructor(val index: Int, val name: String, val subtype: Subtype, size: Int,  scale:Int, minOccurs: Int, val maxOccurs: Int,
+            val domain: Domain = Domain.EMPTY, val defaultValue: String = EMPTY, val tags: String = EMPTY) : Comparable<MetaInfo> {
     // Basic
     val size: Int
     val scale: Int
@@ -83,7 +83,7 @@ Int, minOccurs: Int, val maxOccurs: Int, val domain: Domain = Domain.EMPTY, val 
     val isRequired
         get() = minOccurs > 0
 
-    constructor(parentId: String, pplMetadata: PplMetadata, originalFieldName: String, originalSubtype: Subtype) : this(pplMetadata.index, getName(pplMetadata, originalFieldName),
+    constructor(pplMetadata: PplMetadata, originalFieldName: String, originalSubtype: Subtype) : this(pplMetadata.index, getName(pplMetadata, originalFieldName),
             getSubtype(pplMetadata, originalSubtype), pplMetadata.size, pplMetadata.scale,
             pplMetadata.minOccurs, pplMetadata.maxOccurs, domainOf(*pplMetadata.domain),
             pplMetadata.defaultValue, buildTags(pplMetadata))
@@ -100,12 +100,12 @@ Int, minOccurs: Int, val maxOccurs: Int, val domain: Domain = Domain.EMPTY, val 
         this.isExtended = isExtended(this.domain, this.defaultValue, this.tags)
         if (tags.isNotEmpty()) {
             this.align = getAlign(subtype, tags)
-            this.fillChar = getTagChar(FILL_CHAR, subtype.dataType().fillChar(), tags)
-            this.nullChar = getTagChar(NULL_CHAR, subtype.dataType().nullChar(), tags)
+            this.fillChar = getTagChar(FILL_CHAR, subtype.dataType.fillChar, tags)
+            this.nullChar = getTagChar(NULL_CHAR, subtype.dataType.nullChar, tags)
         } else {
-            this.align = subtype.dataType().align()
-            this.fillChar = subtype.dataType().fillChar()
-            this.nullChar = subtype.dataType().nullChar()
+            this.align = subtype.dataType.group.align
+            this.fillChar = subtype.dataType.fillChar
+            this.nullChar = subtype.dataType.nullChar
         }
     }
 
@@ -135,24 +135,24 @@ Int, minOccurs: Int, val maxOccurs: Int, val domain: Domain = Domain.EMPTY, val 
     }
 
     fun inDomain(valueItem: String?): Boolean {
-        if (domain.isEmpty) {
-            // Domain not defined
-            return true
-        }
+        // Domain not defined
+        if (domain.isEmpty) return true
         return if (valueItem == null) {
             // Domain defined and invalid item
             false
         } else domain.containsValue(valueItem)
     }
 
-    fun isTagPresent(tag: String): Boolean {
-        return tags.contains(tag)
-    }
+    fun isTagPresent(tag: String): Boolean = tags.contains(tag)
 
-    fun ppl(): String {
-        return (name + NAME_END + subtype.id + size + OCCURS_BEGIN + minOccurs + OCCURS_RANGE
-                + maxOccurs + domain.asSerial() + serializeDefaultvalue(defaultValue) + tags)
-    }
+    fun isTagPresent(tag: Char): Boolean = tags.contains(tag)
+
+    fun isKey() = isTagPresent(KEY)
+
+    fun isIndexd() = isTagPresent(INDEXED)
+
+    fun ppl(): String = (name + NAME_END + subtype.id + size + OCCURS_BEGIN + minOccurs + OCCURS_RANGE
+            + maxOccurs + domain.asSerial() + serializeDefaultvalue(defaultValue) + tags)
 
     // Common Methods
 
@@ -187,12 +187,6 @@ Int, minOccurs: Int, val maxOccurs: Int, val domain: Domain = Domain.EMPTY, val 
 
         val NO_SCALE = 0
 
-        private fun createId(parentId: String?, name: String?): String {
-            return if (parentId == null || parentId.isEmpty()) {
-                name ?: EMPTY
-            } else parentId + PATH_SEP + name
-        }
-
         private fun checkOccurs(minOccurs: Int, maxOccurs: Int) {
             if (maxOccurs > 0 && minOccurs > maxOccurs) {
                 throw IllegalArgumentException(
@@ -209,11 +203,8 @@ Int, minOccurs: Int, val maxOccurs: Int, val domain: Domain = Domain.EMPTY, val 
         }
 
         private fun buildTags(pplMetadata: PplMetadata): String {
-            val tags = if (pplMetadata.tags.isNotEmpty()) pplMetadata.tags else EMPTY
+            val tags = if (pplMetadata.tags.isNotEmpty()) pplMetadata.tags else return EMPTY
             val sb = StringBuilder(tags)
-            if (tags.isEmpty()) {
-                return EMPTY
-            }
             if (pplMetadata.key && tags.indexOf(KEY) < 0) {
                 sb.append(KEY)
             }
@@ -226,11 +217,14 @@ Int, minOccurs: Int, val maxOccurs: Int, val domain: Domain = Domain.EMPTY, val 
             if (PplMetadata.EMPTY_CHAR != pplMetadata.fillChar) {
                 sb.append(pplMetadata.fillChar)
             }
+            if (PplMetadata.EMPTY_CHAR != pplMetadata.nullChar) {
+                sb.append(pplMetadata.nullChar)
+            }
             return sb.toString()
         }
 
-        private fun serializeDefaultvalue(defaultValue: String?): String {
-            return if (defaultValue == null || defaultValue.trim { it <= ' ' }.isEmpty()) {
+        private fun serializeDefaultvalue(defaultValue: String): String {
+            return if (defaultValue.trim { it <= ' ' }.isEmpty()) {
                 EMPTY
             } else "" + DEFAULT_VALUE + VALUE_BEGIN + defaultValue + VALUE_END
         }
@@ -240,7 +234,9 @@ Int, minOccurs: Int, val maxOccurs: Int, val domain: Domain = Domain.EMPTY, val 
         }
 
         private fun getAlign(subtype: Subtype, tags: String): Align {
-            return if (tags.indexOf(LEFT) > -1) Align.LEFT else Align.RIGHT
+            return if (tags.indexOf(LEFT) > -1) Align.LEFT else {
+                if (tags.indexOf(RIGHT) > -1)  Align.RIGHT else subtype.dataType.align
+            }
         }
 
         private fun getTagChar(tagChar: Char, defaulChar: Char, tags: String): Char {

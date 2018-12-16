@@ -7,19 +7,34 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplspec.model
+package br.net.buzu.pplspec.context
+
+import br.net.buzu.pplspec.api.CoderManager
+import br.net.buzu.pplspec.api.MetadataFactory
 
 /**
- * Represents a Payload Structure.
+ * Context domainOf parsing/serialization with Factories and Managers used to create
+ * objects and others extension points.
+ *
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface StaticMetaclass : Metaclass, StaticMetadata
+interface PplContext {
+
+    fun metadataFactory(): MetadataFactory
+
+    fun subtypeManager(): SubtypeManager
+
+    fun coderManager(): CoderManager
+
+    fun parserFactory(): ParserFactory
+
+}

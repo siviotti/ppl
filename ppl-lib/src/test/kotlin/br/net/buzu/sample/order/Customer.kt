@@ -14,7 +14,7 @@ class Customer {
         this.phones = phones
     }
 
-    constructor() {}
+    constructor()
 
     fun getAddresses(): List<Address>? {
         return addresses

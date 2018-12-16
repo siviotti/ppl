@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -17,11 +17,10 @@
 package br.net.buzu.pplspec.model
 
 import br.net.buzu.pplspec.lang.*
-import java.util.*
 
 
 /**
- * Represents the Domain Value domainOf a Metadata.
+ * Represents the Domain Value of a Metadata.
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -32,22 +31,11 @@ class Domain protected constructor(private val name: String, val items: List<Dom
     val isEmpty: Boolean
         get() = items.isEmpty()
 
-    override fun name(): String {
-        return name
-    }
+    override fun name(): String = name
 
-    fun containsValue(value: String): Boolean {
-        for (item in items) {
-            if (item.value() == value) {
-                return true
-            }
-        }
-        return false
-    }
+    fun containsValue(value: String): Boolean = items.indexOfFirst({ it.value() == value }) > -1
 
-    fun items(): List<DomainItem> {
-        return items
-    }
+    fun items(): List<DomainItem> = items.toList()
 
     fun asSerial(): String {
         if (items.isEmpty()) {
@@ -63,9 +51,7 @@ class Domain protected constructor(private val name: String, val items: List<Dom
         return sb.toString()
     }
 
-    override fun hashCode(): Int {
-        return name.hashCode() * 31 + items.hashCode()
-    }
+    override fun hashCode(): Int =name.hashCode() * 31 + items.hashCode()
 
     override fun equals(obj: Any?): Boolean {
         if (obj == null) {
@@ -81,13 +67,9 @@ class Domain protected constructor(private val name: String, val items: List<Dom
         return false
     }
 
-    fun equalsItems(other: Domain): Boolean {
-        return items == other.items
-    }
+    fun equalsItems(other: Domain): Boolean = items == other.items
 
-    override fun toString(): String {
-        return StringBuilder().append(name).append(asSerial()).toString()
-    }
+    override fun toString(): String = "$name${asSerial()}"
 
     companion object {
 

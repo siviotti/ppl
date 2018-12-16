@@ -30,7 +30,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 import static org.junit.Assert.*;
-import static br.net.buzu.pplimpl.jvm.MetadataLoadKt.loadMetadata;
+import static br.net.buzu.pplimpl.metadata.MetadataLoadKt.loadMetadata;
 
 
 /**
@@ -444,7 +444,7 @@ public class BuzuTest {
             runLoadByKotlin(ORDER_INSTANCE);
         }
         long t1 = System.currentTimeMillis();
-        System.out.println("time:" + (t1 - t0));
+        //System.out.println("time:" + (t1 - t0));
     }
 
 }

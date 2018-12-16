@@ -1,3 +1,19 @@
+/*
+ *	This file is part of Buzu.
+ *
+ *   Buzu is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   Buzu is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public License
+ *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.pplspec.annotation.PplMetadata
@@ -6,6 +22,7 @@ import br.net.buzu.pplspec.exception.PplReflectionException
 import java.io.*
 import java.lang.reflect.*
 import java.util.*
+import kotlin.reflect.KClass
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 internal const val UNSAFE_COLLECTION = "Unsafe collection '"
@@ -59,6 +76,7 @@ internal fun findMethod(methodName: String, obj: Any, vararg params: Class<*>): 
 
 }
 
+@Suppress("UNCHECKED_CAST")
 fun <T> findAndInvokeGet(instance: Any, fieldName: String): T {
     try {
         return findGet(fieldName, instance).invoke(instance) as T
@@ -147,7 +165,7 @@ fun getPplMetadata(field: Field): PplMetadata? {
 
 fun getValue(field: Field, instance: Any): Any? {
     try {
-        field.setAccessible(true)
+        field.isAccessible = true
         return field.get(instance)
     } catch (e: IllegalArgumentException) {
         return findAndInvokeGet(instance, field.name)
@@ -159,7 +177,7 @@ fun getValue(field: Field, instance: Any): Any? {
 
 fun setValue(field: Field, instance: Any, param: Any?) {
     try {
-        field.setAccessible(true)
+        field.isAccessible = true
         field.set(instance, param)
     } catch (e: IllegalArgumentException) {
         findAndInvokeSet(instance, field.name, field.type, param)
@@ -192,10 +210,10 @@ fun newInstance(type: Class<*>): Any {
             return newInstanceFromInterface(type)
         }
         val c = getMostSimpleConstructor(type)
-        if (!Modifier.isPublic(c.getModifiers())) {
-            c.setAccessible(true)
+        if (!Modifier.isPublic(c.modifiers)) {
+            c.isAccessible = true
         }
-        if (c.getParameterCount() == 0) {
+        if (c.parameterCount == 0) {
             return c.newInstance()
         }
         return if (Serializable::class.java.isAssignableFrom(type)) {
@@ -313,6 +331,4 @@ internal fun extractElementType(fieldType: Class<*>): Class<*> {
         fieldType
     }
 }
-
-
 

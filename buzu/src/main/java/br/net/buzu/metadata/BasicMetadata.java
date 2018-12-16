@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -40,7 +40,7 @@ public abstract class BasicMetadata implements Metadata {
 			throw new NullPointerException("metainfo cannot be null!");
 		}
 		this.metaInfo = metaInfo;
-		this.kind = kindOf(this.metaInfo.isMultiple(), this.metaInfo.getSubtype().dataType().isComplex());
+		this.kind = kindOf(this.metaInfo.isMultiple(), this.metaInfo.getSubtype().getDataType().isComplex());
 	}
 
 	// **************************************************

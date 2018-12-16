@@ -14,24 +14,16 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplimpl.jvm
+package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.pplimpl.metadata.CreateMetadata
-import br.net.buzu.pplimpl.metadata.genericCreateMetadata
-import br.net.buzu.pplspec.annotation.PplIgnore
-import br.net.buzu.pplspec.annotation.PplMetadata
-import br.net.buzu.pplspec.annotation.PplUse
+import br.net.buzu.pplimpl.jvm.genericSkip
+import br.net.buzu.pplimpl.jvm.read
 import br.net.buzu.pplspec.exception.PplMetaclassViolationException
-import br.net.buzu.pplspec.exception.PplReflectionException
-import br.net.buzu.pplspec.lang.DEFAULT_MIN_OCCURS
 import br.net.buzu.pplspec.lang.PATH_SEP
-import br.net.buzu.pplspec.model.MetaInfo
-import br.net.buzu.pplspec.model.Metadata
+import br.net.buzu.pplspec.model.*
 import java.lang.reflect.Field
-import java.lang.reflect.Modifier
 import java.util.*
 
-val genericSkip: (Field) -> Boolean = { skip(it) }
 
 // ********** API **********
 
@@ -101,37 +93,72 @@ private fun checkLimit(info: String, fieldPath: String, maxValue: Int, newValue:
     }
 }
 
-private inline fun getFieldPath(fieldName: String, node: LoadNode): String {
+private fun getFieldPath(fieldName: String, node: LoadNode): String {
     return if (node.fieldPath.isEmpty()) fieldName else node.fieldPath + PATH_SEP + fieldName
 }
 
-private fun skip(field: Field): Boolean {
-    // Precedence 1: Field explict ignore
-    if (field.isAnnotationPresent(PplIgnore::class.java)) {
-        return true
+
+internal class LoadNode(originalValue: Any?, val typeInfo: TypeInfo, val fieldPath: String) {
+
+    val value: Array<Any?>
+    val subtype: Subtype = typeInfo.metaInfo.subtype
+    val occurs: Int
+        get() = value.size
+
+    init {
+        if (originalValue == null) {
+            this.value = arrayOf(1)
+        } else if (typeInfo.isCollection) {
+            if ((originalValue as Collection<*>).isEmpty()) {
+                this.value = arrayOf(1)
+            } else {
+                this.value = originalValue.toTypedArray()
+            }
+        } else if (typeInfo.isArray) {
+            if ((originalValue as Array<Any>).size == 0) {
+                this.value = arrayOf(1)
+            } else {
+                this.value = originalValue as Array<Any?>
+            }
+        } else {
+            this.value = arrayOf(1)
+            this.value[0] = originalValue
+        }
     }
 
-    // Precedence 2: Field explicit use
-    if (field.isAnnotationPresent(PplUse::class.java)) {
-        return false
+    fun calcMaxSize(): Int {
+        if (subtype.dataType.sizeType == SizeType.CUSTOM) {
+            var max = 0
+            var tmp = 0
+            for (obj in value) {
+                tmp = typeInfo.getValueSize(obj!!)
+                if (tmp > max) {
+                    max = tmp
+                }
+            }
+            return max
+        }
+        return subtype.fixedSize()
     }
 
-    // Precedence 3: Static, Transient or Ignore
-    if (Modifier.isStatic(field.modifiers)) {
-        return true
-    }
-    if (Modifier.isTransient(field.modifiers)) {
-        return true
-    }
-
-    // Precedence 4: Field Class
-    var fieldClass: Class<*>
-    try {
-        fieldClass = getElementType(field)
-    } catch (pre: PplReflectionException) {
-        fieldClass = field.javaClass
-    }
-
-    return fieldClass.isAnnotationPresent(PplIgnore::class.java)
 }
 
+internal data class Max(var maxSize: Int = 0, var maxOccurs: Int = 0) {
+
+    fun tryNewMaxOccurs(newValue: Int): Max {
+        if (newValue > maxOccurs) maxOccurs = newValue
+        return this
+    }
+
+    fun tryNewMaxSize(newValue: Int): Max {
+        if (newValue > maxSize) maxSize = newValue
+        return this
+    }
+}
+
+internal class MaxMap(val size: Int) {
+    private val map = Array(size, { Max() })
+    fun getMaxByIndex(index: Int): Max {
+        return map[index]
+    }
+}

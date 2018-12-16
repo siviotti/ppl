@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy
 
 
 /**
- * Metadata information about some annotated field. This information is mandatory
+ * Metadata information about some annotated field or class. This information is mandatory
  * over reflection information.
  *
  * @author Douglas Siviotti
@@ -32,8 +32,8 @@ import java.lang.annotation.RetentionPolicy
 @Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS, AnnotationTarget.FILE)
 @Retention(RetentionPolicy.RUNTIME)
 annotation class PplMetadata(
-        // Basic
 
+        // Basic
         val index: Int = EMPTY_INTEGER,
         val name: String = EMPTY_NAME,
         val subtype: Subtype = Subtype.EMPTY_SUBTYPE,
@@ -41,8 +41,8 @@ annotation class PplMetadata(
         val scale: Int = EMPTY_INTEGER,
         val minOccurs: Int = EMPTY_INTEGER,
         val maxOccurs: Int = EMPTY_INTEGER,
-        // Extension
 
+        // Extension
         val defaultValue: String = EMPTY_STRING,
         val domain: Array<String> = arrayOf(),
         val tags: String = EMPTY_STRING,
@@ -51,6 +51,7 @@ annotation class PplMetadata(
         val align: Char = EMPTY_CHAR,
         val fillChar: Char = EMPTY_CHAR,
         val nullChar: Char = EMPTY_CHAR) {
+
     companion object {
 
         const val EMPTY_NAME = "EMPTY NAME"

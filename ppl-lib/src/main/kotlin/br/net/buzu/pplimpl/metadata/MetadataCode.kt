@@ -193,7 +193,7 @@ internal fun serializeExtension(info: MetaInfo): String {
     if (info.hasDomain()) {
         var valueBegin = ""
         var valueEnd = ""
-        if (info.subtype.dataType().group().isDelimited) {
+        if (info.subtype.dataType.group.isDelimited) {
             valueBegin = "" + VALUE_BEGIN
             valueEnd = "" + VALUE_END
         }

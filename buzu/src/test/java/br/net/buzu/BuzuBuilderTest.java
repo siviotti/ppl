@@ -9,7 +9,6 @@ import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.build.parse.Splitter;
 import br.net.buzu.pplspec.api.PplMapper;
 import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.lang.Syntax;
 import br.net.buzu.pplspec.model.Dialect;
 import org.junit.Test;
 

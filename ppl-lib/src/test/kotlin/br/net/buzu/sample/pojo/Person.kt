@@ -12,9 +12,7 @@ class Person {
     var age: Int? = null
     var city: String? = null
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(name: String, age: Int, city: String) : super() {
         this.name = name

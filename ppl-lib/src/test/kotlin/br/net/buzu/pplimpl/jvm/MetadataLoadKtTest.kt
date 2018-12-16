@@ -1,5 +1,6 @@
 package br.net.buzu.pplimpl.jvm
 
+import br.net.buzu.pplimpl.metadata.loadMetadata
 import br.net.buzu.pplspec.lang.METADATA_END
 import br.net.buzu.pplspec.lang.NAME_END
 import br.net.buzu.pplspec.model.Metadata
@@ -23,7 +24,7 @@ internal class MetadataLoadKtTest {
     @Test
     fun testLoadOrder() {
         val order: Order = ORDER_INSTANCE
-        val metadataOrder=loadMetadata(order)
+        val metadataOrder= loadMetadata(order)
         println(metadataOrder.toTree(0))
         assertMetadata(metadataOrder, "", Subtype.OBJ, 96, 0,1)
         val metadataCustomer = metadataOrder.children<Metadata>()[1]

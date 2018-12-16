@@ -27,7 +27,7 @@ import java.util.*
  * @author Douglas Siviotti
  * @since 1.0
  */
-enum class Subtype(private val type: DataType, val id: String = "" + type.id(), private val fixedSize: Int = DEFAULT_SIZE, val isFullLength: Boolean = false) {
+enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, val fixedSize: Int = DEFAULT_SIZE, val isFullLength: Boolean = false) {
 
     // DataType CHAR
 
@@ -57,7 +57,7 @@ enum class Subtype(private val type: DataType, val id: String = "" + type.id(), 
     // DataType BOOLEAN
 
     /** Boolean based on 'true' or 'false'  */
-    BOOLEAN(DataType.BOOLEAN, "" + DataType.BOOLEAN.id(), 5, false),
+    BOOLEAN(DataType.BOOLEAN, "" + DataType.BOOLEAN.id, 5, false),
     /** Boolean based on 1 or 0  */
     BOZ(DataType.BOOLEAN, "BOZ", 1, true),
     /** Boolean based on 'T' or 'F'  */
@@ -70,33 +70,33 @@ enum class Subtype(private val type: DataType, val id: String = "" + type.id(), 
     // DataType TIMESTAMP
 
     /** Default Timestamp yyyymmddhhmmss  */
-    TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id(), 14, true),
+    TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id, 14, true),
     /** Default Timestamp yyyymmddhhmmssMMM  */
-    TIMESTAMP_AND_MILLIS(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id() + "m", 17, true),
+    TIMESTAMP_AND_MILLIS(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "m", 17, true),
     /** iso Timestamp yyyy-mm-ddThh:mm:ss  */
-    ISO_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id() + "I", 19, true),
+    ISO_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "I", 19, true),
     /** ISO Offset Timestamp yyyy-mm-ddThh:mm:ss+hh:mm  */
-    UTC_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id() + "U", 25, true),
+    UTC_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "U", 25, true),
 
     // DataType DATE
 
     /** Date yyyymmdd  */
-    DATE(DataType.DATE, "" + DataType.DATE.id(), 8, true),
+    DATE(DataType.DATE, "" + DataType.DATE.id, 8, true),
     /** Iso Date 8601: yyyy-mm-dd  */
-    ISO_DATE(DataType.DATE, "" + DataType.DATE.id() + "I", 10, true),
+    ISO_DATE(DataType.DATE, "" + DataType.DATE.id + "I", 10, true),
     /** Iso Offset Date 8601: yyyy-mm-dd+hh:mm  */
-    UTC_DATE(DataType.DATE, "" + DataType.DATE.id() + "U", 16, true),
+    UTC_DATE(DataType.DATE, "" + DataType.DATE.id + "U", 16, true),
 
     // DataType TIME
 
     /** Default Time hhmmss  */
-    TIME(DataType.TIME, "" + DataType.TIME.id(), 6, true),
+    TIME(DataType.TIME, "" + DataType.TIME.id, 6, true),
     /** Time hhmmssMMM  */
-    TIME_AND_MILLIS(DataType.TIME, "" + DataType.TIME.id() + "m", 13, true),
+    TIME_AND_MILLIS(DataType.TIME, "" + DataType.TIME.id + "m", 13, true),
     /** Default Time hh:mm:ss  */
-    ISO_TIME(DataType.TIME, "" + DataType.TIME.id() + "I", 8, true),
+    ISO_TIME(DataType.TIME, "" + DataType.TIME.id + "I", 8, true),
     /** ISO Offset Time hh:mm:ss+hh:mm or hh:mm:ssZ  */
-    UTC_TIME(DataType.TIME, "" + DataType.TIME.id() + "U", 14, true),
+    UTC_TIME(DataType.TIME, "" + DataType.TIME.id + "U", 14, true),
 
     /** Default Period  */
     PERIOD(DataType.PERIOD),
@@ -112,15 +112,11 @@ enum class Subtype(private val type: DataType, val id: String = "" + type.id(), 
     /** Tipo complexo porém plano, ou seja, sem ocorrências indefinidas  */
     OBJ(DataType.OBJECT),
 
-    @Deprecated("")
+    @Deprecated("this instance represents a null Subtype")
     EMPTY_SUBTYPE(DataType.OBJECT, "_EMPTY_SUBTYPE", -1, false);
 
     val isFixedSizeType: Boolean
-        get() = SizeType.FIXED == type.sizeType()
-
-    fun dataType(): DataType {
-        return type
-    }
+        get() = SizeType.FIXED == dataType.sizeType
 
     fun fixedSize(): Int {
         return fixedSize

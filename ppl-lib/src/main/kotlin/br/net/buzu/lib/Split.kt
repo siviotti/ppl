@@ -22,7 +22,6 @@ import br.net.buzu.pplspec.lang.VAR
 import br.net.buzu.pplspec.lang.*
 import br.net.buzu.pplspec.model.PplNode
 
-internal const val UNTERMINATED_STRING_LITERAL = "Unterminated String Literal using "
 internal const val WRONG_USE_OF_BLOCK = "Wrong use domainOf block "
 
 fun splitNodes(text: String): List<PplNode> {
@@ -95,23 +94,17 @@ internal fun splitNode(text: String): PplNode {
             tags = sTags, children = sType.children)
 }
 
-inline private fun countBlock(value: Int, c: Char, open: Char, close: Char): Int {
+private fun countBlock(value: Int, c: Char, open: Char, close: Char): Int {
     if (c == open) {
         return value + 1
     }
     return if (c == close) value - 1 else value
 }
 
-inline private fun checkBlock(element: String, count: Int, text: String) {
+private fun checkBlock(element: String, count: Int, text: String) {
     if (count != 0) {
         throw PplParseException(WRONG_USE_OF_BLOCK + element + ". Too many "
                 + (if (count > 0) "'Open'" else "'Close'") + " Text:\n" + text)
-    }
-}
-
-inline private fun checkStr(c: Char, noOpened: Boolean, text: String) {
-    if (!noOpened) {
-        throw PplParseException(UNTERMINATED_STRING_LITERAL + c + " Text:\n" + text)
     }
 }
 
@@ -144,7 +137,7 @@ internal fun splitType(text: String, beginIndex: Int): TypeSplit {
     val firstChar = pplFirstChar(text, beginIndex)
     var endIndex = firstChar
     var offset = 0
-    var endBlock = 0
+    val endBlock: Int
     var c: Char
     var children = PplNode.EMPTY_CHILDREN
     for (i in firstChar until text.length) {
@@ -162,7 +155,7 @@ internal fun splitType(text: String, beginIndex: Int): TypeSplit {
     }
     val part = text.substring(firstChar, endIndex)
 
-    if (children.size == 0) {
+    if (children.isEmpty()) {
         return TypeSplit(endIndex, part)
     }
     return TypeSplit(offset, part, children)
@@ -214,12 +207,12 @@ internal fun splitDefaultValue(text: String, beginIndex: Int): Split {
     }
     c = text[index]
     val endIndex: Int
-    if (pplIsStringDelimiter(c)) {
+    return if (pplIsStringDelimiter(c)) {
         endIndex = pplNextStringDelimiter(text, index, c) + 1
-        return Split(endIndex + 1, text.substring(firstChar + 2, endIndex - 1))
+        Split(endIndex + 1, text.substring(firstChar + 2, endIndex - 1))
     } else {
         endIndex = pplNextCharOrLast(text, index, SPACE)
-        return Split(endIndex + 1, text.substring(firstChar + 1, endIndex))
+        Split(endIndex + 1, text.substring(firstChar + 1, endIndex))
     }
 
 }

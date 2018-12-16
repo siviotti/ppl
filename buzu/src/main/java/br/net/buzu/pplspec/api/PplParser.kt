@@ -7,34 +7,27 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplspec.context
+package br.net.buzu.pplspec.api
 
-import br.net.buzu.pplspec.api.CoderManager
-import br.net.buzu.pplspec.api.MetadataFactory
+import br.net.buzu.pplspec.api.PayloadMapper
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
+import kotlin.reflect.KClass
 
 /**
- * Context domainOf parsing/serialization with Factories and Managers used to create
- * objects and others extension points.
- *
+ * An annotation that indicates this member should be parsed/serialized with a
+ * given Parser.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface PplContext {
-
-    fun metadataFactory(): MetadataFactory
-
-    fun subtypeManager(): SubtypeManager
-
-    fun coderManager(): CoderManager
-
-    fun parserFactory(): ParserFactory
-
-}
+@Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Retention(RetentionPolicy.RUNTIME)
+annotation class PplParser(val value: KClass<out PayloadMapper>)

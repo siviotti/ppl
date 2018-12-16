@@ -58,7 +58,7 @@ public class Poc {
 			}			
 		}
 		long t1 = System.currentTimeMillis();
-		System.out.println(op + " " + format + "(" + count + "):" + (t1 - t0));
+		//System.out.println(op + " " + format + "(" + count + "):" + (t1 - t0));
 	}
 
 	private static void runParseGson(int count) {

@@ -17,7 +17,7 @@
 package br.net.buzu.pplspec.model
 
 /**
- * TODO
+ * Represents a object able to become a PPL text (serialized)
  *
  * @author Douglas Siviotti
  * @since 1.0

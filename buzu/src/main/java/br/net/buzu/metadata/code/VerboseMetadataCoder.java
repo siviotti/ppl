@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -158,7 +158,7 @@ public class VerboseMetadataCoder implements MetadataCoder {
 		if (meta.hasDomain()) {
 			String valueBegin = "";
 			String valueEnd = "";
-			if (meta.getSubtype().dataType().group().isDelimited()) {
+			if (meta.getSubtype().getDataType().getGroup().isDelimited()) {
 				valueBegin = "" + Token.VALUE_BEGIN;
 				valueEnd = "" + Token.VALUE_END;
 			}
@@ -173,7 +173,6 @@ public class VerboseMetadataCoder implements MetadataCoder {
 			sb.append(serializaTag(Token.DEFAULT_VALUE, meta.getDefaultValue()));
 		}
 		if (meta.hasTags()) {
-			System.out.println("TAGS" + meta.getTags());
 			sb.append(meta.getTags());
 		}
 		return sb.toString();

@@ -34,7 +34,7 @@ abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
     private val kind: Kind
 
     init {
-        this.kind = kindOf(this.metaInfo.isMultiple, this.metaInfo.subtype.dataType().isComplex)
+        this.kind = kindOf(metaInfo.isMultiple, metaInfo.subtype.dataType.isComplex)
     }
 
     override fun name(): String {

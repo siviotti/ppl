@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -18,7 +18,7 @@ package br.net.buzu.metaclass;
 
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.pplspec.annotation.PplMetadata;
-import br.net.buzu.pplspec.annotation.PplParser;
+import br.net.buzu.pplspec.api.PplParser;
 import br.net.buzu.pplspec.api.MetaclassReader;
 import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.api.SkipStrategy;
@@ -127,7 +127,7 @@ public class BasicMetaclassReader implements MetaclassReader {
 
 	private MetaInfo createMetaInfo(String parentId, PplMetadata pplMetadata, Class<?> elementType, String fieldName) {
 		Subtype subtype = context.subtypeManager().fromType(elementType);
-		return pplMetadata != null ? new MetaInfo(parentId, pplMetadata, fieldName, subtype)
+		return pplMetadata != null ? new MetaInfo(pplMetadata, fieldName, subtype)
 				: new MetaInfo(0, fieldName, subtype, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
 						Syntax.DEFAULT_MIN_OCCURS, PplMetadata.EMPTY_INTEGER);
 	}

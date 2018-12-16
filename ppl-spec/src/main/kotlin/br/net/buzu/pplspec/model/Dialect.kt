@@ -25,7 +25,7 @@ package br.net.buzu.pplspec.model
 enum class Dialect(val isHumanReadable: Boolean) {
 
     /**
-     * [Human Readable] Includes all information domainOf Metadatas like occurs and
+     * [Human Readable] Includes all information of Metadatas like occurs and
      * default values. Use \n at end domainOf each Metadata and \t for children metadatas.
      */
     VERBOSE(true),
@@ -45,12 +45,12 @@ enum class Dialect(val isHumanReadable: Boolean) {
 
     /**
      * [Machine Readable] Hides all redundant informations and uses links to reuse
-     * Metadata information (No lost domainOf information).
+     * Metadata information (No lost of information).
      */
     COMPACT(false),
 
     /**
-     * [Machine Readable] Maximun compactation and some lost domainOf information like
+     * [Machine Readable] Maximun compactation and some lost of information like
      * attribute names
      */
     STRUCTURAL(false);

@@ -31,7 +31,7 @@ public class ComplexParserTest {
 	}
 
 	static void dump(Metadata metadata) {
-		// System.out.println(metadata.toTree(0));
+		// System.out.println(metadata.asTree(0));
 		// System.out.println(VerboseMetadataSerializer.INSTANCE.serialize(metadata));
 	}
 

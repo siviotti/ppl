@@ -19,8 +19,8 @@ package br.net.buzu.pplspec.model
 /**
  * Represents a value that can use a label (value-label).
  *
- * @author Douglas Siviotti (073.116.317-69) #21 3509-7585
- * @since 10 de abr de 2018 - Construção da Duimp (Release 1)
+ * @author Douglas Siviotti
+ * @since 1.0
  */
 interface LabeledValue {
 

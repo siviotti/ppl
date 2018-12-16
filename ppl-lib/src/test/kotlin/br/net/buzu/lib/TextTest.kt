@@ -28,18 +28,6 @@ class TextTest {
 
 
     @Test
-    fun testBlank() {
-        assertTrue(isBlank(null))
-        assertTrue(isBlank(""))
-        assertTrue(isBlank("    "))
-        assertTrue(isBlank("         "))
-
-        assertFalse(isBlank("   0"))
-        assertFalse(isBlank("_______"))
-        assertFalse(isBlank("''''"))
-    }
-
-    @Test
     fun testLeftFit() {
         assertEquals("12345", leftFit("12345", 5, '0'))
         assertEquals("12345", leftFit("00012345", 5, '0'))

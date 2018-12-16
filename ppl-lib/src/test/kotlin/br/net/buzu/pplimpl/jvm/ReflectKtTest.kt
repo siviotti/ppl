@@ -2,6 +2,8 @@ package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.pplspec.annotation.PplMetadata
 import br.net.buzu.pplspec.exception.PplReflectionException
+import br.net.buzu.sample.order.Order
+import br.net.buzu.sample.pojo.Person
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -9,6 +11,7 @@ import java.io.Serializable
 import java.lang.reflect.Field
 import java.util.*
 import org.junit.jupiter.api.fail
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
 internal class ReflectKtTest {
@@ -38,11 +41,11 @@ internal class ReflectKtTest {
     fun testFindGet() {
         val bean = Bean()
         val getName = findGet("name", bean)
-        assertEquals("getName", getName.getName())
+        assertEquals("getName", getName.name)
         val getSize = findGet("size", bean)
-        assertEquals("getSize", getSize.getName())
+        assertEquals("getSize", getSize.name)
         val isActive = findGet("active", bean)
-        assertEquals("isActive", isActive.getName())
+        assertEquals("isActive", isActive.name)
 
         try {
             findGet("color", bean)
@@ -57,9 +60,9 @@ internal class ReflectKtTest {
     fun testFindSet() {
         val bean = Bean()
         val setName = findSet("name", bean, String::class.java)
-        assertEquals("setName", setName.getName())
+        assertEquals("setName", setName.name)
         val setSize = findSet("size", bean, Int::class.java)
-        assertEquals("setSize", setSize.getName())
+        assertEquals("setSize", setSize.name)
 
         try {
             findSet("color", bean, String::class.java)
@@ -215,6 +218,33 @@ internal class ReflectKtTest {
         assertTrue("ONE-PAR" != m3.s)// 1 parameter constructor sets s = ONE-PAR
 
     }
+
+    @Test
+    fun testExtractElementType() {
+        assertEquals(String::class.java , extractElementType(String::class.java))
+        assertEquals(Any::class.java, extractElementType(List::class.java))
+        assertEquals(Order::class.java, extractElementType(Order::class.java))
+        assertEquals(Order::class.java, extractElementType(Array<Order>::class.java))
+    }
+
+    @Test
+    fun testGetValueAndSetValue() {
+        val fields = Person::class.java.declaredFields
+        val person = Person("Ladybug", 15, "Paris")
+        assertEquals("Ladybug", getValue(fields[0], person))
+        assertEquals(15, getValue(fields[1], person))
+        assertEquals("Paris", getValue(fields[2], person))
+
+        setValue(fields[0], person, "Catnoir")
+        setValue(fields[1], person, 16)
+        setValue(fields[2], person, "London")
+
+        assertEquals("Catnoir", getValue(fields[0], person))
+        assertEquals(16, getValue(fields[1], person))
+        assertEquals("London", getValue(fields[2], person))
+
+    }
+
 }
 
 // ********** Model Example **********
@@ -263,7 +293,7 @@ internal class MultiConstructor @JvmOverloads constructor(@field:PplMetadata(nam
     }
 
     // THIS CONSTRUCTOR WILL BE CALLED
-    constructor() : this("DEFAULT", 0) {}
+    constructor() : this("DEFAULT", 0)
 
 }
 
@@ -278,7 +308,7 @@ internal class MultiConstructorNoDefaultNotSerializable// Nou used - 2 parameter
     }
 
     // THIS IS CALLED - less parameters (1)
-    constructor(s: String) : this("ONE-PAR", 1) {}
+    constructor(s: String) : this("ONE-PAR", 1)
 
 }
 
@@ -293,7 +323,7 @@ internal class MultiConstructorNoDefaultButSerializable// Nou used (2 parameters
     }
 
     // Not used (1 parameter) because is Serializable
-    constructor(s: String) : this("ONE-PAR", 1) {}
+    constructor(s: String) : this("ONE-PAR", 1)
 
     companion object {
 

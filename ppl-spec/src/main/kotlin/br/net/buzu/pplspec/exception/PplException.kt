@@ -17,7 +17,7 @@
 package br.net.buzu.pplspec.exception
 
 /**
- * Generic Exception.
+ * Generic PPL Exception.
  *
  * @author Douglas Siviotti
  * @since 1.0

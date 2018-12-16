@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -16,6 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
+import br.net.buzu.pplspec.model.StaticMetaclass;
 import br.net.buzu.pplspec.api.PayloadMapper;
 import br.net.buzu.pplspec.model.*;
 import br.net.buzu.util.StaticBehave;

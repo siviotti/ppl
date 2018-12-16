@@ -24,11 +24,11 @@ package br.net.buzu.pplspec.model
  */
 enum class SizeType(val isFixed: Boolean) {
 
-    /** Tamanho fixo que não pode ser customizado  */
+    /** Fixed size. Cannot be defined */
     FIXED(true),
-    /** Tamanho indefinido que deve ser customizado  */
+    /** Custom size. Must be defined, but has a default size.  */
     CUSTOM(false),
-    /** Tamanho dos tipos complexos que somam o tamanho das suas partes  */
+    /** Size derived from a sum of others sizes. Used on complex types.*/
     SUM(true)
 
 }

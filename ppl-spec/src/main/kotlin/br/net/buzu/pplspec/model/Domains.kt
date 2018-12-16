@@ -19,14 +19,14 @@
 package br.net.buzu.pplspec.model
 
 import br.net.buzu.pplspec.lang.EMPTY
-import br.net.buzu.pplspec.lang.LABEL_VALUE
+import br.net.buzu.pplspec.lang.VALUE_LABEL_SEPARATOR
 import java.util.ArrayList
 
 fun domainOf(vararg array: String): Domain {
     return Domain.create(EMPTY, domainItemListOf(*array))
 }
 
-fun createDomain(name: String, items:List<DomainItem>): Domain {
+fun createDomain(name: String, items: List<DomainItem>): Domain {
     return Domain.create(EMPTY, items)
 }
 
@@ -47,11 +47,9 @@ fun domainItemListOf(vararg array: String): List<DomainItem> {
 }
 
 fun domainItemOf(text: String): DomainItem {
-    val pos = text.indexOf(LABEL_VALUE)
-    if (pos < 0) {
-        return DomainItem(text)
-    }
-    val value = text.substring(0, pos)
-    val label = text.substring(pos + 1, text.length)
-    return DomainItem(value, label)
+    val pos = text.indexOf(VALUE_LABEL_SEPARATOR)
+    return if (pos < 0)
+        DomainItem(text)
+    else
+        DomainItem(text.substring(0, pos), text.substring(pos + 1, text.length))
 }
