@@ -32,21 +32,6 @@ internal const val INVALID_DOMAIN = "Invalid domain:"
 private val EMPTY_DOMAIN = Domain.EMPTY
 private val EMPTY_CHILDREN: List<Metadata> = listOf()
 
-typealias CreateMetadata = (MetaInfo, List<Metadata>) -> Metadata
-
-val genericCreateMetadata: CreateMetadata = { metaInfo, children ->
-    if (children.isEmpty())
-        if (metaInfo.isStatic)
-            SimpleStaticMetadata(metaInfo)
-        else
-            SimpleMetadata(metaInfo)
-    else {
-        if (isStaticChildren(children))
-            ComplexStaticMetadada(metaInfo, children)
-        else
-            ComplexMetadata(metaInfo, children)
-    }
-}
 
 fun parseMetadata(pplString: PplString): Metadata {
     return parseMetadata(pplString, createMetadata = genericCreateMetadata)

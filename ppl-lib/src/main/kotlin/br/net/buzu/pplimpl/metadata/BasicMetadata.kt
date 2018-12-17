@@ -24,10 +24,10 @@ import br.net.buzu.java.model.Metadata
 import br.net.buzu.java.model.kindOf
 
 /**
- * Most basic abstract implementation domainOf `Metadata`.
+ * Most basic abstract implementation of Metadata.
  *
  * @author Douglas Siviotti
- * @since 1.0 (15/05/2017)
+ * @since 1.0
  */
 abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
 

@@ -31,7 +31,7 @@ class MetaInfo @JvmOverloads
 constructor(val index: Int, val name: String, val subtype: Subtype, size: Int,  scale:Int, minOccurs: Int, val maxOccurs: Int,
             val domain: Domain = Domain.EMPTY, val defaultValue: String = EMPTY, val tags: String = EMPTY) : Comparable<MetaInfo> {
     // Basic
-    val size: Int
+    val size: Int = if (subtype.isFixedSizeType) subtype.fixedSize() else size
     val scale: Int
     val minOccurs: Int
     // Extension
@@ -93,7 +93,6 @@ constructor(val index: Int, val name: String, val subtype: Subtype, size: Int,  
     }
 
     init {
-        this.size = if (subtype.isFixedSizeType) subtype.fixedSize() else size
         this.scale = if (scale > NO_SCALE) scale else 0
         checkOccurs(minOccurs, maxOccurs)
         this.minOccurs = if (minOccurs < 0) 0 else minOccurs
@@ -215,10 +214,10 @@ constructor(val index: Int, val name: String, val subtype: Subtype, size: Int,  
                 sb.append(pplMetadata.align)
             }
             if (PplMetadata.EMPTY_CHAR != pplMetadata.fillChar) {
-                sb.append(pplMetadata.fillChar)
+                sb.append(FILL_CHAR).append(pplMetadata.fillChar)
             }
             if (PplMetadata.EMPTY_CHAR != pplMetadata.nullChar) {
-                sb.append(pplMetadata.nullChar)
+                sb.append(NULL_CHAR).append(pplMetadata.nullChar)
             }
             return sb.toString()
         }
