@@ -1,6 +1,6 @@
 package br.net.buzu.context;
 
-import br.net.buzu.pplspec.context.PplContext;
+import br.net.buzu.java.context.JavaContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,13 +44,13 @@ public class ContextBuilderTest {
 
 	@Test
 	public void testSimpleBuild() {
-		PplContext context = contextBuilder.build();
+		JavaContext context = contextBuilder.build();
 		assertEquals(BasicContext.class, context.getClass());
 	}
 
 	@Test
 	public void testCustomBuild() {
-		PplContext context = contextBuilder.metadataFactory(new CustomMetadataFactory()).coderManager(new CustomCoderManager())
+		JavaContext context = contextBuilder.metadataFactory(new CustomMetadataFactory()).coderManager(new CustomCoderManager())
 				.subtypeManager(new CustomSubtypeManager()).parserFactory(new CustomParserFactory()).build();
 		assertEquals(BasicContext.class, context.getClass());
 

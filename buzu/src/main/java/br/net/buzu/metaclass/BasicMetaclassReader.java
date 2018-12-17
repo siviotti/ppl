@@ -17,17 +17,17 @@
 package br.net.buzu.metaclass;
 
 import br.net.buzu.context.BasicContext;
-import br.net.buzu.pplspec.annotation.PplMetadata;
-import br.net.buzu.pplspec.api.PplParser;
-import br.net.buzu.pplspec.api.MetaclassReader;
-import br.net.buzu.pplspec.api.PayloadMapper;
-import br.net.buzu.pplspec.api.SkipStrategy;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.exception.PplException;
-import br.net.buzu.pplspec.lang.Syntax;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.Subtype;
+import br.net.buzu.java.annotation.PplMetadata;
+import br.net.buzu.java.api.PplParser;
+import br.net.buzu.java.api.MetaclassReader;
+import br.net.buzu.java.api.PayloadMapper;
+import br.net.buzu.java.api.SkipStrategy;
+import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.java.exception.PplException;
+import br.net.buzu.java.lang.Syntax;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.java.model.Subtype;
 import br.net.buzu.util.Reflect;
 import br.net.buzu.util.StaticBehave;
 
@@ -36,7 +36,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
-import static br.net.buzu.pplspec.model.KindKt.kindOf;
+import static br.net.buzu.java.model.KindKt.kindOf;
 
 /**
  * Basic implementation domainOf <code>MetaclassReader</code>.
@@ -48,18 +48,18 @@ import static br.net.buzu.pplspec.model.KindKt.kindOf;
  */
 public class BasicMetaclassReader implements MetaclassReader {
 
-	private final PplContext context;
+	private final JavaContext context;
 	private final SkipStrategy skip;
 
 	public BasicMetaclassReader() {
 		this(new BasicContext());
 	}
 
-	public BasicMetaclassReader(PplContext context) {
+	public BasicMetaclassReader(JavaContext context) {
 		this(context, new BasicSkipStrategy());
 	}
 
-	public BasicMetaclassReader(PplContext context, SkipStrategy skip) {
+	public BasicMetaclassReader(JavaContext context, SkipStrategy skip) {
 		super();
 		this.context = Objects.requireNonNull(context, "'context' cannot be null");
 		this.skip = Objects.requireNonNull(skip, "'skip' cannot be null");
@@ -171,7 +171,7 @@ public class BasicMetaclassReader implements MetaclassReader {
 
 	// ********** get/set **********
 
-	public PplContext context() {
+	public JavaContext context() {
 		return context;
 	}
 

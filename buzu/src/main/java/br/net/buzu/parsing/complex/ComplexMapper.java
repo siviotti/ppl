@@ -16,10 +16,10 @@
  */
 package br.net.buzu.parsing.complex;
 
-import br.net.buzu.pplspec.api.PayloadMapper;
-import br.net.buzu.pplspec.exception.PplParseException;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.StaticMetadata;
+import br.net.buzu.java.api.PayloadMapper;
+import br.net.buzu.java.exception.PplParseException;
+import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.java.model.StaticMetadata;
 
 import java.util.Collections;
 import java.util.List;

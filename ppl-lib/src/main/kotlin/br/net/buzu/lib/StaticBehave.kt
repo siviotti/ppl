@@ -13,11 +13,12 @@
  *
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
- */package br.net.buzu.lib
+ */
+package br.net.buzu.lib
 
-import br.net.buzu.pplspec.model.MetaInfo
-import br.net.buzu.pplspec.model.Metadata
-import br.net.buzu.pplspec.model.StaticStructure
+import br.net.buzu.java.model.MetaInfo
+import br.net.buzu.java.model.Metadata
+import br.net.buzu.java.model.StaticStructure
 
 internal val META_INFO_MUST_BE_COMPLETE = "MetaInfo must be complete (size and occurrences) for static behave:"
 internal val META_INFO_CANNOT_BE_UNBOUNDED = "MetaInfo cannot be Unbounded (no limit) for static behave:"
@@ -42,7 +43,7 @@ fun checkStaticChild(child: Metadata) {
     }
 }
 
-fun isStaticChidren(children: List<Metadata>): Boolean {
+fun isStaticChildren(children: List<Metadata>): Boolean {
     for (child in children) {
         if (!child.isStatic()) {
             return false

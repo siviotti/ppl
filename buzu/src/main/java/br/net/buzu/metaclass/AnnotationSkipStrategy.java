@@ -16,8 +16,8 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.pplspec.api.SkipStrategy;
-import br.net.buzu.pplspec.exception.PplReflectionException;
+import br.net.buzu.java.api.SkipStrategy;
+import br.net.buzu.java.exception.PplReflectionException;
 import br.net.buzu.util.Reflect;
 
 import java.lang.annotation.Annotation;

@@ -16,7 +16,7 @@
  */
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.pplspec.model.Subtype
+import br.net.buzu.java.model.Subtype
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.time.LocalDate

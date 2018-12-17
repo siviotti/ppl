@@ -7,9 +7,9 @@ import br.net.buzu.metaclass.BasicSkipStrategy;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.build.parse.Splitter;
-import br.net.buzu.pplspec.api.PplMapper;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.model.Dialect;
+import br.net.buzu.java.api.JavaPplMapper;
+import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.java.model.Dialect;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -33,7 +33,7 @@ public class BuzuBuilderTest {
 		assertEquals(BasicMetaclassReader.class, buzu.reader().getClass());
 		assertEquals(BasicSkipStrategy.class, ((BasicMetaclassReader) buzu.reader()).skipStrategy().getClass());
 		assertEquals(BasicMetadataLoader.class, buzu.loader().getClass());
-		assertTrue(buzu instanceof PplMapper);
+		assertTrue(buzu instanceof JavaPplMapper);
 	}
 
 	@Test
@@ -47,7 +47,7 @@ public class BuzuBuilderTest {
 		assertEquals(BasicMetaclassReader.class, buzu.reader().getClass());
 		assertEquals(BasicSkipStrategy.class, ((BasicMetaclassReader) buzu.reader()).skipStrategy().getClass());
 		assertEquals(BasicMetadataLoader.class, buzu.loader().getClass());
-		assertTrue(buzu instanceof PplMapper);
+		assertTrue(buzu instanceof JavaPplMapper);
 	}
 
 	@Test
@@ -68,12 +68,12 @@ public class BuzuBuilderTest {
 		assertEquals(BasicSkipStrategy.class, ((BasicMetaclassReader) buzu.reader()).skipStrategy().getClass());
 		assertEquals(AnnotationSkipStrategy.class, builder.getSkipStrategy().getClass());
 		assertEquals(CustomLoader.class, buzu.loader().getClass());
-		assertTrue(buzu instanceof PplMapper);
+		assertTrue(buzu instanceof JavaPplMapper);
 	}
 
 	@Test
 	public void testContext() {
-		PplContext context = new BasicContext() {
+		JavaContext context = new BasicContext() {
 		};
 		BuzuBuilder builder = new BuzuBuilder().context(context);
 		Buzu buzu = builder.build();

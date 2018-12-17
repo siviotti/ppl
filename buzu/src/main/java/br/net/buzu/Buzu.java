@@ -16,16 +16,16 @@
  */
 package br.net.buzu;
 
-import static br.net.buzu.pplspec.lang.Syntax.pplToString;
+import static br.net.buzu.java.lang.Syntax.pplToString;
 
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.pplspec.api.*;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.exception.PplParseException;
-import br.net.buzu.pplspec.model.*;
+import br.net.buzu.java.api.*;
+import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.java.exception.PplParseException;
+import br.net.buzu.java.model.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -37,15 +37,15 @@ import java.util.Objects;
  * 
  * @author Douglas Siviotti
  * @since 1.0
- * @see PplMapper
+ * @see JavaPplMapper
  * @see BuzuBuilder
  */
-public class Buzu implements PplMapper {
+public class Buzu implements JavaPplMapper {
 
 	static final String PARSE_REQUIRES_STATIC_METADATA = "The 'parseMetadata' operation (fromPPL) requires a StaticMetadata";
 	static final Dialect DEFAULT_DIALECT = Dialect.Companion.getDEFAULT();
 
-	private final PplContext context;
+	private final JavaContext context;
 	private final MetadataParser parser;
 	private final MetadataLoader loader;
 	private final MetaclassReader reader;
@@ -66,7 +66,7 @@ public class Buzu implements PplMapper {
 	 * 
 	 * @param context The PPL Context [CANNOT BE NULL].
 	 */
-	public Buzu(PplContext context) {
+	public Buzu(JavaContext context) {
 		this(context, new BasicMetadataParser(context), new BasicMetaclassReader(context),
 				new BasicMetadataLoader(context), DEFAULT_DIALECT, false);
 	}
@@ -83,8 +83,8 @@ public class Buzu implements PplMapper {
 	 *                        created an instance based on the context.
 	 * 
 	 */
-	Buzu(PplContext context, MetadataParser metadataParser, MetaclassReader metaclassReader,
-			MetadataLoader metadataLoader, Dialect dialect, boolean serializeNulls) {
+	Buzu(JavaContext context, MetadataParser metadataParser, MetaclassReader metaclassReader,
+		 MetadataLoader metadataLoader, Dialect dialect, boolean serializeNulls) {
 		super();
 		this.context = Objects.requireNonNull(context, "'context' cannot be null!");
 		this.parser = metadataParser == null ? new BasicMetadataParser(context) : metadataParser;
@@ -198,7 +198,7 @@ public class Buzu implements PplMapper {
 	// get/set
 	// **************************************************
 
-	public PplContext context() {
+	public JavaContext context() {
 		return context;
 	}
 

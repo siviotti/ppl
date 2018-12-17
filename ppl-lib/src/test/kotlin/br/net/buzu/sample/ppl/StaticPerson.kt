@@ -1,7 +1,7 @@
 package br.net.buzu.sample.ppl
 
-import br.net.buzu.pplspec.annotation.PplMetadata
-import br.net.buzu.pplspec.model.Subtype
+import br.net.buzu.java.annotation.PplMetadata
+import br.net.buzu.java.model.Subtype
 
 /**
  *

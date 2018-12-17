@@ -16,7 +16,7 @@
  */
 package br.net.buzu.metadata.build.parse;
 
-import br.net.buzu.pplspec.exception.PplParseException;
+import br.net.buzu.java.exception.PplParseException;
 
 /**
  *

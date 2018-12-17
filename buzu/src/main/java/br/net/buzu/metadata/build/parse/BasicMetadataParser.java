@@ -16,15 +16,15 @@
  */
 package br.net.buzu.metadata.build.parse;
 
-import static br.net.buzu.pplspec.model.Domains.*;
+import static br.net.buzu.java.model.Domains.*;
 
 import br.net.buzu.context.BasicContext;
-import br.net.buzu.pplspec.api.MetadataParser;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.exception.PplParseException;
+import br.net.buzu.java.api.MetadataParser;
+import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.java.exception.PplParseException;
 
-import br.net.buzu.pplspec.lang.Token;
-import br.net.buzu.pplspec.model.*;
+import br.net.buzu.java.lang.Token;
+import br.net.buzu.java.model.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static br.net.buzu.pplspec.lang.Syntax.*;
+import static br.net.buzu.java.lang.Syntax.*;
 
 /**
  * Metadata parser to transform <code>Text</code> to <code>Metadata</code>.
@@ -50,7 +50,7 @@ public class BasicMetadataParser implements MetadataParser {
 	private static final Domain EMPTY_DOMAIN =Domain.Companion.getEMPTY();
 
 	private final Splitter splitter;
-	private final PplContext context;
+	private final JavaContext context;
 
 	private int count;
 
@@ -64,7 +64,7 @@ public class BasicMetadataParser implements MetadataParser {
 	/**
 	 * Default constructor.
 	 */
-	public BasicMetadataParser(PplContext context) {
+	public BasicMetadataParser(JavaContext context) {
 		this(context, new Splitter());
 	}
 
@@ -74,7 +74,7 @@ public class BasicMetadataParser implements MetadataParser {
 	 * @param splitter
 	 * @param context
 	 */
-	public BasicMetadataParser(PplContext context, Splitter splitter) {
+	public BasicMetadataParser(JavaContext context, Splitter splitter) {
 		super();
 		if (splitter == null) {
 			throw new IllegalArgumentException("Splitter cannot be null!");
@@ -278,7 +278,7 @@ public class BasicMetadataParser implements MetadataParser {
 		return splitter;
 	}
 
-	public PplContext getContext() {
+	public JavaContext getContext() {
 		return context;
 	}
 

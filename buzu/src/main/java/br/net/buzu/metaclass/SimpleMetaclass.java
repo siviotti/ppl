@@ -16,10 +16,10 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.pplspec.api.PayloadMapper;
-import br.net.buzu.pplspec.model.Kind;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metaclass;
+import br.net.buzu.java.api.PayloadMapper;
+import br.net.buzu.java.model.Kind;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metaclass;
 import br.net.buzu.util.StaticBehave;
 
 import java.lang.reflect.Field;

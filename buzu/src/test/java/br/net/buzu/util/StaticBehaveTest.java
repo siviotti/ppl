@@ -1,10 +1,10 @@
 package br.net.buzu.util;
 
 import br.net.buzu.context.BasicContext;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.Subtype;
+import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metadata;
+import br.net.buzu.java.model.Subtype;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -16,7 +16,7 @@ import static org.junit.Assert.fail;
  */
 public class StaticBehaveTest {
 
-	private PplContext context = new BasicContext();
+	private JavaContext context = new BasicContext();
 	private MetaInfo staticMetaInfo = new MetaInfo( 11, "color", Subtype.STRING, 10, 0, 1, 2);
 	private MetaInfo uncompleteMetaInfo = new MetaInfo( 11, "color", Subtype.STRING, -1, 0, 1, 2);
 	private MetaInfo unboundedMetaInfo = new MetaInfo( 11, "color", Subtype.STRING, 10, 0, 1, 0);

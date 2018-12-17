@@ -1,17 +1,16 @@
 package br.net.buzu.metadata;
 
-import br.net.buzu.pplspec.lang.Syntax;
-import br.net.buzu.pplspec.model.Domain;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.Subtype;
-import kotlin.reflect.jvm.internal.impl.util.ModuleVisibilityHelper;
+import br.net.buzu.java.lang.Syntax;
+import br.net.buzu.java.model.Domain;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metadata;
+import br.net.buzu.java.model.Subtype;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.net.buzu.pplspec.model.Domains.domainOf;
+import static br.net.buzu.java.model.Domains.domainOf;
 import static org.junit.Assert.*;
 
 /**

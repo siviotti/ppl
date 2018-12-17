@@ -1,6 +1,6 @@
 package br.net.buzu.metadata.build.parse;
 
-import br.net.buzu.pplspec.lang.Syntax;
+import br.net.buzu.java.lang.Syntax;
 import org.junit.Test;
 
 import java.util.ArrayList;

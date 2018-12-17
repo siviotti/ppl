@@ -16,8 +16,8 @@
  */
 package br.net.buzu.metadata;
 
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.StaticMetadata;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.StaticMetadata;
 import br.net.buzu.util.StaticBehave;
 
 /**

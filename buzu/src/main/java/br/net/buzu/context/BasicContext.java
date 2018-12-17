@@ -16,9 +16,9 @@
  */
 package br.net.buzu.context;
 
-import br.net.buzu.pplspec.api.CoderManager;
-import br.net.buzu.pplspec.api.MetadataFactory;
-import br.net.buzu.pplspec.context.*;
+import br.net.buzu.java.api.CoderManager;
+import br.net.buzu.java.api.MetadataFactory;
+import br.net.buzu.java.context.*;
 
 import java.util.Objects;
 
@@ -31,7 +31,7 @@ import java.util.Objects;
  * @since 1.0
  *
  */
-public class BasicContext implements PplContext {
+public class BasicContext implements JavaContext {
 
 	private final SubtypeManager subtypeManager;
 	private final MetadataFactory metadataFactory;

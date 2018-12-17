@@ -16,9 +16,9 @@
  */
 package br.net.buzu.metadata.code;
 
-import br.net.buzu.pplspec.api.MetadataCoder;
-import br.net.buzu.pplspec.model.Dialect;
-import br.net.buzu.pplspec.model.MetaInfo;
+import br.net.buzu.java.api.MetadataCoder;
+import br.net.buzu.java.model.Dialect;
+import br.net.buzu.java.model.MetaInfo;
 
 /**
  *

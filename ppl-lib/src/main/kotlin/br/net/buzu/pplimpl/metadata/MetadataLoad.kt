@@ -7,7 +7,7 @@
  *   (at your option) any later version.
  *
  *   Buzu is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty domainOf
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
@@ -16,63 +16,52 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.pplimpl.jvm.genericSkip
-import br.net.buzu.pplimpl.jvm.read
-import br.net.buzu.pplspec.exception.PplMetaclassViolationException
-import br.net.buzu.pplspec.lang.PATH_SEP
-import br.net.buzu.pplspec.model.*
-import java.lang.reflect.Field
+import br.net.buzu.java.exception.PplMetaclassViolationException
+import br.net.buzu.java.lang.PATH_SEP
+import br.net.buzu.java.model.*
 import java.util.*
 
-
-// ********** API **********
-
-fun loadMetadata(rootInstance: Any): Metadata {
-    return loadMetadata(rootInstance, genericCreateMetadata, genericSkip)
+@JvmOverloads
+fun loadMetadata(rootInstance: Any, typeMapper: TypeMapper, createMetadata: CreateMetadata = genericCreateMetadata): Metadata {
+    val loadNode = LoadNode(rootInstance, typeMapper, "")
+    val maxMap = MaxMap(typeMapper.nodeCount() + 1)
+    val metaInfo = typeMapper.metaInfo
+    val max = getMax(maxMap, loadNode, metaInfo)
+    return createMetadata(metaInfo.update(max.maxSize, max.maxOccurs), createMetaChildren(loadNode, maxMap, createMetadata))
 }
 
-fun loadMetadata(rootInstance: Any, createMetadata: CreateMetadata = genericCreateMetadata, skip: (Field) -> Boolean = genericSkip): Metadata {
-    val typeInfo = read(rootInstance.javaClass, skip)
-    val node = LoadNode(rootInstance, typeInfo, "")
-    val maxMap = MaxMap(typeInfo.nodeCount() + 1)
-    val metaInfo = typeInfo.metaInfo
-    val max = getMax(maxMap, node, metaInfo)
-    return createMetadata(metaInfo.update(max.maxSize, max.maxOccurs), createMetaChildren(node, maxMap, createMetadata, skip))
-}
-
-// ********** INTERNAL **********
-private fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: CreateMetadata, skip: (Field) -> Boolean): List<Metadata> {
-    val typeInfo = node.typeInfo
-    if (!typeInfo.hasChildren) {
+private fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: CreateMetadata): List<Metadata> {
+    val typeMapper = node.typeMapper
+    if (!typeMapper.hasChildren) {
         return listOf()
     }
-    val typeList = typeInfo.children
+    val typeList = typeMapper.children
     val children = arrayOfNulls<Metadata>(typeList.size)
     var fieldValue: Any?
-    var childTypeInfo: TypeInfo
+    var childMapper: TypeMapper
     for (itemValue in node.value) {
         for (i in typeList.indices) {
-            childTypeInfo = typeList[i]
-            fieldValue = if (itemValue != null) childTypeInfo.getValue(itemValue) else null
-            children[i] = loadChild(fieldValue, childTypeInfo, node, maxMap, createMetadata, skip)
+            childMapper = typeList[i]
+            fieldValue = if (itemValue != null) childMapper.getValue(itemValue) else null
+            children[i] = loadChild(fieldValue, childMapper, node, maxMap, createMetadata)
         }
     }
     return Arrays.asList<Metadata>(*children)
 }
 
-private fun loadChild(fieldValue: Any?, typeInfo: TypeInfo, parentNode: LoadNode, maxMap: MaxMap,
-                      createMetadata: CreateMetadata, skip: (Field) -> Boolean): Metadata {
-    val fieldNode = LoadNode(fieldValue, typeInfo, getFieldPath(typeInfo.fieldName, parentNode))
-    var metaInfo = typeInfo.metaInfo
+private fun loadChild(fieldValue: Any?, typeMapper: TypeMapper, parentNode: LoadNode, maxMap: MaxMap,
+                      createMetadata: CreateMetadata): Metadata {
+    val fieldNode = LoadNode(fieldValue, typeMapper, getFieldPath(typeMapper.fieldName, parentNode))
+    var metaInfo = typeMapper.metaInfo
     val max = getMax(maxMap, fieldNode, metaInfo)
     metaInfo = metaInfo.update(max.maxSize, max.maxOccurs)
-    val children = createMetaChildren(fieldNode, maxMap, createMetadata, skip)
+    val children = createMetaChildren(fieldNode, maxMap, createMetadata)
     return createMetadata(metaInfo, children)
 }
 
 private fun getMax(maxMap: MaxMap, node: LoadNode, metaInfo: MetaInfo): Max {
     val fieldPath = node.fieldPath
-    val max = maxMap.getMaxByIndex(node.typeInfo.treeIndex)
+    val max = maxMap.getMaxByIndex(node.typeMapper.treeIndex)
     val size = max.tryNewMaxSize(node.calcMaxSize()).maxSize
     val maxOccurs = max.tryNewMaxOccurs(node.occurs).maxOccurs
     if (metaInfo.hasSize()) {
@@ -98,23 +87,23 @@ private fun getFieldPath(fieldName: String, node: LoadNode): String {
 }
 
 
-internal class LoadNode(originalValue: Any?, val typeInfo: TypeInfo, val fieldPath: String) {
+internal class LoadNode(originalValue: Any?, val typeMapper: TypeMapper, val fieldPath: String) {
 
     val value: Array<Any?>
-    val subtype: Subtype = typeInfo.metaInfo.subtype
+    val subtype: Subtype = typeMapper.metaInfo.subtype
     val occurs: Int
         get() = value.size
 
     init {
         if (originalValue == null) {
             this.value = arrayOf(1)
-        } else if (typeInfo.isCollection) {
+        } else if (typeMapper.isCollection) {
             if ((originalValue as Collection<*>).isEmpty()) {
                 this.value = arrayOf(1)
             } else {
                 this.value = originalValue.toTypedArray()
             }
-        } else if (typeInfo.isArray) {
+        } else if (typeMapper.isArray) {
             if ((originalValue as Array<Any>).size == 0) {
                 this.value = arrayOf(1)
             } else {
@@ -131,7 +120,7 @@ internal class LoadNode(originalValue: Any?, val typeInfo: TypeInfo, val fieldPa
             var max = 0
             var tmp = 0
             for (obj in value) {
-                tmp = typeInfo.getValueSize(obj!!)
+                tmp = typeMapper.getValueSize(obj!!)
                 if (tmp > max) {
                     max = tmp
                 }
@@ -140,7 +129,6 @@ internal class LoadNode(originalValue: Any?, val typeInfo: TypeInfo, val fieldPa
         }
         return subtype.fixedSize()
     }
-
 }
 
 internal data class Max(var maxSize: Int = 0, var maxOccurs: Int = 0) {

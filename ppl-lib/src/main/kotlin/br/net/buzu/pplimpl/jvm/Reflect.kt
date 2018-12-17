@@ -16,13 +16,12 @@
  */
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.pplspec.annotation.PplMetadata
-import br.net.buzu.pplspec.exception.PplException
-import br.net.buzu.pplspec.exception.PplReflectionException
+import br.net.buzu.java.annotation.PplMetadata
+import br.net.buzu.java.exception.PplException
+import br.net.buzu.java.exception.PplReflectionException
 import java.io.*
 import java.lang.reflect.*
 import java.util.*
-import kotlin.reflect.KClass
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 internal const val UNSAFE_COLLECTION = "Unsafe collection '"
@@ -51,9 +50,7 @@ fun findGet(attributeName: String, obj: Any): Method {
         } catch (e1: NoSuchMethodException) {
             throw PplReflectionException("$methodGet()/$methodIs()", obj.javaClass, e)
         }
-
     }
-
 }
 
 fun findSet(attributeName: String, obj: Any, paramType: Class<*>): Method {
@@ -63,7 +60,6 @@ fun findSet(attributeName: String, obj: Any, paramType: Class<*>): Method {
     } catch (e: NoSuchMethodException) {
         throw PplReflectionException(methodName + "(" + paramType.simpleName + ")", obj.javaClass, e)
     }
-
 }
 
 @Throws(NoSuchMethodException::class)
@@ -73,7 +69,6 @@ internal fun findMethod(methodName: String, obj: Any, vararg params: Class<*>): 
     } catch (e: SecurityException) {
         throw PplReflectionException(e)
     }
-
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -87,7 +82,6 @@ fun <T> findAndInvokeGet(instance: Any, fieldName: String): T {
     } catch (e: InvocationTargetException) {
         throw PplReflectionException(e)
     }
-
 }
 
 fun findAndInvokeSet(instance: Any, fieldName: String, fieldType: Class<*>, param: Any?) {
@@ -103,7 +97,6 @@ fun findAndInvokeSet(instance: Any, fieldName: String, fieldType: Class<*>, para
                         + fieldType.simpleName + ") param(" + param!!.javaClass.simpleName + "):" + param,
                 e)
     }
-
 }
 
 // **************************************************
@@ -123,7 +116,7 @@ fun getElementType(field: Field): Class<*> {
     if (Collection::class.java.isAssignableFrom(fieldType)) {
         if (field.genericType is ParameterizedType) {
             val parType = field.genericType as ParameterizedType
-            if (parType.actualTypeArguments.size > 0) {
+            if (parType.actualTypeArguments.isNotEmpty()) {
                 val itemType = parType.actualTypeArguments[0]
                 return itemType as Class<*>
             }
@@ -133,7 +126,6 @@ fun getElementType(field: Field): Class<*> {
         return fieldType.componentType
     }
     return fieldType
-
 }
 
 /**

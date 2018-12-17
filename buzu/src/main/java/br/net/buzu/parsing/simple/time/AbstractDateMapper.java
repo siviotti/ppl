@@ -17,9 +17,9 @@
 package br.net.buzu.parsing.simple.time;
 
 import br.net.buzu.parsing.simple.AbstractSimpleMapper;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.StaticMetadata;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.java.model.StaticMetadata;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

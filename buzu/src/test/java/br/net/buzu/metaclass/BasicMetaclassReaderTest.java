@@ -4,13 +4,13 @@ import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.parsing.simple.EnumNameMapper;
 import br.net.buzu.parsing.simple.oldtime.OldTimestampMapper;
 import br.net.buzu.parsing.simple.time.DateMapper;
-import br.net.buzu.pplspec.api.PplParser;
-import br.net.buzu.pplspec.api.MetaclassReader;
-import br.net.buzu.pplspec.api.PayloadMapper;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.MetaInfoTest;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.Subtype;
+import br.net.buzu.java.api.PplParser;
+import br.net.buzu.java.api.MetaclassReader;
+import br.net.buzu.java.api.PayloadMapper;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.MetaInfoTest;
+import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.java.model.Subtype;
 import br.net.buzu.sample.order.Order;
 import br.net.buzu.sample.order.Status;
 import br.net.buzu.sample.pojo.Person;
@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.net.buzu.pplspec.annotation.PplMetadata.EMPTY_INTEGER;
+import static br.net.buzu.java.annotation.PplMetadata.EMPTY_INTEGER;
 import static org.junit.Assert.assertEquals;
 
 /**

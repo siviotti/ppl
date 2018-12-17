@@ -1,6 +1,6 @@
 package br.net.buzu.util;
 
-import br.net.buzu.pplspec.exception.PplException;
+import br.net.buzu.java.exception.PplException;
 import org.junit.Test;
 
 import java.io.BufferedReader;

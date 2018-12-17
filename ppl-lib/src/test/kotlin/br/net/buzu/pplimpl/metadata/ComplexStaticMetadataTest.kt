@@ -1,8 +1,8 @@
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.pplspec.model.MetaInfo
-import br.net.buzu.pplspec.model.Metadata
-import br.net.buzu.pplspec.model.Subtype
+import br.net.buzu.java.model.MetaInfo
+import br.net.buzu.java.model.Metadata
+import br.net.buzu.java.model.Subtype
 import java.util.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

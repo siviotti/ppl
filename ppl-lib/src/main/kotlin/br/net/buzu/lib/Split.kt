@@ -16,11 +16,11 @@
  */
 package br.net.buzu.lib
 
-import br.net.buzu.pplspec.exception.PplParseException
-import br.net.buzu.pplspec.lang.EMPTY
-import br.net.buzu.pplspec.lang.VAR
-import br.net.buzu.pplspec.lang.*
-import br.net.buzu.pplspec.model.PplNode
+import br.net.buzu.java.exception.PplParseException
+import br.net.buzu.java.lang.EMPTY
+import br.net.buzu.java.lang.VAR
+import br.net.buzu.java.lang.*
+import br.net.buzu.java.model.PplNode
 
 internal const val WRONG_USE_OF_BLOCK = "Wrong use domainOf block "
 

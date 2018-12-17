@@ -16,12 +16,12 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.pplspec.api.PayloadMapper;
-import br.net.buzu.pplspec.lang.Token;
-import br.net.buzu.pplspec.model.Kind;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.PplSerializable;
+import br.net.buzu.java.api.PayloadMapper;
+import br.net.buzu.java.lang.Token;
+import br.net.buzu.java.model.Kind;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.java.model.PplSerializable;
 import br.net.buzu.util.Reflect;
 
 import java.lang.reflect.Field;

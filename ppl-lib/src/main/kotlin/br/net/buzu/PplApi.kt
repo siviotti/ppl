@@ -1,6 +1,6 @@
 package br.net.buzu
 
-import br.net.buzu.pplspec.model.Metadata
+import br.net.buzu.java.model.Metadata
 
 fun fromPpl(text: String): Any{
     return ""

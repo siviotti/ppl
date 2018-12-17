@@ -1,6 +1,6 @@
 package br.net.buzu.lib
 
-import br.net.buzu.pplspec.lang.PATH_SEP
+import br.net.buzu.java.lang.PATH_SEP
 
 fun <T> asTree(node: T, getChildren: (T) -> List<T>, nodeToString: (T) -> String= {it.toString()}, level: Int = 0): String {
     val sb = StringBuilder()

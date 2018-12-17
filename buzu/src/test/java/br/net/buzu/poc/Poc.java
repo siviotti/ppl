@@ -5,13 +5,13 @@ import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.poc.model.Request;
-import br.net.buzu.pplspec.api.PayloadMapper;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.PplString;
-import br.net.buzu.pplspec.model.StaticMetadata;
+import br.net.buzu.java.api.PayloadMapper;
+import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.java.model.PplString;
+import br.net.buzu.java.model.StaticMetadata;
 import com.google.gson.Gson;
 
-import static br.net.buzu.pplspec.model.PplStringKt.pplStringOf;
+import static br.net.buzu.java.model.PplStringKt.pplStringOf;
 
 public class Poc {
 

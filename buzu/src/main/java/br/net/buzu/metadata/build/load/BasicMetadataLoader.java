@@ -17,12 +17,12 @@
 package br.net.buzu.metadata.build.load;
 
 import br.net.buzu.context.BasicContext;
-import br.net.buzu.pplspec.api.MetadataLoader;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.exception.PplMetaclassViolationException;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.Metadata;
+import br.net.buzu.java.api.MetadataLoader;
+import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.java.exception.PplMetaclassViolationException;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.java.model.Metadata;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,13 +36,13 @@ import java.util.List;
  */
 public class BasicMetadataLoader implements MetadataLoader {
 
-	private final PplContext context;
+	private final JavaContext context;
 
 	public BasicMetadataLoader() {
 		this(new BasicContext());
 	}
 
-	public BasicMetadataLoader(PplContext context) {
+	public BasicMetadataLoader(JavaContext context) {
 		super();
 		if (context == null) {
 			throw new IllegalArgumentException("Context cannot be null!");

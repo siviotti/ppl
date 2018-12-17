@@ -1,12 +1,12 @@
 package br.net.buzu.metadata;
 
-import br.net.buzu.pplspec.model.*;
+import br.net.buzu.java.model.*;
 import br.net.buzu.util.StaticBehave;
 import org.junit.Test;
 
 import java.util.List;
 
-import static br.net.buzu.pplspec.model.Domains.domainOf;
+import static br.net.buzu.java.model.Domains.domainOf;
 import static org.junit.Assert.*;
 
 /**

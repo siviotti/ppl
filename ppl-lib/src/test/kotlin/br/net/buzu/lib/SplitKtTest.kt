@@ -1,7 +1,6 @@
 package br.net.buzu.lib
 
-import br.net.buzu.pplspec.lang.EMPTY
-import jdk.nashorn.internal.runtime.ParserException
+import br.net.buzu.java.lang.EMPTY
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail

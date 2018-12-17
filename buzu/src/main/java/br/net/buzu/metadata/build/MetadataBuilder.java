@@ -20,15 +20,15 @@ import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.pplspec.api.MetaclassReader;
-import br.net.buzu.pplspec.api.MetadataLoader;
-import br.net.buzu.pplspec.api.MetadataParser;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.exception.PplException;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.PplString;
-import br.net.buzu.pplspec.model.StaticMetadata;
+import br.net.buzu.java.api.MetaclassReader;
+import br.net.buzu.java.api.MetadataLoader;
+import br.net.buzu.java.api.MetadataParser;
+import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.java.exception.PplException;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metadata;
+import br.net.buzu.java.model.PplString;
+import br.net.buzu.java.model.StaticMetadata;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,7 +45,7 @@ import java.util.Objects;
 public class MetadataBuilder {
 
 	private static final String METADATA_IS_NOT_STATIC = "The metadata is not Static:\n";
-	private final PplContext context;
+	private final JavaContext context;
 	private final MetadataLoader loader;
 	private final MetadataParser parser;
 	private final MetaclassReader reader;
@@ -58,7 +58,7 @@ public class MetadataBuilder {
 	 * @param parser
 	 * @param reader
 	 */
-	public MetadataBuilder(PplContext context, MetadataLoader loader, MetadataParser parser, MetaclassReader reader) {
+	public MetadataBuilder(JavaContext context, MetadataLoader loader, MetadataParser parser, MetaclassReader reader) {
 		super();
 		this.context = Objects.requireNonNull(context, "'context' cannot be null");
 		this.loader = Objects.requireNonNull(loader, "'loader' cannot be null");
@@ -130,7 +130,7 @@ public class MetadataBuilder {
 	// Get
 	// **************************************************
 
-	public PplContext getContext() {
+	public JavaContext getContext() {
 		return context;
 	}
 

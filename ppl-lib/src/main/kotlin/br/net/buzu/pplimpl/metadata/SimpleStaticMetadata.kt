@@ -17,8 +17,8 @@
 package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.lib.checkStaticInfo
-import br.net.buzu.pplspec.model.MetaInfo
-import br.net.buzu.pplspec.model.StaticMetadata
+import br.net.buzu.java.model.MetaInfo
+import br.net.buzu.java.model.StaticMetadata
 
 /**
  * Implementation domainOf StaticMetadata based on SimpleMetadata

@@ -18,9 +18,9 @@ package br.net.buzu.parsing;
 
 import static br.net.buzu.lib.TextKt.*;
 
-import br.net.buzu.pplspec.api.PayloadMapper;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.StaticMetadata;
+import br.net.buzu.java.api.PayloadMapper;
+import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.java.model.StaticMetadata;
 import br.net.buzu.util.Reflect;
 
 import java.util.*;

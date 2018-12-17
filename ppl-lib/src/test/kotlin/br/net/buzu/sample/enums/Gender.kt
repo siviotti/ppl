@@ -1,6 +1,6 @@
 package br.net.buzu.sample.enums
 
-import br.net.buzu.pplspec.model.PplSerializable
+import br.net.buzu.java.model.PplSerializable
 
 enum class Gender(val code: Char, val description: String) : PplSerializable {
 

@@ -1,13 +1,13 @@
 package br.net.buzu.metadata;
 
 import br.net.buzu.context.BasicMetadataFactory;
-import br.net.buzu.pplspec.model.Domain;
-import br.net.buzu.pplspec.model.Kind;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Subtype;
+import br.net.buzu.java.model.Domain;
+import br.net.buzu.java.model.Kind;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Subtype;
 import org.junit.Test;
 
-import static br.net.buzu.pplspec.model.Domains.domainOf;
+import static br.net.buzu.java.model.Domains.domainOf;
 import static org.junit.Assert.*;
 
 /**

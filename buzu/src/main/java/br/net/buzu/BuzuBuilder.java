@@ -23,12 +23,12 @@ import br.net.buzu.metaclass.BasicSkipStrategy;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.build.parse.Splitter;
-import br.net.buzu.pplspec.api.MetaclassReader;
-import br.net.buzu.pplspec.api.MetadataLoader;
-import br.net.buzu.pplspec.api.MetadataParser;
-import br.net.buzu.pplspec.api.SkipStrategy;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.model.Dialect;
+import br.net.buzu.java.api.MetaclassReader;
+import br.net.buzu.java.api.MetadataLoader;
+import br.net.buzu.java.api.MetadataParser;
+import br.net.buzu.java.api.SkipStrategy;
+import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.java.model.Dialect;
 
 import java.lang.annotation.Annotation;
 import java.util.HashSet;
@@ -43,7 +43,7 @@ import java.util.Set;
  */
 public class BuzuBuilder {
 
-	private PplContext context;
+	private JavaContext context;
 	private Splitter splitter;
 	private MetadataParser metadataParser;
 	private SkipStrategy skipStrategy;
@@ -93,11 +93,11 @@ public class BuzuBuilder {
 	}
 
 
-	public PplContext getContext() {
+	public JavaContext getContext() {
 		return context;
 	}
 
-	public BuzuBuilder context(PplContext context) {
+	public BuzuBuilder context(JavaContext context) {
 		this.context = context;
 		return this;
 	}

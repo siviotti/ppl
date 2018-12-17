@@ -1,6 +1,6 @@
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.pplspec.model.*
+import br.net.buzu.java.model.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 

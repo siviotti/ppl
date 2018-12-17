@@ -32,8 +32,8 @@
  */
 package br.net.buzu.metadata.code;
 
-import br.net.buzu.pplspec.api.MetadataCoder;
-import br.net.buzu.pplspec.model.Metadata;
+import br.net.buzu.java.api.MetadataCoder;
+import br.net.buzu.java.model.Metadata;
 
 /**
  * Serialize a Metadata as Regex

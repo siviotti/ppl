@@ -9,11 +9,11 @@ import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.code.ShortMetadataCoder;
 import br.net.buzu.pplimpl.metadata.GenericCodeManager;
 import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
-import br.net.buzu.pplspec.api.MetadataCoder;
-import br.net.buzu.pplspec.context.PplContext;
-import br.net.buzu.pplspec.exception.PplParseException;
-import br.net.buzu.pplspec.lang.Token;
-import br.net.buzu.pplspec.model.*;
+import br.net.buzu.java.api.MetadataCoder;
+import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.java.exception.PplParseException;
+import br.net.buzu.java.lang.Token;
+import br.net.buzu.java.model.*;
 import br.net.buzu.sample.order.*;
 import br.net.buzu.sample.pojo.Person;
 import br.net.buzu.sample.ppl.Human;
@@ -31,6 +31,8 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 import static br.net.buzu.pplimpl.metadata.MetadataLoadKt.loadMetadata;
+import static br.net.buzu.pplimpl.jvm.JvmTypeMapperKt.*;
+
 
 
 /**
@@ -149,7 +151,7 @@ public class BuzuTest {
     }
 
     private static Buzu kotlinBuzu() {
-        PplContext context = new ContextBuilder().coderManager(new GenericCodeManager()).build();
+        JavaContext context = new ContextBuilder().coderManager(new GenericCodeManager()).build();
         return new BuzuBuilder().context(context).metadataParser(new GenericMetadataParser()).build();
     }
 
@@ -411,7 +413,8 @@ public class BuzuTest {
         BasicMetadataLoader loader = new BasicMetadataLoader();
         Metadata javaMetadata = loader.load(o, metaclass);
 
-        Metadata kotlinMetadata = loadMetadata(o);
+        TypeMapper typeMapper = readTypeMapper(o.getClass());
+        Metadata kotlinMetadata = loadMetadata(o, typeMapper);
 
         assertEquals(javaMetadata.info(), kotlinMetadata.info());
         assertEquals(javaMetadata.children().size(), kotlinMetadata.children().size());
@@ -434,7 +437,7 @@ public class BuzuTest {
     }
 
     private static void runLoadByKotlin(Object o) {
-        Metadata metadata = loadMetadata(o);
+        Metadata metadata = loadMetadata(o, readTypeMapper(o.getClass()));
     }
 
     public static void main(String[] args) {

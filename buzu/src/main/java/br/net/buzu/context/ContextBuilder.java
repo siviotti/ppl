@@ -16,9 +16,9 @@
  */
 package br.net.buzu.context;
 
-import br.net.buzu.pplspec.api.CoderManager;
-import br.net.buzu.pplspec.api.MetadataFactory;
-import br.net.buzu.pplspec.context.*;
+import br.net.buzu.java.api.CoderManager;
+import br.net.buzu.java.api.MetadataFactory;
+import br.net.buzu.java.context.*;
 
 /**
  * Context domainOf parsing/serialization with Factories used to create objects and
@@ -36,7 +36,7 @@ public class ContextBuilder {
 	private CoderManager coderManager = new BasicCoderManager();
 	private ParserFactory parserFactory = new BasicParserFactory();
 
-	public PplContext build() {
+	public JavaContext build() {
 		return new BasicContext(subtypeManager, metadataFactory, coderManager, parserFactory);
 	}
 

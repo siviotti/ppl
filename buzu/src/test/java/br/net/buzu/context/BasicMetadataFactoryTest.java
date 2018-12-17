@@ -1,14 +1,14 @@
 package br.net.buzu.context;
 
 import br.net.buzu.metadata.SimpleStaticMetadata;
-import br.net.buzu.pplspec.model.Domain;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.Subtype;
+import br.net.buzu.java.model.Domain;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metadata;
+import br.net.buzu.java.model.Subtype;
 import org.junit.Before;
 import org.junit.Test;
 
-import static br.net.buzu.pplspec.model.Domains.domainOf;
+import static br.net.buzu.java.model.Domains.domainOf;
 import static org.junit.Assert.assertEquals;
 
 /**

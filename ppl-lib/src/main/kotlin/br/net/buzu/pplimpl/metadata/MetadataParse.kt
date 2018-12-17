@@ -16,13 +16,13 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.lib.isStaticChidren
+import br.net.buzu.lib.isStaticChildren
 import br.net.buzu.lib.splitNodes
-import br.net.buzu.pplspec.api.MetadataParser
-import br.net.buzu.pplspec.exception.MetadataParseException
-import br.net.buzu.pplspec.exception.PplParseException
-import br.net.buzu.pplspec.lang.*
-import br.net.buzu.pplspec.model.*
+import br.net.buzu.java.api.MetadataParser
+import br.net.buzu.java.exception.MetadataParseException
+import br.net.buzu.java.exception.PplParseException
+import br.net.buzu.java.lang.*
+import br.net.buzu.java.model.*
 import java.text.ParseException
 import java.util.*
 
@@ -41,7 +41,7 @@ val genericCreateMetadata: CreateMetadata = { metaInfo, children ->
         else
             SimpleMetadata(metaInfo)
     else {
-        if (isStaticChidren(children))
+        if (isStaticChildren(children))
             ComplexStaticMetadada(metaInfo, children)
         else
             ComplexMetadata(metaInfo, children)

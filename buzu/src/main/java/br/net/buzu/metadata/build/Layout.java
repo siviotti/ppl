@@ -16,11 +16,10 @@
  */
 package br.net.buzu.metadata.build;
 
-import br.net.buzu.pplspec.lang.Syntax;
-import br.net.buzu.pplspec.model.Domain;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Subtype;
-import com.sun.java.browser.plugin2.DOM;
+import br.net.buzu.java.lang.Syntax;
+import br.net.buzu.java.model.Domain;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Subtype;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,13 +1,13 @@
 package br.net.buzu.metadata.code;
 
-import static br.net.buzu.pplspec.lang.Syntax.*;
+import static br.net.buzu.java.lang.Syntax.*;
 
 import br.net.buzu.metadata.BasicMetadata;
 import br.net.buzu.metadata.ComplexMetadata;
 import br.net.buzu.metadata.ComplexMetadataTest;
 import br.net.buzu.metadata.SimpleMetadataTest;
-import br.net.buzu.pplspec.lang.Syntax;
-import br.net.buzu.pplspec.model.*;
+import br.net.buzu.java.lang.Syntax;
+import br.net.buzu.java.model.*;
 import org.junit.Test;
 
 import java.util.ArrayList;

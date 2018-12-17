@@ -1,8 +1,8 @@
 package br.net.buzu.metaclass;
 
-import br.net.buzu.pplspec.model.Kind;
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Subtype;
+import br.net.buzu.java.model.Kind;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Subtype;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

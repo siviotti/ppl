@@ -1,7 +1,7 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.pplspec.annotation.PplMetadata
-import br.net.buzu.pplspec.exception.PplReflectionException
+import br.net.buzu.java.annotation.PplMetadata
+import br.net.buzu.java.exception.PplReflectionException
 import br.net.buzu.sample.order.Order
 import br.net.buzu.sample.pojo.Person
 import org.junit.jupiter.api.Test
@@ -11,7 +11,6 @@ import java.io.Serializable
 import java.lang.reflect.Field
 import java.util.*
 import org.junit.jupiter.api.fail
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
 internal class ReflectKtTest {

@@ -16,8 +16,8 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.pplspec.model.MetaInfo
-import br.net.buzu.pplspec.model.Metadata
+import br.net.buzu.java.model.MetaInfo
+import br.net.buzu.java.model.Metadata
 
 /**
  * No complex metadata.

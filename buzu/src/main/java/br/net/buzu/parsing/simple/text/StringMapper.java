@@ -16,10 +16,10 @@
  */
 package br.net.buzu.parsing.simple.text;
 
-import br.net.buzu.pplspec.model.MetaInfo;
-import br.net.buzu.pplspec.model.Metaclass;
-import br.net.buzu.pplspec.model.StaticMetadata;
-import br.net.buzu.pplspec.model.Subtype;
+import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.java.model.StaticMetadata;
+import br.net.buzu.java.model.Subtype;
 
 /**
  * Parser to {@link Subtype#STRING}

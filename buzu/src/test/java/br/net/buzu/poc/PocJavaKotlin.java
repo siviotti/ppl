@@ -5,12 +5,9 @@ import static br.net.buzu.pplimpl.metadata.MetadataCodeKt.*;
 import br.net.buzu.Buzu;
 import br.net.buzu.BuzuBuilder;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.metadata.code.VerboseMetadataCoder;
-import br.net.buzu.pplimpl.metadata.BasicMetadata;
 import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
-import br.net.buzu.pplspec.api.MetadataParser;
-import br.net.buzu.pplspec.model.Metadata;
-import br.net.buzu.pplspec.model.PplString;
+import br.net.buzu.java.model.Metadata;
+import br.net.buzu.java.model.PplString;
 import br.net.buzu.sample.order.Order;
 
 public class PocJavaKotlin {

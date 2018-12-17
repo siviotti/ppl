@@ -18,10 +18,10 @@ package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.lib.checkStaticChild
 import br.net.buzu.lib.checkStaticInfo
-import br.net.buzu.pplspec.model.MetaInfo
-import br.net.buzu.pplspec.model.Metadata
-import br.net.buzu.pplspec.model.StaticMetadata
-import br.net.buzu.pplspec.model.StaticStructure
+import br.net.buzu.java.model.MetaInfo
+import br.net.buzu.java.model.Metadata
+import br.net.buzu.java.model.StaticMetadata
+import br.net.buzu.java.model.StaticStructure
 
 /**
  * @author Douglas Siviotti

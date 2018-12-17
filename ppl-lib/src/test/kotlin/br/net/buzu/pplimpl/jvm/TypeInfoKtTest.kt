@@ -8,7 +8,7 @@ internal class TypeInfoKtTest {
 
     @Test
     fun testRead() {
-        val typeInfo=read(Order::class.java, genericSkip)
+        val typeInfo=readTypeMapper(Order::class.java, genericSkip)
         println(asTree(typeInfo, {it.children}))
     }
 }

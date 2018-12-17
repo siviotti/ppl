@@ -1,6 +1,5 @@
 package br.net.buzu.context;
 
-import br.net.buzu.pplspec.lang.Syntax;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
