@@ -1,7 +1,5 @@
-package br.net.buzu.pplimpl.metadata
+package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.pplimpl.jvm.genericSkip
-import br.net.buzu.pplimpl.jvm.readTypeMapper
 import br.net.buzu.java.lang.METADATA_END
 import br.net.buzu.java.lang.NAME_END
 import br.net.buzu.java.model.Metadata

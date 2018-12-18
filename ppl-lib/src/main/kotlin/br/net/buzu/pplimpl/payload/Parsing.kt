@@ -16,8 +16,9 @@
  */
 package br.net.buzu.pplimpl.payload
 
+import br.net.buzu.java.model.FieldAdapter
 import br.net.buzu.java.model.Metadata
 
-fun parsePayload(payload: String , metadata: Metadata): Any?{
+fun parsePayload(payload: String , metadata: Metadata, fieldAdapter: FieldAdapter): Any?{
     return null
 }

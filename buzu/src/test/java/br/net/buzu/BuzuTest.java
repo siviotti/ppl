@@ -30,8 +30,8 @@ import java.time.LocalTime;
 import java.util.*;
 
 import static org.junit.Assert.*;
-import static br.net.buzu.pplimpl.metadata.MetadataLoadKt.loadMetadata;
-import static br.net.buzu.pplimpl.jvm.JvmTypeMapperKt.*;
+import static br.net.buzu.pplimpl.jvm.MetadataLoadKt.loadMetadata;
+import static br.net.buzu.pplimpl.jvm.JvmFieldAdapterKt.*;
 
 
 
@@ -413,7 +413,7 @@ public class BuzuTest {
         BasicMetadataLoader loader = new BasicMetadataLoader();
         Metadata javaMetadata = loader.load(o, metaclass);
 
-        TypeMapper typeMapper = readTypeMapper(o.getClass());
+        FieldAdapter typeMapper = readTypeMapper(o.getClass());
         Metadata kotlinMetadata = loadMetadata(o, typeMapper);
 
         assertEquals(javaMetadata.info(), kotlinMetadata.info());

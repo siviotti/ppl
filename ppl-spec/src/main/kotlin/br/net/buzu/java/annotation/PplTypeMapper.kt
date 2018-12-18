@@ -16,18 +16,18 @@
  */
 package br.net.buzu.java.annotation
 
-import br.net.buzu.java.model.TypeMapper
+import br.net.buzu.java.model.FieldAdapter
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import kotlin.reflect.KClass
 
 /**
  * An annotation that indicates this member should be parsed/serialized with a
- * given TypeMapper.
+ * given FieldAdapter.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
 @Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS, AnnotationTarget.FILE)
 @Retention(RetentionPolicy.RUNTIME)
-annotation class PplTypeMapper(val value: KClass<out TypeMapper>)
+annotation class PplTypeMapper(val value: KClass<out FieldAdapter>)

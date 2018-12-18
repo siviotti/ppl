@@ -16,16 +16,15 @@
  */
 package br.net.buzu.java.model
 
-import java.lang.reflect.Field
-
 /**
  * Basic tree node for type parsing.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-abstract class TypeMapper(val fieldName: String, val fieldType: Class<*>, val elementType: Class<*>, val metaInfo: MetaInfo,
-                          val children: List<TypeMapper>, val field: Field, val treeIndex: Int) {
+abstract class FieldAdapter(val fieldPath: String, val fieldName: String, val fieldType: Class<*>,
+                            val elementType: Class<*>, val metaInfo: MetaInfo,
+                            val children: List<FieldAdapter>, val treeIndex: Int) {
 
     val hasChildren: Boolean = children.isNotEmpty()
     val isArray: Boolean = fieldType.isArray
@@ -44,11 +43,11 @@ abstract class TypeMapper(val fieldName: String, val fieldType: Class<*>, val el
         }
     }
 
-    abstract fun getValue(sourceObject: Any): Any?
+    abstract fun getFieldValue(parentObject: Any): Any?
 
-    abstract fun setValue(targetObject: Any, paramValue: Any?)
+    abstract fun setFieldValue(parentObject: Any, paramValue: Any?)
 
     abstract fun getValueSize(value: Any?): Int
 
-    override fun toString(): String =  "[${treeIndex}] ${fieldName}: ${fieldType.simpleName}<${elementType.simpleName}> ${metaInfo}"
+    override fun toString(): String =  "[$treeIndex] $fieldPath: ${fieldType.simpleName}<${elementType.simpleName}> $metaInfo"
 }
