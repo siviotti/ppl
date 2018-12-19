@@ -413,7 +413,7 @@ public class BuzuTest {
         BasicMetadataLoader loader = new BasicMetadataLoader();
         Metadata javaMetadata = loader.load(o, metaclass);
 
-        FieldAdapter typeMapper = readTypeMapper(o.getClass());
+        FieldAdapter typeMapper = readFieldAdapter(o.getClass());
         Metadata kotlinMetadata = loadMetadata(o, typeMapper);
 
         assertEquals(javaMetadata.info(), kotlinMetadata.info());
@@ -437,7 +437,7 @@ public class BuzuTest {
     }
 
     private static void runLoadByKotlin(Object o) {
-        Metadata metadata = loadMetadata(o, readTypeMapper(o.getClass()));
+        Metadata metadata = loadMetadata(o, readFieldAdapter(o.getClass()));
     }
 
     public static void main(String[] args) {

@@ -23,7 +23,7 @@ internal class MetadataLoadKtTest {
     @Test
     fun testLoadOrder() {
         val order: Order = ORDER_INSTANCE
-        val typeMapper = readTypeMapper(order.javaClass, genericSkip)
+        val typeMapper = readFieldAdapter(order.javaClass, genericSkip)
         val metadataOrder= loadMetadata(order, typeMapper)
         println(metadataOrder.toTree(0))
         assertMetadata(metadataOrder, "", Subtype.OBJ, 96, 0,1)

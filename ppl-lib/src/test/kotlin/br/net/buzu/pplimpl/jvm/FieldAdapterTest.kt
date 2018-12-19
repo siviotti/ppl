@@ -4,11 +4,11 @@ import br.net.buzu.lib.asTree
 import br.net.buzu.sample.order.Order
 import org.junit.jupiter.api.Test
 
-internal class TypeInfoKtTest {
+internal class FieldAdapterTest {
 
     @Test
     fun testRead() {
-        val typeInfo=readTypeMapper(Order::class.java, genericSkip)
-        println(asTree(typeInfo, {it.children}))
+        val fieldAdapter=readFieldAdapter(Order::class.java, genericSkip)
+        println(asTree(fieldAdapter, {it.children}))
     }
 }

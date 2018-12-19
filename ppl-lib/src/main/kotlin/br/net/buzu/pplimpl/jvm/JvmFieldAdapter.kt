@@ -73,12 +73,12 @@ class JvmFieldAdapter(fieldPath: String, fieldName: String, fieldType: Class<*>,
 }
 
 @JvmOverloads
-fun readTypeMapper(type: Class<*>, skip: (Field) -> Boolean= genericSkip): FieldAdapter {
-    return readTypeMapper(type, extractElementType(type), skip)
+fun readFieldAdapter(type: Class<*>, skip: (Field) -> Boolean= genericSkip): FieldAdapter {
+    return readFieldAdapter(type, extractElementType(type), skip)
 }
 
 @JvmOverloads
-fun readTypeMapper(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean= genericSkip): FieldAdapter {
+fun readFieldAdapter(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean= genericSkip): FieldAdapter {
     val seq = IndexSequence()
     val pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
     val index = seq.next()
