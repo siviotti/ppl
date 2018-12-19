@@ -122,12 +122,12 @@ public class Reflect {
 	// **************************************************
 
 	/**
-	 * Returns the internal type domainOf a Collection or Array if is multiple. If not
-	 * returns the field type.
+	 * Returns the internal elementType domainOf a Collection or Array if is multiple. If not
+	 * returns the field elementType.
 	 * 
 	 * @param field
 	 *            The field
-	 * @return The single type relative to the field.
+	 * @return The single elementType relative to the field.
 	 */
 	public static Class<?> getElementType(Field field) {
 		Class<?> fieldType = field.getType();
@@ -139,7 +139,7 @@ public class Reflect {
 					return (Class<?>) itemType;
 				}
 			}
-			throw new PplReflectionException(UNSAFE_COLLECTION + field.getName() + "'. Use a generic type.");
+			throw new PplReflectionException(UNSAFE_COLLECTION + field.getName() + "'. Use a generic elementType.");
 		} else if (fieldType.isArray()) {
 			return fieldType.getComponentType();
 		}
@@ -180,15 +180,15 @@ public class Reflect {
 	// **************************************************
 
 	/**
-	 * Creates a new instance from a type.
+	 * Creates a new instance from a elementType.
 	 * <P>
 	 * Constructor Strategy Precedence:<BR>
 	 * 1 - Try the default constructor <BR>
-	 * 2 - If the type is Serializable try unserialization<BR>
+	 * 2 - If the elementType is Serializable try unserialization<BR>
 	 * 3 - Use the constructor with less parameters
 	 * 
 	 * @param type
-	 *            The type
+	 *            The elementType
 	 * @return The new instance
 	 */
 	public static Object newInstance(Class<?> type) {

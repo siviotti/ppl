@@ -45,7 +45,7 @@ public class LayoutTest {
 						.atomic("street", Subtype.STRING, 30, true)
 						.atomic("city", Subtype.STRING, 20, true)
 						.atomic("zip", Subtype.CHAR, 8, true)
-						.atomic("type", Subtype.STRING, 8, false, "", domain("BILLING", "DELIVERY"), "")
+						.atomic("elementType", Subtype.STRING, 8, false, "", domain("BILLING", "DELIVERY"), "")
 					.end()
 					.array("phones", Subtype.CHAR, 9, 1, 3)
 				.end()
@@ -148,7 +148,7 @@ public class LayoutTest {
 		Layout zip = adressChildren.get(2);
 		assertMetainfo(zip.metaInfo(), "zip", Subtype.CHAR, 8,NO_PRECISION,  1, 1);
 		Layout type = adressChildren.get(3);
-		assertMetainfo(type.metaInfo(), "type", Subtype.STRING, 8,NO_PRECISION,  0, 1);
+		assertMetainfo(type.metaInfo(), "elementType", Subtype.STRING, 8,NO_PRECISION,  0, 1);
 		
 		Layout creditCard = customerChildren.get(2);
 		assertMetainfo(creditCard.metaInfo(), "phones", Subtype.CHAR, 9,NO_PRECISION,  1, 3);

@@ -27,21 +27,21 @@ import br.net.buzu.java.model.Metaclass
 interface MetaclassReader {
 
     /**
-     * Reads the type and returns a Metaclass based on it.
+     * Reads the elementType and returns a Metaclass based on it.
      *
      * @param type
-     * The original type.
+     * The original elementType.
      * @return The instance domainOf Metaclass.
      */
     fun read(type: Class<*>): Metaclass
 
     /**
-     * Reads the type and the elementType and returns a Metaclass based on it.
+     * Reads the elementType and the elementType and returns a Metaclass based on it.
      *
      * @param type
-     * The original type (root object).
+     * The original elementType (root object).
      * @param elementType
-     * The type domainOf each item if type is multiple or root type if not.
+     * The elementType domainOf each item if elementType is multiple or root elementType if not.
      * @return The instance domainOf Metaclass.
      */
     fun read(type: Class<*>, elementType: Class<*>): Metaclass

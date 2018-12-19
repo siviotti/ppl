@@ -57,20 +57,20 @@ public abstract class AbstractPositionalMapper implements PayloadMapper {
 	protected void callSet(Object object, Metaclass childMetaclass, Object parsed) {
 		if (parsed == null) {
 			childMetaclass.set(object, parsed);
-			// Reflect.set(object, childMetaclass.fieldName(), childMetaclass.fieldType(),
+			// Reflect.set(object, childMetaclass.metaName(), childMetaclass.fieldType(),
 			// parsed);
 		} else if (Collection.class.isAssignableFrom(childMetaclass.fieldType())
 				&& !(parsed instanceof Collection<?>)) {
 			List<Object> list = new ArrayList<>();
 			list.add(parsed);
-			// Reflect.set(object, childMetaclass.fieldName(), childMetaclass.fieldType(),
+			// Reflect.set(object, childMetaclass.metaName(), childMetaclass.fieldType(),
 			// list);
 			childMetaclass.set(object, list);
 		} else if (childMetaclass.fieldType().isArray() && !parsed.getClass().isArray()) {
 			// TODO
 			Logger.getLogger(getClass().getCanonicalName()).severe("ARRAY ERROR");
 		} else {
-			// Reflect.set(object, childMetaclass.fieldName(), childMetaclass.fieldType(),
+			// Reflect.set(object, childMetaclass.metaName(), childMetaclass.fieldType(),
 			// parsed);
 			childMetaclass.set(object, parsed);
 		}

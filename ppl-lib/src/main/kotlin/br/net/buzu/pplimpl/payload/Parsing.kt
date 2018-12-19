@@ -20,5 +20,8 @@ import br.net.buzu.java.model.FieldAdapter
 import br.net.buzu.java.model.Metadata
 
 fun parsePayload(payload: String , metadata: Metadata, fieldAdapter: FieldAdapter): Any?{
+    for (child in metadata.children<Metadata>()){
+
+    }
     return null
 }

@@ -14,37 +14,11 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.metadata.code;
+package br.net.buzu.java.api
 
-import br.net.buzu.java.api.MetadataCoder;
-import br.net.buzu.java.model.Dialect;
-import br.net.buzu.java.model.MetaInfo;
+interface PositionalMapper{
 
-/**
- *
- *
- * @author Douglas Siviotti
- * @since 1.0
- *
- */
-public class CompactMetadataCoder extends ShortMetadataCoder{
-	
-	public static final MetadataCoder INSTANCE = new CompactMetadataCoder();
+    fun fromPosicional(positionalText: String): Any?
 
-	@Override
-	public Dialect dialect() {
-		return Dialect.COMPACT;
-	}
-
-
-	@Override
-	// Hide default elementType (S)
-	protected String serializeSimpleType(MetaInfo meta) {
-		if (DEFAULT_SINGLE.equals(meta.getSubtype())) {
-			return EMPTY;
-		}
-		return super.serializeSimpleType(meta);
-	}
-
-	
+    fun toPosicional(value: Any?): String
 }

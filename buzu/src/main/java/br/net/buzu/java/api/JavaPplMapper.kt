@@ -42,14 +42,14 @@ interface JavaPplMapper {
 
     /**
      * Parsers a PPL text and returns the correspondent object based on the
-     * indicated type. If the PPL text represents multiple records, the result will
-     * be a Collection parametrized to the 'type'. If the PPL text represents only
+     * indicated elementType. If the PPL text represents multiple records, the result will
+     * be a Collection parametrized to the 'elementType'. If the PPL text represents only
      * one record, the result is a single object.
      *
      * @param text
      * The PPL text at the format `(METADATA)PAYLOAD`.
      * @param type
-     * The type of the object will be created.
+     * The elementType of the object will be created.
      * @return The object corresponding to the PPL text.
      * @throws PplParseException
      */
@@ -62,7 +62,7 @@ interface JavaPplMapper {
      * @param text
      * The PPL text at the format `(METADATA)PAYLOAD`.
      * @param elementType
-     * The type of the element of the List which will be created.
+     * The elementType of the element of the List which will be created.
      * @return The Collection corresponding to the PPL text.
      * @throws PplParseException
      */
@@ -75,7 +75,7 @@ interface JavaPplMapper {
      * @param text
      * The PPL text at the format `(METADATA)PAYLOAD`.
      * @param toClass
-     * The Metaclass containing the type of the created object.
+     * The Metaclass containing the elementType of the created object.
      * @return The object corresponding to the PPL text.
      * @throws PplParseException
      */

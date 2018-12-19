@@ -123,7 +123,7 @@ public final class ParseNode {
 		for (int i = 0; i < level; i++) {
 			sb.append(".");
 		}
-		sb.append("name:").append(name).append(" type:").append(type).append(" size:").append(size).append(" occurs:")
+		sb.append("name:").append(name).append(" elementType:").append(type).append(" size:").append(size).append(" occurs:")
 				.append(occurs).append(" domain:").append(domain).append(" defaultValue=").append(defaultValue)
 				.append(" tags=").append(tags);
 		if (children != null) {

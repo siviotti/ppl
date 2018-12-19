@@ -54,7 +54,7 @@ public class ShortMetadataCoder extends NaturalMetadataCoder {
 	}
 
 	@Override
-	// Hide space after type
+	// Hide space after elementType
 	protected String afterType() {
 		return EMPTY;
 	}

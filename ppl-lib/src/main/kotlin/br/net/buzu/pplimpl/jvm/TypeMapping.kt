@@ -25,7 +25,7 @@ import java.time.LocalTime
 import java.time.Period
 import java.util.*
 
-private val INTERNAL_SIMPLE_MAPPING: Map<Class<*>, Subtype> = mapOf(
+private val INTERNAL_SUBTYPE_MAPPING: Map<Class<*>, Subtype> = mapOf(
         String::class.java to Subtype.STRING,
         Int::class.java to Subtype.INTEGER,
         Int::class.javaPrimitiveType!! to Subtype.INTEGER,
@@ -62,6 +62,6 @@ val genericSubTypeOf: (Class<*>) -> Subtype = { type -> subTypeOf(type) }
  * @return The correct instance relative to the class.
  */
 fun subTypeOf(typeClass: Class<*>): Subtype = if (typeClass.isEnum) Subtype.STRING
-else INTERNAL_SIMPLE_MAPPING[typeClass] ?: Subtype.DEFAULT_COMPLEX
+else INTERNAL_SUBTYPE_MAPPING[typeClass] ?: Subtype.DEFAULT_COMPLEX
 
-fun isSimpleType(type: Class<*>): Boolean = INTERNAL_SIMPLE_MAPPING.containsKey(type) || type.isEnum
+fun isSimpleType(type: Class<*>): Boolean = INTERNAL_SUBTYPE_MAPPING.containsKey(type) || type.isEnum

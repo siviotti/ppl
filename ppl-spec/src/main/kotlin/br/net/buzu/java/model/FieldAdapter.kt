@@ -16,13 +16,15 @@
  */
 package br.net.buzu.java.model
 
+import java.lang.IllegalArgumentException
+
 /**
  * Basic tree node for type parsing.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-abstract class FieldAdapter(val fieldPath: String, val fieldName: String, val fieldType: Class<*>,
+abstract class FieldAdapter(val fieldFullName: String, val metaName: String, val fieldType: Class<*>,
                             val elementType: Class<*>, val metaInfo: MetaInfo,
                             val children: List<FieldAdapter>, val treeIndex: Int) {
 
@@ -30,6 +32,7 @@ abstract class FieldAdapter(val fieldPath: String, val fieldName: String, val fi
     val isArray: Boolean = fieldType.isArray
     val isCollection: Boolean = Collection::class.java.isAssignableFrom(fieldType)
     val multiple: Boolean
+    private val childrenMap = children.map { it.metaName to it }.toMap()
 
     init {
         multiple = isArray || isCollection
@@ -43,11 +46,20 @@ abstract class FieldAdapter(val fieldPath: String, val fieldName: String, val fi
         }
     }
 
+    override fun toString(): String = "[$treeIndex] $fieldFullName: ${fieldType.simpleName}<${elementType.simpleName}> ($metaName) $metaInfo"
+
     abstract fun getFieldValue(parentObject: Any): Any?
 
     abstract fun setFieldValue(parentObject: Any, paramValue: Any?)
 
     abstract fun getValueSize(value: Any?): Int
 
-    override fun toString(): String =  "[$treeIndex] $fieldPath: ${fieldType.simpleName}<${elementType.simpleName}> $metaInfo"
+    abstract fun asSingleObject(positionalText: String): Any?
+
+    abstract fun asStringFromNotNull(value: Any): String
+
+    fun getChildByMetaName(name: String): FieldAdapter = childrenMap[name]
+            ?: throw IllegalArgumentException("Child fieldAdapter '$name' not found at ${toString()}")
+
+
 }

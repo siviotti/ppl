@@ -104,12 +104,12 @@ fun findAndInvokeSet(instance: Any, fieldName: String, fieldType: Class<*>, para
 // **************************************************
 
 /**
- * Returns the internal type domainOf a Collection or Array if is multiple. If not
- * returns the field type.
+ * Returns the internal elementType domainOf a Collection or Array if is multiple. If not
+ * returns the field elementType.
  *
  * @param field
  * The field
- * @return The single type relative to the field.
+ * @return The single elementType relative to the field.
  */
 fun getElementType(field: Field): Class<*> {
     val fieldType = field.type
@@ -121,7 +121,7 @@ fun getElementType(field: Field): Class<*> {
                 return itemType as Class<*>
             }
         }
-        throw PplReflectionException(UNSAFE_COLLECTION + field.name + "'. Use a generic type.")
+        throw PplReflectionException(UNSAFE_COLLECTION + field.name + "'. Use a generic elementType.")
     } else if (fieldType.isArray) {
         return fieldType.componentType
     }
@@ -185,15 +185,15 @@ fun setValue(field: Field, instance: Any, param: Any?) {
 // **************************************************
 
 /**
- * Creates a new instance from a type.
+ * Creates a new instance from a elementType.
  * <P>
  * Constructor Strategy Precedence:<BR></BR>
  * 1 - Try the default constructor <BR></BR>
- * 2 - If the type is Serializable try unserialization<BR></BR>
+ * 2 - If the elementType is Serializable try unserialization<BR></BR>
  * 3 - Use the constructor with less parameters
  *
  * @param type
- * The type
+ * The elementType
  * @return The new instance
 </P> */
 fun newInstance(type: Class<*>): Any {

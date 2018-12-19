@@ -53,7 +53,7 @@ fun metadataAsCompact(metadata: Metadata): String {
 internal fun serialize(metadata: Metadata, level: Int,
         // name
                        afterName: String,
-        // type
+        // elementType
                        afterSubOpen: String, afterMetaEnd: String, indentation: String, afterType: String, serializeSimpleType: (MetaInfo) -> String,
         // size
                        afterSize: String, serializeComplexSize: (MetaInfo, String) -> String,
@@ -135,7 +135,7 @@ internal fun serializeName(name: String, afterName: String): String {
     return if (EMPTY != name && !name.startsWith(NO_NAME_START)) name + NAME_END + afterName else EMPTY
 }
 
-// type
+// elementType
 
 internal val serializeVerboseSimpleType: (metaInfo: MetaInfo) -> String = { metaInfo ->
     metaInfo.subtype.id

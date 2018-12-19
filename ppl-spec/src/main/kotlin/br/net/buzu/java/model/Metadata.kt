@@ -37,7 +37,7 @@ interface Metadata : Nameable {
     /**
      * Retuns the Kind of the Element: ATOMIC, ARRAY, RECORD or TABLE.
      *
-     * @return The Kind instance domainOf [Kind]
+     * @return The Kind instance of [Kind]
      */
     fun kind(): Kind
 

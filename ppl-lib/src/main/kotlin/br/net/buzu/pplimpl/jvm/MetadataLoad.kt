@@ -17,7 +17,6 @@
 package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.java.exception.PplMetaclassViolationException
-import br.net.buzu.java.lang.PATH_SEP
 import br.net.buzu.java.model.*
 import br.net.buzu.pplimpl.metadata.CreateMetadata
 import br.net.buzu.pplimpl.metadata.genericCreateMetadata
@@ -62,7 +61,7 @@ private fun loadChild(fieldValue: Any?, typeMapper: FieldAdapter, parentNode: Lo
 }
 
 private fun getMax(maxMap: MaxMap, node: LoadNode, metaInfo: MetaInfo): Max {
-    val fieldPath = node.fieldAdapter.fieldPath
+    val fieldPath = node.fieldAdapter.fieldFullName
     val max = maxMap.getMaxByIndex(node.fieldAdapter.treeIndex)
     val size = max.tryNewMaxSize(node.calcMaxSize()).maxSize
     val maxOccurs = max.tryNewMaxOccurs(node.occurs).maxOccurs

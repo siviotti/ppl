@@ -103,7 +103,7 @@ public class SplitterTest {
         assertEquals(30, splitter.extractType("(xx:INT5,2#1-5*{@@@};yy:INT5;)*{prop}", 0, node));
         assertEquals(Syntax.EMPTY, node.getType());
 
-        // Ignored chars before getType()
+        // Ignored chars before getElementType()
         node = new ParseNode();
         assertEquals(6, splitter.extractType("   STR2abc", 0, node));
         assertEquals("STR", node.getType());

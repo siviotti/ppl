@@ -30,11 +30,20 @@ import br.net.buzu.java.model.FieldAdapter
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 import java.math.BigDecimal
+import java.util.*
 
 val genericSkip: (Field) -> Boolean = { skip(it) }
 
 class JvmFieldAdapter(fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>, metaInfo: MetaInfo, children: List<FieldAdapter>, treeIndex: Int, val field: Field) :
         FieldAdapter(fieldPath, fieldName, fieldType, elementType, metaInfo, children, treeIndex) {
+
+    private val parser: (String)-> Any?
+    private val serializer: Serializer
+
+    init{
+        parser = { null}
+        serializer = getSerializer(metaInfo.subtype, Date::class.java.isAssignableFrom(elementType))
+    }
 
     override fun getFieldValue(parentObject: Any): Any? = getValue(field, parentObject)
 
@@ -56,6 +65,11 @@ class JvmFieldAdapter(fieldPath: String, fieldName: String, fieldType: Class<*>,
         return str?.length ?: 0
     }
 
+    override fun asSingleObject(positionalText: String): Any? = parser(positionalText)
+
+    override fun asStringFromNotNull(value: Any): String = serializer (value)
+
+
 }
 
 @JvmOverloads
@@ -74,7 +88,7 @@ fun readTypeMapper(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boole
             createChildren(metaInfo, EMPTY, elementType, skip, seq), index, fields[0])
 }
 
-private fun readFromField(parentPath: String, field: Field, index: Int, skip: (Field) -> Boolean, seq: IndexSequence): FieldAdapter {
+private fun readFromField(parentFullName: String, field: Field, index: Int, skip: (Field) -> Boolean, seq: IndexSequence): FieldAdapter {
     // Precedence 1: Field Annotation
     var pplMetadata: PplMetadata? = field.getAnnotation(PplMetadata::class.java)
     // Precedence 2: If null, use field Type Annotation
@@ -82,10 +96,10 @@ private fun readFromField(parentPath: String, field: Field, index: Int, skip: (F
     if (pplMetadata == null) {
         pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
     }
-    val fieldPath = if (parentPath.isEmpty()) field.name else parentPath + PATH_SEP + field.name
+    val fullName = if (parentFullName.isEmpty()) field.name else parentFullName + PATH_SEP + field.name
     val metaInfo = createMetaInfo(pplMetadata, elementType, field.name, index)
-    return JvmFieldAdapter(fieldPath, field.name, field.type, elementType, metaInfo,
-            createChildren(metaInfo, fieldPath, elementType, skip, seq), index, field)
+    return JvmFieldAdapter(fullName, field.name, field.type, elementType, metaInfo,
+            createChildren(metaInfo, fullName, elementType, skip, seq), index, field)
 }
 
 private fun createMetaInfo(pplMetadata: PplMetadata?, elementType: Class<*>, fieldName: String, index: Int): MetaInfo {
