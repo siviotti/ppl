@@ -48,7 +48,7 @@ abstract class FieldAdapter(val fieldFullName: String, val metaName: String, val
 
     override fun toString(): String = "[$treeIndex] $fieldFullName: ${fieldType.simpleName}<${elementType.simpleName}> ($metaName) $metaInfo"
 
-    abstract fun getFieldValue(parentObject: Any): Any?
+    abstract fun getFieldValue(parentObject: Any ): Any?
 
     abstract fun setFieldValue(parentObject: Any, paramValue: Any?)
 

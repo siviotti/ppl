@@ -86,5 +86,32 @@ class Order {
         return sb.toString()
     }
 
+    companion object {
 
+        val BILING = Address("Champs Elysee 10", "Paris", "75008", AddressType.BILLING)
+        val DELIVERY = Address("Baker Street 221b", "London", "NW1 6XE", AddressType.DELIVERY)
+        val ADDRESSES: MutableList<Address> = mutableListOf(BILING, DELIVERY)
+        val PHONE1 = "11111111"
+        val PHONE2 = "22222222"
+        val PHONES: MutableList<String> = mutableListOf(PHONE1, PHONE2)
+        val CUSTOMER_NAME = "Ladybug"
+        val CUSTOMER: Customer = Customer(CUSTOMER_NAME, ADDRESSES, PHONES)
+        // Products
+
+        val PRODUCT1 = Product("Book", 45.99)
+        val PRODUCT2 = Product("Notebook", 1200.00)
+        val PRODUCT3 = Product("Clock", 25.52)
+        val PRODUCT4 = Product("Software", 0.99)
+        val PRODUCT5 = Product("Tablet", 500.00)
+        val PRODUCTS: MutableList<Product> = mutableListOf(PRODUCT1, PRODUCT2, PRODUCT3, PRODUCT4, PRODUCT5)
+        // Order
+        val ORDER_NUMBER = "1234567890"
+        val ORDER_DATE = LocalDate.of(2017, 11, 30)
+        val ORDER_STATUS = Status.OPENED
+        val ORDER_CANCELED = false
+        val INSTANCE: Order = Order(ORDER_NUMBER, CUSTOMER, ORDER_DATE, PRODUCTS, ORDER_STATUS, ORDER_CANCELED)
+        val PPL_STRING = "(number:S10;customer:(name:S7;addresses:(street:S17;city:S6;zip:S7;elementType:S8)#0-2;phones:S8#0-2);date:D;products:(description:S8;price:N6)#0-5;status:S6;canceled:B)1234567890LadybugChamps Elysee 10 Paris 75008  BILLING Baker Street 221bLondonNW1 6XEDELIVERY111111112222222220171130Book    045.99Notebook1200.0Clock   025.52Software000.99Tablet  0500.0OPENEDfalse"
+
+
+    }
 }

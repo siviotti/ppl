@@ -3,6 +3,10 @@ package br.net.buzu.pplimpl.jvm
 import br.net.buzu.java.model.Subtype
 import java.lang.IllegalArgumentException
 import java.math.BigDecimal
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 internal typealias Serializer = (value: Any) -> String
 
@@ -29,9 +33,9 @@ val isoTimestampSerializer: Serializer = { it.toString() }
 val utcTimestampSerializer: Serializer = { it.toString() }
 
 // Date
-val dateSerializer: Serializer = { it.toString() }
-val isoDateSerializer: Serializer = { it.toString() }
-val utcDateSerializer: Serializer = { it.toString() }
+val dateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.BASIC_ISO_DATE) }
+val isoDateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.ISO_DATE) }
+val utcDateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.ISO_OFFSET_DATE}
 
 // Times
 val timeSerializer: Serializer = { it.toString() }
@@ -46,7 +50,7 @@ val oldIsoTimestampSerializer: Serializer = { it.toString() }
 val oldUtcTimestampSerializer: Serializer = { it.toString() }
 
 // Old Date
-val oldDateSerializer: Serializer = { it.toString() }
+val oldDateSerializer: Serializer = { SimpleDateFormat("yyyy-MM-dd+HH:mm").format(it as Date) }
 val oldIsoDateSerializer: Serializer = { it.toString() }
 val oldUtcDateSerializer: Serializer = { it.toString() }
 

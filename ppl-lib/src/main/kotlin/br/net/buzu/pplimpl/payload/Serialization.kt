@@ -26,72 +26,65 @@ import java.lang.IllegalArgumentException
 
 fun serializePayload(value: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String =
         when (metadata.kind()) {
-            Kind.ATOMIC -> serializeAtomic(value, metadata, fieldAdapter)
+            Kind.ATOMIC -> serializeArray(value, metadata, fieldAdapter)
             Kind.ARRAY -> serializeArray(value, metadata, fieldAdapter)
-            Kind.RECORD -> serializeRecord(value, metadata, fieldAdapter)
-            Kind.ARRAY -> serializeTable(value, metadata, fieldAdapter)
             else -> {
-                throw IllegalArgumentException()
+                serializeTable(value, metadata, fieldAdapter)
             }
         }
 
 
-fun serializeAtomic(value: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
-    val sb = StringBuilder()
-    if (value == null) {
-        sb.append(serializeNull(metadata.info()))
+internal fun serializeAtomic(atomicValue: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
+    return if (atomicValue == null) {
+        serializeNull(metadata.info())
     } else {
-        sb.append(serializeValue(metadata.info(), value, fieldAdapter))
+        serializeValue(atomicValue, metadata.info(), fieldAdapter)
     }
-    return sb.toString()
 }
 
-fun serializeArray(value: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
+internal fun serializeArray(arrayValue: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
     val sb = StringBuilder()
-    val array = valueToArray(value)
-    for (i in array.indices) {
-        if (array[i] == null) {
+    val array = valueToMaxArray(arrayValue, metadata.info().maxOccurs, fieldAdapter)
+    for (element in array) {
+        if (element == null) {
             sb.append(serializeNull(metadata.info()))
         } else {
-            sb.append(serializeValue(metadata.info(), array[i]!!, fieldAdapter))
+            sb.append(serializeValue(element, metadata.info(), fieldAdapter))
         }
     }
     return sb.toString()
 }
 
-fun valueToArray(value: Any?): Array<Any?> {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
-
-fun serializeRecord(value: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
+internal fun serializeTable(tableValue: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
     val sb = StringBuilder()
+    val array = valueToMaxArray(tableValue, metadata.info().maxOccurs, fieldAdapter)
     var childFieldAdapter: FieldAdapter
-    val staticMetadataChildren = metadata.children<StaticMetadata>()
-    for (childMetadata in metadata.children<StaticMetadata>()) {
-        childFieldAdapter = fieldAdapter.getChildByMetaName(metadata.name())
-        sb.append(serializePayload(value, childMetadata, childFieldAdapter))
-    }
-    return sb.toString()
-}
-
-fun serializeTable(value: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
-    val sb = StringBuilder()
-    val array = valueToArray(value)
-    var childFieldAdapter: FieldAdapter
-    val staticMetadataChildren = metadata.children<StaticMetadata>()
-    for (i in array.indices) {
+    for (element in array) {
         for (childMetadata in metadata.children<StaticMetadata>()) {
-            childFieldAdapter = fieldAdapter.getChildByMetaName(metadata.name())
-            sb.append(serializePayload(array[i], childMetadata, childFieldAdapter))
+            childFieldAdapter = fieldAdapter.getChildByMetaName(childMetadata.name())
+            if (element != null) {
+                sb.append(serializePayload(childFieldAdapter.getFieldValue(element), childMetadata, childFieldAdapter))
+            } else {
+                sb.append(serializeNull(childMetadata.info()))
+            }
         }
     }
     return sb.toString()
 }
 
-fun serializeValue(metaInfo: MetaInfo, value: Any, fieldAdapter: FieldAdapter): String {
+internal fun valueToMaxArray(value: Any?, size: Int, fieldAdapter: FieldAdapter): Array<Any?> {
+    return when {
+        size == 0 -> arrayOf(0)
+        value is Collection<*> -> value.toTypedArray()
+        fieldAdapter.isArray -> value as Array<Any?>
+        else -> arrayOf(value)
+    }
+}
+
+internal fun serializeValue(value: Any, metaInfo: MetaInfo, fieldAdapter: FieldAdapter): String {
     return fit(metaInfo.align, fieldAdapter.asStringFromNotNull(value), metaInfo.size, metaInfo.fillChar)
 }
 
-fun serializeNull(metaInfo: MetaInfo): String {
+internal fun serializeNull(metaInfo: MetaInfo): String {
     return fill(metaInfo.align, metaInfo.defaultValue, metaInfo.size, metaInfo.nullChar)
 }
