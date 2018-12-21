@@ -37,11 +37,11 @@ val genericSkip: (Field) -> Boolean = { skip(it) }
 class JvmFieldAdapter(fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>, metaInfo: MetaInfo, children: List<FieldAdapter>, treeIndex: Int, val field: Field) :
         FieldAdapter(fieldPath, fieldName, fieldType, elementType, metaInfo, children, treeIndex) {
 
-    private val parser: (String)-> Any?
+    private val parser: (String) -> Any?
     private val serializer: Serializer
 
-    init{
-        parser = { null}
+    init {
+        parser = { null }
         serializer = getSerializer(metaInfo.subtype, Date::class.java.isAssignableFrom(elementType))
     }
 
@@ -67,18 +67,20 @@ class JvmFieldAdapter(fieldPath: String, fieldName: String, fieldType: Class<*>,
 
     override fun asSingleObject(positionalText: String): Any? = parser(positionalText)
 
-    override fun asStringFromNotNull(value: Any): String = serializer (value)
+    override fun asStringFromNotNull(value: Any): String = serializer(value)
+
+    override fun createNewInstance() = newInstance(elementType)
 
 
 }
 
 @JvmOverloads
-fun readFieldAdapter(type: Class<*>, skip: (Field) -> Boolean= genericSkip): FieldAdapter {
+fun readFieldAdapter(type: Class<*>, skip: (Field) -> Boolean = genericSkip): FieldAdapter {
     return readFieldAdapter(type, extractElementType(type), skip)
 }
 
 @JvmOverloads
-fun readFieldAdapter(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean= genericSkip): FieldAdapter {
+fun readFieldAdapter(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean = genericSkip): FieldAdapter {
     val seq = IndexSequence()
     val pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
     val index = seq.next()

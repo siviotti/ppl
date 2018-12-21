@@ -26,7 +26,7 @@ import java.lang.IllegalArgumentException
 
 fun serializePayload(value: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String =
         when (metadata.kind()) {
-            Kind.ATOMIC -> serializeArray(value, metadata, fieldAdapter)
+            Kind.ATOMIC -> serializeAtomic(value, metadata, fieldAdapter)
             Kind.ARRAY -> serializeArray(value, metadata, fieldAdapter)
             else -> {
                 serializeTable(value, metadata, fieldAdapter)

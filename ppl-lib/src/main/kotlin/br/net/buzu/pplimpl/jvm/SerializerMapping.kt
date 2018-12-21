@@ -17,7 +17,7 @@ val numberSerializer: Serializer = { if (it is BigDecimal) it.toPlainString() el
 val integerSerializer: Serializer = { it.toString() }
 val longSerializer: Serializer = { it.toString() }
 
-// Fixedx Size
+// Fixed Size
 
 // Boolean
 val booleanSerializer: Serializer = { it.toString() }
@@ -35,7 +35,7 @@ val utcTimestampSerializer: Serializer = { it.toString() }
 // Date
 val dateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.BASIC_ISO_DATE) }
 val isoDateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.ISO_DATE) }
-val utcDateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.ISO_OFFSET_DATE}
+val utcDateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.ISO_OFFSET_DATE)}
 
 // Times
 val timeSerializer: Serializer = { it.toString() }

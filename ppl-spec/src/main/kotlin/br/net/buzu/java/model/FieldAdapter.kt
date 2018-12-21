@@ -31,6 +31,7 @@ abstract class FieldAdapter(val fieldFullName: String, val metaName: String, val
     val hasChildren: Boolean = children.isNotEmpty()
     val isArray: Boolean = fieldType.isArray
     val isCollection: Boolean = Collection::class.java.isAssignableFrom(fieldType)
+    val isComplex = metaInfo.subtype.dataType.isComplex
     val multiple: Boolean
     private val childrenMap = children.map { it.metaName to it }.toMap()
 
@@ -57,6 +58,8 @@ abstract class FieldAdapter(val fieldFullName: String, val metaName: String, val
     abstract fun asSingleObject(positionalText: String): Any?
 
     abstract fun asStringFromNotNull(value: Any): String
+
+    abstract fun createNewInstance(): Any
 
     fun getChildByMetaName(name: String): FieldAdapter = childrenMap[name]
             ?: throw IllegalArgumentException("Child fieldAdapter '$name' not found at ${toString()}")
