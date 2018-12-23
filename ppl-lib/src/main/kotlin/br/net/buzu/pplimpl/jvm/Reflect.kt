@@ -20,6 +20,7 @@ import br.net.buzu.java.annotation.PplMetadata
 import br.net.buzu.java.exception.PplException
 import br.net.buzu.java.exception.PplReflectionException
 import java.io.*
+import java.lang.Exception
 import java.lang.reflect.*
 import java.util.*
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
@@ -136,7 +137,7 @@ fun getElementType(field: Field): Class<*> {
  * @return The field list.
  */
 fun getAllFields(type: Class<*>): List<Field> {
-    if (type.superclass == Any::class.java || type.superclass== JvmType.Object::class.java || type.superclass==null) {
+    if (type.superclass == Any::class.java || type.superclass == JvmType.Object::class.java || type.superclass == null) {
         return Arrays.asList(*type.declaredFields)
     }
     val fields = ArrayList<Field>()
@@ -156,13 +157,18 @@ fun getPplMetadata(field: Field): PplMetadata? {
 }
 
 fun getValue(field: Field, instance: Any): Any? {
-    try {
+    return try {
         field.isAccessible = true
-        return field.get(instance)
+        field.get(instance)
     } catch (e: IllegalArgumentException) {
-        return findAndInvokeGet(instance, field.name)
+        throw PplReflectionException("Illegal argument for field '${field.name}' Instance:$instance")
     } catch (e: IllegalAccessException) {
-        return findAndInvokeGet(instance, field.name)
+        try {
+            findAndInvokeGet(instance, field.name)
+        } catch (e: Exception) {
+            throw PplReflectionException("Field ${field.name} cannot be accessed")
+        }
+
     }
 
 }
@@ -172,11 +178,14 @@ fun setValue(field: Field, instance: Any, param: Any?) {
         field.isAccessible = true
         field.set(instance, param)
     } catch (e: IllegalArgumentException) {
-        findAndInvokeSet(instance, field.name, field.type, param)
+        throw PplReflectionException("Illegal argument for field '${field.name}' Instance:$instance, param:$param")
     } catch (e: IllegalAccessException) {
-        findAndInvokeSet(instance, field.name, field.type, param)
+        try {
+            findAndInvokeSet(instance, field.name, field.type, param)
+        } catch (e: Exception) {
+            throw PplReflectionException("Field ${field.name} cannot be accessed")
+        }
     }
-
 }
 
 

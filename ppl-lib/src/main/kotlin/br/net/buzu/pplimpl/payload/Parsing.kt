@@ -20,9 +20,6 @@ import br.net.buzu.java.model.FieldAdapter
 import br.net.buzu.java.model.Kind
 import br.net.buzu.java.model.MetaInfo
 import br.net.buzu.java.model.StaticMetadata
-import br.net.buzu.pplimpl.jvm.newInstance
-import java.util.ArrayList
-import java.util.HashSet
 
 fun parsePayload(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? =
         when (metadata.kind()) {
@@ -33,7 +30,7 @@ fun parsePayload(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdap
             }
         }
 
-fun parseAtomic(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
+internal fun parseAtomic(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
     val metaInfo: MetaInfo = metadata.info()
     var s = text
     if (isNull(text, metaInfo.nullChar)) {
@@ -43,13 +40,13 @@ fun parseAtomic(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapt
             return null
         }
     }
-    return parseValue(s.substring(0, metaInfo.size), metadata, fieldAdapter)
+    return fieldAdapter.asSingleObject(s.substring(0, metaInfo.size))
 }
 
 
-fun parseArray(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
+internal fun parseArray(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
     val metaInfo: MetaInfo = metadata.info()
-    var s=text
+    var s = text
     if (isNull(text, metaInfo.nullChar)) {
         if (metaInfo.hasDefaultValue()) {
             s = metaInfo.defaultValue
@@ -62,19 +59,40 @@ fun parseArray(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapte
     val array = createAndFillArray(fieldAdapter, metaInfo.maxOccurs)
     for (i in array.indices) {
         endIndex += metaInfo.size
-        parseValue(s.substring(beginIndex, endIndex), metadata, fieldAdapter)
+        array[i] = fieldAdapter.asSingleObject(s.substring(beginIndex, endIndex))
         beginIndex += metadata.info().size
     }
     return fromArray(array, fieldAdapter)
-
 }
 
-fun createAndFillArray(fieldAdapter: FieldAdapter, size: Int): Array<Any> {
-    return if (fieldAdapter.isComplex) arrayOf(size, { fieldAdapter.createNewInstance() }) else arrayOf()
-
+internal fun parseTable(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
+    println(fieldAdapter.toString())
+    val metaInfo: MetaInfo = metadata.info()
+    var beginIndex = 0
+    var endIndex = 0
+    var parsed: Any?
+    var childFieldAdapter: FieldAdapter
+    val array = createAndFillArray(fieldAdapter, metaInfo.maxOccurs)
+    println("array class:"+ array[0]?.javaClass)
+    for (i in array.indices) {
+        for (childMetadata in metadata.children<StaticMetadata>()) {
+            println("childMetadata: ${childMetadata.name()}")
+            childFieldAdapter = fieldAdapter.getChildByMetaName(childMetadata.name())
+            endIndex += childMetadata.serialMaxSize()
+            parsed = parsePayload(text.substring(beginIndex, endIndex), childMetadata, childFieldAdapter)
+            println("parsed: $parsed")
+            beginIndex += childMetadata.serialMaxSize()
+            childFieldAdapter.setFieldValue(array[i]!!, parsed)
+        }
+    }
+    return fromArray(array, fieldAdapter)
 }
 
-fun fromArray(array: Array<Any>, fieldAdapter: FieldAdapter): Any {
+internal fun createAndFillArray(fieldAdapter: FieldAdapter, size: Int): Array<Any?> {
+    return if (fieldAdapter.isComplex) Array(size) {fieldAdapter.createNewInstance()} else arrayOf()
+}
+
+internal fun fromArray(array: Array<Any?>, fieldAdapter: FieldAdapter): Any {
     if (fieldAdapter.isArray) {
         return array
     }
@@ -84,24 +102,14 @@ fun fromArray(array: Array<Any>, fieldAdapter: FieldAdapter): Any {
         }
         return array.toList()
     }
-    return array[0]
+    return array[0]!!
 }
-
-
-fun parseTable(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
-return null
-}
-
 
 internal fun isNull(text: String, nullChar: Char): Boolean {
-    for (i in 0 until text.length) {
-        if (text[i] != nullChar) {
-            return false
-        }
-    }
+    for (i in 0 until text.length) if (text[i] != nullChar) return false
     return true
 }
 
-fun parseValue(substring: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
+internal fun parseValue(substring: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
     return fieldAdapter.asSingleObject(substring)
 }
