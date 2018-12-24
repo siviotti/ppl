@@ -16,13 +16,12 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.lib.isStaticChildren
-import br.net.buzu.lib.splitNodes
 import br.net.buzu.java.api.MetadataParser
 import br.net.buzu.java.exception.MetadataParseException
 import br.net.buzu.java.exception.PplParseException
 import br.net.buzu.java.lang.*
 import br.net.buzu.java.model.*
+import br.net.buzu.lib.splitNodes
 import java.text.ParseException
 import java.util.*
 
@@ -223,7 +222,10 @@ class GenericMetadataParser : MetadataParser {
     }
 }
 
-class IndexSequence {  private var internalValue = 0;    fun next() = internalValue++ }
+class IndexSequence {
+    private var internalValue = 0;
+    fun next() = internalValue++
+}
 
 private fun isStaticChildren(children: List<Metadata>): Boolean {
     for (child in children) {

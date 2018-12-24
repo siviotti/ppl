@@ -21,7 +21,7 @@ import br.net.buzu.java.model.Subtype;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Parser to {@link Subtype#ISO_TIME}
+ * ValueParser to {@link Subtype#ISO_TIME}
  *
  * @author Douglas Siviotti
  * @since 1.0

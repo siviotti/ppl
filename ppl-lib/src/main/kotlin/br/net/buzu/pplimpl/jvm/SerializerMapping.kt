@@ -8,66 +8,65 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-internal typealias Serializer = (value: Any) -> String
 
 // Var Size
-val charSerializer: Serializer = { it.toString() }
-val stringSerializer: Serializer = { it.toString() }
-val numberSerializer: Serializer = { if (it is BigDecimal) it.toPlainString() else it.toString() }
-val integerSerializer: Serializer = { it.toString() }
-val longSerializer: Serializer = { it.toString() }
+val charSerializer: ValueSerializer = { it.toString() }
+val stringSerializer: ValueSerializer = { it.toString() }
+val numberSerializer: ValueSerializer = { if (it is BigDecimal) it.toPlainString() else it.toString() }
+val integerSerializer: ValueSerializer = { it.toString() }
+val longSerializer: ValueSerializer = { it.toString() }
 
 // Fixed Size
 
 // Boolean
-val booleanSerializer: Serializer = { it.toString() }
-val bozSerializer: Serializer = { it.toString() }
-val btfSerializer: Serializer = { it.toString() }
-val bynSerializer: Serializer = { it.toString() }
-val bsnSerializer: Serializer = { it.toString() }
+val booleanSerializer: ValueSerializer = { it.toString() }
+val bozSerializer: ValueSerializer = { if (it as Boolean) "1" else "0"}
+val btfSerializer: ValueSerializer = { it.toString() }
+val bynSerializer: ValueSerializer = { it.toString() }
+val bsnSerializer: ValueSerializer = { it.toString() }
 
 // Timestamp
-val timestampSerializer: Serializer = { it.toString() }
-val timestampAndMillisSerializer: Serializer = { it.toString() }
-val isoTimestampSerializer: Serializer = { it.toString() }
-val utcTimestampSerializer: Serializer = { it.toString() }
+val timestampSerializer: ValueSerializer = { it.toString() }
+val timestampAndMillisSerializer: ValueSerializer = { it.toString() }
+val isoTimestampSerializer: ValueSerializer = { it.toString() }
+val utcTimestampSerializer: ValueSerializer = { it.toString() }
 
 // Date
-val dateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.BASIC_ISO_DATE) }
-val isoDateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.ISO_DATE) }
-val utcDateSerializer: Serializer = { (it as LocalDate).format(DateTimeFormatter.ISO_OFFSET_DATE)}
+val dateSerializer: ValueSerializer = { (it as LocalDate).format(DateTimeFormatter.BASIC_ISO_DATE) }
+val isoDateSerializer: ValueSerializer = { (it as LocalDate).format(DateTimeFormatter.ISO_DATE) }
+val utcDateSerializer: ValueSerializer = { (it as LocalDate).format(DateTimeFormatter.ISO_OFFSET_DATE)}
 
 // Times
-val timeSerializer: Serializer = { it.toString() }
-val timeAndMillisSerializer: Serializer = { it.toString() }
-val isoTimeSerializer: Serializer = { it.toString() }
-val utcTimeSerializer: Serializer = { it.toString() }
+val timeSerializer: ValueSerializer = { it.toString() }
+val timeAndMillisSerializer: ValueSerializer = { it.toString() }
+val isoTimeSerializer: ValueSerializer = { it.toString() }
+val utcTimeSerializer: ValueSerializer = { it.toString() }
 
 // Old Timestamp
-val oldTimestampSerializer: Serializer = { it.toString() }
-val oldTimestampAndMillisSerializer: Serializer = { it.toString() }
-val oldIsoTimestampSerializer: Serializer = { it.toString() }
-val oldUtcTimestampSerializer: Serializer = { it.toString() }
+val oldTimestampSerializer: ValueSerializer = { it.toString() }
+val oldTimestampAndMillisSerializer: ValueSerializer = { it.toString() }
+val oldIsoTimestampSerializer: ValueSerializer = { it.toString() }
+val oldUtcTimestampSerializer: ValueSerializer = { it.toString() }
 
 // Old Date
-val oldDateSerializer: Serializer = { SimpleDateFormat("yyyy-MM-dd+HH:mm").format(it as Date) }
-val oldIsoDateSerializer: Serializer = { it.toString() }
-val oldUtcDateSerializer: Serializer = { it.toString() }
+val oldDateSerializer: ValueSerializer = { SimpleDateFormat("yyyy-MM-dd+HH:mm").format(it as Date) }
+val oldIsoDateSerializer: ValueSerializer = { it.toString() }
+val oldUtcDateSerializer: ValueSerializer = { it.toString() }
 
 // Old Times
-val oldTimeSerializer: Serializer = { it.toString() }
-val oldTimeAndMillisSerializer: Serializer = { it.toString() }
-val oldIsoTimeSerializer: Serializer = { it.toString() }
-val oldUtcTimeSerializer: Serializer = { it.toString() }
+val oldTimeSerializer: ValueSerializer = { it.toString() }
+val oldTimeAndMillisSerializer: ValueSerializer = { it.toString() }
+val oldIsoTimeSerializer: ValueSerializer = { it.toString() }
+val oldUtcTimeSerializer: ValueSerializer = { it.toString() }
 
-val TIME_OFFSET = 11
+const val TIME_OFFSET = 11
 
 private val INTERNAL_SERIALIZER_MAPPING = createSerializerArray()
 
-fun createSerializerArray(): Array<Serializer?> {
-    val array = arrayOfNulls<Serializer>(Subtype.values().size + TIME_OFFSET)
+private fun createSerializerArray(): Array<ValueSerializer?> {
+    val array = arrayOfNulls<ValueSerializer>(Subtype.values().size + TIME_OFFSET)
 
-    // Var Size (1 Parser per Subtype)
+    // Var Size (1 ValueParser per Subtype)
     array[Subtype.CHAR.ordinal] = charSerializer
     array[Subtype.STRING.ordinal] = stringSerializer
     array[Subtype.NUMBER.ordinal] = numberSerializer
@@ -117,9 +116,9 @@ fun createSerializerArray(): Array<Serializer?> {
 }
 
 
-internal fun getSerializer(subtype: Subtype, useOldDate: Boolean): Serializer {
+internal fun getPayloadSerializer(subtype: Subtype, useOldDate: Boolean): ValueSerializer {
     val index = if (useOldDate) subtype.ordinal + TIME_OFFSET else subtype.ordinal
     return INTERNAL_SERIALIZER_MAPPING[index]
-            ?: throw IllegalArgumentException("Missing Serializer for subtype '$subtype'")
+            ?: throw IllegalArgumentException("Missing ValueSerializer for subtype '$subtype'")
 }
 

@@ -22,7 +22,7 @@ import kotlin.reflect.KClass
 
 /**
  * An annotation that indicates this member should be parsed/serialized with a
- * given Parser.
+ * given ValueParser.
  *
  * @author Douglas Siviotti
  * @since 1.0

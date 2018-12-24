@@ -44,7 +44,7 @@ annotation class PplMetadata(
 
         // Extension
         val defaultValue: String = EMPTY_STRING,
-        val domain: Array<String> = arrayOf(),
+        val domain: Array<String> = [],
         val tags: String = EMPTY_STRING,
         val key: Boolean = false,
         val indexed: Boolean = false,

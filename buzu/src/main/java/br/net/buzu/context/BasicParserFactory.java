@@ -53,7 +53,7 @@ public class BasicParserFactory implements ParserFactory {
 
 	static {
 
-		// Var Size (1 Parser per Subtype)
+		// Var Size (1 ValueParser per Subtype)
 		PARSER_ARRAY[Subtype.CHAR.ordinal()] = CharMapper.INSTANCE;
 		PARSER_ARRAY[Subtype.STRING.ordinal()] = StringMapper.INSTANCE;
 		PARSER_ARRAY[Subtype.NUMBER.ordinal()] = NumberMapper.INSTANCE;

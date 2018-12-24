@@ -24,20 +24,12 @@ import java.lang.IllegalArgumentException
  * @author Douglas Siviotti
  * @since 1.0
  */
-abstract class FieldAdapter(val fieldFullName: String, val metaName: String, val fieldType: Class<*>,
-                            val elementType: Class<*>, val metaInfo: MetaInfo,
-                            val children: List<FieldAdapter>, val treeIndex: Int) {
+abstract class MetaType(val fieldFullName: String, val metaName: String, val metaInfo: MetaInfo,
+                        val treeIndex: Int, val adapter: TypeAdapter<*>, val children: List<MetaType>) {
 
     val hasChildren: Boolean = children.isNotEmpty()
-    val isArray: Boolean = fieldType.isArray
-    val isCollection: Boolean = Collection::class.java.isAssignableFrom(fieldType)
-    val isComplex = metaInfo.subtype.dataType.isComplex
-    val multiple: Boolean
     private val childrenMap = children.map { it.metaName to it }.toMap()
 
-    init {
-        multiple = isArray || isCollection
-    }
 
     fun nodeCount(): Int {
         return if (children.isEmpty()) 1 else {
@@ -47,9 +39,12 @@ abstract class FieldAdapter(val fieldFullName: String, val metaName: String, val
         }
     }
 
-    override fun toString(): String = "[$treeIndex] $fieldFullName: ${fieldType.simpleName}<${elementType.simpleName}> ($metaName) $metaInfo"
+    open fun getChildByMetaName(name: String): MetaType = childrenMap[name]
+            ?: throw IllegalArgumentException("Child fieldAdapter '$name' not found at ${toString()}. Children:$children")
 
-    abstract fun getFieldValue(parentObject: Any ): Any?
+
+
+    abstract fun getFieldValue(parentObject: Any): Any?
 
     abstract fun setFieldValue(parentObject: Any, paramValue: Any?)
 
@@ -59,10 +54,12 @@ abstract class FieldAdapter(val fieldFullName: String, val metaName: String, val
 
     abstract fun asStringFromNotNull(value: Any): String
 
-    abstract fun createNewInstance(): Any
+    abstract fun maxArrayToValue(array: Array<Any?>): Any
 
-    fun getChildByMetaName(name: String): FieldAdapter = childrenMap[name]
-            ?: throw IllegalArgumentException("Child fieldAdapter '$name' not found at ${toString()}")
+    abstract fun createAndFillArray(size: Int): Array<Any?>
 
+    abstract fun valueToMaxArray(value: Any?, size: Int): Array<Any?>
+
+    abstract fun valueToArray(value: Any?): Array<Any?>
 
 }

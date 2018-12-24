@@ -24,10 +24,10 @@ import java.util.ArrayList
 
 fun domainOf(vararg array: String): Domain = Domain.create(EMPTY, domainItemListOf(*array))
 
-fun createDomain(name: String, items: List<DomainItem>): Domain = Domain.create(EMPTY, items)
+fun createDomain(name: String, items: List<DomainItem>): Domain = Domain.create(name, items)
 
 fun toDomainItemList(stringList: List<String>): List<DomainItem> {
-    val list = ArrayList<DomainItem>()
+    val list = mutableListOf<DomainItem>()
     for (item in stringList) {
         list.add(domainItemOf(item))
     }

@@ -26,7 +26,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Abstract Parser to Timestamp
+ * Abstract ValueParser to Timestamp
  *
  * @author Douglas Siviotti
  * @since 1.0

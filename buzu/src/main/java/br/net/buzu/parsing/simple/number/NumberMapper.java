@@ -25,7 +25,7 @@ import br.net.buzu.java.model.StaticMetadata;
 import java.math.BigDecimal;
 
 /**
- * Parser to Type.NUMBER
+ * ValueParser to Type.NUMBER
  *
  * @author Douglas Siviotti
  * @since 1.0

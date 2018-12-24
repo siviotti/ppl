@@ -4,6 +4,7 @@ import br.net.buzu.java.lang.METADATA_END
 import br.net.buzu.java.lang.NAME_END
 import br.net.buzu.java.model.Metadata
 import br.net.buzu.java.model.Subtype
+import br.net.buzu.pplimpl.metadata.loadMetadata
 import br.net.buzu.sample.order.*
 import br.net.buzu.sample.pojo.Person
 import br.net.buzu.sample.ppl.Human
@@ -23,7 +24,7 @@ internal class MetadataLoadKtTest {
     @Test
     fun testLoadOrder() {
         val order: Order = ORDER_INSTANCE
-        val typeMapper = readFieldAdapter(order.javaClass, genericSkip)
+        val typeMapper = readMetaType(order.javaClass, genericSkip)
         val metadataOrder= loadMetadata(order, typeMapper)
         println(metadataOrder.toTree(0))
         assertMetadata(metadataOrder, "", Subtype.OBJ, 96, 0,1)

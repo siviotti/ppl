@@ -19,7 +19,7 @@ package br.net.buzu.parsing.simple.oldtime;
 import br.net.buzu.java.model.Subtype;
 
 /**
- * Parser to {@link Subtype#ISO_TIME}
+ * ValueParser to {@link Subtype#ISO_TIME}
  *
  * @author Douglas Siviotti
  * @since 1.0

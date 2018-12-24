@@ -21,7 +21,7 @@ import br.net.buzu.java.model.Subtype;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Parser to {@link Subtype#TIMESTAMP_AND_MILLIS}
+ * ValueParser to {@link Subtype#TIMESTAMP_AND_MILLIS}
  *
  * @author Douglas Siviotti
  * @since 1.0

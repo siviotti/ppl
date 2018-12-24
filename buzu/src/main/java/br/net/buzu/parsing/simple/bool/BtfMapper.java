@@ -19,7 +19,7 @@ package br.net.buzu.parsing.simple.bool;
 import br.net.buzu.java.model.Subtype;
 
 /**
- * Parser to {@link Subtype#BTF}
+ * ValueParser to {@link Subtype#BTF}
  *
  * @author Douglas Siviotti
  * @since 1.0

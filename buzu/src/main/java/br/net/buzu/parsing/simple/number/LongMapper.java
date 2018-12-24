@@ -25,7 +25,7 @@ import br.net.buzu.java.model.Subtype;
 import java.math.BigInteger;
 
 /**
- * Parser to {@link Subtype#LONG}
+ * ValueParser to {@link Subtype#LONG}
  *
  * @author Douglas Siviotti
  * @since 1.0

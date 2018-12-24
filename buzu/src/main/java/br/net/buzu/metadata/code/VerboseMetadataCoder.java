@@ -22,7 +22,7 @@ import br.net.buzu.java.lang.Token;
 import br.net.buzu.java.model.*;
 
 /**
- * Verbose Serializer.
+ * Verbose ValueSerializer.
  *
  * @author Douglas Siviotti
  * @since 1.0

@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Abstract Parser to Old Date
+ * Abstract ValueParser to Old Date
  *
  * @author Douglas Siviotti
  * @since 1.0

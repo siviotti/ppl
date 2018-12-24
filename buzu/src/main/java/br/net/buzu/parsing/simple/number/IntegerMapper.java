@@ -24,7 +24,7 @@ import br.net.buzu.java.model.StaticMetadata;
 import java.math.BigInteger;
 
 /**
- * Parser to Type.INTEGER
+ * ValueParser to Type.INTEGER
  *
  * @author Douglas Siviotti
  * @since 1.0

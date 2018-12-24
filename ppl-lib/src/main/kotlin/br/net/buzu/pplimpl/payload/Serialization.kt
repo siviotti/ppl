@@ -16,54 +16,53 @@
  */
 package br.net.buzu.pplimpl.payload
 
-import br.net.buzu.java.model.FieldAdapter
+import br.net.buzu.java.model.MetaType
 import br.net.buzu.java.model.Kind
 import br.net.buzu.java.model.MetaInfo
 import br.net.buzu.java.model.StaticMetadata
 import br.net.buzu.lib.fill
 import br.net.buzu.lib.fit
-import java.lang.IllegalArgumentException
 
-fun serializePayload(value: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String =
+fun serializePayload(value: Any?, metadata: StaticMetadata, metaType: MetaType): String =
         when (metadata.kind()) {
-            Kind.ATOMIC -> serializeAtomic(value, metadata, fieldAdapter)
-            Kind.ARRAY -> serializeArray(value, metadata, fieldAdapter)
+            Kind.ATOMIC -> serializeAtomic(value, metadata, metaType)
+            Kind.ARRAY -> serializeArray(value, metadata, metaType)
             else -> {
-                serializeTable(value, metadata, fieldAdapter)
+                serializeTable(value, metadata, metaType)
             }
         }
 
 
-internal fun serializeAtomic(atomicValue: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
+internal fun serializeAtomic(atomicValue: Any?, metadata: StaticMetadata, metaType: MetaType): String {
     return if (atomicValue == null) {
         serializeNull(metadata.info())
     } else {
-        serializeValue(atomicValue, metadata.info(), fieldAdapter)
+        serializeValue(atomicValue, metadata.info(), metaType)
     }
 }
 
-internal fun serializeArray(arrayValue: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
+internal fun serializeArray(arrayValue: Any?, metadata: StaticMetadata, metaType: MetaType): String {
     val sb = StringBuilder()
-    val array = valueToMaxArray(arrayValue, metadata.info().maxOccurs, fieldAdapter)
+    val array = metaType.valueToMaxArray(arrayValue, metadata.info().maxOccurs)
     for (element in array) {
         if (element == null) {
             sb.append(serializeNull(metadata.info()))
         } else {
-            sb.append(serializeValue(element, metadata.info(), fieldAdapter))
+            sb.append(serializeValue(element, metadata.info(), metaType))
         }
     }
     return sb.toString()
 }
 
-internal fun serializeTable(tableValue: Any?, metadata: StaticMetadata, fieldAdapter: FieldAdapter): String {
+internal fun serializeTable(tableValue: Any?, metadata: StaticMetadata, metaType: MetaType): String {
     val sb = StringBuilder()
-    val array = valueToMaxArray(tableValue, metadata.info().maxOccurs, fieldAdapter)
-    var childFieldAdapter: FieldAdapter
+    val array = metaType.valueToMaxArray(tableValue, metadata.info().maxOccurs)
+    var childMetaType: MetaType
     for (element in array) {
         for (childMetadata in metadata.children<StaticMetadata>()) {
-            childFieldAdapter = fieldAdapter.getChildByMetaName(childMetadata.name())
+            childMetaType = metaType.getChildByMetaName(childMetadata.name())
             if (element != null) {
-                sb.append(serializePayload(childFieldAdapter.getFieldValue(element), childMetadata, childFieldAdapter))
+                sb.append(serializePayload(childMetaType.getFieldValue(element), childMetadata, childMetaType))
             } else {
                 sb.append(serializeNull(childMetadata.info()))
             }
@@ -72,16 +71,8 @@ internal fun serializeTable(tableValue: Any?, metadata: StaticMetadata, fieldAda
     return sb.toString()
 }
 
-internal fun valueToMaxArray(value: Any?, size: Int, fieldAdapter: FieldAdapter): Array<Any?> {
-    return when {
-        size == 0 -> arrayOf(0)
-        value is Collection<*> -> value.toTypedArray()
-        fieldAdapter.isArray -> value as Array<Any?>
-        else -> arrayOf(value)
-    }
-}
 
-internal fun serializeValue(value: Any, metaInfo: MetaInfo, fieldAdapter: FieldAdapter): String {
+internal fun serializeValue(value: Any, metaInfo: MetaInfo, fieldAdapter: MetaType): String {
     return fit(metaInfo.align, fieldAdapter.asStringFromNotNull(value), metaInfo.size, metaInfo.fillChar)
 }
 

@@ -161,12 +161,12 @@ fun getValue(field: Field, instance: Any): Any? {
         field.isAccessible = true
         field.get(instance)
     } catch (e: IllegalArgumentException) {
-        throw PplReflectionException("Illegal argument for field '${field.name}' Instance:$instance")
+        throw PplReflectionException("Illegal argument for field '${field.name}' Instance:$instance", e)
     } catch (e: IllegalAccessException) {
         try {
             findAndInvokeGet(instance, field.name)
         } catch (e: Exception) {
-            throw PplReflectionException("Field ${field.name} cannot be accessed")
+            throw PplReflectionException("Field ${field.name} cannot be accessed", e)
         }
 
     }
@@ -178,12 +178,12 @@ fun setValue(field: Field, instance: Any, param: Any?) {
         field.isAccessible = true
         field.set(instance, param)
     } catch (e: IllegalArgumentException) {
-        throw PplReflectionException("Illegal argument for field '${field.name}' Instance:$instance, param:$param")
+        throw PplReflectionException("Illegal argument for field '${field.name}' Instance:$instance, param:$param", e)
     } catch (e: IllegalAccessException) {
         try {
             findAndInvokeSet(instance, field.name, field.type, param)
         } catch (e: Exception) {
-            throw PplReflectionException("Field ${field.name} cannot be accessed")
+            throw PplReflectionException("Field ${field.name} cannot be accessed", e)
         }
     }
 }

@@ -24,7 +24,7 @@ import br.net.buzu.java.model.StaticMetadata;
 import br.net.buzu.java.model.Subtype;
 
 /**
- * Parser to {@link Subtype#BOOLEAN}
+ * ValueParser to {@link Subtype#BOOLEAN}
  *
  * @author Douglas Siviotti
  * @since 1.0

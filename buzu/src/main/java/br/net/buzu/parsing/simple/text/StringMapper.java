@@ -22,7 +22,7 @@ import br.net.buzu.java.model.StaticMetadata;
 import br.net.buzu.java.model.Subtype;
 
 /**
- * Parser to {@link Subtype#STRING}
+ * ValueParser to {@link Subtype#STRING}
  *
  * @author Douglas Siviotti
  * @since 1.0

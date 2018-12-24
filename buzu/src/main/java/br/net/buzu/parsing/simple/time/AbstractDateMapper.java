@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Abstract Parser to Date
+ * Abstract ValueParser to Date
  *
  * @author Douglas Siviotti
  * @since 1.0

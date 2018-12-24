@@ -14,55 +14,53 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplimpl.jvm
+package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.java.exception.PplMetaclassViolationException
 import br.net.buzu.java.model.*
-import br.net.buzu.pplimpl.metadata.CreateMetadata
-import br.net.buzu.pplimpl.metadata.genericCreateMetadata
 import java.util.*
 
 @JvmOverloads
-fun loadMetadata(rootInstance: Any, fieldAdapter: FieldAdapter, createMetadata: CreateMetadata = genericCreateMetadata): Metadata {
-    val loadNode = LoadNode(rootInstance, fieldAdapter)
-    val maxMap = MaxMap(fieldAdapter.nodeCount() + 1)
-    val metaInfo = fieldAdapter.metaInfo
+fun loadMetadata(rootInstance: Any, metaType: MetaType, createMetadata: CreateMetadata = genericCreateMetadata): Metadata {
+    val loadNode = LoadNode(rootInstance, metaType)
+    val maxMap = MaxMap(metaType.nodeCount() + 1)
+    val metaInfo = metaType.metaInfo
     val max = getMax(maxMap, loadNode, metaInfo)
     return createMetadata(metaInfo.update(max.maxSize, max.maxOccurs), createMetaChildren(loadNode, maxMap, createMetadata))
 }
 
-private fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: CreateMetadata): List<Metadata> {
-    val typeAdapter = node.fieldAdapter
-    if (!typeAdapter.hasChildren) {
+internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: CreateMetadata): List<Metadata> {
+    val metaType = node.metaType
+    if (!metaType.hasChildren) {
         return listOf()
     }
-    val typeList = typeAdapter.children
+    val typeList = metaType.children
     val children = arrayOfNulls<Metadata>(typeList.size)
     var fieldValue: Any?
-    var childAdapter: FieldAdapter
+    var childMetaType: MetaType
     for (itemValue in node.value) {
         for (i in typeList.indices) {
-            childAdapter = typeList[i]
-            fieldValue = if (itemValue != null) childAdapter.getFieldValue(itemValue) else null
-            children[i] = loadChild(fieldValue, childAdapter, node, maxMap, createMetadata)
+            childMetaType = typeList[i]
+            fieldValue = if (itemValue != null) childMetaType.getFieldValue(itemValue) else null
+            children[i] = loadChild(fieldValue, childMetaType, node, maxMap, createMetadata)
         }
     }
     return Arrays.asList<Metadata>(*children)
 }
 
-private fun loadChild(fieldValue: Any?, typeMapper: FieldAdapter, parentNode: LoadNode, maxMap: MaxMap,
-                      createMetadata: CreateMetadata): Metadata {
-    val fieldNode = LoadNode(fieldValue, typeMapper)
-    var metaInfo = typeMapper.metaInfo
+internal fun loadChild(fieldValue: Any?, metaType: MetaType, parentNode: LoadNode, maxMap: MaxMap,
+                       createMetadata: CreateMetadata): Metadata {
+    val fieldNode = LoadNode(fieldValue, metaType)
+    var metaInfo = metaType.metaInfo
     val max = getMax(maxMap, fieldNode, metaInfo)
     metaInfo = metaInfo.update(max.maxSize, max.maxOccurs)
     val children = createMetaChildren(fieldNode, maxMap, createMetadata)
     return createMetadata(metaInfo, children)
 }
 
-private fun getMax(maxMap: MaxMap, node: LoadNode, metaInfo: MetaInfo): Max {
-    val fieldPath = node.fieldAdapter.fieldFullName
-    val max = maxMap.getMaxByIndex(node.fieldAdapter.treeIndex)
+internal fun getMax(maxMap: MaxMap, node: LoadNode, metaInfo: MetaInfo): Max {
+    val fieldPath = node.metaType.fieldFullName
+    val max = maxMap.getMaxByIndex(node.metaType.treeIndex)
     val size = max.tryNewMaxSize(node.calcMaxSize()).maxSize
     val maxOccurs = max.tryNewMaxOccurs(node.occurs).maxOccurs
     if (metaInfo.hasSize()) {
@@ -74,7 +72,7 @@ private fun getMax(maxMap: MaxMap, node: LoadNode, metaInfo: MetaInfo): Max {
     return max
 }
 
-private fun checkLimit(info: String, fieldPath: String, maxValue: Int, newValue: Int) {
+internal fun checkLimit(info: String, fieldPath: String, maxValue: Int, newValue: Int) {
     if (newValue > maxValue) {
         val sb = StringBuilder()
         sb.append(info).append(" violation on field '").append(fieldPath).append("'. Max value:'").append(maxValue)
@@ -83,32 +81,14 @@ private fun checkLimit(info: String, fieldPath: String, maxValue: Int, newValue:
     }
 }
 
-internal class LoadNode(originalValue: Any?, val fieldAdapter: FieldAdapter) {
+internal class LoadNode(originalValue: Any?, val metaType: MetaType) {
 
-    val value: Array<Any?>
-    val subtype: Subtype = fieldAdapter.metaInfo.subtype
+    val value: Array<Any?> = metaType.valueToArray(originalValue)
+    val subtype: Subtype = metaType.metaInfo.subtype
     val occurs: Int
         get() = value.size
 
     init {
-        if (originalValue == null) {
-            this.value = arrayOf(1)
-        } else if (fieldAdapter.isCollection) {
-            if ((originalValue as Collection<*>).isEmpty()) {
-                this.value = arrayOf(1)
-            } else {
-                this.value = originalValue.toTypedArray()
-            }
-        } else if (fieldAdapter.isArray) {
-            if ((originalValue as Array<Any>).size == 0) {
-                this.value = arrayOf(1)
-            } else {
-                this.value = originalValue as Array<Any?>
-            }
-        } else {
-            this.value = arrayOf(1)
-            this.value[0] = originalValue
-        }
     }
 
     fun calcMaxSize(): Int {
@@ -116,7 +96,7 @@ internal class LoadNode(originalValue: Any?, val fieldAdapter: FieldAdapter) {
             var max = 0
             var tmp = 0
             for (obj in value) {
-                tmp = fieldAdapter.getValueSize(obj!!)
+                tmp = metaType.getValueSize(obj!!)
                 if (tmp > max) {
                     max = tmp
                 }

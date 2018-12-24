@@ -20,7 +20,7 @@ import br.net.buzu.java.api.PayloadMapper
 import br.net.buzu.java.model.Metaclass
 
 /**
- * Parser Factory creates Parser from Metadata.
+ * ValueParser Factory creates ValueParser from Metadata.
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -28,11 +28,11 @@ import br.net.buzu.java.model.Metaclass
 interface ParserFactory {
 
     /**
-     * Creates a Parser from a metadata.
+     * Creates a ValueParser from a metadata.
      *
      * @param metadata
      * The metadata
-     * @return The instance domainOf Parser.
+     * @return The instance domainOf ValueParser.
      */
     fun create(metaClass: Metaclass): PayloadMapper
 }

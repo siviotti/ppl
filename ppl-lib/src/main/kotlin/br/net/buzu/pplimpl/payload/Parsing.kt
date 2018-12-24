@@ -16,100 +16,67 @@
  */
 package br.net.buzu.pplimpl.payload
 
-import br.net.buzu.java.model.FieldAdapter
+import br.net.buzu.java.model.MetaType
 import br.net.buzu.java.model.Kind
 import br.net.buzu.java.model.MetaInfo
 import br.net.buzu.java.model.StaticMetadata
 
-fun parsePayload(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? =
+fun parsePayload(text: String, metadata: StaticMetadata, metaType: MetaType): Any? =
         when (metadata.kind()) {
-            Kind.ATOMIC -> parseAtomic(text, metadata, fieldAdapter)
-            Kind.ARRAY -> parseArray(text, metadata, fieldAdapter)
+            Kind.ATOMIC -> parseAtomic(text, metadata, metaType)
+            Kind.ARRAY -> parseArray(text, metadata, metaType)
             else -> {
-                parseTable(text, metadata, fieldAdapter)
+                parseTable(text, metadata, metaType)
             }
         }
 
-internal fun parseAtomic(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
+internal fun parseAtomic(text: String, metadata: StaticMetadata, metaType: MetaType): Any? {
     val metaInfo: MetaInfo = metadata.info()
-    var s = text
-    if (isNull(text, metaInfo.nullChar)) {
-        if (metaInfo.hasDefaultValue()) {
-            s = metaInfo.defaultValue
-        } else {
-            return null
-        }
-    }
-    return fieldAdapter.asSingleObject(s.substring(0, metaInfo.size))
+    return if (isNull(text, metaInfo.nullChar))
+        if (metaInfo.hasDefaultValue())
+            metaType.asSingleObject(metadata.info().defaultValue)
+        else null
+    else
+        metaType.asSingleObject(text.substring(0, metaInfo.size))
 }
 
-
-internal fun parseArray(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
+internal fun parseArray(text: String, metadata: StaticMetadata, metaType: MetaType): Any? {
     val metaInfo: MetaInfo = metadata.info()
-    var s = text
-    if (isNull(text, metaInfo.nullChar)) {
-        if (metaInfo.hasDefaultValue()) {
-            s = metaInfo.defaultValue
-        } else {
-            return null
-        }
-    }
     var beginIndex = 0
     var endIndex = 0
-    val array = createAndFillArray(fieldAdapter, metaInfo.maxOccurs)
+    val array = metaType.createAndFillArray(metaInfo.maxOccurs)
     for (i in array.indices) {
         endIndex += metaInfo.size
-        array[i] = fieldAdapter.asSingleObject(s.substring(beginIndex, endIndex))
-        beginIndex += metadata.info().size
+        array[i] = parseAtomic(text.substring(beginIndex,endIndex), metadata, metaType)
+        beginIndex += metaInfo.size
     }
-    return fromArray(array, fieldAdapter)
+    return metaType.maxArrayToValue(array)
 }
 
-internal fun parseTable(text: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
-    println(fieldAdapter.toString())
+internal fun parseTable(text: String, metadata: StaticMetadata, metaType: MetaType): Any? {
+    println(metaType.toString())
     val metaInfo: MetaInfo = metadata.info()
     var beginIndex = 0
     var endIndex = 0
     var parsed: Any?
-    var childFieldAdapter: FieldAdapter
-    val array = createAndFillArray(fieldAdapter, metaInfo.maxOccurs)
-    println("array class:"+ array[0]?.javaClass)
+    var childMetaType: MetaType
+    val array = metaType.createAndFillArray(metaInfo.maxOccurs)
+    println("array class:" + array[0]?.javaClass)
     for (i in array.indices) {
         for (childMetadata in metadata.children<StaticMetadata>()) {
             println("childMetadata: ${childMetadata.name()}")
-            childFieldAdapter = fieldAdapter.getChildByMetaName(childMetadata.name())
+            childMetaType = metaType.getChildByMetaName(childMetadata.name())
             endIndex += childMetadata.serialMaxSize()
-            parsed = parsePayload(text.substring(beginIndex, endIndex), childMetadata, childFieldAdapter)
+            parsed = parsePayload(text.substring(beginIndex, endIndex), childMetadata, childMetaType)
             println("parsed: $parsed")
             beginIndex += childMetadata.serialMaxSize()
-            childFieldAdapter.setFieldValue(array[i]!!, parsed)
+            childMetaType.setFieldValue(array[i]!!, parsed)
         }
     }
-    return fromArray(array, fieldAdapter)
-}
-
-internal fun createAndFillArray(fieldAdapter: FieldAdapter, size: Int): Array<Any?> {
-    return if (fieldAdapter.isComplex) Array(size) {fieldAdapter.createNewInstance()} else arrayOf()
-}
-
-internal fun fromArray(array: Array<Any?>, fieldAdapter: FieldAdapter): Any {
-    if (fieldAdapter.isArray) {
-        return array
-    }
-    if (fieldAdapter.isCollection) {
-        if (Set::class.java.isAssignableFrom(fieldAdapter.elementType)) {
-            return array.toSet()
-        }
-        return array.toList()
-    }
-    return array[0]!!
+    return metaType.maxArrayToValue(array)
 }
 
 internal fun isNull(text: String, nullChar: Char): Boolean {
     for (i in 0 until text.length) if (text[i] != nullChar) return false
     return true
-}
-
-internal fun parseValue(substring: String, metadata: StaticMetadata, fieldAdapter: FieldAdapter): Any? {
-    return fieldAdapter.asSingleObject(substring)
 }
