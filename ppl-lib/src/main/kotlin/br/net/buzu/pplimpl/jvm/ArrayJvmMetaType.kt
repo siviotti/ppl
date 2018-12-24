@@ -6,9 +6,9 @@ import br.net.buzu.model.StaticMetadata
 import br.net.buzu.model.TypeAdapter
 import java.lang.reflect.Field
 
-class ArrayJvmMetaType (fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>,
-                        metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, adapter: TypeAdapter)
-    : JvmMetaType(fieldPath, fieldName,fieldType, elementType,metaInfo, children, treeIndex, field, adapter) {
+class ArrayJvmMetaType(fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>,
+                       metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, adapter: TypeAdapter)
+    : JvmMetaType(fieldPath, fieldName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter) {
 
     override fun parse(text: String, metadata: StaticMetadata): Any? {
         val metaInfo: MetaInfo = metadata.info()
@@ -28,13 +28,7 @@ class ArrayJvmMetaType (fieldPath: String, fieldName: String, fieldType: Class<*
     override fun serialize(value: Any?, metadata: StaticMetadata): String {
         val sb = StringBuilder()
         val array = valueToMaxArray(value, metadata.info().maxOccurs)
-        for (element in array) {
-            if (element == null) {
-                sb.append(serializeNull(metadata.info()))
-            } else {
-                sb.append(serializeValue(element, metadata.info()))
-            }
-        }
+        for (element in array) serializeAtomic(element, metadata)
         return sb.toString()
     }
 }

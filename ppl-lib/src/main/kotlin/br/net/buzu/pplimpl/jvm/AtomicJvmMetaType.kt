@@ -13,7 +13,7 @@ class AtomicJvmMetaType(fieldPath: String, fieldName: String, fieldType: Class<*
     override fun parse(text: String, metadata: StaticMetadata): Any? = parseAtomic(text, metadata)
 
     override fun serialize(value: Any?, metadata: StaticMetadata): String {
-        return if (value == null) serializeNull(metadata.info()) else serializeValue(value, metadata.info())
+        return serializeAtomic(value, metadata)
     }
 
 }

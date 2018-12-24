@@ -19,7 +19,7 @@ package br.net.buzu.model
 import java.lang.IllegalArgumentException
 
 /**
- * Basic tree node for type parsing.
+ * Basic tree node for type parsing/serialization
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -27,13 +27,15 @@ import java.lang.IllegalArgumentException
 abstract class MetaType(val fieldFullName: String, val metaName: String, val metaInfo: MetaInfo,
                         val treeIndex: Int, val adapter: TypeAdapter, val children: List<MetaType>) {
 
-    val hasChildren: Boolean = children.isNotEmpty()
+    abstract val hasChildren: Boolean
 
-    abstract fun serialize(value: Any?, metadata:StaticMetadata): String
+    // Parse and Serialization API
 
     abstract fun parse(text: String, metadata: StaticMetadata): Any?
 
-    abstract fun getChildByMetaName(name: String): MetaType
+    abstract fun serialize(value: Any?, metadata:StaticMetadata): String
+
+    // Metadata Load API
 
     abstract fun nodeCount(): Int
 
@@ -42,12 +44,6 @@ abstract class MetaType(val fieldFullName: String, val metaName: String, val met
     abstract fun setFieldValue(parentObject: Any, paramValue: Any?)
 
     abstract fun getValueSize(value: Any?): Int
-
-    abstract fun maxArrayToValue(array: Array<Any?>): Any
-
-    abstract fun createAndFillArray(size: Int): Array<Any?>
-
-    abstract fun valueToMaxArray(value: Any?, size: Int): Array<Any?>
 
     abstract fun valueToArray(value: Any?): Array<Any?>
 
