@@ -1,6 +1,6 @@
 package br.net.buzu.sample.enums;
 
-import br.net.buzu.java.model.PplSerializable;
+import br.net.buzu.model.PplSerializable;
 
 public enum Gender implements PplSerializable {
 

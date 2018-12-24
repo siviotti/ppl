@@ -16,7 +16,7 @@
  */
 package br.net.buzu.parsing.simple.time;
 
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.model.Subtype;
 
 import java.time.format.DateTimeFormatter;
 

@@ -16,15 +16,15 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.java.api.CoderManager
-import br.net.buzu.java.api.MetadataCoder
-import br.net.buzu.java.lang.*
-import br.net.buzu.java.model.Dialect
-import br.net.buzu.java.model.MetaInfo
-import br.net.buzu.java.model.Metadata
-import br.net.buzu.java.model.Subtype
+import br.net.buzu.api.CoderManager
+import br.net.buzu.api.MetadataCoder
+import br.net.buzu.lang.*
+import br.net.buzu.model.Dialect
+import br.net.buzu.model.MetaInfo
+import br.net.buzu.model.Metadata
+import br.net.buzu.model.Subtype
 
-internal const val SPACE = "" + br.net.buzu.java.lang.SPACE
+internal const val SPACE = "" + br.net.buzu.lang.SPACE
 
 fun codeMetadata(metadata: Metadata): String {
     return metadataAsShort(metadata)

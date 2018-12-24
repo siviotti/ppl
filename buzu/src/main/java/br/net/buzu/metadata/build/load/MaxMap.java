@@ -16,8 +16,8 @@
  */
 package br.net.buzu.metadata.build.load;
 
-import br.net.buzu.java.lang.Token;
-import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.lang.Token;
+import br.net.buzu.model.Metaclass;
 
 import java.util.HashMap;
 import java.util.Map;

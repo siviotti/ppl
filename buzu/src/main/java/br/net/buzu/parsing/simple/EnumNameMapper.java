@@ -16,10 +16,8 @@
  */
 package br.net.buzu.parsing.simple;
 
-import br.net.buzu.java.exception.PplParseException;
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.StaticMetadata;
+import br.net.buzu.exception.PplParseException;
+import br.net.buzu.model.*;
 
 import java.lang.reflect.Field;
 

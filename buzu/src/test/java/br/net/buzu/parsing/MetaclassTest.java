@@ -1,7 +1,7 @@
 package br.net.buzu.parsing;
 
 import br.net.buzu.metaclass.BasicMetaclassReader;
-import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.model.Metaclass;
 import org.junit.Test;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package br.net.buzu.metaclass;
 
-import br.net.buzu.java.model.Metaclass;
+import br.net.buzu.model.Metaclass;
 import br.net.buzu.sample.order.Order;
 import org.junit.Test;
 

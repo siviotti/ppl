@@ -16,7 +16,7 @@
  */
 package br.net.buzu.parsing.simple.oldtime;
 
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.model.Subtype;
 
 /**
  * ValueParser to {@link Subtype#UTC_TIMESTAMP}

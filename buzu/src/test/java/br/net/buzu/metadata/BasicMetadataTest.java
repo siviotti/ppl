@@ -1,8 +1,8 @@
 package br.net.buzu.metadata;
 
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.java.model.Metadata;
-import br.net.buzu.java.model.PplString;
+import br.net.buzu.model.Metadata;
+import br.net.buzu.model.PplString;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

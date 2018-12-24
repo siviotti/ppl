@@ -16,16 +16,16 @@
  */
 package br.net.buzu;
 
-import static br.net.buzu.java.lang.Syntax.pplToString;
+import static br.net.buzu.lang.Syntax.pplToString;
 
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.java.api.*;
-import br.net.buzu.java.context.JavaContext;
-import br.net.buzu.java.exception.PplParseException;
-import br.net.buzu.java.model.*;
+import br.net.buzu.api.*;
+import br.net.buzu.context.JavaContext;
+import br.net.buzu.exception.PplParseException;
+import br.net.buzu.model.*;
 
 import java.util.Collection;
 import java.util.List;

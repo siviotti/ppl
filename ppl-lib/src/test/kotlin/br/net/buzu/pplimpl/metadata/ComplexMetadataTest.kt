@@ -1,7 +1,7 @@
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.java.lang.EMPTY
-import br.net.buzu.java.model.*
+import br.net.buzu.lang.EMPTY
+import br.net.buzu.model.*
 import java.util.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

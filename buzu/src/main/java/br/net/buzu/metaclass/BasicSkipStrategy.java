@@ -16,10 +16,10 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.java.annotation.PplIgnore;
-import br.net.buzu.java.annotation.PplUse;
-import br.net.buzu.java.api.SkipStrategy;
-import br.net.buzu.java.exception.PplReflectionException;
+import br.net.buzu.annotation.PplIgnore;
+import br.net.buzu.annotation.PplUse;
+import br.net.buzu.api.SkipStrategy;
+import br.net.buzu.exception.PplReflectionException;
 import br.net.buzu.util.Reflect;
 
 import java.lang.annotation.Annotation;

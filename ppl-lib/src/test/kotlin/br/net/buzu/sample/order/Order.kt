@@ -16,7 +16,7 @@ class Order {
     var date: LocalDate? = null
     var products: List<Product>? = ArrayList()
     var status: Status? = null
-    var isCanceled: Boolean = false
+    var canceled: Boolean = false
 
     constructor()
 
@@ -27,13 +27,13 @@ class Order {
         this.date = date
         this.products = products
         this.status = status
-        this.isCanceled = canceled
+        this.canceled = canceled
     }
 
     override fun hashCode(): Int {
         val prime = 31
         var result = 1
-        result = prime * result + if (isCanceled) 1231 else 1237
+        result = prime * result + if (canceled) 1231 else 1237
         result = prime * result + if (customer == null) 0 else customer!!.hashCode()
         result = prime * result + if (date == null) 0 else date!!.hashCode()
         result = prime * result + if (number == null) 0 else number!!.hashCode()
@@ -50,7 +50,7 @@ class Order {
         if (javaClass != obj.javaClass)
             return false
         val other = obj as Order?
-        if (isCanceled != other!!.isCanceled)
+        if (canceled != other!!.canceled)
             return false
         if (customer == null) {
             if (other.customer != null)
@@ -82,7 +82,7 @@ class Order {
         sb.append("date=").append(date).append("\n")
         sb.append("products=").append(products).append("\n")
         sb.append("status=").append(status).append("\n")
-        sb.append("canceled=").append(isCanceled)
+        sb.append("canceled=").append(canceled)
         return sb.toString()
     }
 

@@ -16,7 +16,7 @@
  */
 package br.net.buzu.lib
 
-import br.net.buzu.java.model.Align
+import br.net.buzu.model.Align
 
 /**
  * Completa ou corta uma String de forma que ela fique com um tamanho fixo

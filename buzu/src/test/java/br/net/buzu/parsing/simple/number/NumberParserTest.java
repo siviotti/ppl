@@ -2,13 +2,13 @@ package br.net.buzu.parsing.simple.number;
 
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.StaticMetadata;
+import br.net.buzu.model.Metaclass;
+import br.net.buzu.model.StaticMetadata;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 
-import static br.net.buzu.java.model.PplStringKt.pplStringOf;
+import static br.net.buzu.model.PplStringKt.pplStringOf;
 import static org.junit.Assert.assertEquals;
 
 /**

@@ -17,12 +17,12 @@
 package br.net.buzu.metadata.build.load;
 
 import br.net.buzu.context.BasicContext;
-import br.net.buzu.java.api.MetadataLoader;
-import br.net.buzu.java.context.JavaContext;
-import br.net.buzu.java.exception.PplMetaclassViolationException;
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.Metadata;
+import br.net.buzu.api.MetadataLoader;
+import br.net.buzu.context.JavaContext;
+import br.net.buzu.exception.PplMetaclassViolationException;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Metaclass;
+import br.net.buzu.model.Metadata;
 
 import java.util.Arrays;
 import java.util.List;

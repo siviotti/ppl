@@ -1,6 +1,6 @@
 package br.net.buzu.sample.ppl;
 
-import br.net.buzu.java.annotation.PplMetadata;
+import br.net.buzu.annotation.PplMetadata;
 
 import java.time.LocalDate;
 

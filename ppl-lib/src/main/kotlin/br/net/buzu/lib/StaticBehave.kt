@@ -16,9 +16,9 @@
  */
 package br.net.buzu.lib
 
-import br.net.buzu.java.model.MetaInfo
-import br.net.buzu.java.model.Metadata
-import br.net.buzu.java.model.StaticStructure
+import br.net.buzu.model.MetaInfo
+import br.net.buzu.model.Metadata
+import br.net.buzu.model.StaticStructure
 
 internal val META_INFO_MUST_BE_COMPLETE = "MetaInfo must be complete (size and occurrences) for static behave:"
 internal val META_INFO_CANNOT_BE_UNBOUNDED = "MetaInfo cannot be Unbounded (no limit) for static behave:"

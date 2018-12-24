@@ -16,11 +16,11 @@
  */
 package br.net.buzu.metadata.code;
 
-import br.net.buzu.java.api.MetadataCoder;
-import br.net.buzu.java.lang.Syntax;
-import br.net.buzu.java.lang.Token;
-import br.net.buzu.java.model.Dialect;
-import br.net.buzu.java.model.MetaInfo;
+import br.net.buzu.api.MetadataCoder;
+import br.net.buzu.lang.Syntax;
+import br.net.buzu.lang.Token;
+import br.net.buzu.model.Dialect;
+import br.net.buzu.model.MetaInfo;
 
 /**
  *

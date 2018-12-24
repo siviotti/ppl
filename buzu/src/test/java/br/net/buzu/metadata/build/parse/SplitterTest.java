@@ -1,7 +1,7 @@
 package br.net.buzu.metadata.build.parse;
 
-import br.net.buzu.java.exception.PplParseException;
-import br.net.buzu.java.lang.Syntax;
+import br.net.buzu.exception.PplParseException;
+import br.net.buzu.lang.Syntax;
 import org.junit.Test;
 
 import java.text.ParseException;

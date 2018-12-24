@@ -16,44 +16,41 @@
  */
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.pplimpl.metadata.IndexSequence
-import br.net.buzu.java.annotation.PplIgnore
-import br.net.buzu.java.annotation.PplMetadata
-import br.net.buzu.java.annotation.PplUse
-import br.net.buzu.java.exception.PplReflectionException
-import br.net.buzu.java.lang.DEFAULT_MIN_OCCURS
-import br.net.buzu.java.lang.EMPTY
-import br.net.buzu.java.lang.PATH_SEP
-import br.net.buzu.java.model.MetaInfo
-import br.net.buzu.java.model.PplSerializable
-import br.net.buzu.java.model.MetaType
-import br.net.buzu.java.model.TypeAdapter
+import br.net.buzu.model.*
+import br.net.buzu.lib.fill
+import br.net.buzu.lib.fit
 import java.lang.reflect.Field
-import java.lang.reflect.Modifier
 import java.math.BigDecimal
 import java.util.*
 
-val genericSkip: (Field) -> Boolean = { skip(it) }
 
-class JvmMetaType(fieldPath: String, fieldName: String, val fieldType: Class<*>, val elementType: Class<*>,
-                  metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val field: Field, adapter: TypeAdapter<*>) :
-        MetaType(fieldPath, fieldName, metaInfo, treeIndex, adapter, children) {
+abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Class<*>, val elementType: Class<*>,
+                           metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val field: Field, adapter: TypeAdapter) :
+        MetaType(fullName, metaName, metaInfo, treeIndex, adapter, children) {
 
-    val isArray: Boolean = fieldType.isArray
-    val isCollection: Boolean = Collection::class.java.isAssignableFrom(fieldType)
-    val isComplex = metaInfo.subtype.dataType.isComplex
-    val multiple: Boolean
-    private val parser: ValueParser
+    private val isArray: Boolean = fieldType.isArray
+    private val isCollection: Boolean = Collection::class.java.isAssignableFrom(fieldType)
+    private val isComplex = metaInfo.subtype.dataType.isComplex
     private val serializer: ValueSerializer
-    private val valueSizer: (Any?) -> Int
 
+    private val childrenMap = children.map { it.metaName to it }.toMap()
 
     init {
-        multiple = isArray || isCollection
-        parser = { text, metaInfo -> text }
         serializer = getPayloadSerializer(metaInfo.subtype, Date::class.java.isAssignableFrom(elementType))
-        valueSizer = { 0 }
     }
+
+    override fun getChildByMetaName(name: String): MetaType = childrenMap[name]
+            ?: throw IllegalArgumentException("Child fieldAdapter '$name' not found at ${toString()}. Children:$children")
+
+
+    override fun nodeCount(): Int {
+        return if (children.isEmpty()) 1 else {
+            var count = 1
+            for (it in children) count += it.nodeCount()
+            count
+        }
+    }
+
 
     override fun getFieldValue(parentObject: Any): Any? = getValue(field, parentObject)
 
@@ -75,9 +72,9 @@ class JvmMetaType(fieldPath: String, fieldName: String, val fieldType: Class<*>,
         return str?.length ?: 0
     }
 
-    override fun asSingleObject(positionalText: String): Any? = parser(positionalText, metaInfo)
+    fun asSingleObject(positionalText: String): Any? = adapter.stringToValue(positionalText, metaInfo)
 
-    override fun asStringFromNotNull(value: Any): String = serializer(value)
+    fun asStringFromNotNull(value: Any): String = adapter.valueToString(value)
 
 
     override fun maxArrayToValue(array: Array<Any?>): Any {
@@ -115,95 +112,34 @@ class JvmMetaType(fieldPath: String, fieldName: String, val fieldType: Class<*>,
     }
 
     override fun createAndFillArray(size: Int): Array<Any?> {
-        return if (isComplex) Array(size) { newInstance(elementType) } else arrayOf()
+        return if (isComplex) Array(size) { newInstance(elementType) } else Array(size){}
     }
-
-
 
     override fun toString(): String = "[$treeIndex] $fieldFullName: ${fieldType.simpleName}<${elementType.simpleName}> ($metaName) $metaInfo"
-}
 
-@JvmOverloads
-fun readMetaType(type: Class<*>, skip: (Field) -> Boolean = genericSkip): MetaType {
-    return readMetaType(type, extractElementType(type), skip)
-}
-
-@JvmOverloads
-fun readMetaType(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean = genericSkip): MetaType {
-    val seq = IndexSequence()
-    val pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
-    val index = seq.next()
-    val metaInfo = createMetaInfo(pplMetadata, elementType, EMPTY, index)
-    val typeAdapter = typeAdapterOf(elementType, metaInfo.subtype)
-    val fields = getAllFields({ }::class.java)
-    return JvmMetaType(EMPTY, EMPTY, type, elementType, metaInfo,
-            createChildren(metaInfo, EMPTY, elementType, skip, seq), index, fields[0], typeAdapter)
-}
-
-private fun readFromField(parentFullName: String, field: Field, index: Int, skip: (Field) -> Boolean, seq: IndexSequence): MetaType {
-    // Precedence 1: Field Annotation
-    var pplMetadata: PplMetadata? = field.getAnnotation(PplMetadata::class.java)
-    // Precedence 2: If null, use field Type Annotation
-    val elementType = getElementType(field)
-    if (pplMetadata == null) {
-        pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
+    internal fun serializeValue(value: Any, metaInfo: MetaInfo): String {
+        return fit(metaInfo.align, asStringFromNotNull(value), metaInfo.size, metaInfo.fillChar)
     }
-    val fullName = if (parentFullName.isEmpty()) field.name else parentFullName + PATH_SEP + field.name
-    val metaInfo = createMetaInfo(pplMetadata, elementType, field.name, index)
-    val typeAdapter = typeAdapterOf(elementType, metaInfo.subtype)
-    return JvmMetaType(fullName, field.name, field.type, elementType, metaInfo,
-            createChildren(metaInfo, fullName, elementType, skip, seq), index, field, typeAdapter)
-}
 
-private fun createMetaInfo(pplMetadata: PplMetadata?, elementType: Class<*>, fieldName: String, index: Int): MetaInfo {
-    val subtype = subTypeOf(elementType)
-    return if (pplMetadata != null)
-        MetaInfo(pplMetadata, fieldName, subtype)
-    else
-        MetaInfo(index, fieldName, subtype, PplMetadata.EMPTY_INTEGER, PplMetadata.EMPTY_INTEGER,
-                DEFAULT_MIN_OCCURS, PplMetadata.EMPTY_INTEGER)
-}
-
-private fun createChildren(parentMetaInfo: MetaInfo, parentPath: String, parentType: Class<*>, skip: (Field) -> Boolean, seq: IndexSequence): List<MetaType> {
-    if (isSimpleType(parentType)) {
-        return listOf()
+    internal fun serializeNull(metaInfo: MetaInfo): String {
+        return fill(metaInfo.align, metaInfo.defaultValue, metaInfo.size, metaInfo.nullChar)
     }
-    val children = mutableListOf<MetaType>()
-    var count = 0
-    for (field in getAllFields(parentType).filterNot(skip)) {
-        children.add(readFromField(parentPath, field, seq.next(), skip, seq))
-    }
-    // Warning: the index used on this sort must be the "metaInfo.index"
-    // It has precedence over treeIndex because it comes from the PplMetadata annotation
-    return children.sortedBy { it.metaInfo.index }
-}
 
-private fun skip(field: Field): Boolean {
-    // Precedence 1: Field explict ignore
-    if (field.isAnnotationPresent(PplIgnore::class.java)) {
+    internal fun parseAtomic(text: String, metadata: StaticMetadata): Any? {
+        val metaInfo: MetaInfo = metadata.info()
+        return if (isNull(text, metaInfo.nullChar))
+            if (metaInfo.hasDefaultValue())
+                asSingleObject(metadata.info().defaultValue)
+            else null
+        else
+            asSingleObject(text.substring(0, metaInfo.size))
+    }
+
+    internal fun isNull(text: String, nullChar: Char): Boolean {
+        for (i in 0 until text.length) if (text[i] != nullChar) return false
         return true
     }
 
-    // Precedence 2: Field explicit use
-    if (field.isAnnotationPresent(PplUse::class.java)) {
-        return false
-    }
 
-    // Precedence 3: Static, Transient or Ignore
-    if (Modifier.isStatic(field.modifiers)) {
-        return true
-    }
-    if (Modifier.isTransient(field.modifiers)) {
-        return true
-    }
-
-    // Precedence 4: Field Class
-    var fieldClass: Class<*>
-    try {
-        fieldClass = getElementType(field)
-    } catch (pre: PplReflectionException) {
-        fieldClass = field.javaClass
-    }
-
-    return fieldClass.isAnnotationPresent(PplIgnore::class.java)
 }
+

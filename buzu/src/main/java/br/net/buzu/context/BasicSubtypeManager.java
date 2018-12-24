@@ -16,8 +16,8 @@
  */
 package br.net.buzu.context;
 
-import br.net.buzu.java.context.SubtypeManager;
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.context.SubtypeManager;
+import br.net.buzu.model.Subtype;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

@@ -1,10 +1,10 @@
 package br.net.buzu.util;
 
 import br.net.buzu.context.BasicContext;
-import br.net.buzu.java.context.JavaContext;
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metadata;
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.context.JavaContext;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Metadata;
+import br.net.buzu.model.Subtype;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

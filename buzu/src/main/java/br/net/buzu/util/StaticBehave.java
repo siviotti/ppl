@@ -16,9 +16,9 @@
  */
 package br.net.buzu.util;
 
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metadata;
-import br.net.buzu.java.model.StaticStructure;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Metadata;
+import br.net.buzu.model.StaticStructure;
 
 import java.util.Collection;
 

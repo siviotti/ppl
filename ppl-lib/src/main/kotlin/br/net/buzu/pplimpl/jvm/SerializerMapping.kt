@@ -1,6 +1,6 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.java.model.Subtype
+import br.net.buzu.model.Subtype
 import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.text.SimpleDateFormat

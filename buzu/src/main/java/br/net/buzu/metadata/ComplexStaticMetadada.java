@@ -16,10 +16,10 @@
  */
 package br.net.buzu.metadata;
 
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metadata;
-import br.net.buzu.java.model.StaticMetadata;
-import br.net.buzu.java.model.StaticStructure;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Metadata;
+import br.net.buzu.model.StaticMetadata;
+import br.net.buzu.model.StaticStructure;
 import br.net.buzu.util.StaticBehave;
 
 import java.util.List;

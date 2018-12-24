@@ -1,17 +1,17 @@
 package br.net.buzu.metadata.build;
 
-import br.net.buzu.java.lang.Syntax;
-import br.net.buzu.java.model.Domain;
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.MetaInfoTest;
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.lang.Syntax;
+import br.net.buzu.model.Domain;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.MetaInfoTest;
+import br.net.buzu.model.Subtype;
 import org.junit.Test;
 
 import java.util.List;
 
 import static br.net.buzu.metadata.build.Layout.NO_PRECISION;
 import static br.net.buzu.metadata.build.Layout.NO_SIZE;
-import static br.net.buzu.java.model.MetaInfoTest.domain;
+import static br.net.buzu.model.MetaInfoTest.domain;
 import static org.junit.Assert.*;
 
 /**

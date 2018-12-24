@@ -1,6 +1,6 @@
 package br.net.buzu.metaclass;
 
-import br.net.buzu.java.annotation.PplIgnore;
+import br.net.buzu.annotation.PplIgnore;
 import org.junit.Test;
 
 import java.lang.annotation.Annotation;

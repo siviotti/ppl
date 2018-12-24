@@ -17,10 +17,10 @@
 package br.net.buzu.parsing.simple.oldtime;
 
 import br.net.buzu.parsing.simple.AbstractSimpleMapper;
-import br.net.buzu.java.exception.PplParseException;
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.StaticMetadata;
+import br.net.buzu.exception.PplParseException;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Metaclass;
+import br.net.buzu.model.StaticMetadata;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

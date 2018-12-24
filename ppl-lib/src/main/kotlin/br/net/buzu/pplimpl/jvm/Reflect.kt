@@ -16,9 +16,9 @@
  */
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.java.annotation.PplMetadata
-import br.net.buzu.java.exception.PplException
-import br.net.buzu.java.exception.PplReflectionException
+import br.net.buzu.annotation.PplMetadata
+import br.net.buzu.exception.PplException
+import br.net.buzu.exception.PplReflectionException
 import java.io.*
 import java.lang.Exception
 import java.lang.reflect.*
@@ -178,7 +178,7 @@ fun setValue(field: Field, instance: Any, param: Any?) {
         field.isAccessible = true
         field.set(instance, param)
     } catch (e: IllegalArgumentException) {
-        throw PplReflectionException("Illegal argument for field '${field.name}' Instance:$instance, param:$param", e)
+        throw PplReflectionException("Illegal argument for field '${field.name}' param:$param \n Instance:$instance", e)
     } catch (e: IllegalAccessException) {
         try {
             findAndInvokeSet(instance, field.name, field.type, param)

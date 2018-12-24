@@ -1,6 +1,6 @@
 package br.net.buzu.context;
 
-import br.net.buzu.java.context.JavaContext;
+import br.net.buzu.context.JavaContext;
 import org.junit.Before;
 import org.junit.Test;
 

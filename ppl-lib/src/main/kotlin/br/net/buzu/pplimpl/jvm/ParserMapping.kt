@@ -1,13 +1,14 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.java.model.Subtype
+import br.net.buzu.model.Subtype
 import java.lang.IllegalArgumentException
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 
 val charParser: ValueParser = { text, metaInfo -> text }
 val stringParser: ValueParser = { text, metaInfo -> text.trim { fillChar -> fillChar ==metaInfo.fillChar} }
-val numberParser: ValueParser = { text, metaInfo -> text }
+val numberParser: ValueParser = { text, metaInfo -> 0.0 }
 val integerParser: ValueParser = { text, metaInfo -> text.toInt() }
 val longParser: ValueParser = { text, metaInfo -> text.toLong() }
 
@@ -27,7 +28,7 @@ val isoTimestampParser: ValueParser = { text, metaInfo -> text }
 val utcTimestampParser: ValueParser = { text, metaInfo -> text }
 
 // Date
-val dateParser: ValueParser = { text, metaInfo -> DateTimeFormatter.BASIC_ISO_DATE.parse(text) }
+val dateParser: ValueParser = { text, metaInfo -> LocalDate.parse(text, DateTimeFormatter.BASIC_ISO_DATE) }
 val isoDateParser: ValueParser = { text, metaInfo -> DateTimeFormatter.ISO_DATE.parse(text) }
 val utcDateParser: ValueParser = { text, metaInfo -> DateTimeFormatter.ISO_OFFSET_DATE.parse(text) }
 

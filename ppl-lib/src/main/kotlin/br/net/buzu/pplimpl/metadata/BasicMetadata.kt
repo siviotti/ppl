@@ -16,12 +16,12 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.java.lang.*
-import br.net.buzu.java.model.Kind
-import br.net.buzu.java.model.MetaInfo
-import br.net.buzu.java.model.Metadata
+import br.net.buzu.lang.*
+import br.net.buzu.model.Kind
+import br.net.buzu.model.MetaInfo
+import br.net.buzu.model.Metadata
 
-import br.net.buzu.java.model.kindOf
+import br.net.buzu.model.kindOf
 
 /**
  * Most basic abstract implementation of Metadata.

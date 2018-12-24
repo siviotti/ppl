@@ -1,6 +1,6 @@
 package br.net.buzu.lib
 
-import br.net.buzu.java.lang.EMPTY
+import br.net.buzu.lang.EMPTY
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail

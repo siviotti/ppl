@@ -16,9 +16,9 @@
  */
 package br.net.buzu.metadata.build.load;
 
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.SizeType;
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.model.Metaclass;
+import br.net.buzu.model.SizeType;
+import br.net.buzu.model.Subtype;
 
 import java.util.Collection;
 

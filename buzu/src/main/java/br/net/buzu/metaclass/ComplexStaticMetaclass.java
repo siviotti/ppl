@@ -16,9 +16,9 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.java.model.StaticMetaclass;
-import br.net.buzu.java.api.PayloadMapper;
-import br.net.buzu.java.model.*;
+import br.net.buzu.model.StaticMetaclass;
+import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.model.*;
 import br.net.buzu.util.StaticBehave;
 
 import java.lang.reflect.Field;

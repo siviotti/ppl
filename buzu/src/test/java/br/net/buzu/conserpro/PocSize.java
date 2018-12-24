@@ -2,7 +2,7 @@ package br.net.buzu.conserpro;
 
 import br.net.buzu.Buzu;
 import static br.net.buzu.lib.TextKt.*;
-import br.net.buzu.java.model.PplString;
+import br.net.buzu.model.PplString;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 

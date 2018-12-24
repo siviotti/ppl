@@ -16,11 +16,11 @@
  */
 package br.net.buzu.parsing.simple.number;
 
-import br.net.buzu.java.exception.PplParseException;
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.StaticMetadata;
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.exception.PplParseException;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Metaclass;
+import br.net.buzu.model.StaticMetadata;
+import br.net.buzu.model.Subtype;
 
 import java.math.BigInteger;
 

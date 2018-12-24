@@ -16,8 +16,8 @@
  */
 package br.net.buzu.util;
 
-import br.net.buzu.java.annotation.PplMetadata;
-import br.net.buzu.java.exception.PplReflectionException;
+import br.net.buzu.annotation.PplMetadata;
+import br.net.buzu.exception.PplReflectionException;
 
 import java.io.*;
 import java.lang.reflect.*;

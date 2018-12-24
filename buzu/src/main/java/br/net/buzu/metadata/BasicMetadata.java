@@ -16,12 +16,12 @@
  */
 package br.net.buzu.metadata;
 
-import br.net.buzu.java.lang.Token;
-import br.net.buzu.java.model.Kind;
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metadata;
+import br.net.buzu.lang.Token;
+import br.net.buzu.model.Kind;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Metadata;
 
-import static br.net.buzu.java.model.KindKt.kindOf;
+import static br.net.buzu.model.KindKt.kindOf;
 
 /**
  * Most basic abstract implementation domainOf <code>Metadata</code>.

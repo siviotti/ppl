@@ -1,7 +1,7 @@
 package br.net.buzu.metadata;
 
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Subtype;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

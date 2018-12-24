@@ -3,19 +3,19 @@ package br.net.buzu.metadata.build.parse;
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.metadata.ComplexStaticMetadada;
 import br.net.buzu.metadata.code.ShortMetadataCoder;
-import br.net.buzu.java.lang.Syntax;
-import br.net.buzu.java.model.Domain;
-import br.net.buzu.java.model.Metadata;
-import br.net.buzu.java.model.StaticMetadata;
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.lang.Syntax;
+import br.net.buzu.model.Domain;
+import br.net.buzu.model.Metadata;
+import br.net.buzu.model.StaticMetadata;
+import br.net.buzu.model.Subtype;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.net.buzu.java.model.Domains.domainOf;
-import static br.net.buzu.java.model.PplStringKt.pplStringOf;
+import static br.net.buzu.model.Domains.domainOf;
+import static br.net.buzu.model.PplStringKt.pplStringOf;
 import static org.junit.Assert.*;
 
 /**

@@ -9,11 +9,11 @@ import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.code.ShortMetadataCoder;
 import br.net.buzu.pplimpl.metadata.GenericCodeManager;
 import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
-import br.net.buzu.java.api.MetadataCoder;
-import br.net.buzu.java.context.JavaContext;
-import br.net.buzu.java.exception.PplParseException;
-import br.net.buzu.java.lang.Token;
-import br.net.buzu.java.model.*;
+import br.net.buzu.api.MetadataCoder;
+import br.net.buzu.context.JavaContext;
+import br.net.buzu.exception.PplParseException;
+import br.net.buzu.lang.Token;
+import br.net.buzu.model.*;
 import br.net.buzu.sample.order.*;
 import br.net.buzu.sample.pojo.Person;
 import br.net.buzu.sample.ppl.Human;
@@ -31,9 +31,7 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 import static br.net.buzu.pplimpl.metadata.MetadataLoadKt.loadMetadata;
-import static br.net.buzu.pplimpl.jvm.JvmMetaTypeKt.*;
-
-
+import static br.net.buzu.pplimpl.jvm.MetaTypeReadKt.readMetaType;
 
 /**
  * Unit Test for Buzu. [REGRESSION TEST]

@@ -16,10 +16,10 @@
  */
 package br.net.buzu.parsing.complex;
 
-import br.net.buzu.java.api.PayloadMapper;
-import br.net.buzu.java.exception.PplParseException;
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.StaticMetadata;
+import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.exception.PplParseException;
+import br.net.buzu.model.Metaclass;
+import br.net.buzu.model.StaticMetadata;
 
 import java.util.Collections;
 import java.util.List;
@@ -109,7 +109,7 @@ public class ComplexMapper extends AbstractComplexMapper {
 	private Metaclass getMetaclassChild(StaticMetadata metadataChild, Metaclass metaclass) {
 		Metaclass metaclassChild = metaclass.getChildByName(metadataChild.name());
 		if (metaclassChild == null) {
-			throw new PplParseException("Field '" + metadataChild.name() + "' is missing in the Metaclass domainOf '"
+			throw new PplParseException("Field '" + metadataChild.name() + "' is missing in the Metaclass of '"
 					+ metaclass.elementType() + "':\n" + metaclass.toTree(0));
 		}
 		return metaclassChild;

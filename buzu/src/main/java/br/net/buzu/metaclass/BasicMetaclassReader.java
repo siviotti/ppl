@@ -17,17 +17,17 @@
 package br.net.buzu.metaclass;
 
 import br.net.buzu.context.BasicContext;
-import br.net.buzu.java.annotation.PplMetadata;
-import br.net.buzu.java.api.PplParser;
-import br.net.buzu.java.api.MetaclassReader;
-import br.net.buzu.java.api.PayloadMapper;
-import br.net.buzu.java.api.SkipStrategy;
-import br.net.buzu.java.context.JavaContext;
-import br.net.buzu.java.exception.PplException;
-import br.net.buzu.java.lang.Syntax;
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.annotation.PplMetadata;
+import br.net.buzu.api.PplParser;
+import br.net.buzu.api.MetaclassReader;
+import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.api.SkipStrategy;
+import br.net.buzu.context.JavaContext;
+import br.net.buzu.exception.PplException;
+import br.net.buzu.lang.Syntax;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Metaclass;
+import br.net.buzu.model.Subtype;
 import br.net.buzu.util.Reflect;
 import br.net.buzu.util.StaticBehave;
 
@@ -36,7 +36,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
-import static br.net.buzu.java.model.KindKt.kindOf;
+import static br.net.buzu.model.KindKt.kindOf;
 
 /**
  * Basic implementation domainOf <code>MetaclassReader</code>.

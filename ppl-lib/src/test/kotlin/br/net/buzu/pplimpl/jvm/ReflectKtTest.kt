@@ -1,7 +1,7 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.java.annotation.PplMetadata
-import br.net.buzu.java.exception.PplReflectionException
+import br.net.buzu.annotation.PplMetadata
+import br.net.buzu.exception.PplReflectionException
 import br.net.buzu.sample.order.Order
 import br.net.buzu.sample.pojo.Person
 import org.junit.jupiter.api.Test

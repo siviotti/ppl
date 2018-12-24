@@ -23,12 +23,12 @@ import br.net.buzu.metaclass.BasicSkipStrategy;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.build.parse.Splitter;
-import br.net.buzu.java.api.MetaclassReader;
-import br.net.buzu.java.api.MetadataLoader;
-import br.net.buzu.java.api.MetadataParser;
-import br.net.buzu.java.api.SkipStrategy;
-import br.net.buzu.java.context.JavaContext;
-import br.net.buzu.java.model.Dialect;
+import br.net.buzu.api.MetaclassReader;
+import br.net.buzu.api.MetadataLoader;
+import br.net.buzu.api.MetadataParser;
+import br.net.buzu.api.SkipStrategy;
+import br.net.buzu.context.JavaContext;
+import br.net.buzu.model.Dialect;
 
 import java.lang.annotation.Annotation;
 import java.util.HashSet;

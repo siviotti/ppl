@@ -16,8 +16,8 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.java.exception.PplMetaclassViolationException
-import br.net.buzu.java.model.*
+import br.net.buzu.exception.PplMetaclassViolationException
+import br.net.buzu.model.*
 import java.util.*
 
 @JvmOverloads

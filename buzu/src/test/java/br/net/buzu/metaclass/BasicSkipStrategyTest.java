@@ -1,7 +1,7 @@
 package br.net.buzu.metaclass;
 
-import br.net.buzu.java.annotation.PplIgnore;
-import br.net.buzu.java.annotation.PplUse;
+import br.net.buzu.annotation.PplIgnore;
+import br.net.buzu.annotation.PplUse;
 import org.junit.Test;
 
 import java.lang.reflect.Field;

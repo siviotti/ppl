@@ -16,8 +16,8 @@
  */
 package br.net.buzu.metadata.build.parse;
 
-import br.net.buzu.java.lang.Syntax;
-import br.net.buzu.java.lang.Token;
+import br.net.buzu.lang.Syntax;
+import br.net.buzu.lang.Token;
 
 import java.util.List;
 

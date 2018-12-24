@@ -17,8 +17,8 @@
 package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.lib.complexSize
-import br.net.buzu.java.model.MetaInfo
-import br.net.buzu.java.model.Metadata
+import br.net.buzu.model.MetaInfo
+import br.net.buzu.model.Metadata
 
 /**
  * Metadata parent domainOf others Metadatas.

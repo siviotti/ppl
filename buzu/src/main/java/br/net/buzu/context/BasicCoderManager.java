@@ -17,9 +17,9 @@
 package br.net.buzu.context;
 
 import br.net.buzu.metadata.code.*;
-import br.net.buzu.java.api.MetadataCoder;
-import br.net.buzu.java.api.CoderManager;
-import br.net.buzu.java.model.Dialect;
+import br.net.buzu.api.MetadataCoder;
+import br.net.buzu.api.CoderManager;
+import br.net.buzu.model.Dialect;
 
 /**
  * Simple CoderManager

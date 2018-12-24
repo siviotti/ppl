@@ -16,7 +16,7 @@
  */
 package br.net.buzu.parsing.simple.bool;
 
-import br.net.buzu.java.model.Subtype;
+import br.net.buzu.model.Subtype;
 
 /**
  * ValueParser to {@link Subtype#BOZ}

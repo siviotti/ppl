@@ -16,15 +16,15 @@
  */
 package br.net.buzu.metadata.build.parse;
 
-import static br.net.buzu.java.model.Domains.*;
+import static br.net.buzu.model.Domains.*;
 
 import br.net.buzu.context.BasicContext;
-import br.net.buzu.java.api.MetadataParser;
-import br.net.buzu.java.context.JavaContext;
-import br.net.buzu.java.exception.PplParseException;
+import br.net.buzu.api.MetadataParser;
+import br.net.buzu.context.JavaContext;
+import br.net.buzu.exception.PplParseException;
 
-import br.net.buzu.java.lang.Token;
-import br.net.buzu.java.model.*;
+import br.net.buzu.lang.Token;
+import br.net.buzu.model.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static br.net.buzu.java.lang.Syntax.*;
+import static br.net.buzu.lang.Syntax.*;
 
 /**
  * Metadata parser to transform <code>Text</code> to <code>Metadata</code>.

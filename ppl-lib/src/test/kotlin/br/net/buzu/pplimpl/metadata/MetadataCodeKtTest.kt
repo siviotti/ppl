@@ -1,7 +1,7 @@
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.java.model.Metadata
-import br.net.buzu.java.model.PplNode
+import br.net.buzu.model.Metadata
+import br.net.buzu.model.PplNode
 import org.junit.jupiter.api.Test
 import java.util.*
 

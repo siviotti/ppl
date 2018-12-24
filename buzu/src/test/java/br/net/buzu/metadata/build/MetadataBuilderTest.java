@@ -5,8 +5,8 @@ import br.net.buzu.context.BasicContext;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.java.model.Metadata;
-import br.net.buzu.java.model.PplString;
+import br.net.buzu.model.Metadata;
+import br.net.buzu.model.PplString;
 import org.junit.Before;
 import org.junit.Test;
 

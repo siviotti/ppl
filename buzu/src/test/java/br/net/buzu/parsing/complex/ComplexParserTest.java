@@ -7,10 +7,10 @@ import br.net.buzu.example.Customer;
 import br.net.buzu.example.Product;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import br.net.buzu.java.api.PayloadMapper;
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.Metadata;
-import br.net.buzu.java.model.StaticMetadata;
+import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.model.Metaclass;
+import br.net.buzu.model.Metadata;
+import br.net.buzu.model.StaticMetadata;
 import br.net.buzu.sample.pojo.Person;
 import org.junit.Test;
 

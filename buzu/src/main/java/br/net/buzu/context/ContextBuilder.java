@@ -16,9 +16,9 @@
  */
 package br.net.buzu.context;
 
-import br.net.buzu.java.api.CoderManager;
-import br.net.buzu.java.api.MetadataFactory;
-import br.net.buzu.java.context.*;
+import br.net.buzu.api.CoderManager;
+import br.net.buzu.api.MetadataFactory;
+import br.net.buzu.context.*;
 
 /**
  * Context domainOf parsing/serialization with Factories used to create objects and

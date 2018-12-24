@@ -19,9 +19,9 @@ package br.net.buzu.parsing.simple;
 import static br.net.buzu.lib.TextKt.*;
 
 import br.net.buzu.parsing.AbstractPositionalMapper;
-import br.net.buzu.java.model.MetaInfo;
-import br.net.buzu.java.model.Metaclass;
-import br.net.buzu.java.model.StaticMetadata;
+import br.net.buzu.model.MetaInfo;
+import br.net.buzu.model.Metaclass;
+import br.net.buzu.model.StaticMetadata;
 
 /**
  * Superclass domainOf simple parsers (String, Integer Boolean etc).

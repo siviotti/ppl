@@ -7,9 +7,9 @@ import br.net.buzu.metaclass.BasicSkipStrategy;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.build.parse.Splitter;
-import br.net.buzu.java.api.JavaPplMapper;
-import br.net.buzu.java.context.JavaContext;
-import br.net.buzu.java.model.Dialect;
+import br.net.buzu.api.JavaPplMapper;
+import br.net.buzu.context.JavaContext;
+import br.net.buzu.model.Dialect;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

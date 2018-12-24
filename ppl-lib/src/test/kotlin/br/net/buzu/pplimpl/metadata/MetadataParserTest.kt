@@ -1,9 +1,9 @@
 package br.net.buzu.pplimpl.metadata
 
 
-import br.net.buzu.java.exception.MetadataParseException
-import br.net.buzu.java.lang.NO_NAME_START
-import br.net.buzu.java.model.*
+import br.net.buzu.exception.MetadataParseException
+import br.net.buzu.lang.NO_NAME_START
+import br.net.buzu.model.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.util.*
