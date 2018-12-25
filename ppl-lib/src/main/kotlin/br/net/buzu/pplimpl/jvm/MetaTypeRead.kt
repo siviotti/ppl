@@ -9,7 +9,7 @@ import br.net.buzu.lang.EMPTY
 import br.net.buzu.lang.PATH_SEP
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.MetaType
-import br.net.buzu.model.TypeAdapter
+import br.net.buzu.model.ValueMapper
 import br.net.buzu.pplimpl.metadata.IndexSequence
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
@@ -27,10 +27,10 @@ fun readMetaType(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean
     val pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
     val index = seq.next()
     val metaInfo = createMetaInfo(pplMetadata, elementType, EMPTY, index)
-    val typeAdapter = typeAdapterOf(elementType, metaInfo.subtype)
-    val fields = getAllFields({ }::class.java)
+    val typeAdapter = getValueMapper(elementType, metaInfo.subtype)
+    val fakeField = getAllFields({ }::class.java)[0]
     return createJvmMetaType(EMPTY, EMPTY, type, elementType, metaInfo,
-            createChildren(metaInfo, EMPTY, elementType, skip, seq), index, fields[0], typeAdapter)
+            createChildren(metaInfo, EMPTY, elementType, skip, seq), index, fakeField, typeAdapter)
 }
 
 private fun readFromField(parentFullName: String, field: Field, index: Int, skip: (Field) -> Boolean, seq: IndexSequence): MetaType {
@@ -43,7 +43,7 @@ private fun readFromField(parentFullName: String, field: Field, index: Int, skip
     }
     val fullName = if (parentFullName.isEmpty()) field.name else parentFullName + PATH_SEP + field.name
     val metaInfo = createMetaInfo(pplMetadata, elementType, field.name, index)
-    val typeAdapter = typeAdapterOf(elementType, metaInfo.subtype)
+    val typeAdapter = getValueMapper(elementType, metaInfo.subtype)
     return createJvmMetaType(fullName, field.name, field.type, elementType, metaInfo,
             createChildren(metaInfo, fullName, elementType, skip, seq), index, field, typeAdapter)
 }
@@ -102,7 +102,7 @@ private fun skip(field: Field): Boolean {
 }
 
 fun createJvmMetaType(fullname: String, metaName: String, fieldType: Class<*>, elementType: Class<*>,
-                      metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, adapter: TypeAdapter): MetaType {
+                      metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, adapter: ValueMapper): MetaType {
     return when {
         elementType.isEnum -> EnumJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
         metaInfo.subtype.dataType.isComplex -> ComplexJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)

@@ -4,14 +4,12 @@ import br.net.buzu.exception.PplParseException
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.MetaType
 import br.net.buzu.model.StaticMetadata
-import br.net.buzu.model.TypeAdapter
+import br.net.buzu.model.ValueMapper
 import java.lang.reflect.Field
-import java.util.*
-import kotlin.reflect.jvm.internal.impl.resolve.constants.EnumValue
 
 class EnumJvmMetaType(fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>,
-                        metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, adapter: TypeAdapter)
-    : JvmMetaType(fieldPath, fieldName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter) {
+                      metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, valueMapper: ValueMapper)
+    : JvmMetaType(fieldPath, fieldName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper) {
 
 
     override fun parse(text: String, metadata: StaticMetadata): Any? {

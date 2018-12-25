@@ -21,12 +21,11 @@ import br.net.buzu.lib.fill
 import br.net.buzu.lib.fit
 import java.lang.reflect.Field
 import java.math.BigDecimal
-import java.util.*
 
 
 abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Class<*>, val elementType: Class<*>,
-                           metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val field: Field, adapter: TypeAdapter) :
-        MetaType(fullName, metaName, metaInfo, treeIndex, adapter, children) {
+                           metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val field: Field, valueMapper: ValueMapper) :
+        MetaType(fullName, metaName, metaInfo, treeIndex, valueMapper, children) {
 
     override val hasChildren: Boolean = children.isNotEmpty()
     private val isArray: Boolean = fieldType.isArray
@@ -101,7 +100,7 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
     }
 
     internal fun createAndFillArray(size: Int): Array<Any?> {
-        return if (isComplex) Array(size) { newInstance(elementType) } else Array(size){}
+        return if (isComplex) Array(size) { newInstance(elementType) } else Array(size) {}
     }
 
     override fun toString(): String = "[$treeIndex] $fieldFullName: ${fieldType.simpleName}<${elementType.simpleName}> ($metaName) $metaInfo"
@@ -109,19 +108,17 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
     internal fun parseAtomic(text: String, metadata: StaticMetadata): Any? {
         val metaInfo: MetaInfo = metadata.info()
         return if (isNull(text, metaInfo.nullChar))
-            if (metaInfo.hasDefaultValue())
-                adapter.valueToString(metadata.info().defaultValue)
-            else null
+            if (metaInfo.hasDefaultValue()) valueMapper.toValue(metadata.info().defaultValue, metaInfo) else null
         else
-            adapter.valueToString(text.substring(0, metaInfo.size))
+            valueMapper.toValue(text.substring(0, metaInfo.size), metaInfo)
     }
 
-    fun serializeAtomic(value: Any?, metadata: StaticMetadata): String {
+    internal fun serializeAtomic(value: Any?, metadata: StaticMetadata): String {
         return if (value == null) serializeNull(metadata.info()) else serializeValue(value, metadata.info())
     }
 
     internal fun serializeValue(value: Any, metaInfo: MetaInfo): String {
-        return fit(metaInfo.align, adapter.valueToString(value), metaInfo.size, metaInfo.fillChar)
+        return fit(metaInfo.align, valueMapper.toText(value), metaInfo.size, metaInfo.fillChar)
     }
 
     internal fun serializeNull(metaInfo: MetaInfo): String {
@@ -133,6 +130,4 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
         return true
     }
 
-
 }
-

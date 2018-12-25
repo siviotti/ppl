@@ -23,7 +23,7 @@ import br.net.buzu.model.StaticMetadata
 
 /**
  * Specification of a mapper based on Metadata and positional split to
- * stringToValue/serialize a Payload.
+ * toValue/serialize a Payload.
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -33,7 +33,7 @@ interface PayloadMapper  {
      * Convets the payload text to object based on Metadata.
      *
      * @param metadata
-     * The StaticMetadata used to stringToValue the object.
+     * The StaticMetadata used to toValue the object.
      * @param text
      * The text to be parsed.
      * @param toClass

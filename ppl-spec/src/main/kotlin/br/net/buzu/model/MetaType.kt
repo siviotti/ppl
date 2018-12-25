@@ -16,8 +16,6 @@
  */
 package br.net.buzu.model
 
-import java.lang.IllegalArgumentException
-
 /**
  * Basic tree node for type parsing/serialization
  *
@@ -25,7 +23,7 @@ import java.lang.IllegalArgumentException
  * @since 1.0
  */
 abstract class MetaType(val fieldFullName: String, val metaName: String, val metaInfo: MetaInfo,
-                        val treeIndex: Int, val adapter: TypeAdapter, val children: List<MetaType>) {
+                        val treeIndex: Int, val valueMapper: ValueMapper, val children: List<MetaType>) {
 
     abstract val hasChildren: Boolean
 
