@@ -28,8 +28,5 @@ class AtomicJvmMetaType(fieldPath: String, fieldName: String, fieldType: Class<*
 
     override fun parse(text: String, metadata: StaticMetadata): Any? = parseAtomic(text, metadata)
 
-    override fun serialize(value: Any?, metadata: StaticMetadata): String {
-        return serializeAtomic(value, metadata)
-    }
-
+    override fun serialize(value: Any?, metadata: StaticMetadata): String = serializeAtomic(value, metadata)
 }

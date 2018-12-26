@@ -24,12 +24,11 @@ class ComplexJvmMetaType (fieldPath: String, fieldName: String, fieldType: Class
     : JvmMetaType(fieldPath, fieldName,fieldType, elementType,metaInfo, children, treeIndex, field, valueMapper) {
 
     override fun parse(text: String, metadata: StaticMetadata): Any? {
-        val metaInfo: MetaInfo = metadata.info()
         var beginIndex = 0
         var endIndex = 0
         var parsed: Any?
         var childMetaType: MetaType
-        val array = createAndFillArray(metaInfo.maxOccurs)
+        val array = createAndFillArray(metadata.info().maxOccurs)
         for (i in array.indices) {
             for (childMetadata in metadata.children<StaticMetadata>()) {
                 childMetaType = getChildByMetaName(childMetadata.name())

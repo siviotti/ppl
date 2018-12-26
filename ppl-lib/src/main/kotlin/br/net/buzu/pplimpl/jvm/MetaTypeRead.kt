@@ -106,7 +106,7 @@ fun createJvmMetaType(fullname: String, metaName: String, fieldType: Class<*>, e
     return when {
         elementType.isEnum -> EnumJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
         metaInfo.subtype.dataType.isComplex -> ComplexJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
-        metaInfo.isMultiple -> ArrayJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
+        metaInfo.isMultiple -> MultipleJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
         else -> AtomicJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
     }
 
