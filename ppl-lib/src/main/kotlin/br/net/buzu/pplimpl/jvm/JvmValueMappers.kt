@@ -25,36 +25,47 @@ fun getValueMapper(elementType: Class<*>, subType: Subtype): ValueMapper {
         INTERNAL_ADAPTER_MAP[elementType] ?: ComplexMapper
 }
 
-abstract class JvmValueMapper(val subType: Subtype) : ValueMapper {
+abstract class JvmValueMapper(val type: Class<*>, val subType: Subtype) : ValueMapper {
     override fun getValueSize(value: Any?): Int = if (value == null) 0 else toText(value).length
 }
 
-object ComplexMapper : JvmValueMapper(Subtype.OBJ) {
+object ComplexMapper : JvmValueMapper(Any::class.java, Subtype.OBJ) {
     override fun toValue(positionalText: String, metaInfo: MetaInfo): Any? = throw OperationNotSupportedException()
     override fun toText(value: Any): String = throw OperationNotSupportedException()
 }
 
-object CharMapper : JvmValueMapper(Subtype.CHAR) {
+object CharMapper : JvmValueMapper(String::class.java, Subtype.CHAR) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text
     override fun toText(value: Any): String = value.toString()
 }
 
-object StringMapper : JvmValueMapper(Subtype.STRING) {
+object StringMapper : JvmValueMapper(String::class.java, Subtype.STRING) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.trim { fillChar -> fillChar == metaInfo.fillChar }
     override fun toText(value: Any): String = value.toString()
 }
 
-object DateMapper : JvmValueMapper(Subtype.DATE) {
+object DoubleMapper : JvmValueMapper(Double::class.java, Subtype.NUMBER) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.trim { fillChar -> fillChar == metaInfo.fillChar }
+    override fun toText(value: Any): String = value.toString()
+}
+
+object IntegerMapper : JvmValueMapper(Int::class.java, Subtype.NUMBER) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.toInt()
+    override fun toText(value: Any): String = value.toString()
+}
+
+object LongMapper : JvmValueMapper(Long::class.java, Subtype.NUMBER) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.toLong()
+    override fun toText(value: Any): String = value.toString()
+}
+
+
+object DateMapper : JvmValueMapper(LocalDate::class.java, Subtype.DATE) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = LocalDate.parse(text, DateTimeFormatter.BASIC_ISO_DATE)
     override fun toText(value: Any): String = (value as LocalDate).format(DateTimeFormatter.BASIC_ISO_DATE)
 }
 
-object DoubleMapper : JvmValueMapper(Subtype.NUMBER) {
-    override fun toValue(text: String, metaInfo: MetaInfo): Any? = 0.0
-    override fun toText(value: Any): String = value.toString()
-}
-
-object BooleanMapper : JvmValueMapper(Subtype.BOOLEAN) {
+object BooleanMapper : JvmValueMapper(Boolean::class.java, Subtype.BOOLEAN) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.toBoolean()
     override fun toText(value: Any): String = value.toString()
 }
