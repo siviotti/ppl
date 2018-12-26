@@ -3,7 +3,6 @@ package br.net.buzu.pplimpl.jvm
 import br.net.buzu.lang.EMPTY
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Subtype
-import br.net.buzu.model.ValueMapper
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -14,28 +13,39 @@ internal class JvmValueMapperTest {
 
     @Test
     fun testCharMapper() {
-        assertEquals("123", CharMapper.toValue("123", metaInfo))
-        assertEquals(" 123", CharMapper.toValue(" 123", metaInfo))
-        assertEquals("123 ", CharMapper.toValue("123 ", metaInfo))
-        assertEquals(" 123 ", CharMapper.toValue(" 123 ", metaInfo))
-        assertEquals("", CharMapper.toValue(" 123 ", metaInfo))
+        assertEquals('1', CharMapper.toValue("1", metaInfo))
+        assertEquals('A', CharMapper.toValue("A", metaInfo))
+        assertEquals('1', CharMapper.toValue("123 ", metaInfo))
+        assertEquals(' ', CharMapper.toValue("  1 ", metaInfo))
 
-        assertEquals("123", CharMapper.toText("123"))
-        assertEquals(" 123", CharMapper.toText(" 123"))
-        assertEquals("123 ", CharMapper.toText("123 "))
-        assertEquals(" 123 ", CharMapper.toText(" 123 "))
+        assertEquals("1", CharMapper.toText('1'))
+        assertEquals(" ", CharMapper.toText(' '))
     }
 
     @Test
-    fun testStringMapper() {
-        assertEquals("123", StringMapper.toValue("123", metaInfo))
-        assertEquals("123", StringMapper.toValue(" 123", metaInfo))
-        assertEquals("123", StringMapper.toValue("123 ", metaInfo))
-        assertEquals("123", StringMapper.toValue(" 123 ", metaInfo))
-        assertEquals("123", StringMapper.toText("123"))
-        assertEquals(" 123", StringMapper.toText(" 123"))
-        assertEquals("123 ", StringMapper.toText("123 "))
-        assertEquals(" 123 ", StringMapper.toText(" 123 "))
+    fun testStringFullMapper() {
+        assertEquals("123", StringFullMapper.toValue("123", metaInfo))
+        assertEquals(" 123", StringFullMapper.toValue(" 123", metaInfo))
+        assertEquals("123 ", StringFullMapper.toValue("123 ", metaInfo))
+        assertEquals(" 123 ", StringFullMapper.toValue(" 123 ", metaInfo))
+        assertEquals(" 123 ", StringFullMapper.toValue(" 123 ", metaInfo))
+
+        assertEquals("123", StringFullMapper.toText("123"))
+        assertEquals(" 123", StringFullMapper.toText(" 123"))
+        assertEquals("123 ", StringFullMapper.toText("123 "))
+        assertEquals(" 123 ", StringFullMapper.toText(" 123 "))
+    }
+
+    @Test
+    fun testStringTrimMapper() {
+        assertEquals("123", StringTrimMapper.toValue("123", metaInfo))
+        assertEquals("123", StringTrimMapper.toValue(" 123", metaInfo))
+        assertEquals("123", StringTrimMapper.toValue("123 ", metaInfo))
+        assertEquals("123", StringTrimMapper.toValue(" 123 ", metaInfo))
+        assertEquals("123", StringTrimMapper.toText("123"))
+        assertEquals(" 123", StringTrimMapper.toText(" 123"))
+        assertEquals("123 ", StringTrimMapper.toText("123 "))
+        assertEquals(" 123 ", StringTrimMapper.toText(" 123 "))
     }
 
     @Test

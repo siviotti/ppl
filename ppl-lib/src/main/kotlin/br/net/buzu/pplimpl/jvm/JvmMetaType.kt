@@ -34,7 +34,7 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
     private val childrenMap = children.map { it.metaName to it }.toMap()
 
     internal fun getChildByMetaName(name: String): MetaType = childrenMap[name]
-            ?: throw IllegalArgumentException("Child fieldAdapter '$name' not found at ${toString()}. Children:$children")
+            ?: throw IllegalArgumentException("MetaType child '$name' not found at ${toString()}. Children:$children")
 
 
     override fun nodeCount(): Int {

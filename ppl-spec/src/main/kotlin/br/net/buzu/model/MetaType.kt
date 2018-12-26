@@ -23,7 +23,7 @@ package br.net.buzu.model
  * @since 1.0
  */
 abstract class MetaType(val fieldFullName: String, val metaName: String, val metaInfo: MetaInfo,
-                        val treeIndex: Int, val valueMapper: ValueMapper, val children: List<MetaType>) {
+                        val treeIndex: Int, val valueMapper: ValueMapper, val children: List<MetaType>) : TypeAdapter{
 
     abstract val hasChildren: Boolean
 
@@ -36,10 +36,6 @@ abstract class MetaType(val fieldFullName: String, val metaName: String, val met
     // Metadata Load API
 
     abstract fun nodeCount(): Int
-
-    abstract fun getFieldValue(parentObject: Any): Any?
-
-    abstract fun setFieldValue(parentObject: Any, paramValue: Any?)
 
     abstract fun getValueSize(value: Any?): Int
 

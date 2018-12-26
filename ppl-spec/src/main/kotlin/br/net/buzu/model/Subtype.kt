@@ -93,9 +93,9 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
     TIME(DataType.TIME, "" + DataType.TIME.id, 6, true),
     /** Time hhmmssMMM  */
     TIME_AND_MILLIS(DataType.TIME, "" + DataType.TIME.id + "m", 13, true),
-    /** Default Time hh:mm:ss  */
+    /** ISO Time hh:mm:ss  */
     ISO_TIME(DataType.TIME, "" + DataType.TIME.id + "I", 8, true),
-    /** ISO Offset Time hh:mm:ss+hh:mm or hh:mm:ssZ  */
+    /** ISO Offset Time hh:mm:ss+hh:mm */
     UTC_TIME(DataType.TIME, "" + DataType.TIME.id + "U", 14, true),
 
     /** Default Period  */

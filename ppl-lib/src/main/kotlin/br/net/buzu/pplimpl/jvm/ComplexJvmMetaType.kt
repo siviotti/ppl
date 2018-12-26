@@ -1,3 +1,19 @@
+/*
+ *	This file is part of Buzu.
+ *
+ *   Buzu is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   Buzu is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public License
+ *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.model.*
@@ -14,14 +30,11 @@ class ComplexJvmMetaType (fieldPath: String, fieldName: String, fieldType: Class
         var parsed: Any?
         var childMetaType: MetaType
         val array = createAndFillArray(metaInfo.maxOccurs)
-        println("array class:" + array[0]?.javaClass)
         for (i in array.indices) {
             for (childMetadata in metadata.children<StaticMetadata>()) {
-                println("childMetadata: ${childMetadata.name()}")
                 childMetaType = getChildByMetaName(childMetadata.name())
                 endIndex += childMetadata.serialMaxSize()
                 parsed = childMetaType.parse (text.substring(beginIndex, endIndex), childMetadata)
-                println("parsed: $parsed")
                 beginIndex += childMetadata.serialMaxSize()
                 childMetaType.setFieldValue(array[i]!!, parsed)
             }
