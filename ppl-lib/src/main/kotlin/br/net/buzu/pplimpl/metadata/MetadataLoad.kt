@@ -88,9 +88,6 @@ internal class LoadNode(originalValue: Any?, val metaType: MetaType) {
     val occurs: Int
         get() = value.size
 
-    init {
-    }
-
     fun calcMaxSize(): Int {
         if (subtype.dataType.sizeType == SizeType.CUSTOM) {
             var max = 0
@@ -121,8 +118,6 @@ internal data class Max(var maxSize: Int = 0, var maxOccurs: Int = 0) {
 }
 
 internal class MaxMap(val size: Int) {
-    private val map = Array(size, { Max() })
-    fun getMaxByIndex(index: Int): Max {
-        return map[index]
-    }
+    private val map = Array(size) { Max() }
+    fun getMaxByIndex(index: Int): Max = map[index]
 }

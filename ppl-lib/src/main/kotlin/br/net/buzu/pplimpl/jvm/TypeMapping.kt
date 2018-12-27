@@ -53,7 +53,7 @@ private val INTERNAL_SUBTYPE_MAPPING: Map<Class<*>, Subtype> = mapOf(
         Char::class.javaPrimitiveType!! to Subtype.CHAR
 )
 
-val genericSubTypeOf: (Class<*>) -> Subtype = { type -> subTypeOf(type) }
+val genericSubTypeOf: (Class<*>) -> Subtype = { type -> defaultSubTypeOf(type) }
 /**
  * Creates a instance of `SubType` based on a Class.
  *
@@ -61,7 +61,7 @@ val genericSubTypeOf: (Class<*>) -> Subtype = { type -> subTypeOf(type) }
  * The class
  * @return The correct instance relative to the class.
  */
-fun subTypeOf(typeClass: Class<*>): Subtype = if (typeClass.isEnum) Subtype.STRING
+fun defaultSubTypeOf(typeClass: Class<*>): Subtype = if (typeClass.isEnum) Subtype.STRING
 else INTERNAL_SUBTYPE_MAPPING[typeClass] ?: Subtype.DEFAULT_COMPLEX
 
 fun isSimpleType(type: Class<*>): Boolean = INTERNAL_SUBTYPE_MAPPING.containsKey(type) || type.isEnum

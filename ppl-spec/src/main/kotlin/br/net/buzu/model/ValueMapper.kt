@@ -2,7 +2,6 @@ package br.net.buzu.model
 
 interface ValueMapper {
 
-    val subtype: Subtype
 
     fun getValueSize(value: Any?): Int
 

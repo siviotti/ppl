@@ -27,10 +27,10 @@ fun readMetaType(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean
     val pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
     val index = seq.next()
     val metaInfo = createMetaInfo(pplMetadata, elementType, EMPTY, index)
-    val typeAdapter = getValueMapper(elementType, metaInfo.subtype)
+    val valueMapper = getValueMapper(metaInfo.subtype, elementType)
     val fakeField = getAllFields({ }::class.java)[0]
     return createJvmMetaType(EMPTY, EMPTY, type, elementType, metaInfo,
-            createChildren(metaInfo, EMPTY, elementType, skip, seq), index, fakeField, typeAdapter)
+            createChildren(metaInfo, EMPTY, elementType, skip, seq), index, fakeField, valueMapper)
 }
 
 private fun readFromField(parentFullName: String, field: Field, index: Int, skip: (Field) -> Boolean, seq: IndexSequence): MetaType {
@@ -43,13 +43,13 @@ private fun readFromField(parentFullName: String, field: Field, index: Int, skip
     }
     val fullName = if (parentFullName.isEmpty()) field.name else parentFullName + PATH_SEP + field.name
     val metaInfo = createMetaInfo(pplMetadata, elementType, field.name, index)
-    val typeAdapter = getValueMapper(elementType, metaInfo.subtype)
+    val valueMapper = getValueMapper(metaInfo.subtype, elementType)
     return createJvmMetaType(fullName, field.name, field.type, elementType, metaInfo,
-            createChildren(metaInfo, fullName, elementType, skip, seq), index, field, typeAdapter)
+            createChildren(metaInfo, fullName, elementType, skip, seq), index, field, valueMapper)
 }
 
 private fun createMetaInfo(pplMetadata: PplMetadata?, elementType: Class<*>, fieldName: String, index: Int): MetaInfo {
-    val subtype = subTypeOf(elementType)
+    val subtype = defaultSubTypeOf(elementType)
     return if (pplMetadata != null)
         MetaInfo(pplMetadata, fieldName, subtype)
     else

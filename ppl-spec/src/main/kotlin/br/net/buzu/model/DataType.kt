@@ -66,8 +66,6 @@ enum class DataType(val id: Char, val group: DataGroup, val isComplex: Boolean =
 
     // COMPLEX (Class)
 
-    /** Plain Complex Object  */
-    FLAT(TYPE_FLAT, DataGroup.COMPLEX),
     /** Key/Value Object  */
     MAP(TYPE_MAP, DataGroup.COMPLEX),
     /** Hierarquical Complex Object  */

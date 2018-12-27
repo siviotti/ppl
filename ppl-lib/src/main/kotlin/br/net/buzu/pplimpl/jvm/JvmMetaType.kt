@@ -24,8 +24,8 @@ import java.math.BigDecimal
 
 
 abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Class<*>, val elementType: Class<*>,
-                           metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val field: Field, valueMapper: ValueMapper) :
-        MetaType(fullName, metaName, metaInfo, treeIndex, valueMapper, children) {
+                           metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val field: Field, val valueMapper: ValueMapper) :
+        MetaType(fullName, metaName, metaInfo, treeIndex, children) {
 
     override val hasChildren: Boolean = children.isNotEmpty()
     private val isArray: Boolean = fieldType.isArray
@@ -44,7 +44,6 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
             count
         }
     }
-
 
     override fun getFieldValue(parentObject: Any): Any? = getValue(field, parentObject)
 

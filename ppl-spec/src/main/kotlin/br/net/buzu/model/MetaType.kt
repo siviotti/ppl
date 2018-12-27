@@ -23,7 +23,7 @@ package br.net.buzu.model
  * @since 1.0
  */
 abstract class MetaType(val fieldFullName: String, val metaName: String, val metaInfo: MetaInfo,
-                        val treeIndex: Int, val valueMapper: ValueMapper, val children: List<MetaType>) : TypeAdapter{
+                        val treeIndex: Int, val children: List<MetaType>) : TypeAdapter{
 
     abstract val hasChildren: Boolean
 

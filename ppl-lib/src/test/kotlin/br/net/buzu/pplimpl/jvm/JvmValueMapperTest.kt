@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import java.math.BigDecimal
+import java.math.BigInteger
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.Month
 import java.util.*
 
 internal class JvmValueMapperTest {
@@ -20,40 +20,40 @@ internal class JvmValueMapperTest {
     // TEXT
 
     @Test
+    fun testOneCharMapper() {
+        assertEquals('1', OneCharMapper.toValue("1", metaInfo))
+        assertEquals('A', OneCharMapper.toValue("A", metaInfo))
+        assertEquals('1', OneCharMapper.toValue("123 ", metaInfo))
+        assertEquals(' ', OneCharMapper.toValue("  1 ", metaInfo))
+
+        assertEquals("1", OneCharMapper.toText('1'))
+        assertEquals(" ", OneCharMapper.toText(' '))
+    }
+
+    @Test
     fun testCharMapper() {
-        assertEquals('1', CharMapper.toValue("1", metaInfo))
-        assertEquals('A', CharMapper.toValue("A", metaInfo))
-        assertEquals('1', CharMapper.toValue("123 ", metaInfo))
-        assertEquals(' ', CharMapper.toValue("  1 ", metaInfo))
+        assertEquals("123", CharMapper.toValue("123", metaInfo))
+        assertEquals(" 123", CharMapper.toValue(" 123", metaInfo))
+        assertEquals("123 ", CharMapper.toValue("123 ", metaInfo))
+        assertEquals(" 123 ", CharMapper.toValue(" 123 ", metaInfo))
+        assertEquals(" 123 ", CharMapper.toValue(" 123 ", metaInfo))
 
-        assertEquals("1", CharMapper.toText('1'))
-        assertEquals(" ", CharMapper.toText(' '))
+        assertEquals("123", CharMapper.toText("123"))
+        assertEquals(" 123", CharMapper.toText(" 123"))
+        assertEquals("123 ", CharMapper.toText("123 "))
+        assertEquals(" 123 ", CharMapper.toText(" 123 "))
     }
 
     @Test
-    fun testStringFullMapper() {
-        assertEquals("123", StringFullMapper.toValue("123", metaInfo))
-        assertEquals(" 123", StringFullMapper.toValue(" 123", metaInfo))
-        assertEquals("123 ", StringFullMapper.toValue("123 ", metaInfo))
-        assertEquals(" 123 ", StringFullMapper.toValue(" 123 ", metaInfo))
-        assertEquals(" 123 ", StringFullMapper.toValue(" 123 ", metaInfo))
-
-        assertEquals("123", StringFullMapper.toText("123"))
-        assertEquals(" 123", StringFullMapper.toText(" 123"))
-        assertEquals("123 ", StringFullMapper.toText("123 "))
-        assertEquals(" 123 ", StringFullMapper.toText(" 123 "))
-    }
-
-    @Test
-    fun testStringTrimMapper() {
-        assertEquals("123", StringTrimMapper.toValue("123", metaInfo))
-        assertEquals("123", StringTrimMapper.toValue(" 123", metaInfo))
-        assertEquals("123", StringTrimMapper.toValue("123 ", metaInfo))
-        assertEquals("123", StringTrimMapper.toValue(" 123 ", metaInfo))
-        assertEquals("123", StringTrimMapper.toText("123"))
-        assertEquals(" 123", StringTrimMapper.toText(" 123"))
-        assertEquals("123 ", StringTrimMapper.toText("123 "))
-        assertEquals(" 123 ", StringTrimMapper.toText(" 123 "))
+    fun testStringMapper() {
+        assertEquals("123", StringMapper.toValue("123", metaInfo))
+        assertEquals("123", StringMapper.toValue(" 123", metaInfo))
+        assertEquals("123", StringMapper.toValue("123 ", metaInfo))
+        assertEquals("123", StringMapper.toValue(" 123 ", metaInfo))
+        assertEquals("123", StringMapper.toText("123"))
+        assertEquals(" 123", StringMapper.toText(" 123"))
+        assertEquals("123 ", StringMapper.toText("123 "))
+        assertEquals(" 123 ", StringMapper.toText(" 123 "))
     }
 
     // DECIMAL
@@ -91,6 +91,12 @@ internal class JvmValueMapperTest {
     fun testLongMapper() {
         assertEquals(123L, LongMapper.toValue("123", metaInfo))
         assertEquals("123", LongMapper.toText(123L))
+    }
+    @Test
+    fun testBigIntegerMapper() {
+        val bigInt = BigInteger.valueOf(123L)
+        assertEquals(bigInt, BigIntegerMapper.toValue("123", metaInfo))
+        assertEquals("123", BigIntegerMapper.toText(bigInt))
     }
 
     // BOOLEAN

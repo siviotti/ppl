@@ -17,10 +17,10 @@
 package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.StaticMetadata
 import br.net.buzu.model.Subtype
 import br.net.buzu.model.ValueMapper
 import java.math.BigDecimal
+import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -32,51 +32,110 @@ import javax.naming.OperationNotSupportedException
 typealias ValueParser = (text: String, metaInfo: MetaInfo) -> Any
 typealias ValueSerializer = (value: Any) -> String
 
-private val INTERNAL_ADAPTER_MAP: Map<Class<*>, ValueMapper> = mapOf(
-        String::class.java to StringTrimMapper,
-        LocalDate::class.java to DateMapper,
-        Double::class.java to DoubleMapper,
-        Boolean::class.java to BooleanMapper
-)
+const val OLD_TIME_OFFSET = 11
 
-fun getValueMapper(spec: Pair<Class<*>, Subtype>): ValueMapper {
+private val MAPPER_ARRAY = createArrayOfMapper()
 
+fun createArrayOfMapper(): Array<JvmValueMapper> {
+    val array = Array<JvmValueMapper>(Subtype.values().size + TIME_OFFSET) { ErrorMapper }
 
-    return if (spec.second == Subtype.CHAR) CharMapper
-    else
-        INTERNAL_ADAPTER_MAP[spec.first] ?: ComplexMapper
+    // Var Size (1 ValueParser per Subtype)
+    array[Subtype.CHAR.ordinal] = CharMapper
+    array[Subtype.STRING.ordinal] = StringMapper
+    array[Subtype.NUMBER.ordinal] = BigDecimalMapper
+    array[Subtype.INTEGER.ordinal] = IntegerMapper
+    array[Subtype.LONG.ordinal] = LongMapper
+
+    // Fixed Size (Many parsers per Subtype)
+
+    // Boolean
+    array[Subtype.BOOLEAN.ordinal] = BooleanMapper
+    array[Subtype.BOZ.ordinal] = BozMapper
+    array[Subtype.BTF.ordinal] = BtfMapper
+    array[Subtype.BYN.ordinal] = BynMapper
+    array[Subtype.BSN.ordinal] = BsnMapper
+
+    // Timestamp
+    array[Subtype.TIMESTAMP.ordinal] = TimestampMapper
+    array[Subtype.TIMESTAMP_AND_MILLIS.ordinal] = TimestampAndMillisMapper
+    array[Subtype.ISO_TIMESTAMP.ordinal] = IsoTimestampMapper
+    array[Subtype.UTC_TIMESTAMP.ordinal] = UtcTimestampMapper
+    // Date
+    array[Subtype.DATE.ordinal] = DateMapper
+    array[Subtype.ISO_DATE.ordinal] = IsoDateMapper
+    array[Subtype.UTC_DATE.ordinal] = UtcDateMapper
+    // Time
+    array[Subtype.TIME.ordinal] = TimeMapper
+    array[Subtype.TIME_AND_MILLIS.ordinal] = TimeAndMillisMapper
+    array[Subtype.ISO_TIME.ordinal] = IsoTimeMapper
+    array[Subtype.UTC_TIME.ordinal] = UtcTimeMapper
+
+    // OLD Timestamp
+    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP.ordinal] = OldTimestampMapper
+    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP_AND_MILLIS.ordinal] = OldTimestampAndMillisMapper
+    array[OLD_TIME_OFFSET + Subtype.ISO_TIMESTAMP.ordinal] = OldIsoTimestampMapper
+    array[OLD_TIME_OFFSET + Subtype.UTC_TIMESTAMP.ordinal] = OldUtcTimestampMapper
+    // OLD Date
+    array[OLD_TIME_OFFSET + Subtype.DATE.ordinal] = OldDateMapper
+    array[OLD_TIME_OFFSET + Subtype.ISO_DATE.ordinal] = OldIsoDateMapper
+    array[OLD_TIME_OFFSET + Subtype.UTC_DATE.ordinal] = OldUtcDateMapper
+    // OLD Time
+    array[OLD_TIME_OFFSET + Subtype.TIME.ordinal] = OldTimeMapper
+    array[OLD_TIME_OFFSET + Subtype.TIME_AND_MILLIS.ordinal] = OldTimeAndMillisMapper
+    array[OLD_TIME_OFFSET + Subtype.ISO_TIME.ordinal] = OldIsoTimeMapper
+    array[OLD_TIME_OFFSET + Subtype.UTC_TIME.ordinal] = OldUtcTimeMapper
+
+    return array
 }
 
-abstract class JvmValueMapper(val jvmType: Class<*>, subType: Subtype) : ValueMapper {
-    override val subtype: Subtype
-        get() = subtype
 
+fun getValueMapper(subtype:Subtype, elementType: Class<*>): ValueMapper {
+    return when {
+        elementType == Char::class.java || elementType == Char::class.javaPrimitiveType -> OneCharMapper
+        subtype == Subtype.NUMBER -> when {
+            elementType == BigDecimal::class.java -> BigDecimalMapper
+            elementType == Double::class.java || elementType == Double::class.javaPrimitiveType -> DoubleMapper
+            else -> FloatMapper
+        }
+        subtype == Subtype.LONG -> if (elementType == BigInteger::class.java) BigIntegerMapper else LongMapper
+        else -> if (elementType == Date::class.java) MAPPER_ARRAY[subtype.ordinal + OLD_TIME_OFFSET]
+        else MAPPER_ARRAY[subtype.ordinal]
+    }
+}
+
+abstract class JvmValueMapper(val jvmType: Class<*>, val subType: Subtype) : ValueMapper {
     override fun getValueSize(value: Any?): Int = if (value == null) 0 else toText(value).length
 }
 
-object ComplexMapper : JvmValueMapper(Any::class.java, Subtype.OBJ) {
+object ErrorMapper : JvmValueMapper(Any::class.java, Subtype.OBJ) {
     override fun toValue(positionalText: String, metaInfo: MetaInfo): Any? = throw OperationNotSupportedException()
     override fun toText(value: Any): String = throw OperationNotSupportedException()
 }
 
 // TEXT
 
-object CharMapper : JvmValueMapper(Char::class.java, Subtype.CHAR) {
+object OneCharMapper : JvmValueMapper(Char::class.java, Subtype.CHAR) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text[0]
     override fun toText(value: Any): String = (value as Char).toString()
 }
 
-object StringFullMapper : JvmValueMapper(String::class.java, Subtype.CHAR) {
+object CharMapper : JvmValueMapper(String::class.java, Subtype.CHAR) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text
     override fun toText(value: Any): String = value.toString()
 }
 
-object StringTrimMapper : JvmValueMapper(String::class.java, Subtype.STRING) {
+object StringMapper : JvmValueMapper(String::class.java, Subtype.STRING) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.trim { fillChar -> fillChar == metaInfo.fillChar }
     override fun toText(value: Any): String = value.toString()
 }
 
 // DECIMAL
+
+object NumberMapper : JvmValueMapper(Double::class.java, Subtype.NUMBER) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.toBigDecimal()
+    override fun toText(value: Any): String =
+            if (value.javaClass == BigDecimal::class.java) (value as BigDecimal).toPlainString() else value.toString()
+}
 
 object DoubleMapper : JvmValueMapper(Double::class.java, Subtype.NUMBER) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.toDouble()
@@ -91,7 +150,7 @@ object FloatMapper : JvmValueMapper(Float::class.java, Subtype.NUMBER) {
 object BigDecimalMapper : JvmValueMapper(BigDecimal::class.java, Subtype.NUMBER) {
     private val round = BigDecimal.ROUND_DOWN
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = BigDecimal(text).setScale(metaInfo.scale, round)
-    override fun toText(value: Any): String = value.toString()
+    override fun toText(value: Any): String = (value as BigDecimal).toPlainString()
 }
 
 // INTEGER
@@ -108,6 +167,11 @@ object LongMapper : JvmValueMapper(Long::class.java, Subtype.LONG) {
     override fun toText(value: Any): String = value.toString()
 }
 
+object BigIntegerMapper : JvmValueMapper(Long::class.java, Subtype.LONG) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.toBigInteger()
+    override fun toText(value: Any): String = (value as BigInteger).toString()
+}
+
 // BOOLEAN
 
 object BooleanMapper : JvmValueMapper(Boolean::class.java, Subtype.BOOLEAN) {
@@ -115,8 +179,8 @@ object BooleanMapper : JvmValueMapper(Boolean::class.java, Subtype.BOOLEAN) {
     override fun toText(value: Any): String = value.toString()
 }
 
-open class BooleanCharMapper (subType: Subtype, val trueChar: Char, val falseChar: Char) : JvmValueMapper(Boolean::class.java, subType) {
-    override fun toValue(text: String, metaInfo: MetaInfo): Any? = text[0]==trueChar
+open class BooleanCharMapper(subType: Subtype, val trueChar: Char, val falseChar: Char) : JvmValueMapper(Boolean::class.java, subType) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = text[0] == trueChar
     override fun toText(value: Any): String = if (value as Boolean) trueChar.toString() else falseChar.toString()
 }
 
@@ -127,8 +191,8 @@ object BsnMapper : BooleanCharMapper(Subtype.BSN, 'S', 'N')
 
 // DATE
 
-open class LocalDateMapper(subType: Subtype, private val formatter: DateTimeFormatter): JvmValueMapper(LocalDate::class.java, subType){
-    override fun toValue(text: String, metaInfo: MetaInfo): Any?= LocalDate.parse(text, formatter)
+open class LocalDateMapper(subType: Subtype, private val formatter: DateTimeFormatter) : JvmValueMapper(LocalDate::class.java, subType) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = LocalDate.parse(text, formatter)
     override fun toText(value: Any): String = (value as LocalDate).format(formatter)
 }
 
@@ -138,8 +202,8 @@ object UtcDateMapper : LocalDateMapper(Subtype.UTC_DATE, DateTimeFormatter.ISO_O
 
 // TIME
 
-open class LocalTimeMapper(subType: Subtype, private val formatter: DateTimeFormatter): JvmValueMapper(LocalTime::class.java, subType){
-    override fun toValue(text: String, metaInfo: MetaInfo): Any?= LocalTime.parse(text, formatter)
+open class LocalTimeMapper(subType: Subtype, private val formatter: DateTimeFormatter) : JvmValueMapper(LocalTime::class.java, subType) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = LocalTime.parse(text, formatter)
     override fun toText(value: Any): String = (value as LocalTime).format(formatter)
 }
 
@@ -150,8 +214,8 @@ object UtcTimeMapper : LocalTimeMapper(Subtype.UTC_TIME, DateTimeFormatter.ISO_O
 
 // TIMESTAMP
 
-open class LocalTimestampMapper(subType: Subtype, private val formatter: DateTimeFormatter): JvmValueMapper(LocalDateTime::class.java, subType){
-    override fun toValue(text: String, metaInfo: MetaInfo): Any?= LocalDateTime.parse(text, formatter)
+open class LocalTimestampMapper(subType: Subtype, private val formatter: DateTimeFormatter) : JvmValueMapper(LocalDateTime::class.java, subType) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = LocalDateTime.parse(text, formatter)
     override fun toText(value: Any): String = (value as LocalDateTime).format(formatter)
 }
 
@@ -162,21 +226,21 @@ object UtcTimestampMapper : LocalTimestampMapper(Subtype.UTC_TIMESTAMP, DateTime
 
 // OLD DATE
 
-open class OldJavaDateMapper(subType: Subtype, private val format: SimpleDateFormat): JvmValueMapper(Date::class.java, subType){
-    override fun toValue(text: String, metaInfo: MetaInfo): Any?= format.parse(text)
+open class OldJavaDateMapper(subType: Subtype, private val format: SimpleDateFormat) : JvmValueMapper(Date::class.java, subType) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = format.parse(text)
     override fun toText(value: Any): String = format.format(value as Date)
 }
 
-object OldDateMapper: OldJavaDateMapper(Subtype.DATE, SimpleDateFormat("yyyyMMdd"))
-object OldIsoDateMapper: OldJavaDateMapper(Subtype.ISO_DATE, SimpleDateFormat("yyyy-MM-dd"))
-object OldUtcDateMapper: OldJavaDateMapper(Subtype.UTC_DATE, SimpleDateFormat("yyyy-MM-ddXXX"))
+object OldDateMapper : OldJavaDateMapper(Subtype.DATE, SimpleDateFormat("yyyyMMdd"))
+object OldIsoDateMapper : OldJavaDateMapper(Subtype.ISO_DATE, SimpleDateFormat("yyyy-MM-dd"))
+object OldUtcDateMapper : OldJavaDateMapper(Subtype.UTC_DATE, SimpleDateFormat("yyyy-MM-ddXXX"))
 
-object OldTimeMapper: OldJavaDateMapper(Subtype.TIME, SimpleDateFormat("HHmmss"))
-object OldTimeAndMillisMapper: OldJavaDateMapper(Subtype.TIME_AND_MILLIS, SimpleDateFormat("HHmmssSSS"))
-object OldIsoTimeMapper: OldJavaDateMapper(Subtype.ISO_TIME, SimpleDateFormat("HH-mm-ss"))
-object OldUtcTimeMapper: OldJavaDateMapper(Subtype.UTC_TIME, SimpleDateFormat("HH-mm-ss+XXX"))
+object OldTimeMapper : OldJavaDateMapper(Subtype.TIME, SimpleDateFormat("HHmmss"))
+object OldTimeAndMillisMapper : OldJavaDateMapper(Subtype.TIME_AND_MILLIS, SimpleDateFormat("HHmmssSSS"))
+object OldIsoTimeMapper : OldJavaDateMapper(Subtype.ISO_TIME, SimpleDateFormat("HH-mm-ss"))
+object OldUtcTimeMapper : OldJavaDateMapper(Subtype.UTC_TIME, SimpleDateFormat("HH-mm-ss+XXX"))
 
-object OldTimestampMapper: OldJavaDateMapper(Subtype.TIMESTAMP, SimpleDateFormat("yyyyMMddHHmmss"))
-object OldTimestampAndMillisMapper: OldJavaDateMapper(Subtype.TIMESTAMP_AND_MILLIS, SimpleDateFormat("yyyyMMddHHmmssSSS"))
-object OldIsoTimestampMapper: OldJavaDateMapper(Subtype.ISO_TIMESTAMP, SimpleDateFormat("yyyy-MM-ddTHH-mm-ss"))
-object OldUtcTimestampMapper: OldJavaDateMapper(Subtype.UTC_TIMESTAMP, SimpleDateFormat("yyyy-MM-ddTHH-mm-ss+XXX"))
+object OldTimestampMapper : OldJavaDateMapper(Subtype.TIMESTAMP, SimpleDateFormat("yyyyMMddHHmmss"))
+object OldTimestampAndMillisMapper : OldJavaDateMapper(Subtype.TIMESTAMP_AND_MILLIS, SimpleDateFormat("yyyyMMddHHmmssSSS"))
+object OldIsoTimestampMapper : OldJavaDateMapper(Subtype.ISO_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss"))
+object OldUtcTimestampMapper : OldJavaDateMapper(Subtype.UTC_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss+XXX"))

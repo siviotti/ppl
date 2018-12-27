@@ -104,9 +104,6 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
     // DataType COMPLEX
 
     /** Tipo complexo porém plano, ou seja, sem ocorrências indefinidas  */
-    FLAT(DataType.FLAT),
-
-    /** Tipo complexo porém plano, ou seja, sem ocorrências indefinidas  */
     MAP(DataType.MAP),
 
     /** Tipo complexo porém plano, ou seja, sem ocorrências indefinidas  */
