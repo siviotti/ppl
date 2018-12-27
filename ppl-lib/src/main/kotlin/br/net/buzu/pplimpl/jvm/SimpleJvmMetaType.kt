@@ -22,11 +22,17 @@ import br.net.buzu.model.StaticMetadata
 import br.net.buzu.model.ValueMapper
 import java.lang.reflect.Field
 
-class MultipleJvmMetaType(fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>,
-                          metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, valueMapper: ValueMapper)
+/**
+ * MetaType for simple structures (not complex). This class handle "ATOMIC" and 'ARRAY" kinds.
+ *
+ * @author Douglas Siviotti
+ * @since 1.0
+ */
+open class SimpleJvmMetaType(fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>,
+                        metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, valueMapper: ValueMapper)
     : JvmMetaType(fieldPath, fieldName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper) {
 
-    override fun parse(text: String, metadata: StaticMetadata): Any? {
+    override fun doParse(text: String, metadata: StaticMetadata): Any? {
         val metaInfo: MetaInfo = metadata.info()
         var beginIndex = 0
         var endIndex = 0
@@ -40,7 +46,7 @@ class MultipleJvmMetaType(fieldPath: String, fieldName: String, fieldType: Class
 
     }
 
-    override fun serialize(value: Any?, metadata: StaticMetadata): String {
+    override fun doSerialize(value: Any?, metadata: StaticMetadata): String {
         val sb = StringBuilder()
         val array = valueToMaxArray(value, metadata.info().maxOccurs)
         for (element in array) sb.append(serializeAtomic(element, metadata))

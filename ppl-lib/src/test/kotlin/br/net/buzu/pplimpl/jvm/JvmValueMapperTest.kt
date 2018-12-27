@@ -261,4 +261,41 @@ internal class JvmValueMapperTest {
         assertEquals("2018-12-26-02:00", OldUtcDateMapper.toText(date))
     }
 
+    @Test
+    fun testGetValueMapper(){
+        // TEXT
+        assertEquals(OneCharMapper, getValueMapper(Subtype.CHAR, Char::class.java))
+        assertEquals(CharMapper, getValueMapper(Subtype.CHAR, String::class.java))
+        assertEquals(StringMapper, getValueMapper(Subtype.STRING, Any::class.java))
+        // NUMBER
+        assertEquals(DoubleMapper, getValueMapper(Subtype.NUMBER, Double::class.java))
+        assertEquals(DoubleMapper, getValueMapper(Subtype.NUMBER, Double::class.javaPrimitiveType!!))
+        assertEquals(BigDecimalMapper, getValueMapper(Subtype.NUMBER, BigDecimal::class.java))
+        assertEquals(FloatMapper, getValueMapper(Subtype.NUMBER, Float::class.java))
+        assertEquals(FloatMapper, getValueMapper(Subtype.NUMBER, Float::class.javaPrimitiveType!!))
+        // INTEGER
+        assertEquals(IntegerMapper, getValueMapper(Subtype.INTEGER, Int::class.java))
+        assertEquals(IntegerMapper, getValueMapper(Subtype.INTEGER, Int::class.javaPrimitiveType!!))
+        // LONG
+        assertEquals(LongMapper, getValueMapper(Subtype.LONG, Long::class.java))
+        assertEquals(LongMapper, getValueMapper(Subtype.LONG, Long::class.javaPrimitiveType!!))
+        assertEquals(BigIntegerMapper, getValueMapper(Subtype.LONG, BigInteger::class.java))
+        // BOOELAN
+        assertEquals(BooleanMapper, getValueMapper(Subtype.BOOLEAN, Any::class.java))
+        assertEquals(BozMapper, getValueMapper(Subtype.BOZ, Any::class.java))
+        assertEquals(BtfMapper, getValueMapper(Subtype.BTF, Any::class.java))
+        assertEquals(BynMapper, getValueMapper(Subtype.BYN, Any::class.java))
+        assertEquals(BsnMapper, getValueMapper(Subtype.BSN, Any::class.java))
+        // DATE
+        assertEquals(DateMapper, getValueMapper(Subtype.DATE, LocalDate::class.java))
+        assertEquals(OldDateMapper, getValueMapper(Subtype.DATE, Date::class.java))
+        assertEquals(IsoDateMapper, getValueMapper(Subtype.ISO_DATE, LocalDate::class.java))
+        assertEquals(OldIsoDateMapper, getValueMapper(Subtype.ISO_DATE, Date::class.java))
+        assertEquals(UtcDateMapper, getValueMapper(Subtype.UTC_DATE, LocalDate::class.java))
+        assertEquals(OldUtcDateMapper, getValueMapper(Subtype.UTC_DATE, Date::class.java))
+        // TIME
+        assertEquals(TimeMapper, getValueMapper(Subtype.TIME, LocalTime::class.java))
+        assertEquals(OldTimeMapper, getValueMapper(Subtype.TIME, Date::class.java))
+
+    }
 }

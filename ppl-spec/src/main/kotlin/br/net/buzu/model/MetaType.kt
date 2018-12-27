@@ -33,7 +33,7 @@ abstract class MetaType(val fieldFullName: String, val metaName: String, val met
 
     abstract fun serialize(value: Any?, metadata:StaticMetadata): String
 
-    // Metadata Load API
+    // Metadata Load Helper API
 
     abstract fun nodeCount(): Int
 

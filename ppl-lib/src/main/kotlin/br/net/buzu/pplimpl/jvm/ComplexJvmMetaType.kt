@@ -19,11 +19,17 @@ package br.net.buzu.pplimpl.jvm
 import br.net.buzu.model.*
 import java.lang.reflect.Field
 
+/**
+ * MetaType for complex structures (has children). This class handle "RECORD" and 'TABLE" kinds.
+ *
+ * @author Douglas Siviotti
+ * @since 1.0
+ */
 class ComplexJvmMetaType (fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>,
                           metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, valueMapper: ValueMapper)
     : JvmMetaType(fieldPath, fieldName,fieldType, elementType,metaInfo, children, treeIndex, field, valueMapper) {
 
-    override fun parse(text: String, metadata: StaticMetadata): Any? {
+    override fun doParse(text: String, metadata: StaticMetadata): Any? {
         var beginIndex = 0
         var endIndex = 0
         var parsed: Any?
@@ -41,7 +47,7 @@ class ComplexJvmMetaType (fieldPath: String, fieldName: String, fieldType: Class
         return maxArrayToValue(array)
     }
 
-    override fun serialize(value: Any?, metadata: StaticMetadata): String {
+    override fun doSerialize(value: Any?, metadata: StaticMetadata): String {
         val sb = StringBuilder()
         val array = valueToMaxArray(value, metadata.info().maxOccurs)
         var childMetaType: MetaType

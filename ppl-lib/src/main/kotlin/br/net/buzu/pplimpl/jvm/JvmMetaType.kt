@@ -16,15 +16,17 @@
  */
 package br.net.buzu.pplimpl.jvm
 
+import br.net.buzu.exception.PplParseException
+import br.net.buzu.exception.PplSerializeException
 import br.net.buzu.model.*
 import br.net.buzu.lib.fill
 import br.net.buzu.lib.fit
 import java.lang.reflect.Field
-import java.math.BigDecimal
 
 
 abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Class<*>, val elementType: Class<*>,
-                           metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val field: Field, val valueMapper: ValueMapper) :
+                           metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val field: Field,
+                           private val valueMapper: ValueMapper) :
         MetaType(fullName, metaName, metaInfo, treeIndex, children) {
 
     override val hasChildren: Boolean = children.isNotEmpty()
@@ -32,6 +34,27 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
     private val isCollection: Boolean = Collection::class.java.isAssignableFrom(fieldType)
     private val isComplex = metaInfo.subtype.dataType.isComplex
     private val childrenMap = children.map { it.metaName to it }.toMap()
+
+    override fun parse(text: String, metadata: StaticMetadata): Any? {
+        try {
+            return doParse(text, metadata)
+        } catch (e: Exception) {
+            throw PplParseException(this.javaClass.simpleName, text, elementType, e)
+        }
+    }
+
+    override fun serialize(value: Any?, metadata: StaticMetadata): String {
+        try {
+            return doSerialize(value, metadata)
+        } catch (e: Exception) {
+            throw PplSerializeException("Serialization error at ${toString()} \n valueMapper:${valueMapper.javaClass.simpleName}", e)
+        }
+    }
+
+    abstract fun doParse(text: String, metadata: StaticMetadata): Any?
+
+    abstract fun doSerialize(value: Any?, metadata: StaticMetadata): String
+
 
     internal fun getChildByMetaName(name: String): MetaType = childrenMap[name]
             ?: throw IllegalArgumentException("MetaType child '$name' not found at ${toString()}. Children:$children")
@@ -49,27 +72,13 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
 
     override fun setFieldValue(parentObject: Any, paramValue: Any?) = setValue(field, parentObject, paramValue)
 
-    override fun getValueSize(value: Any?): Int {
-        if (value == null) {
-            return 0
-        }
-        val str = if (PplSerializable::class.java.isAssignableFrom(value.javaClass)) {
-            (value as PplSerializable).asPplSerial()
-        } else {
-            if (value is BigDecimal) {
-                value.toPlainString()
-            } else {
-                value.toString()
-            }
-        }
-        return str?.length ?: 0
-    }
+    override fun getValueSize(value: Any?): Int = valueMapper.getValueSize(value)
 
-    internal fun maxArrayToValue(array: Array<Any?>): Any {
+    internal fun maxArrayToValue(array: Array<Any?>): Any? {
         return when {
             isArray -> array
             isCollection -> if (Set::class.java.isAssignableFrom(elementType)) array.toSet() else array.toList()
-            else -> array[0]!!
+            else -> array[0]
         }
     }
 
@@ -79,6 +88,10 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
             isArray -> value as Array<Any?>
             else -> arrayOf(value)
         }
+    }
+
+    internal fun createAndFillArray(size: Int): Array<Any?> {
+        return if (isComplex) Array(size) { newInstance(elementType) } else Array(size) {}
     }
 
     override fun valueToArray(value: Any?): Array<Any?> {
@@ -98,33 +111,25 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
         }
     }
 
-    internal fun createAndFillArray(size: Int): Array<Any?> {
-        return if (isComplex) Array(size) { newInstance(elementType) } else Array(size) {}
-    }
-
     override fun toString(): String = "[$treeIndex] $fieldFullName: ${fieldType.simpleName}<${elementType.simpleName}> ($metaName) $metaInfo"
 
-    internal fun parseAtomic(text: String, metadata: StaticMetadata): Any? {
-        val metaInfo: MetaInfo = metadata.info()
-        return if (isNull(text, metaInfo.nullChar))
-            if (metaInfo.hasDefaultValue()) valueMapper.toValue(metadata.info().defaultValue, metaInfo) else null
+    internal open fun parseAtomic(text: String, metadata: StaticMetadata): Any? {
+        val info: MetaInfo = metadata.info()
+        return if (isNull(text, info.nullChar))
+            if (info.hasDefaultValue()) valueMapper.toValue(metadata.info().defaultValue, info) else null
         else
-            valueMapper.toValue(text.substring(0, metaInfo.size), metaInfo)
+            valueMapper.toValue(text, info)
     }
 
-    internal fun serializeAtomic(value: Any?, metadata: StaticMetadata): String {
-        return if (value == null) serializeNull(metadata.info()) else serializeValue(value, metadata.info())
+    internal open fun serializeAtomic(value: Any?, metadata: StaticMetadata): String {
+        val info: MetaInfo = metadata.info()
+        return if (value == null) serializeNull(info)
+        else fit(info.align, valueMapper.toText(value), info.size, info.fillChar)
     }
 
-    internal fun serializeValue(value: Any, metaInfo: MetaInfo): String {
-        return fit(metaInfo.align, valueMapper.toText(value), metaInfo.size, metaInfo.fillChar)
-    }
+    internal fun serializeNull(info: MetaInfo): String = fill(info.align, info.defaultValue, info.size, info.nullChar)
 
-    internal fun serializeNull(metaInfo: MetaInfo): String {
-        return fill(metaInfo.align, metaInfo.defaultValue, metaInfo.size, metaInfo.nullChar)
-    }
-
-    internal fun isNull(text: String, nullChar: Char): Boolean {
+    private fun isNull(text: String, nullChar: Char): Boolean {
         for (i in 0 until text.length) if (text[i] != nullChar) return false
         return true
     }

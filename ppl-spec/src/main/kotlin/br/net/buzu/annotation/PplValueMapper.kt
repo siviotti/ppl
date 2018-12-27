@@ -14,25 +14,21 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplimpl.jvm
+package br.net.buzu.annotation
 
-import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.MetaType
-import br.net.buzu.model.StaticMetadata
 import br.net.buzu.model.ValueMapper
-import java.lang.reflect.Field
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
+import kotlin.reflect.KClass
 
 /**
- * MetaType specific for "ATOMIC" kind.
+ * Indicates that a given "ValueMapper" must be used over the default
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-class AtomicJvmMetaType(fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>,
-                        metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, valueMapper: ValueMapper)
-    : JvmMetaType(fieldPath, fieldName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper) {
+@Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
+annotation class PplValueMapper(val value: KClass<out ValueMapper>)
 
-    override fun doParse(text: String, metadata: StaticMetadata): Any? = parseAtomic(text, metadata)
 
-    override fun doSerialize(value: Any?, metadata: StaticMetadata): String = serializeAtomic(value, metadata)
-}

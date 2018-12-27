@@ -19,6 +19,7 @@ package br.net.buzu.pplimpl.jvm
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Subtype
 import br.net.buzu.model.ValueMapper
+import java.lang.reflect.Field
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.text.SimpleDateFormat
@@ -34,7 +35,7 @@ typealias ValueSerializer = (value: Any) -> String
 
 const val OLD_TIME_OFFSET = 11
 
-private val MAPPER_ARRAY = createArrayOfMapper()
+private val MAPPERS = createArrayOfMapper()
 
 fun createArrayOfMapper(): Array<JvmValueMapper> {
     val array = Array<JvmValueMapper>(Subtype.values().size + TIME_OFFSET) { ErrorMapper }
@@ -89,26 +90,27 @@ fun createArrayOfMapper(): Array<JvmValueMapper> {
 }
 
 
-fun getValueMapper(subtype:Subtype, elementType: Class<*>): ValueMapper {
+fun getValueMapper(subtype: Subtype, elementType: Class<*>): ValueMapper {
     return when {
         elementType == Char::class.java || elementType == Char::class.javaPrimitiveType -> OneCharMapper
-        subtype == Subtype.NUMBER -> when {
-            elementType == BigDecimal::class.java -> BigDecimalMapper
-            elementType == Double::class.java || elementType == Double::class.javaPrimitiveType -> DoubleMapper
+        subtype == Subtype.NUMBER -> when (elementType) {
+            BigDecimal::class.java -> BigDecimalMapper
+            Double::class.java, Double::class.javaPrimitiveType -> DoubleMapper
             else -> FloatMapper
         }
         subtype == Subtype.LONG -> if (elementType == BigInteger::class.java) BigIntegerMapper else LongMapper
-        else -> if (elementType == Date::class.java) MAPPER_ARRAY[subtype.ordinal + OLD_TIME_OFFSET]
-        else MAPPER_ARRAY[subtype.ordinal]
+        else -> MAPPERS[if (elementType == Date::class.java) subtype.ordinal + OLD_TIME_OFFSET else subtype.ordinal]
     }
 }
+
+// Special Mappers
 
 abstract class JvmValueMapper(val jvmType: Class<*>, val subType: Subtype) : ValueMapper {
     override fun getValueSize(value: Any?): Int = if (value == null) 0 else toText(value).length
 }
 
 object ErrorMapper : JvmValueMapper(Any::class.java, Subtype.OBJ) {
-    override fun toValue(positionalText: String, metaInfo: MetaInfo): Any? = throw OperationNotSupportedException()
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = throw OperationNotSupportedException()
     override fun toText(value: Any): String = throw OperationNotSupportedException()
 }
 
@@ -148,7 +150,7 @@ object FloatMapper : JvmValueMapper(Float::class.java, Subtype.NUMBER) {
 }
 
 object BigDecimalMapper : JvmValueMapper(BigDecimal::class.java, Subtype.NUMBER) {
-    private val round = BigDecimal.ROUND_DOWN
+    private const val round = BigDecimal.ROUND_DOWN
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = BigDecimal(text).setScale(metaInfo.scale, round)
     override fun toText(value: Any): String = (value as BigDecimal).toPlainString()
 }

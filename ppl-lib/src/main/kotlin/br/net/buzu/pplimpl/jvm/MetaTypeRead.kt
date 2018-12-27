@@ -102,12 +102,12 @@ private fun skip(field: Field): Boolean {
 }
 
 fun createJvmMetaType(fullname: String, metaName: String, fieldType: Class<*>, elementType: Class<*>,
-                      metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, adapter: ValueMapper): MetaType {
+                      metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, valueMapper: ValueMapper): MetaType {
     return when {
-        elementType.isEnum -> EnumJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
-        metaInfo.subtype.dataType.isComplex -> ComplexJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
-        metaInfo.isMultiple -> MultipleJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
-        else -> AtomicJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, adapter)
+        elementType.isEnum -> EnumSimpleJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper)
+        metaInfo.subtype.dataType.isComplex -> ComplexJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper)
+        metaInfo.isMultiple -> SimpleJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper)
+        else -> AtomicJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper)
     }
 
 }
