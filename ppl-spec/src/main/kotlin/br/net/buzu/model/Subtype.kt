@@ -67,17 +67,6 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
     /** Boolean based on 'S' or 'N'  */
     BSN(DataType.BOOLEAN, "BSN", 1, true),
 
-    // DataType TIMESTAMP
-
-    /** Default Timestamp yyyymmddhhmmss  */
-    TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id, 14, true),
-    /** Default Timestamp yyyymmddhhmmssMMM  */
-    TIMESTAMP_AND_MILLIS(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "m", 17, true),
-    /** iso Timestamp yyyy-mm-ddThh:mm:ss  */
-    ISO_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "I", 19, true),
-    /** ISO Offset Timestamp yyyy-mm-ddThh:mm:ss+hh:mm  */
-    UTC_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "U", 25, true),
-
     // DataType DATE
 
     /** Date yyyymmdd  */
@@ -97,6 +86,18 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
     ISO_TIME(DataType.TIME, "" + DataType.TIME.id + "I", 8, true),
     /** ISO Offset Time hh:mm:ss+hh:mm */
     UTC_TIME(DataType.TIME, "" + DataType.TIME.id + "U", 14, true),
+
+    // DataType TIMESTAMP
+
+    /** Default Timestamp yyyymmddhhmmss  */
+    TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id, 14, true),
+    /** Default Timestamp yyyymmddhhmmssMMM  */
+    TIMESTAMP_AND_MILLIS(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "m", 17, true),
+    /** iso Timestamp yyyy-mm-ddThh:mm:ss  */
+    ISO_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "I", 19, true),
+    /** ISO Offset Timestamp yyyy-mm-ddThh:mm:ss+hh:mm  */
+    UTC_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "U", 25, true),
+
 
     /** Default Period  */
     PERIOD(DataType.PERIOD),

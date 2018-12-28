@@ -59,7 +59,7 @@ internal fun loadChild(fieldValue: Any?, metaType: MetaType, parentNode: LoadNod
 }
 
 internal fun getMax(maxMap: MaxMap, node: LoadNode, metaInfo: MetaInfo): Max {
-    val fieldPath = node.metaType.fieldFullName
+    val fieldPath = node.metaType.fullName
     val max = maxMap.getMaxByIndex(node.metaType.treeIndex)
     val size = max.tryNewMaxSize(node.calcMaxSize()).maxSize
     val maxOccurs = max.tryNewMaxOccurs(node.occurs).maxOccurs

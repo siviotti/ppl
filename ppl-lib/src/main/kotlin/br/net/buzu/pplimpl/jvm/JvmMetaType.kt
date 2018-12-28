@@ -111,7 +111,7 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
         }
     }
 
-    override fun toString(): String = "[$treeIndex] $fieldFullName: ${fieldType.simpleName}<${elementType.simpleName}> ($metaName) $metaInfo"
+    override fun toString(): String = "[$treeIndex] $fullName: ${fieldType.simpleName}<${elementType.simpleName}> ($metaName) $metaInfo"
 
     internal open fun parseAtomic(text: String, metadata: StaticMetadata): Any? {
         val info: MetaInfo = metadata.info()

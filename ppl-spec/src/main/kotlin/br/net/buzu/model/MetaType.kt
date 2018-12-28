@@ -17,12 +17,13 @@
 package br.net.buzu.model
 
 /**
- * Basic tree node for type parsing/serialization
+ * Abstraction over a field type. If this type is complex the MetaType has children (another MetaTypes).
+ * So, the MetaType is a Node of a Tree os MetaTypes.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-abstract class MetaType(val fieldFullName: String, val metaName: String, val metaInfo: MetaInfo,
+abstract class MetaType(val fullName: String, val metaName: String, val metaInfo: MetaInfo,
                         val treeIndex: Int, val children: List<MetaType>) : TypeAdapter{
 
     abstract val hasChildren: Boolean

@@ -8,9 +8,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 internal class JvmValueMapperTest {
@@ -168,10 +167,10 @@ internal class JvmValueMapperTest {
 
     @Test
     fun testUtcDateMapper() {
-        val date = LocalDate.of(2018, 12, 26)
-        assertEquals(date, UtcDateMapper.toValue("2018-12-26+03:00", metaInfo))
-        //TODO
-        //assertEquals("2018-12-26+03:00", UtcDateMapper.toText(date))
+        val dateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
+        val date = ZonedDateTime.of(dateTime, ZoneId.of("America/Sao_Paulo"))
+        assertEquals(date, UtcDateMapper.toValue("2018-12-26-02:00", metaInfo))
+        assertEquals("2018-12-26-02:00", UtcDateMapper.toText(date))
     }
 
     // TIME
@@ -199,9 +198,10 @@ internal class JvmValueMapperTest {
 
     @Test
     fun testUtcTimeMapper() {
-        val date = LocalTime.of(11, 22, 33)
-        assertEquals(date, UtcTimeMapper.toValue("11:22:33+03:00", metaInfo))
-        //assertEquals("11:22:33+03:00", UtcTimeMapper.toText(date))
+        val date = ZonedDateTime.of(LocalDate.of(2018, 12, 26), LocalTime.of(11, 22, 33), ZoneId.of("America/Sao_Paulo"))
+        assertEquals(date, UtcTimeMapper.toValue("11:22:33-02:00", metaInfo))
+        println(date.format(DateTimeFormatter.ISO_OFFSET_TIME))
+        assertEquals("11:22:33+03:00", UtcTimeMapper.toText(date))
     }
 
     // TIMESTAMP
@@ -231,7 +231,7 @@ internal class JvmValueMapperTest {
     fun testUtcTimestampMapper() {
         val date = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
         assertEquals(date, UtcTimestampMapper.toValue("2018-12-26T11:22:33+03:00", metaInfo))
-        //assertEquals("2018-12-26T11:22:33+03:00", UtcTimestampMapper.toText(date))
+        assertEquals("2018-12-26T11:22:33+03:00", UtcTimestampMapper.toText(date))
     }
 
 
@@ -296,6 +296,20 @@ internal class JvmValueMapperTest {
         // TIME
         assertEquals(TimeMapper, getValueMapper(Subtype.TIME, LocalTime::class.java))
         assertEquals(OldTimeMapper, getValueMapper(Subtype.TIME, Date::class.java))
-
+        assertEquals(TimeAndMillisMapper, getValueMapper(Subtype.TIME_AND_MILLIS, LocalTime::class.java))
+        assertEquals(OldTimeAndMillisMapper, getValueMapper(Subtype.TIME_AND_MILLIS, Date::class.java))
+        assertEquals(IsoTimeMapper, getValueMapper(Subtype.ISO_TIME, LocalTime::class.java))
+        assertEquals(OldIsoTimeMapper, getValueMapper(Subtype.ISO_TIME, Date::class.java))
+        assertEquals(UtcTimeMapper, getValueMapper(Subtype.UTC_TIME, LocalTime::class.java))
+        assertEquals(OldUtcTimeMapper, getValueMapper(Subtype.UTC_TIME, Date::class.java))
+        // TIMESTAMP
+        assertEquals(TimestampMapper, getValueMapper(Subtype.TIMESTAMP, LocalDateTime::class.java))
+        assertEquals(OldTimestampMapper, getValueMapper(Subtype.TIMESTAMP, Date::class.java))
+        assertEquals(TimestampAndMillisMapper, getValueMapper(Subtype.TIMESTAMP_AND_MILLIS, LocalDateTime::class.java))
+        assertEquals(OldTimestampAndMillisMapper, getValueMapper(Subtype.TIMESTAMP_AND_MILLIS, Date::class.java))
+        assertEquals(IsoTimestampMapper, getValueMapper(Subtype.ISO_TIMESTAMP, LocalDateTime::class.java))
+        assertEquals(OldIsoTimestampMapper, getValueMapper(Subtype.ISO_TIMESTAMP, Date::class.java))
+        assertEquals(UtcTimestampMapper, getValueMapper(Subtype.UTC_TIMESTAMP, LocalDateTime::class.java))
+        assertEquals(OldUtcTimestampMapper, getValueMapper(Subtype.UTC_TIMESTAMP, Date::class.java))
     }
 }

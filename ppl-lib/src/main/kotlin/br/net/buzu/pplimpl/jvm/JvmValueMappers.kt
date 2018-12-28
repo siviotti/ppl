@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.naming.OperationNotSupportedException
@@ -38,7 +39,7 @@ const val OLD_TIME_OFFSET = 11
 private val MAPPERS = createArrayOfMapper()
 
 fun createArrayOfMapper(): Array<JvmValueMapper> {
-    val array = Array<JvmValueMapper>(Subtype.values().size + TIME_OFFSET) { ErrorMapper }
+    val array = Array<JvmValueMapper>(Subtype.values().size + OLD_TIME_OFFSET) { ErrorMapper }
 
     // Var Size (1 ValueParser per Subtype)
     array[Subtype.CHAR.ordinal] = CharMapper
@@ -133,12 +134,6 @@ object StringMapper : JvmValueMapper(String::class.java, Subtype.STRING) {
 
 // DECIMAL
 
-object NumberMapper : JvmValueMapper(Double::class.java, Subtype.NUMBER) {
-    override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.toBigDecimal()
-    override fun toText(value: Any): String =
-            if (value.javaClass == BigDecimal::class.java) (value as BigDecimal).toPlainString() else value.toString()
-}
-
 object DoubleMapper : JvmValueMapper(Double::class.java, Subtype.NUMBER) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.toDouble()
     override fun toText(value: Any): String = value.toString()
@@ -193,14 +188,19 @@ object BsnMapper : BooleanCharMapper(Subtype.BSN, 'S', 'N')
 
 // DATE
 
-open class LocalDateMapper(subType: Subtype, private val formatter: DateTimeFormatter) : JvmValueMapper(LocalDate::class.java, subType) {
+open class LocalDateMapper(subType: Subtype, private val formatter: DateTimeFormatter, jvmDateType: Class<*> = LocalDate::class.java)
+    : JvmValueMapper(jvmDateType, subType) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = LocalDate.parse(text, formatter)
     override fun toText(value: Any): String = (value as LocalDate).format(formatter)
 }
 
 object DateMapper : LocalDateMapper(Subtype.DATE, DateTimeFormatter.BASIC_ISO_DATE)
 object IsoDateMapper : LocalDateMapper(Subtype.ISO_DATE, DateTimeFormatter.ISO_DATE)
-object UtcDateMapper : LocalDateMapper(Subtype.UTC_DATE, DateTimeFormatter.ISO_OFFSET_DATE)
+
+object UtcDateMapper   : JvmValueMapper(ZonedDateTime::class.java, Subtype.UTC_DATE ) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? = ZonedDateTime.parse(text, DateTimeFormatter.ISO_OFFSET_DATE)
+    override fun toText(value: Any): String = (value as ZonedDateTime).format(DateTimeFormatter.ISO_OFFSET_DATE)
+}
 
 // TIME
 
