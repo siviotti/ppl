@@ -75,7 +75,6 @@ public class BasicParserFactory implements ParserFactory {
 		// Date
 		PARSER_ARRAY[Subtype.DATE.ordinal()] = DateMapper.INSTANCE;
 		PARSER_ARRAY[Subtype.ISO_DATE.ordinal()] = IsoDateMapper.INSTANCE;
-		PARSER_ARRAY[Subtype.UTC_DATE.ordinal()] = UtcDateMapper.INSTANCE;
 		// Time
 		PARSER_ARRAY[Subtype.TIME.ordinal()] = TimeMapper.INSTANCE;
 		PARSER_ARRAY[Subtype.TIME_AND_MILLIS.ordinal()] = TimestampAndMillisMapper.INSTANCE;
@@ -90,7 +89,6 @@ public class BasicParserFactory implements ParserFactory {
 		// OLD Date
 		PARSER_ARRAY[TIME_OFFSET + Subtype.DATE.ordinal()] = OldDateMapper.INSTANCE;
 		PARSER_ARRAY[TIME_OFFSET + Subtype.ISO_DATE.ordinal()] = OldIsoDateMapper.INSTANCE;
-		PARSER_ARRAY[TIME_OFFSET + Subtype.UTC_DATE.ordinal()] = OldUtcDateMapper.INSTANCE;
 		// OLD Time
 		PARSER_ARRAY[TIME_OFFSET + Subtype.TIME.ordinal()] = OldTimeMapper.INSTANCE;
 		PARSER_ARRAY[TIME_OFFSET + Subtype.TIME_AND_MILLIS.ordinal()] = OldTimestampAndMillisMapper.INSTANCE;

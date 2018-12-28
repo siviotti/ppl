@@ -73,8 +73,6 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
     DATE(DataType.DATE, "" + DataType.DATE.id, 8, true),
     /** Iso Date 8601: yyyy-mm-dd  */
     ISO_DATE(DataType.DATE, "" + DataType.DATE.id + "I", 10, true),
-    /** Iso Offset Date 8601: yyyy-mm-dd+hh:mm  */
-    UTC_DATE(DataType.DATE, "" + DataType.DATE.id + "U", 16, true),
 
     // DataType TIME
 
@@ -84,7 +82,7 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
     TIME_AND_MILLIS(DataType.TIME, "" + DataType.TIME.id + "m", 13, true),
     /** ISO Time hh:mm:ss  */
     ISO_TIME(DataType.TIME, "" + DataType.TIME.id + "I", 8, true),
-    /** ISO Offset Time hh:mm:ss+hh:mm */
+    /** ISO Offset Time hh:mm:ss+hh:mm - - UTC (Coordinated Universal Time)*/
     UTC_TIME(DataType.TIME, "" + DataType.TIME.id + "U", 14, true),
 
     // DataType TIMESTAMP
@@ -93,9 +91,9 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
     TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id, 14, true),
     /** Default Timestamp yyyymmddhhmmssMMM  */
     TIMESTAMP_AND_MILLIS(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "m", 17, true),
-    /** iso Timestamp yyyy-mm-ddThh:mm:ss  */
+    /** ISO Timestamp yyyy-mm-ddThh:mm:ss  */
     ISO_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "I", 19, true),
-    /** ISO Offset Timestamp yyyy-mm-ddThh:mm:ss+hh:mm  */
+    /** ISO Offset Timestamp yyyy-mm-ddThh:mm:ss+hh:mm  - UTC (Coordinated Universal Time)*/
     UTC_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "U", 25, true),
 
 

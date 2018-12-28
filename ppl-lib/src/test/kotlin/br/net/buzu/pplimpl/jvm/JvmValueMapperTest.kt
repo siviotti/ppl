@@ -12,6 +12,7 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+
 internal class JvmValueMapperTest {
 
     val metaInfo = MetaInfo(0, EMPTY, Subtype.STRING, 0, 0, 0, 0)
@@ -165,14 +166,6 @@ internal class JvmValueMapperTest {
         assertEquals("2018-12-26", IsoDateMapper.toText(date))
     }
 
-    @Test
-    fun testUtcDateMapper() {
-        val dateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
-        val date = ZonedDateTime.of(dateTime, ZoneId.of("America/Sao_Paulo"))
-        assertEquals(date, UtcDateMapper.toValue("2018-12-26-02:00", metaInfo))
-        assertEquals("2018-12-26-02:00", UtcDateMapper.toText(date))
-    }
-
     // TIME
 
     @Test
@@ -198,10 +191,10 @@ internal class JvmValueMapperTest {
 
     @Test
     fun testUtcTimeMapper() {
-        val date = ZonedDateTime.of(LocalDate.of(2018, 12, 26), LocalTime.of(11, 22, 33), ZoneId.of("America/Sao_Paulo"))
+        val localTime = LocalTime.of( 11, 22, 33)
+        val date = OffsetTime.of(localTime, ZoneOffset.ofHours(-2))
         assertEquals(date, UtcTimeMapper.toValue("11:22:33-02:00", metaInfo))
-        println(date.format(DateTimeFormatter.ISO_OFFSET_TIME))
-        assertEquals("11:22:33+03:00", UtcTimeMapper.toText(date))
+        assertEquals("11:22:33-02:00", UtcTimeMapper.toText(date))
     }
 
     // TIMESTAMP
@@ -215,9 +208,39 @@ internal class JvmValueMapperTest {
 
     @Test
     fun testTimestampAndMillisMapper() {
-        val date = LocalDateTime.of(2018, 12, 26, 11, 22, 33,  444 * 1000000)
-        assertEquals(date, TimestampAndMillisMapper.toValue("20181226112233444", metaInfo))
-        assertEquals("20181226112233444", TimestampAndMillisMapper.toText(date))
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
+        val formatter2 = DateTimeFormatter.ofPattern("HHmmssSSS")
+        val localTime = LocalTime.of(11,22,33, 444 * 1000000)
+        val localDateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33,  444 * 1000000)
+        println(localDateTime.format(formatter))
+        println(LocalDateTime.parse("20181226112233444", formatter))
+        assertEquals(localDateTime, TimestampAndMillisMapper.toValue("20181226112233444", metaInfo))
+        assertEquals("20181226112233444", TimestampAndMillisMapper.toText(localDateTime))
+    }
+
+    @Test
+    fun testParsedateTime(){
+        val text = "20181226112233444"
+        val localDateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33,  444 * 1000000 )
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
+        println("formatter: $formatter")
+        val formatted = localDateTime.format(formatter)
+        assertEquals(text, formatted)
+        val parsed = LocalDateTime.parse(text, formatter)
+        assertEquals(localDateTime, parsed)
+        println ("formatted: $formatted parsed: $parsed")
+    }
+    @Test
+    fun testParseTime(){
+        val text = "112233444"
+        val localTime = LocalTime.of( 11, 22, 33,  444 * 1000000)
+        val formatter = DateTimeFormatter.ofPattern("HHmmssSSS")
+        println("formatter: $formatter")
+        val formatted = localTime.format(formatter)
+        assertEquals(text, formatted)
+        val parsed = LocalTime.parse(text, formatter)
+        assertEquals(localTime, parsed)
+        println ("formatted: $formatted parsed: $parsed")
     }
 
     @Test
@@ -229,9 +252,10 @@ internal class JvmValueMapperTest {
 
     @Test
     fun testUtcTimestampMapper() {
-        val date = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
-        assertEquals(date, UtcTimestampMapper.toValue("2018-12-26T11:22:33+03:00", metaInfo))
-        assertEquals("2018-12-26T11:22:33+03:00", UtcTimestampMapper.toText(date))
+        val localdateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
+        val date = OffsetDateTime.of(localdateTime, ZoneOffset.ofHours(-2))
+        assertEquals(date, UtcTimestampMapper.toValue("2018-12-26T11:22:33-02:00", metaInfo))
+        assertEquals("2018-12-26T11:22:33-02:00", UtcTimestampMapper.toText(date))
     }
 
 
@@ -251,14 +275,6 @@ internal class JvmValueMapperTest {
         val date = Date(calendar.timeInMillis)
         assertEquals(date, OldIsoDateMapper.toValue("2018-12-26", metaInfo))
         assertEquals("2018-12-26", OldIsoDateMapper.toText(date))
-    }
-
-    @Test
-    fun testOldUtcDateMapper() {
-        val calendar = GregorianCalendar(2018, Calendar.DECEMBER, 26)
-        val date = Date(calendar.timeInMillis)
-        assertEquals(date, OldUtcDateMapper.toValue("2018-12-26-02:00", metaInfo))
-        assertEquals("2018-12-26-02:00", OldUtcDateMapper.toText(date))
     }
 
     @Test
@@ -291,8 +307,6 @@ internal class JvmValueMapperTest {
         assertEquals(OldDateMapper, getValueMapper(Subtype.DATE, Date::class.java))
         assertEquals(IsoDateMapper, getValueMapper(Subtype.ISO_DATE, LocalDate::class.java))
         assertEquals(OldIsoDateMapper, getValueMapper(Subtype.ISO_DATE, Date::class.java))
-        assertEquals(UtcDateMapper, getValueMapper(Subtype.UTC_DATE, LocalDate::class.java))
-        assertEquals(OldUtcDateMapper, getValueMapper(Subtype.UTC_DATE, Date::class.java))
         // TIME
         assertEquals(TimeMapper, getValueMapper(Subtype.TIME, LocalTime::class.java))
         assertEquals(OldTimeMapper, getValueMapper(Subtype.TIME, Date::class.java))
