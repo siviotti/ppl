@@ -24,8 +24,15 @@ import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
+import java.time.temporal.ChronoField
 import java.util.*
 import javax.naming.OperationNotSupportedException
+import java.text.DateFormat
+import java.text.ParseException
+import java.util.TimeZone
+
+
 
 const val OLD_TIME_OFFSET = 11
 
@@ -211,7 +218,11 @@ open class LocalTimestampMapper(subType: Subtype, private val formatter: DateTim
 }
 
 object TimestampMapper : LocalTimestampMapper(Subtype.TIMESTAMP, DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
-object TimestampAndMillisMapper : LocalTimestampMapper(Subtype.TIMESTAMP_AND_MILLIS, DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
+// JDK-BUG: object TimestampAndMillisMapper : LocalTimestampMapper(Subtype.TIMESTAMP_AND_MILLIS, DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
+// https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8031085
+object TimestampAndMillisMapper : LocalTimestampMapper(Subtype.TIMESTAMP_AND_MILLIS,
+        DateTimeFormatterBuilder().appendPattern("yyyyMMddHHmmss").
+                appendValue(ChronoField.MILLI_OF_SECOND, 3).toFormatter()) // Workaround
 object IsoTimestampMapper : LocalTimestampMapper(Subtype.ISO_TIMESTAMP, DateTimeFormatter.ISO_DATE_TIME)
 
 object UtcTimestampMapper : LocalTimestampMapper(Subtype.UTC_TIMESTAMP, DateTimeFormatter.ISO_ZONED_DATE_TIME) {
@@ -232,10 +243,11 @@ object OldIsoDateMapper : OldJavaDateMapper(Subtype.ISO_DATE, SimpleDateFormat("
 
 object OldTimeMapper : OldJavaDateMapper(Subtype.TIME, SimpleDateFormat("HHmmss"))
 object OldTimeAndMillisMapper : OldJavaDateMapper(Subtype.TIME_AND_MILLIS, SimpleDateFormat("HHmmssSSS"))
-object OldIsoTimeMapper : OldJavaDateMapper(Subtype.ISO_TIME, SimpleDateFormat("HH-mm-ss"))
-object OldUtcTimeMapper : OldJavaDateMapper(Subtype.UTC_TIME, SimpleDateFormat("HH-mm-ss+XXX"))
+object OldIsoTimeMapper : OldJavaDateMapper(Subtype.ISO_TIME, SimpleDateFormat("HH:mm:ss"))
+object OldUtcTimeMapper : OldJavaDateMapper(Subtype.UTC_TIME, SimpleDateFormat("HH:mm:ssX"))
 
 object OldTimestampMapper : OldJavaDateMapper(Subtype.TIMESTAMP, SimpleDateFormat("yyyyMMddHHmmss"))
 object OldTimestampAndMillisMapper : OldJavaDateMapper(Subtype.TIMESTAMP_AND_MILLIS, SimpleDateFormat("yyyyMMddHHmmssSSS"))
-object OldIsoTimestampMapper : OldJavaDateMapper(Subtype.ISO_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss"))
-object OldUtcTimestampMapper : OldJavaDateMapper(Subtype.UTC_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss+XXX"))
+object OldIsoTimestampMapper : OldJavaDateMapper(Subtype.ISO_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"))
+val sdfUtc = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZ")
+object OldUtcTimestampMapper : OldJavaDateMapper(Subtype.UTC_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX"))

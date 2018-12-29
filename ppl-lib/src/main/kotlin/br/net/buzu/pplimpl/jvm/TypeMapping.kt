@@ -19,10 +19,7 @@ package br.net.buzu.pplimpl.jvm
 import br.net.buzu.model.Subtype
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.Period
+import java.time.*
 import java.util.*
 
 private val INTERNAL_SUBTYPE_MAPPING: Map<Class<*>, Subtype> = mapOf(
@@ -34,8 +31,10 @@ private val INTERNAL_SUBTYPE_MAPPING: Map<Class<*>, Subtype> = mapOf(
         Boolean::class.javaPrimitiveType!! to Subtype.BOOLEAN,
         Date::class.java to Subtype.TIMESTAMP,
         LocalDateTime::class.java to Subtype.TIMESTAMP,
+        OffsetDateTime::class.java to Subtype.UTC_TIMESTAMP,
         LocalDate::class.java to Subtype.DATE,
         LocalTime::class.java to Subtype.TIME,
+        OffsetTime::class.java to Subtype.UTC_TIME,
         Period::class.java to Subtype.PERIOD,
         BigDecimal::class.java to Subtype.NUMBER,
         Double::class.java to Subtype.NUMBER,

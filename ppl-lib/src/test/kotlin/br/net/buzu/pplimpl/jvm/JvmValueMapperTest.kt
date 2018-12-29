@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.text.SimpleDateFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -208,39 +209,9 @@ internal class JvmValueMapperTest {
 
     @Test
     fun testTimestampAndMillisMapper() {
-        val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
-        val formatter2 = DateTimeFormatter.ofPattern("HHmmssSSS")
-        val localTime = LocalTime.of(11,22,33, 444 * 1000000)
         val localDateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33,  444 * 1000000)
-        println(localDateTime.format(formatter))
-        println(LocalDateTime.parse("20181226112233444", formatter))
         assertEquals(localDateTime, TimestampAndMillisMapper.toValue("20181226112233444", metaInfo))
         assertEquals("20181226112233444", TimestampAndMillisMapper.toText(localDateTime))
-    }
-
-    @Test
-    fun testParsedateTime(){
-        val text = "20181226112233444"
-        val localDateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33,  444 * 1000000 )
-        val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
-        println("formatter: $formatter")
-        val formatted = localDateTime.format(formatter)
-        assertEquals(text, formatted)
-        val parsed = LocalDateTime.parse(text, formatter)
-        assertEquals(localDateTime, parsed)
-        println ("formatted: $formatted parsed: $parsed")
-    }
-    @Test
-    fun testParseTime(){
-        val text = "112233444"
-        val localTime = LocalTime.of( 11, 22, 33,  444 * 1000000)
-        val formatter = DateTimeFormatter.ofPattern("HHmmssSSS")
-        println("formatter: $formatter")
-        val formatted = localTime.format(formatter)
-        assertEquals(text, formatted)
-        val parsed = LocalTime.parse(text, formatter)
-        assertEquals(localTime, parsed)
-        println ("formatted: $formatted parsed: $parsed")
     }
 
     @Test
@@ -254,7 +225,9 @@ internal class JvmValueMapperTest {
     fun testUtcTimestampMapper() {
         val localdateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
         val date = OffsetDateTime.of(localdateTime, ZoneOffset.ofHours(-2))
-        assertEquals(date, UtcTimestampMapper.toValue("2018-12-26T11:22:33-02:00", metaInfo))
+        val parsed = UtcTimestampMapper.toValue("2018-12-26T11:22:33-02:00", metaInfo)as OffsetDateTime
+        //println("parsed: $parsed h:${parsed.hour}")
+        assertEquals(date, parsed)
         assertEquals("2018-12-26T11:22:33-02:00", UtcTimestampMapper.toText(date))
     }
 
@@ -276,6 +249,83 @@ internal class JvmValueMapperTest {
         assertEquals(date, OldIsoDateMapper.toValue("2018-12-26", metaInfo))
         assertEquals("2018-12-26", OldIsoDateMapper.toText(date))
     }
+
+    // OLD TIME
+
+    @Test
+    fun testOldTimeMapper() {
+        val calendar = GregorianCalendar(1970,0,1,11,22,33)
+        val date = Date(calendar.timeInMillis)
+        println(date)
+        assertEquals(date, OldTimeMapper.toValue("112233", metaInfo))
+        assertEquals("112233", OldTimeMapper.toText(date))
+    }
+
+    @Test
+    fun testOldTimeAndMillisMapper() {
+        val cal = GregorianCalendar(1970,0,1,11,22,33)
+        cal.set(Calendar.MILLISECOND, 444)
+        val date = Date(cal.timeInMillis)
+        assertEquals(date, OldTimeAndMillisMapper.toValue("112233444", metaInfo))
+        assertEquals("112233444", OldTimeAndMillisMapper.toText(date))
+    }
+
+    @Test
+    fun testOldIsoTimeMapper() {
+        val date = Date(GregorianCalendar(1970,0,1,11,22,33).timeInMillis)
+        assertEquals(date, OldIsoTimeMapper.toValue("11:22:33", metaInfo))
+        assertEquals("11:22:33", OldIsoTimeMapper.toText(date))
+    }
+
+    @Test
+    fun testOldUtcTimeMapper() {
+        val calendar = GregorianCalendar(1970,0,1,11,22,33)
+        calendar.set(Calendar.ZONE_OFFSET, -2)
+        val date = Date(calendar.timeInMillis)
+        assertEquals(date, OldUtcTimeMapper.toValue("11:22:33-02:00", metaInfo))
+        assertEquals("11:22:33-02:00", OldUtcTimeMapper.toText(date))
+    }
+
+    // OLD TIMESTAMP
+
+    @Test
+    fun testOldTimestampMapper() {
+        val calendar = GregorianCalendar(2018,Calendar.DECEMBER,26,11,22,33)
+        val date = Date(calendar.timeInMillis)
+        assertEquals(date, OldTimestampMapper.toValue("20181226112233", metaInfo))
+        assertEquals("20181226112233", OldTimestampMapper.toText(date))
+    }
+
+    @Test
+    fun testOldTimestampAndMillisMapper() {
+        val calendar = GregorianCalendar(2018,Calendar.DECEMBER,26,11,22,33)
+        calendar.set(Calendar.MILLISECOND, 444)
+        val date = Date(calendar.timeInMillis)
+        assertEquals(date, OldTimestampAndMillisMapper.toValue("20181226112233444", metaInfo))
+        assertEquals("20181226112233444", OldTimestampAndMillisMapper.toText(date))
+    }
+
+    @Test
+    fun testOldIsoTimestampMapper() {
+        val calendar = GregorianCalendar(2018,Calendar.DECEMBER,26,11,22,33)
+        val date = Date(calendar.timeInMillis)
+        assertEquals(date, OldIsoTimestampMapper.toValue("2018-12-26T11:22:33", metaInfo))
+        assertEquals("2018-12-26T11:22:33", OldIsoTimestampMapper.toText(date))
+    }
+
+    @Test
+    fun testOldUtcTimestampMapper() {
+        val textDate = "2018-12-26T11:22:33-02:00"
+        val offsetDate = OffsetDateTime.parse(textDate, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+        println("offsetDate: $offsetDate")
+        val date = Date.from(offsetDate.toInstant())
+        println("date: $date")
+        val parsed = OldUtcTimestampMapper.toValue(textDate, metaInfo)
+        println("parsed: $parsed")
+        assertEquals(date, parsed)
+        assertEquals(textDate, OldUtcTimestampMapper.toText(date))
+    }
+
 
     @Test
     fun testGetValueMapper(){
