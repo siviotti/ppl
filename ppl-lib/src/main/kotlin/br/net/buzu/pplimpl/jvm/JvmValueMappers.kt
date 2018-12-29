@@ -57,33 +57,35 @@ fun createArrayOfMapper(): Array<JvmValueMapper> {
     array[Subtype.BYN.ordinal] = BynMapper
     array[Subtype.BSN.ordinal] = BsnMapper
 
-    // Timestamp
-    array[Subtype.TIMESTAMP.ordinal] = TimestampMapper
-    array[Subtype.TIMESTAMP_AND_MILLIS.ordinal] = TimestampAndMillisMapper
-    array[Subtype.ISO_TIMESTAMP.ordinal] = IsoTimestampMapper
-    array[Subtype.UTC_TIMESTAMP.ordinal] = UtcTimestampMapper
     // Date
     array[Subtype.DATE.ordinal] = DateMapper
     array[Subtype.ISO_DATE.ordinal] = IsoDateMapper
+    array[Subtype.UTC_DATE.ordinal] = UtcDateMapper
     // Time
     array[Subtype.TIME.ordinal] = TimeMapper
     array[Subtype.TIME_AND_MILLIS.ordinal] = TimeAndMillisMapper
     array[Subtype.ISO_TIME.ordinal] = IsoTimeMapper
     array[Subtype.UTC_TIME.ordinal] = UtcTimeMapper
+    // Timestamp
+    array[Subtype.TIMESTAMP.ordinal] = TimestampMapper
+    array[Subtype.TIMESTAMP_AND_MILLIS.ordinal] = TimestampAndMillisMapper
+    array[Subtype.ISO_TIMESTAMP.ordinal] = IsoTimestampMapper
+    array[Subtype.UTC_TIMESTAMP.ordinal] = UtcTimestampMapper
 
-    // OLD Timestamp
-    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP.ordinal] = OldTimestampMapper
-    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP_AND_MILLIS.ordinal] = OldTimestampAndMillisMapper
-    array[OLD_TIME_OFFSET + Subtype.ISO_TIMESTAMP.ordinal] = OldIsoTimestampMapper
-    array[OLD_TIME_OFFSET + Subtype.UTC_TIMESTAMP.ordinal] = OldUtcTimestampMapper
     // OLD Date
     array[OLD_TIME_OFFSET + Subtype.DATE.ordinal] = OldDateMapper
     array[OLD_TIME_OFFSET + Subtype.ISO_DATE.ordinal] = OldIsoDateMapper
+    array[OLD_TIME_OFFSET + Subtype.UTC_DATE.ordinal] = OldUtcDateMapper
     // OLD Time
     array[OLD_TIME_OFFSET + Subtype.TIME.ordinal] = OldTimeMapper
     array[OLD_TIME_OFFSET + Subtype.TIME_AND_MILLIS.ordinal] = OldTimeAndMillisMapper
     array[OLD_TIME_OFFSET + Subtype.ISO_TIME.ordinal] = OldIsoTimeMapper
     array[OLD_TIME_OFFSET + Subtype.UTC_TIME.ordinal] = OldUtcTimeMapper
+    // OLD Timestamp
+    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP.ordinal] = OldTimestampMapper
+    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP_AND_MILLIS.ordinal] = OldTimestampAndMillisMapper
+    array[OLD_TIME_OFFSET + Subtype.ISO_TIMESTAMP.ordinal] = OldIsoTimestampMapper
+    array[OLD_TIME_OFFSET + Subtype.UTC_TIMESTAMP.ordinal] = OldUtcTimestampMapper
 
     return array
 }
@@ -193,6 +195,7 @@ open class LocalDateMapper(subType: Subtype, private val formatter: DateTimeForm
 
 object DateMapper : LocalDateMapper(Subtype.DATE, DateTimeFormatter.BASIC_ISO_DATE)
 object IsoDateMapper : LocalDateMapper(Subtype.ISO_DATE, DateTimeFormatter.ISO_DATE)
+object UtcDateMapper : LocalDateMapper(Subtype.UTC_DATE, DateTimeFormatter.ISO_OFFSET_DATE)
 
 // TIME
 
@@ -240,14 +243,14 @@ open class OldJavaDateMapper(subType: Subtype, private val format: SimpleDateFor
 
 object OldDateMapper : OldJavaDateMapper(Subtype.DATE, SimpleDateFormat("yyyyMMdd"))
 object OldIsoDateMapper : OldJavaDateMapper(Subtype.ISO_DATE, SimpleDateFormat("yyyy-MM-dd"))
+object OldUtcDateMapper : OldJavaDateMapper(Subtype.UTC_DATE, SimpleDateFormat("yyyy-MM-ddXXX"))
 
 object OldTimeMapper : OldJavaDateMapper(Subtype.TIME, SimpleDateFormat("HHmmss"))
 object OldTimeAndMillisMapper : OldJavaDateMapper(Subtype.TIME_AND_MILLIS, SimpleDateFormat("HHmmssSSS"))
 object OldIsoTimeMapper : OldJavaDateMapper(Subtype.ISO_TIME, SimpleDateFormat("HH:mm:ss"))
-object OldUtcTimeMapper : OldJavaDateMapper(Subtype.UTC_TIME, SimpleDateFormat("HH:mm:ssX"))
+object OldUtcTimeMapper : OldJavaDateMapper(Subtype.UTC_TIME, SimpleDateFormat("HH:mm:ssXXX"))
 
 object OldTimestampMapper : OldJavaDateMapper(Subtype.TIMESTAMP, SimpleDateFormat("yyyyMMddHHmmss"))
 object OldTimestampAndMillisMapper : OldJavaDateMapper(Subtype.TIMESTAMP_AND_MILLIS, SimpleDateFormat("yyyyMMddHHmmssSSS"))
 object OldIsoTimestampMapper : OldJavaDateMapper(Subtype.ISO_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"))
-val sdfUtc = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZ")
-object OldUtcTimestampMapper : OldJavaDateMapper(Subtype.UTC_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX"))
+object OldUtcTimestampMapper : OldJavaDateMapper(Subtype.UTC_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"))

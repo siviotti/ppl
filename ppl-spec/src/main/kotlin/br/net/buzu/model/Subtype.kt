@@ -73,6 +73,8 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
     DATE(DataType.DATE, "" + DataType.DATE.id, 8, true),
     /** Iso Date 8601: yyyy-mm-dd  */
     ISO_DATE(DataType.DATE, "" + DataType.DATE.id + "I", 10, true),
+    /** ISO Offset Date yyyy-mm-dd+hh:mm  - UTC (Coordinated Universal Time)*/
+    UTC_DATE(DataType.DATE, "" + DataType.DATE.id + "U", 16, true),
 
     // DataType TIME
 
