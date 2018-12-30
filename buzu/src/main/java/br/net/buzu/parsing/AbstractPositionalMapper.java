@@ -16,8 +16,6 @@
  */
 package br.net.buzu.parsing;
 
-import static br.net.buzu.lib.TextKt.*;
-
 import br.net.buzu.api.PayloadMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.StaticMetadata;
@@ -84,7 +82,7 @@ public abstract class AbstractPositionalMapper implements PayloadMapper {
 	}
 
 	protected String serializeNull(StaticMetadata metadata) {
-		return fill(metadata.info().getAlign(), "", metadata.serialMaxSize(),
+		return br.net.buzu.pplimpl.util.TextKt.fill(metadata.info().getAlign(), "", metadata.serialMaxSize(),
 				metadata.info().getSubtype().getDataType().getNullChar());
 	}
 

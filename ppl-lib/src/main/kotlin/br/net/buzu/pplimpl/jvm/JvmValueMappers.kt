@@ -28,67 +28,14 @@ import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.ChronoField
 import java.util.*
 import javax.naming.OperationNotSupportedException
-import java.text.DateFormat
-import java.text.ParseException
-import java.util.TimeZone
-
-
 
 const val OLD_TIME_OFFSET = 11
 
+typealias GetValueMapper= (Subtype, Class<*>)-> ValueMapper
+
+val genericGetValueMapper: GetValueMapper = { subtype, elementType-> getValueMapper(subtype, elementType)}
+
 private val MAPPERS = createArrayOfMapper()
-
-fun createArrayOfMapper(): Array<JvmValueMapper> {
-    val array = Array<JvmValueMapper>(Subtype.values().size + OLD_TIME_OFFSET) { ErrorMapper }
-
-    // Var Size (1 ValueParser per Subtype)
-    array[Subtype.CHAR.ordinal] = CharMapper
-    array[Subtype.STRING.ordinal] = StringMapper
-    array[Subtype.NUMBER.ordinal] = BigDecimalMapper
-    array[Subtype.INTEGER.ordinal] = IntegerMapper
-    array[Subtype.LONG.ordinal] = LongMapper
-
-    // Fixed Size (Many parsers per Subtype)
-
-    // Boolean
-    array[Subtype.BOOLEAN.ordinal] = BooleanMapper
-    array[Subtype.BOZ.ordinal] = BozMapper
-    array[Subtype.BTF.ordinal] = BtfMapper
-    array[Subtype.BYN.ordinal] = BynMapper
-    array[Subtype.BSN.ordinal] = BsnMapper
-
-    // Date
-    array[Subtype.DATE.ordinal] = DateMapper
-    array[Subtype.ISO_DATE.ordinal] = IsoDateMapper
-    array[Subtype.UTC_DATE.ordinal] = UtcDateMapper
-    // Time
-    array[Subtype.TIME.ordinal] = TimeMapper
-    array[Subtype.TIME_AND_MILLIS.ordinal] = TimeAndMillisMapper
-    array[Subtype.ISO_TIME.ordinal] = IsoTimeMapper
-    array[Subtype.UTC_TIME.ordinal] = UtcTimeMapper
-    // Timestamp
-    array[Subtype.TIMESTAMP.ordinal] = TimestampMapper
-    array[Subtype.TIMESTAMP_AND_MILLIS.ordinal] = TimestampAndMillisMapper
-    array[Subtype.ISO_TIMESTAMP.ordinal] = IsoTimestampMapper
-    array[Subtype.UTC_TIMESTAMP.ordinal] = UtcTimestampMapper
-
-    // OLD Date
-    array[OLD_TIME_OFFSET + Subtype.DATE.ordinal] = OldDateMapper
-    array[OLD_TIME_OFFSET + Subtype.ISO_DATE.ordinal] = OldIsoDateMapper
-    array[OLD_TIME_OFFSET + Subtype.UTC_DATE.ordinal] = OldUtcDateMapper
-    // OLD Time
-    array[OLD_TIME_OFFSET + Subtype.TIME.ordinal] = OldTimeMapper
-    array[OLD_TIME_OFFSET + Subtype.TIME_AND_MILLIS.ordinal] = OldTimeAndMillisMapper
-    array[OLD_TIME_OFFSET + Subtype.ISO_TIME.ordinal] = OldIsoTimeMapper
-    array[OLD_TIME_OFFSET + Subtype.UTC_TIME.ordinal] = OldUtcTimeMapper
-    // OLD Timestamp
-    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP.ordinal] = OldTimestampMapper
-    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP_AND_MILLIS.ordinal] = OldTimestampAndMillisMapper
-    array[OLD_TIME_OFFSET + Subtype.ISO_TIMESTAMP.ordinal] = OldIsoTimestampMapper
-    array[OLD_TIME_OFFSET + Subtype.UTC_TIMESTAMP.ordinal] = OldUtcTimestampMapper
-
-    return array
-}
 
 fun getValueMapper(subtype: Subtype, elementType: Class<*>): ValueMapper {
     return when {
@@ -99,15 +46,18 @@ fun getValueMapper(subtype: Subtype, elementType: Class<*>): ValueMapper {
             else -> FloatMapper
         }
         subtype == Subtype.LONG -> if (elementType == BigInteger::class.java) BigIntegerMapper else LongMapper
-        else -> MAPPERS[if (elementType == Date::class.java) subtype.ordinal + OLD_TIME_OFFSET else subtype.ordinal]
+        elementType == Date::class.java -> MAPPERS[subtype.ordinal + OLD_TIME_OFFSET]
+        else -> MAPPERS[subtype.ordinal]
     }
 }
 
-// Special Mappers
+// Superclass of All Mappers
 
 abstract class JvmValueMapper(val jvmType: Class<*>, val subType: Subtype) : ValueMapper {
     override fun getValueSize(value: Any?): Int = if (value == null) 0 else toText(value).length
 }
+
+// Error Mapper - Complex type has no Mapper
 
 object ErrorMapper : JvmValueMapper(Any::class.java, Subtype.OBJ) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = throw OperationNotSupportedException()
@@ -254,3 +204,55 @@ object OldTimestampMapper : OldJavaDateMapper(Subtype.TIMESTAMP, SimpleDateForma
 object OldTimestampAndMillisMapper : OldJavaDateMapper(Subtype.TIMESTAMP_AND_MILLIS, SimpleDateFormat("yyyyMMddHHmmssSSS"))
 object OldIsoTimestampMapper : OldJavaDateMapper(Subtype.ISO_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"))
 object OldUtcTimestampMapper : OldJavaDateMapper(Subtype.UTC_TIMESTAMP, SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"))
+
+fun createArrayOfMapper(): Array<JvmValueMapper> {
+    val array = Array<JvmValueMapper>(Subtype.values().size + OLD_TIME_OFFSET) { ErrorMapper }
+
+    // Var Size (1 ValueParser per Subtype)
+    array[Subtype.CHAR.ordinal] = CharMapper
+    array[Subtype.STRING.ordinal] = StringMapper
+    array[Subtype.NUMBER.ordinal] = BigDecimalMapper
+    array[Subtype.INTEGER.ordinal] = IntegerMapper
+    array[Subtype.LONG.ordinal] = LongMapper
+
+    // Fixed Size (Many parsers per Subtype)
+
+    // Boolean
+    array[Subtype.BOOLEAN.ordinal] = BooleanMapper
+    array[Subtype.BOZ.ordinal] = BozMapper
+    array[Subtype.BTF.ordinal] = BtfMapper
+    array[Subtype.BYN.ordinal] = BynMapper
+    array[Subtype.BSN.ordinal] = BsnMapper
+
+    // Date
+    array[Subtype.DATE.ordinal] = DateMapper
+    array[Subtype.ISO_DATE.ordinal] = IsoDateMapper
+    array[Subtype.UTC_DATE.ordinal] = UtcDateMapper
+    // Time
+    array[Subtype.TIME.ordinal] = TimeMapper
+    array[Subtype.TIME_AND_MILLIS.ordinal] = TimeAndMillisMapper
+    array[Subtype.ISO_TIME.ordinal] = IsoTimeMapper
+    array[Subtype.UTC_TIME.ordinal] = UtcTimeMapper
+    // Timestamp
+    array[Subtype.TIMESTAMP.ordinal] = TimestampMapper
+    array[Subtype.TIMESTAMP_AND_MILLIS.ordinal] = TimestampAndMillisMapper
+    array[Subtype.ISO_TIMESTAMP.ordinal] = IsoTimestampMapper
+    array[Subtype.UTC_TIMESTAMP.ordinal] = UtcTimestampMapper
+
+    // OLD Date
+    array[OLD_TIME_OFFSET + Subtype.DATE.ordinal] = OldDateMapper
+    array[OLD_TIME_OFFSET + Subtype.ISO_DATE.ordinal] = OldIsoDateMapper
+    array[OLD_TIME_OFFSET + Subtype.UTC_DATE.ordinal] = OldUtcDateMapper
+    // OLD Time
+    array[OLD_TIME_OFFSET + Subtype.TIME.ordinal] = OldTimeMapper
+    array[OLD_TIME_OFFSET + Subtype.TIME_AND_MILLIS.ordinal] = OldTimeAndMillisMapper
+    array[OLD_TIME_OFFSET + Subtype.ISO_TIME.ordinal] = OldIsoTimeMapper
+    array[OLD_TIME_OFFSET + Subtype.UTC_TIME.ordinal] = OldUtcTimeMapper
+    // OLD Timestamp
+    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP.ordinal] = OldTimestampMapper
+    array[OLD_TIME_OFFSET + Subtype.TIMESTAMP_AND_MILLIS.ordinal] = OldTimestampAndMillisMapper
+    array[OLD_TIME_OFFSET + Subtype.ISO_TIMESTAMP.ordinal] = OldIsoTimestampMapper
+    array[OLD_TIME_OFFSET + Subtype.UTC_TIMESTAMP.ordinal] = OldUtcTimestampMapper
+
+    return array
+}

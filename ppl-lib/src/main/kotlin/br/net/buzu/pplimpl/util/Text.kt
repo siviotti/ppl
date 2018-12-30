@@ -14,7 +14,7 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.lib
+package br.net.buzu.pplimpl.util
 
 import br.net.buzu.model.Align
 
@@ -35,11 +35,11 @@ import br.net.buzu.model.Align
  * tamanho.
  */
 fun fit(align: Align, original: String, finalSize: Int, c: Char): String {
-    val l = original.length
-    if (l == finalSize) {
+    val len = original.length
+    if (len == finalSize) {
         return original
     }
-    return if (l < finalSize) fill(align, original, finalSize, c) else cut(align, original, finalSize)
+    return if (len < finalSize) fill(align, original, finalSize, c) else cut(align, original, finalSize)
 }
 
 /**

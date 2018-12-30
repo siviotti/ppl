@@ -21,11 +21,9 @@ import br.net.buzu.exception.MetadataParseException
 import br.net.buzu.exception.PplParseException
 import br.net.buzu.lang.*
 import br.net.buzu.model.*
-import br.net.buzu.lib.splitNodes
 import java.text.ParseException
 import java.util.*
 
-internal const val SUBTYPE_NOT_FOUND = "Subtype not found:"
 internal const val INVALID_DOMAIN = "Invalid domain:"
 
 private val EMPTY_DOMAIN = Domain.EMPTY
@@ -39,10 +37,10 @@ fun parseMetadata(pplString: PplString): Metadata {
 fun parseMetadata(pplString: PplString, createMetadata: CreateMetadata, seq: IndexSequence = IndexSequence()): Metadata {
     try {
         val nodes = splitNodes(pplString.pplMetadata)
-        if (nodes.size > 1) {
-            return parseMetadata(createRoot(nodes), createMetadata, seq)
+        return if (nodes.size > 1) {
+            parseMetadata(createRoot(nodes), createMetadata, seq)
         } else {
-            return parseMetadata(nodes[0], createMetadata, seq)
+            parseMetadata(nodes[0], createMetadata, seq)
         }
     } catch (e: ParseException) {
         throw PplParseException("Parsing error on text:\n$pplString", e)
@@ -139,7 +137,7 @@ internal fun extractScale(node: PplNode): Int {
     val index = scale.indexOf(DECIMAL_SEP)
     if (index > 0) {
         scale = scale.substring(index + 1)
-        return if (scale.length > 0) Integer.parseInt(scale) else 0
+        return if (scale.isNotEmpty()) Integer.parseInt(scale) else 0
     }
     return 0
 }
@@ -227,11 +225,3 @@ class IndexSequence {
     fun next() = internalValue++
 }
 
-private fun isStaticChildren(children: List<Metadata>): Boolean {
-    for (child in children) {
-        if (child !is StaticStructure) {
-            return false
-        }
-    }
-    return true
-}

@@ -16,7 +16,6 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.lib.checkStaticInfo
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.StaticMetadata
 

@@ -31,11 +31,7 @@ import br.net.buzu.model.kindOf
  */
 abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
 
-    private val kind: Kind
-
-    init {
-        this.kind = kindOf(metaInfo.isMultiple, metaInfo.subtype.dataType.isComplex)
-    }
+    private val kind: Kind = kindOf(metaInfo.isMultiple, metaInfo.subtype.dataType.isComplex)
 
     override fun name(): String {
         return metaInfo.name
@@ -44,7 +40,6 @@ abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
     override fun kind(): Kind {
         return kind
     }
-
 
     override fun info(): MetaInfo {
         return metaInfo
@@ -73,10 +68,6 @@ abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
         return sb.toString()
     }
 
-    // **************************************************
-    // hashcode, equals, toString
-    // **************************************************
-
     override fun hashCode(): Int {
         return kind.ordinal * 31 + metaInfo.hashCode() * 31
     }
@@ -99,4 +90,18 @@ abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
         return kind.toString() + " " + metaInfo.ppl()
     }
 
+    companion object {
+        private const val META_INFO_MUST_BE_COMPLETE = "MetaInfo must be complete (size and occurrences) for static behave:"
+        private const val META_INFO_CANNOT_BE_UNBOUNDED = "MetaInfo cannot be Unbounded (no limit) for static behave:"
+
+        internal fun checkStaticInfo(metaInfo: MetaInfo): MetaInfo {
+            if (!metaInfo.isComplete) {
+                throw IllegalArgumentException(META_INFO_MUST_BE_COMPLETE + metaInfo)
+            }
+            if (metaInfo.isUnbounded) {
+                throw IllegalArgumentException(META_INFO_CANNOT_BE_UNBOUNDED + metaInfo)
+            }
+            return metaInfo
+        }
+    }
 }

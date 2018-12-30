@@ -14,10 +14,11 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.lib
+package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.exception.PplParseException
 import br.net.buzu.lang.EMPTY
+import br.net.buzu.lang.SPACE
 import br.net.buzu.lang.VAR
 import br.net.buzu.lang.*
 import br.net.buzu.model.PplNode
@@ -75,17 +76,20 @@ internal fun splitNode(text: String): PplNode {
     val sOccurs = splitOccurs(text, sSize.index)
 
     if (sOccurs.index > lastCharIndex) {
-        return PplNode(name = sName.part, type = sType.part, size = sSize.part, occurs = sOccurs.part, children = sType.children)
+        return PplNode(name = sName.part, type = sType.part, size = sSize.part, occurs = sOccurs.part,
+                children = sType.children)
     }
     val sDomain = splitDomain(text, sOccurs.index)
 
     if (sDomain.index > lastCharIndex) {
-        return PplNode(name = sName.part, type = sType.part, size = sSize.part, occurs = sOccurs.part, domain = sDomain.part, children = sType.children)
+        return PplNode(name = sName.part, type = sType.part, size = sSize.part, occurs = sOccurs.part,
+                domain = sDomain.part, children = sType.children)
     }
     val sDefaultValue = splitDefaultValue(text, sDomain.index)
 
     if (sDefaultValue.index > lastCharIndex) {
-        return PplNode(name = sName.part, type = sType.part, size = sSize.part, occurs = sOccurs.part, defaultValue = sDefaultValue.part, children = sType.children)
+        return PplNode(name = sName.part, type = sType.part, size = sSize.part, occurs = sOccurs.part,
+                defaultValue = sDefaultValue.part, children = sType.children)
     }
     val sTags = splitTags(text, sDefaultValue.index)
 

@@ -1,7 +1,6 @@
 package br.net.buzu.conserpro;
 
 import br.net.buzu.Buzu;
-import static br.net.buzu.lib.TextKt.*;
 import br.net.buzu.model.PplString;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
@@ -94,9 +93,9 @@ public class PocSize {
 	}
 
 	private static String dump(String format, String text, int size) {
-		String sizeStr = leftFit("" + size, 4, '0');
+		String sizeStr = br.net.buzu.pplimpl.util.TextKt.leftFit("" + size, 4, '0');
 		save(text, "-" + sizeStr + "-"+ "-" + format.trim());
-		return format + "[" + leftFit("" + text.length(), 8, '0') + "]";
+		return format + "[" + br.net.buzu.pplimpl.util.TextKt.leftFit("" + text.length(), 8, '0') + "]";
 	}
 
 	private static void save(String text, String format) {

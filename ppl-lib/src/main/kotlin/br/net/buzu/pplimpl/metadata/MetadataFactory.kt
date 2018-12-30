@@ -3,6 +3,7 @@ package br.net.buzu.pplimpl.metadata
 import br.net.buzu.api.MetadataFactory
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
+import br.net.buzu.model.StaticStructure
 
 typealias CreateMetadata = (MetaInfo, List<Metadata>) -> Metadata
 
@@ -15,7 +16,7 @@ fun createMetadata(metaInfo: MetaInfo, children: List<Metadata>): Metadata {
         else
             SimpleMetadata(metaInfo)
     else {
-        if (br.net.buzu.lib.isStaticChildren(children))
+        if (isStaticChildren(children))
             ComplexStaticMetadada(metaInfo, children)
         else
             ComplexMetadata(metaInfo, children)
@@ -26,4 +27,13 @@ class GenericMetadatafactory : MetadataFactory {
     override fun create(metaInfo: MetaInfo, children: List<Metadata>): Metadata {
         return createMetadata(metaInfo, children)
     }
+}
+
+internal fun isStaticChildren(children: List<Metadata>): Boolean {
+    for (child in children) {
+        if (child !is StaticStructure) {
+            return false
+        }
+    }
+    return true
 }

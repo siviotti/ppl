@@ -16,8 +16,6 @@
  */
 package br.net.buzu.parsing.simple;
 
-import static br.net.buzu.lib.TextKt.*;
-
 import br.net.buzu.parsing.AbstractPositionalMapper;
 import br.net.buzu.model.MetaInfo;
 import br.net.buzu.model.Metaclass;
@@ -85,11 +83,11 @@ public abstract class AbstractSimpleMapper extends AbstractPositionalMapper {
 	 * @see MetaInfo#getDefaultValue()
 	 */
 	protected String serializeNullElement(MetaInfo meta) {
-		return fill(meta.getAlign(), meta.getDefaultValue(), meta.getSize(), meta.getSubtype().getDataType().getNullChar());
+		return br.net.buzu.pplimpl.util.TextKt.fill(meta.getAlign(), meta.getDefaultValue(), meta.getSize(), meta.getSubtype().getDataType().getNullChar());
 	}
 
 	protected String serializeElement(MetaInfo meta, Object obj) {
-		return fit(meta.getAlign(), asStringFromNotNull(meta, obj), meta.getSize(), meta.getFillChar());
+		return br.net.buzu.pplimpl.util.TextKt.fit(meta.getAlign(), asStringFromNotNull(meta, obj), meta.getSize(), meta.getFillChar());
 	}
 
 	protected abstract String asStringFromNotNull(MetaInfo meta, Object obj);

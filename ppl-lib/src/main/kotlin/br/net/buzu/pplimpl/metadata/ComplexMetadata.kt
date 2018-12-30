@@ -16,7 +16,6 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.lib.complexSize
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
 
@@ -26,21 +25,10 @@ import br.net.buzu.model.Metadata
  * @author Douglas Siviotti
  * @since 1.0 (15/05/2017)
  */
-open class ComplexMetadata(metaInfo: MetaInfo, children: List<Metadata>) : BasicMetadata(metaInfo.update(complexSize(children), metaInfo.maxOccurs)) {
+open class ComplexMetadata(metaInfo: MetaInfo, children: List<Metadata>)
+    : BasicMetadata(metaInfo.update(complexSize(children), metaInfo.maxOccurs)) {
 
-    private val children: List<Metadata>
-
-    init {
-        this.children = children.toList()
-    }
-
-    private fun complexSize(children: List<Metadata>): Int {
-        var complexSize = 0
-        for (child in children) {
-            complexSize += child.info().size
-        }
-        return complexSize
-    }
+    private val children: List<Metadata> = children.toList()
 
     override fun <T: Metadata> children(): List<T> {
         val list = mutableListOf<T>()
@@ -80,4 +68,13 @@ open class ComplexMetadata(metaInfo: MetaInfo, children: List<Metadata>) : Basic
     }
 
 
+    companion object {
+        private fun complexSize(children: List<Metadata>): Int {
+            var complexSize = 0
+            for (child in children) {
+                complexSize += child.info().size
+            }
+            return complexSize
+        }
+    }
 }

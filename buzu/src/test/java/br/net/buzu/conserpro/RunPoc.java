@@ -1,7 +1,5 @@
 package br.net.buzu.conserpro;
 
-import static br.net.buzu.lib.TextKt.*;
-
 import br.net.buzu.Buzu;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
@@ -101,7 +99,7 @@ public class RunPoc {
 	}
 
 	private static String dif(long t1, long t0) {
-		return leftFill("" + (t1 - t0), 6, '0');
+		return br.net.buzu.pplimpl.util.TextKt.leftFill("" + (t1 - t0), 6, '0');
 	}
 
 	// ********** serialize **********

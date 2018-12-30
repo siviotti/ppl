@@ -14,6 +14,8 @@ import br.net.buzu.pplimpl.metadata.IndexSequence
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
+private val EMPTY_CHILDREN : List<MetaType> = listOf()
+
 val genericSkip: (Field) -> Boolean = { skip(it) }
 
 @JvmOverloads
@@ -59,7 +61,7 @@ private fun createMetaInfo(pplMetadata: PplMetadata?, elementType: Class<*>, fie
 
 private fun createChildren(parentMetaInfo: MetaInfo, parentPath: String, parentType: Class<*>, skip: (Field) -> Boolean, seq: IndexSequence): List<MetaType> {
     if (isSimpleType(parentType)) {
-        return listOf()
+        return EMPTY_CHILDREN
     }
     val children = mutableListOf<MetaType>()
     var count = 0

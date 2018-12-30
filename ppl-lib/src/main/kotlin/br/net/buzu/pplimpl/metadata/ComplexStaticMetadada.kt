@@ -16,8 +16,6 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.lib.checkStaticChild
-import br.net.buzu.lib.checkStaticInfo
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
 import br.net.buzu.model.StaticMetadata
@@ -35,7 +33,10 @@ class ComplexStaticMetadada(metaInfo: MetaInfo, children: List<Metadata>) : Comp
         checkStaticInfo(info())
         var tmp = 0
         for (child in children) {
-            checkStaticChild(child)
+            if (child !is StaticStructure) {
+                throw IllegalArgumentException(
+                        INVALID_STATIC_CHILD + child.info() + " is not a " + StaticStructure::class.java.simpleName)
+            }
             tmp += (child as StaticStructure).serialMaxSize()
         }
         this.serialSize = tmp * info().maxOccurs
@@ -64,4 +65,7 @@ class ComplexStaticMetadada(metaInfo: MetaInfo, children: List<Metadata>) : Comp
         return serialSize
     }
 
+    companion object {
+        internal const val INVALID_STATIC_CHILD = "Invalid Static child:"
+    }
 }

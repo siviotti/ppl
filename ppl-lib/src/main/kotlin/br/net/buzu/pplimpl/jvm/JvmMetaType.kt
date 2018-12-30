@@ -19,8 +19,8 @@ package br.net.buzu.pplimpl.jvm
 import br.net.buzu.exception.PplParseException
 import br.net.buzu.exception.PplSerializeException
 import br.net.buzu.model.*
-import br.net.buzu.lib.fill
-import br.net.buzu.lib.fit
+import br.net.buzu.pplimpl.util.fill
+import br.net.buzu.pplimpl.util.fit
 import java.lang.reflect.Field
 
 

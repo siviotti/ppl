@@ -1,6 +1,7 @@
-package br.net.buzu.lib
+package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.lang.EMPTY
+import br.net.buzu.pplimpl.metadata.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail

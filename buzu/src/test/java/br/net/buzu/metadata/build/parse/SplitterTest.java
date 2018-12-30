@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static br.net.buzu.lib.SplitKt.*;
 
 /**
  * @author Douglas Siviotti
@@ -460,7 +459,7 @@ public class SplitterTest {
         long t0 = System.currentTimeMillis();
         for (int i = 0; i < 1000000; i++) {
             //splitter.splitMeta(text);
-            splitNodes(text);
+            br.net.buzu.pplimpl.metadata.SplitKt.splitNodes(text);
         }
         long t1 = System.currentTimeMillis();
         //System.out.println("time:"+(t1-t0));

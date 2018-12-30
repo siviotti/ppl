@@ -222,10 +222,9 @@ internal class JvmValueMapperTest {
 
     @Test
     fun testUtcTimestampMapper() {
-        val localdateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
-        val date = OffsetDateTime.of(localdateTime, ZoneOffset.ofHours(-2))
+        val localDateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
+        val date = OffsetDateTime.of(localDateTime, ZoneOffset.ofHours(-2))
         val parsed = UtcTimestampMapper.toValue("2018-12-26T11:22:33-02:00", metaInfo)as OffsetDateTime
-        //println("parsed: $parsed h:${parsed.hour}")
         assertEquals(date, parsed)
         assertEquals("2018-12-26T11:22:33-02:00", UtcTimestampMapper.toText(date))
     }
@@ -256,9 +255,7 @@ internal class JvmValueMapperTest {
         val sdf = SimpleDateFormat("yyyy-MM-ddXXX")
 
         val date = sdf.parse(textDate)
-        println("textDate:$textDate date: $date")
         val parsed = OldUtcDateMapper.toValue(textDate, metaInfo)
-        println("parsed: $parsed")
         assertEquals(date, parsed)
         assertEquals(textDate, OldUtcDateMapper.toText(date))
     }
@@ -270,7 +267,6 @@ internal class JvmValueMapperTest {
     fun testOldTimeMapper() {
         val calendar = GregorianCalendar(1970,0,1,11,22,33)
         val date = Date(calendar.timeInMillis)
-        println(date)
         assertEquals(date, OldTimeMapper.toValue("112233", metaInfo))
         assertEquals("112233", OldTimeMapper.toText(date))
     }
@@ -296,7 +292,6 @@ internal class JvmValueMapperTest {
         val offset = SimpleDateFormat("XXX").format(Date())
         val textTime = "11:22:33$offset"
         val sdf = SimpleDateFormat("HH:mm:ssXXX")
-
         val date = sdf.parse(textTime)
         assertEquals(date, OldUtcTimeMapper.toValue(textTime, metaInfo))
         assertEquals(textTime, OldUtcTimeMapper.toText(date))
@@ -334,11 +329,8 @@ internal class JvmValueMapperTest {
         val offset = SimpleDateFormat("XXX").format(Date())
         val textDate = "2018-12-26T11:22:33$offset"
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
-
         val date = sdf.parse(textDate)
-        println("textDate:$textDate date: $date")
         val parsed = OldUtcTimestampMapper.toValue(textDate, metaInfo)
-        println("parsed: $parsed")
         assertEquals(date, parsed)
         assertEquals(textDate, OldUtcTimestampMapper.toText(date))
     }

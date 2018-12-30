@@ -4,7 +4,6 @@ import br.net.buzu.Buzu;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import static br.net.buzu.lib.TextKt.*;
 import br.net.buzu.api.PayloadMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.PplString;
@@ -140,7 +139,7 @@ public class PocTime {
 	}
 
 	static void dump(String format, String text, int size) {
-		System.out.println(format + "[" + leftFit("" + text.length(), 8, '0') + "]" + ((size == 1) ? text : ""));
+		System.out.println(format + "[" + br.net.buzu.pplimpl.util.TextKt.leftFit("" + text.length(), 8, '0') + "]" + ((size == 1) ? text : ""));
 	}
 
 	public static XStream getXStream() {
