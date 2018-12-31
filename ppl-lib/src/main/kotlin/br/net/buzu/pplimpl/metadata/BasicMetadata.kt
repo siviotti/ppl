@@ -59,15 +59,6 @@ abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
         return sb.toString()
     }
 
-    override fun toPlain(): String {
-        val sb = StringBuilder()
-        sb.append(info()).append("\n")
-        if (hasChildren()) {
-            children<Metadata>().forEach { c -> sb.append(c.toPlain()) }
-        }
-        return sb.toString()
-    }
-
     override fun hashCode(): Int {
         return kind.ordinal * 31 + metaInfo.hashCode() * 31
     }

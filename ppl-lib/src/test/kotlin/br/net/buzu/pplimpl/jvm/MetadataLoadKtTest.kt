@@ -26,7 +26,6 @@ internal class MetadataLoadKtTest {
         val order: Order = ORDER_INSTANCE
         val typeMapper = readMetaType(order.javaClass, genericSkip)
         val metadataOrder= loadMetadata(order, typeMapper)
-        println(metadataOrder.toTree(0))
         assertMetadata(metadataOrder, "", Subtype.OBJ, 96, 0,1)
         val metadataCustomer = metadataOrder.children<Metadata>()[1]
         assertMetadata(metadataCustomer, "customer", Subtype.OBJ, 53, 0,1)

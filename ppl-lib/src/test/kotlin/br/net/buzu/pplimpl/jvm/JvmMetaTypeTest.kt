@@ -4,6 +4,7 @@ import br.net.buzu.model.StaticMetadata
 import br.net.buzu.model.pplStringOf
 import br.net.buzu.pplimpl.metadata.loadMetadata
 import br.net.buzu.pplimpl.metadata.parseMetadata
+import br.net.buzu.pplimpl.util.asTree
 import br.net.buzu.sample.order.Order
 import org.junit.jupiter.api.Test
 

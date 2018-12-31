@@ -41,7 +41,6 @@ open class SimpleMetadata(metaInfo: MetaInfo) : BasicMetadata(metaInfo) {
     }
 
     companion object {
-
-        private val SIMPLE_METADATA_HAS_NO_CHILDREN = "SimpleMetadata has no children!"
+        private const val SIMPLE_METADATA_HAS_NO_CHILDREN = "SimpleMetadata has no children!"
     }
 }

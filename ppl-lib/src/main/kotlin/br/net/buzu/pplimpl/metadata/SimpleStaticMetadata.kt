@@ -20,7 +20,7 @@ import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.StaticMetadata
 
 /**
- * Implementation domainOf StaticMetadata based on SimpleMetadata
+ * Implementation of StaticMetadata based on SimpleMetadata
  *
  * @author Douglas Siviotti
  */

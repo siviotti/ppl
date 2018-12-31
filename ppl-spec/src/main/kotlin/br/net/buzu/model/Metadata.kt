@@ -17,7 +17,7 @@
 package br.net.buzu.model
 
 /**
- * Represents a element of a positional tree.
+ * Represents an element of a positional tree.
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -71,13 +71,5 @@ interface Metadata : Nameable {
      * @return
      */
     fun toTree(level: Int): String
-
-    /**
-     * [Debug method] Returns ths Metadata as plain data
-     *
-     * @param level
-     * @return
-     */
-    fun toPlain(): String
 
 }

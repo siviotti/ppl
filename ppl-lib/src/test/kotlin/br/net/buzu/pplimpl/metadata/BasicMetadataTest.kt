@@ -19,7 +19,6 @@ class BasicMetadataTest {
         assertTrue(bm2 == bm1)
         assertTrue(bm2.hashCode() == bm1.hashCode())
         assertTrue(bm2.toString() == bm1.toString())
-        assertTrue(bm2.toTree(0) == bm1.toTree(0))
         assertTrue(bm1 == bm1)
         assertFalse(bm1 == null)
         val o = "abc"

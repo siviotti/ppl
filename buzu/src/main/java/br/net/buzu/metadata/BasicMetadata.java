@@ -79,16 +79,6 @@ public abstract class BasicMetadata implements Metadata {
 		return sb.toString();
 	}
 
-	@Override
-	public String toPlain() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(info()).append("\n");
-		if (hasChildren()) {
-			children().forEach(c -> sb.append(c.toPlain()));
-		}
-		return sb.toString();
-	}
-
 	// **************************************************
 	// hashcode, equals, toString
 	// **************************************************

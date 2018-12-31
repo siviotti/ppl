@@ -148,16 +148,6 @@ public abstract class BasicMetaclass implements Metaclass {
 	}
 
 	@Override
-	public String toPlain() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(toString()).append("\n");
-		if (hasChildren()) {
-			children().forEach(c -> sb.append(c.toPlain()));
-		}
-		return sb.toString();
-	}
-
-	@Override
 	public int getValueSize(Object value) {
 		if (value == null) {
 			return 0;

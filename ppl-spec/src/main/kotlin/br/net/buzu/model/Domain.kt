@@ -25,7 +25,7 @@ import br.net.buzu.lang.*
  * @author Douglas Siviotti
  * @since 1.0
  */
-class Domain protected constructor(private val name: String, val items: List<DomainItem> = listOf()) : Nameable {
+class Domain private constructor(private val name: String, val items: List<DomainItem> = listOf()) : Nameable {
 
 
     val isEmpty: Boolean
@@ -33,7 +33,7 @@ class Domain protected constructor(private val name: String, val items: List<Dom
 
     override fun name(): String = name
 
-    fun containsValue(value: String): Boolean = items.indexOfFirst({ it.value() == value }) > -1
+    fun containsValue(value: String): Boolean = items.indexOfFirst { it.value() == value } > -1
 
     fun items(): List<DomainItem> = items.toList()
 
