@@ -28,4 +28,14 @@ interface TypeAdapter {
 
     fun setFieldValue(parentObject: Any, paramValue: Any?)
 
+    fun maxArrayToValue(array: Array<Any?>): Any?
+
+    fun valueToMaxArray(value: Any?, size: Int): Array<Any?>
+
+    fun createAndFillArray(size: Int): Array<Any?>
+
+    fun valueToArray(value: Any?): Array<Any?>
+
+    fun enumConstantToValue(constName: String): Any
+
 }

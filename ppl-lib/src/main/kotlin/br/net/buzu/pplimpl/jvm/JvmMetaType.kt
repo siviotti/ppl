@@ -24,22 +24,18 @@ import br.net.buzu.pplimpl.util.fit
 import java.lang.reflect.Field
 
 
-abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Class<*>, val elementType: Class<*>,
-                           metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val field: Field,
+abstract class JvmMetaType(fullName: String, metaName: String,  metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, val typeAdapter: TypeAdapter,
                            private val valueMapper: ValueMapper) :
         MetaType(fullName, metaName, metaInfo, treeIndex, children) {
 
     override val hasChildren: Boolean = children.isNotEmpty()
-    private val isArray: Boolean = fieldType.isArray
-    private val isCollection: Boolean = Collection::class.java.isAssignableFrom(fieldType)
-    private val isComplex = metaInfo.subtype.dataType.isComplex
     private val childrenMap = children.map { it.metaName to it }.toMap()
 
     override fun parse(text: String, metadata: StaticMetadata): Any? {
         try {
             return doParse(text, metadata)
         } catch (e: Exception) {
-            throw PplParseException(this.javaClass.simpleName, text, elementType, e)
+            throw PplParseException("Parsing error \n[from text]:$text\n[  to type]:$typeAdapter\n[  mapper ]:$valueMapper")
         }
     }
 
@@ -47,7 +43,7 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
         try {
             return doSerialize(value, metadata)
         } catch (e: Exception) {
-            throw PplSerializeException("Serialization error at ${toString()} \n valueMapper:${valueMapper.javaClass.simpleName}", e)
+            throw PplSerializeException("Serialization error at ${toString()} \n valueMapper:$valueMapper", e)
         }
     }
 
@@ -68,50 +64,21 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
         }
     }
 
-    override fun getFieldValue(parentObject: Any): Any? = getValue(field, parentObject)
+    override fun getFieldValue(parentObject: Any): Any? = typeAdapter.getFieldValue(parentObject)
 
-    override fun setFieldValue(parentObject: Any, paramValue: Any?) = setValue(field, parentObject, paramValue)
+    override fun setFieldValue(parentObject: Any, paramValue: Any?) = typeAdapter.setFieldValue(parentObject, paramValue)
 
     override fun getValueSize(value: Any?): Int = valueMapper.getValueSize(value)
 
-    internal fun maxArrayToValue(array: Array<Any?>): Any? {
-        return when {
-            isArray -> array
-            isCollection -> if (Set::class.java.isAssignableFrom(elementType)) array.toSet() else array.toList()
-            else -> array[0]
-        }
-    }
+    override fun maxArrayToValue(array: Array<Any?>): Any? = typeAdapter.maxArrayToValue(array)
 
-    internal fun valueToMaxArray(value: Any?, size: Int): Array<Any?> {
-        return when {
-            value is Collection<*> -> value.toTypedArray()
-            isArray -> value as Array<Any?>
-            else -> arrayOf(value)
-        }
-    }
+    override fun valueToMaxArray(value: Any?, size: Int): Array<Any?> = typeAdapter.valueToMaxArray(value,size)
 
-    internal fun createAndFillArray(size: Int): Array<Any?> {
-        return if (isComplex) Array(size) { newInstance(elementType) } else Array(size) {}
-    }
+    override fun createAndFillArray(size: Int): Array<Any?> = typeAdapter. createAndFillArray(size)
 
-    override fun valueToArray(value: Any?): Array<Any?> {
-        return when {
-            value == null -> arrayOf()
-            isCollection -> if ((value as Collection<*>).isEmpty()) {
-                arrayOf()
-            } else {
-                value.toTypedArray()
-            }
-            isArray -> if ((value as Array<Any>).size == 0) {
-                arrayOf()
-            } else {
-                value as Array<Any?>
-            }
-            else -> arrayOf(value)
-        }
-    }
+    override fun valueToArray(value: Any?): Array<Any?> =typeAdapter.valueToArray(value)
 
-    override fun toString(): String = "[$treeIndex] $fullName: ${fieldType.simpleName}<${elementType.simpleName}> ($metaName) $metaInfo"
+    override fun toString(): String = "[$treeIndex] $fullName: $typeAdapter ($metaName) $metaInfo"
 
     internal open fun parseAtomic(text: String, metadata: StaticMetadata): Any? {
         val info: MetaInfo = metadata.info()
@@ -133,5 +100,7 @@ abstract class JvmMetaType(fullName: String, metaName: String, val fieldType: Cl
         for (i in 0 until text.length) if (text[i] != nullChar) return false
         return true
     }
+
+    override fun enumConstantToValue(constName: String): Any = typeAdapter.enumConstantToValue(constName)
 
 }

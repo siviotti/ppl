@@ -55,6 +55,7 @@ fun getValueMapper(subtype: Subtype, elementType: Class<*>): ValueMapper {
 
 abstract class JvmValueMapper(val jvmType: Class<*>, val subType: Subtype) : ValueMapper {
     override fun getValueSize(value: Any?): Int = if (value == null) 0 else toText(value).length
+    override fun toString(): String = "subType:$subType jvm-type:$jvmType"
 }
 
 // Error Mapper - Complex type has no Mapper

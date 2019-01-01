@@ -24,7 +24,7 @@ package br.net.buzu.model
  * @since 1.0
  */
 abstract class MetaType(val fullName: String, val metaName: String, val metaInfo: MetaInfo,
-                        val treeIndex: Int, val children: List<MetaType>) : TypeAdapter{
+                        val treeIndex: Int, val children: List<MetaType>) : TypeAdapter {
 
     abstract val hasChildren: Boolean
 
@@ -32,14 +32,12 @@ abstract class MetaType(val fullName: String, val metaName: String, val metaInfo
 
     abstract fun parse(text: String, metadata: StaticMetadata): Any?
 
-    abstract fun serialize(value: Any?, metadata:StaticMetadata): String
+    abstract fun serialize(value: Any?, metadata: StaticMetadata): String
 
     // Metadata Load Helper API
 
     abstract fun nodeCount(): Int
 
     abstract fun getValueSize(value: Any?): Int
-
-    abstract fun valueToArray(value: Any?): Array<Any?>
 
 }

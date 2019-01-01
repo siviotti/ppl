@@ -25,9 +25,9 @@ import java.lang.reflect.Field
  * @author Douglas Siviotti
  * @since 1.0
  */
-class ComplexJvmMetaType (fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>,
-                          metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, valueMapper: ValueMapper)
-    : JvmMetaType(fieldPath, fieldName,fieldType, elementType,metaInfo, children, treeIndex, field, valueMapper) {
+class ComplexJvmMetaType (fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
+                          treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
+    : JvmMetaType(fieldPath, fieldName,metaInfo, children, treeIndex, typeAdapter, valueMapper) {
 
     override fun doParse(text: String, metadata: StaticMetadata): Any? {
         var beginIndex = 0

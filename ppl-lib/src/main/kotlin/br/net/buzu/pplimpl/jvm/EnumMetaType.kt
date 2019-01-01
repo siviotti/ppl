@@ -17,10 +17,7 @@
 package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.exception.PplParseException
-import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.MetaType
-import br.net.buzu.model.StaticMetadata
-import br.net.buzu.model.ValueMapper
+import br.net.buzu.model.*
 import java.lang.reflect.Field
 
 /**
@@ -29,21 +26,12 @@ import java.lang.reflect.Field
  * @author Douglas Siviotti
  * @since 1.0
  */
-class EnumSimpleJvmMetaType(fieldPath: String, fieldName: String, fieldType: Class<*>, elementType: Class<*>,
-                            metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, valueMapper: ValueMapper)
-    : SimpleJvmMetaType(fieldPath, fieldName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper) {
+class EnumSimpleJvmMetaType(fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
+                            treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
+    : SimpleJvmMetaType(fieldPath, fieldName, metaInfo, children, treeIndex, typeAdapter, valueMapper) {
 
 
-    override fun parseAtomic(text: String, metadata: StaticMetadata): Any? {
-        val fields = getAllFields(elementType)
-        val constName = text.trim { it <= ' ' }
-        for (field in fields) {
-            if (field.isEnumConstant() && field.getName() == constName) {
-                return field.get(null)
-            }
-        }
-        throw PplParseException("The text '" + text + "' is missing at enum " + elementType)
-    }
+    override fun parseAtomic(text: String, metadata: StaticMetadata): Any?= typeAdapter.enumConstantToValue(text)
 
     override fun serializeAtomic(value: Any?, metadata: StaticMetadata): String {
         return if (value != null) (value as Enum<*>).name else serializeNull(metadata.info())

@@ -9,6 +9,7 @@ import br.net.buzu.lang.EMPTY
 import br.net.buzu.lang.PATH_SEP
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.MetaType
+import br.net.buzu.model.TypeAdapter
 import br.net.buzu.model.ValueMapper
 import br.net.buzu.pplimpl.metadata.IndexSequence
 import java.lang.reflect.Field
@@ -31,8 +32,9 @@ fun readMetaType(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean
     val metaInfo = createMetaInfo(pplMetadata, elementType, EMPTY, index)
     val valueMapper = getValueMapper(metaInfo.subtype, elementType)
     val fakeField = getAllFields({ }::class.java)[0]
+    val typeAdapter = JvmTypeAdapter(type, elementType, fakeField, metaInfo.subtype.dataType.isComplex)
     return createJvmMetaType(EMPTY, EMPTY, type, elementType, metaInfo,
-            createChildren(metaInfo, EMPTY, elementType, skip, seq), index, fakeField, valueMapper)
+            createChildren(metaInfo, EMPTY, elementType, skip, seq), index, typeAdapter, valueMapper)
 }
 
 private fun readFromField(parentFullName: String, field: Field, index: Int, skip: (Field) -> Boolean, seq: IndexSequence): MetaType {
@@ -46,8 +48,9 @@ private fun readFromField(parentFullName: String, field: Field, index: Int, skip
     val fullName = if (parentFullName.isEmpty()) field.name else parentFullName + PATH_SEP + field.name
     val metaInfo = createMetaInfo(pplMetadata, elementType, field.name, index)
     val valueMapper = getValueMapper(metaInfo.subtype, elementType)
+    val typeAdapter = JvmTypeAdapter(field.type, elementType, field, metaInfo.subtype.dataType.isComplex)
     return createJvmMetaType(fullName, field.name, field.type, elementType, metaInfo,
-            createChildren(metaInfo, fullName, elementType, skip, seq), index, field, valueMapper)
+            createChildren(metaInfo, fullName, elementType, skip, seq), index, typeAdapter, valueMapper)
 }
 
 private fun createMetaInfo(pplMetadata: PplMetadata?, elementType: Class<*>, fieldName: String, index: Int): MetaInfo {
@@ -104,12 +107,13 @@ private fun skip(field: Field): Boolean {
 }
 
 fun createJvmMetaType(fullname: String, metaName: String, fieldType: Class<*>, elementType: Class<*>,
-                      metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, field: Field, valueMapper: ValueMapper): MetaType {
+                      metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, typeAdapter:TypeAdapter, valueMapper: ValueMapper): MetaType {
+
     return when {
-        elementType.isEnum -> EnumSimpleJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper)
-        metaInfo.subtype.dataType.isComplex -> ComplexJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper)
-        metaInfo.isMultiple -> SimpleJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper)
-        else -> AtomicJvmMetaType(fullname, metaName, fieldType, elementType, metaInfo, children, treeIndex, field, valueMapper)
+        elementType.isEnum -> EnumSimpleJvmMetaType(fullname, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
+        metaInfo.subtype.dataType.isComplex -> ComplexJvmMetaType(fullname, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
+        metaInfo.isMultiple -> SimpleJvmMetaType(fullname, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
+        else -> AtomicJvmMetaType(fullname, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
     }
 
 }
