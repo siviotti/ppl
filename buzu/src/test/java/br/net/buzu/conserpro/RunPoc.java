@@ -4,9 +4,10 @@ import br.net.buzu.Buzu;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.api.PositionalMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.StaticMetadata;
+import br.net.buzu.pplimpl.core.FitKt;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 
@@ -99,7 +100,7 @@ public class RunPoc {
 	}
 
 	private static String dif(long t1, long t0) {
-		return br.net.buzu.pplimpl.util.TextKt.leftFill("" + (t1 - t0), 6, '0');
+		return FitKt.leftFill("" + (t1 - t0), 6, '0');
 	}
 
 	// ********** serialize **********
@@ -137,7 +138,7 @@ public class RunPoc {
 	private static void serializePpl2(Object object, int loop) {
 		StaticMetadata metadata = (StaticMetadata) new MetadataBuilder().build(object);
 		Metaclass metaclass = new BasicMetaclassReader().read(object.getClass());
-		PayloadMapper parser = new BasicParserFactory().create(metaclass);
+		PositionalMapper parser = new BasicParserFactory().create(metaclass);
 		t0 = System.currentTimeMillis();
 		for (int i = 0; i < loop; i++) {
 			parser.serialize(metadata, object, metaclass);
@@ -184,7 +185,7 @@ public class RunPoc {
 	private static void parsePpl2(Object object, int loop) {
 		StaticMetadata metadata = (StaticMetadata) new MetadataBuilder().build(object);
 		Metaclass metaclass = new BasicMetaclassReader().read(object.getClass());
-		PayloadMapper parser = new BasicParserFactory().create( metaclass);
+		PositionalMapper parser = new BasicParserFactory().create( metaclass);
 		String str = parser.serialize(metadata, object, metaclass);
 		t0 = System.currentTimeMillis();
 		for (int i = 0; i < loop; i++) {

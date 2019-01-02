@@ -16,7 +16,7 @@
  */
 package br.net.buzu.parsing.complex;
 
-import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.api.PositionalMapper;
 import br.net.buzu.exception.PplParseException;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.StaticMetadata;
@@ -33,9 +33,9 @@ import java.util.List;
  */
 public class ComplexMapper extends AbstractComplexMapper {
 
-	protected final List<PayloadMapper> children;
+	protected final List<PositionalMapper> children;
 
-	public ComplexMapper(List<PayloadMapper> children) {
+	public ComplexMapper(List<PositionalMapper> children) {
 		super();
 		this.children = Collections.unmodifiableList(children);
 	}
@@ -51,7 +51,7 @@ public class ComplexMapper extends AbstractComplexMapper {
 		Metaclass metaclassChild;
 		StaticMetadata metadataChild;
 		List<StaticMetadata> staticMetadataChildren = metadata.children();
-		PayloadMapper parserChild;
+		PositionalMapper parserChild;
 		for (int i = 0; i < array.length; i++) {
 			for (int j = 0; j < children.size(); j++) {
 				metadataChild = staticMetadataChildren.get(j);
@@ -84,7 +84,7 @@ public class ComplexMapper extends AbstractComplexMapper {
 		StringBuilder sb = new StringBuilder();
 		Object[] array = toMaxArray(obj, metadata.info().getMaxOccurs());
 		StaticMetadata metadataChild;
-		PayloadMapper parserChild;
+		PositionalMapper parserChild;
 		Metaclass metaclassChild;
 		List<StaticMetadata> staticMetadataChildren = metadata.children();
 		for (int i = 0; i < array.length; i++) {

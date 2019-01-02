@@ -41,7 +41,7 @@ internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: 
     for (itemValue in node.value) {
         for (i in typeList.indices) {
             childMetaType = typeList[i]
-            fieldValue = if (itemValue != null) childMetaType.getFieldValue(itemValue) else null
+            fieldValue = if (itemValue != null) childMetaType.typeAdapter.getFieldValue(itemValue) else null
             children[i] = loadChild(fieldValue, childMetaType, node, maxMap, createMetadata)
         }
     }
@@ -83,7 +83,7 @@ internal fun checkLimit(info: String, fieldPath: String, maxValue: Int, newValue
 
 internal class LoadNode(originalValue: Any?, val metaType: MetaType) {
 
-    val value: Array<Any?> = metaType.valueToArray(originalValue)
+    val value: Array<Any?> = metaType.typeAdapter.valueToArray(originalValue)
     val subtype: Subtype = metaType.metaInfo.subtype
     val occurs: Int
         get() = value.size
@@ -93,7 +93,7 @@ internal class LoadNode(originalValue: Any?, val metaType: MetaType) {
             var max = 0
             var tmp = 0
             for (obj in value) {
-                tmp = metaType.getValueSize(obj!!)
+                tmp = metaType.valueMapper.getValueSize(obj!!)
                 if (tmp > max) {
                     max = tmp
                 }

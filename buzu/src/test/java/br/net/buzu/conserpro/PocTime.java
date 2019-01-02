@@ -4,10 +4,11 @@ import br.net.buzu.Buzu;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.api.PositionalMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.PplString;
 import br.net.buzu.model.StaticMetadata;
+import br.net.buzu.pplimpl.core.FitKt;
 import br.net.buzu.sample.pojo.Person;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
@@ -52,7 +53,7 @@ public class PocTime {
 		PplString pplString = new PplString(empresaPpl1);
 		StaticMetadata metadata = (StaticMetadata) new MetadataBuilder().build(source);
 		Metaclass from = new BasicMetaclassReader().read(List.class, source.get(0).getClass());
-		PayloadMapper parser = new BasicParserFactory().create(from);
+		PositionalMapper parser = new BasicParserFactory().create(from);
 		Metaclass toClass = new BasicMetaclassReader().read(List.class, source.get(0).getClass());
 		String empresaPpl2 = pplString.getPayload();
 		Object object = source.get(0);
@@ -139,7 +140,7 @@ public class PocTime {
 	}
 
 	static void dump(String format, String text, int size) {
-		System.out.println(format + "[" + br.net.buzu.pplimpl.util.TextKt.leftFit("" + text.length(), 8, '0') + "]" + ((size == 1) ? text : ""));
+		System.out.println(format + "[" + FitKt.leftFit("" + text.length(), 8, '0') + "]" + ((size == 1) ? text : ""));
 	}
 
 	public static XStream getXStream() {

@@ -17,16 +17,19 @@
 package br.net.buzu.model
 
 /**
- * Represents the element able to convert value to text (toText) and text to value (toValue).
- * This capability also allows to determinate the serial size of a given value (getValueSize).
- *
+ * Represents the element able to convert value to text (serialize) and text to value (parse).
+  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface PositionalMapper {
+interface TypeMapper<T> {
 
-    fun toValue(text: String, metaInfo: MetaInfo): Any?
+    fun parse(text: String): T?
 
-    fun toText(value: Any): String
+    fun serialize(value: T?): String
+
+    // write (Writer out)
+
+    // read (Reader in)
 
 }

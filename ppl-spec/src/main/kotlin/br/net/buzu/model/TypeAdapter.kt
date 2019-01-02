@@ -17,12 +17,18 @@
 package br.net.buzu.model
 
 /**
- * Represents an Adapter for get/set field values
+ * Represents an Adapter for the element type and get/set field values
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
 interface TypeAdapter {
+
+    val isComplex: Boolean
+
+    val isEnum: Boolean
+
+    val defaultSubtype: Subtype
 
     fun getFieldValue(parentObject: Any): Any?
 

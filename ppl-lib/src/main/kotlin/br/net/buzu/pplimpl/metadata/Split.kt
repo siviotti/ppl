@@ -235,4 +235,3 @@ internal fun splitTags(text: String, beginIndex: Int): String {
 internal data class Split(val index: Int, val part: String = EMPTY)
 
 internal data class TypeSplit(val index: Int, val part: String = EMPTY, val children: List<PplNode> = PplNode.EMPTY_CHILDREN)
-

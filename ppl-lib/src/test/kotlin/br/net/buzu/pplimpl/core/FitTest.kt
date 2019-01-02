@@ -14,9 +14,8 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplimpl.util
+package br.net.buzu.pplimpl.core
 
-import br.net.buzu.pplimpl.util.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.fail
@@ -25,7 +24,7 @@ import org.junit.jupiter.api.fail
 /**
  * @author Douglas Siviotti
  */
-class TextTest {
+class FitTest {
 
 
     @Test

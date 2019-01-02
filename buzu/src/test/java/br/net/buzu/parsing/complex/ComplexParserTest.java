@@ -7,7 +7,7 @@ import br.net.buzu.example.Customer;
 import br.net.buzu.example.Product;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.api.PositionalMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.Metadata;
 import br.net.buzu.model.StaticMetadata;
@@ -35,11 +35,11 @@ public class ComplexParserTest {
 		// System.out.println(VerboseMetadataSerializer.INSTANCE.serialize(metadata));
 	}
 
-	static PayloadMapper createParser(Metadata metadata, Class<?> clazz) {
+	static PositionalMapper createParser(Metadata metadata, Class<?> clazz) {
 		return createParser(metadata, new BasicMetaclassReader().read(clazz));
 	}
 
-	static PayloadMapper createParser(Metadata metadata, Metaclass pplClass) {
+	static PositionalMapper createParser(Metadata metadata, Metaclass pplClass) {
 		return new BasicParserFactory().create(pplClass);
 	}
 
@@ -55,7 +55,7 @@ public class ComplexParserTest {
 		Customer customer = new Customer("John", adresses, 33, "12345678", "8765432000");
 		StaticMetadata metadata = new MetadataBuilder().buildStatic(customer);
 		Metaclass from = new BasicMetaclassReader().read(Customer.class);
-		PayloadMapper parser = createParser(metadata, from);
+		PositionalMapper parser = createParser(metadata, from);
 		dump(metadata);
 		String s = parser.serialize(metadata, customer, from);
 		serial(s);
@@ -68,7 +68,7 @@ public class ComplexParserTest {
 		Empresa empresa = new Empresa();
 		StaticMetadata metadata = new MetadataBuilder().buildStatic(empresa);
 		Metaclass fromEmpresa = new BasicMetaclassReader().read(Empresa.class);
-		PayloadMapper parser = createParser(metadata, fromEmpresa);
+		PositionalMapper parser = createParser(metadata, fromEmpresa);
 		dump(metadata);
 		String serial = parser.serialize(metadata, empresa, fromEmpresa);
 		serial(serial);
@@ -92,7 +92,7 @@ public class ComplexParserTest {
 		
 		StaticMetadata metadata = new MetadataBuilder().buildStatic(empresa);
 		Metaclass from = new BasicMetaclassReader().read(Empresa.class);
-		PayloadMapper parser = createParser(metadata, from);
+		PositionalMapper parser = createParser(metadata, from);
 		dump(metadata);
 		String serial = parser.serialize(metadata, empresa, from);
 		serial(serial);
@@ -110,7 +110,7 @@ public class ComplexParserTest {
 	public void testEmpresaTeste() {
 		Empresa empresa = MockFactory.empresaTeste();
 		StaticMetadata metadata = new MetadataBuilder().buildStatic(empresa);
-		PayloadMapper parser = createParser(metadata, Empresa.class);
+		PositionalMapper parser = createParser(metadata, Empresa.class);
 		dump(metadata);
 		// Serialize
 		Metaclass metaclass = new BasicMetaclassReader().read(Empresa.class);
@@ -130,7 +130,7 @@ public class ComplexParserTest {
 	public void testBB() {
 		Empresa empresa = MockFactory.bancoDoBrasil();
 		StaticMetadata metadata = new MetadataBuilder().buildStatic(empresa);
-		PayloadMapper parser = createParser(metadata, Empresa.class);
+		PositionalMapper parser = createParser(metadata, Empresa.class);
 		dump(metadata);
 		String serial = parser.serialize(metadata, empresa, new BasicMetaclassReader().read(Empresa.class));
 		serial(serial);
@@ -150,7 +150,7 @@ public class ComplexParserTest {
 		persons.add(new Person("Catnoir", 15, "Paris"));
 		StaticMetadata metadata = new MetadataBuilder().buildStatic(persons);
 		Metaclass from = new BasicMetaclassReader().read(ArrayList.class, Person.class);
-		PayloadMapper parser = createParser(metadata, from);
+		PositionalMapper parser = createParser(metadata, from);
 		dump(metadata);
 		String serial = parser.serialize(metadata, persons, from);
 		serial(serial);
@@ -171,7 +171,7 @@ public class ComplexParserTest {
 		// empresas.add(MockFactory.bancoDoBrasil());
 		StaticMetadata metadata = new MetadataBuilder().buildStatic(empresas);
 		Metaclass from = new BasicMetaclassReader().read(List.class, Empresa.class);
-		PayloadMapper parser = createParser(metadata, from);
+		PositionalMapper parser = createParser(metadata, from);
 		dump(metadata);
 		for (Empresa empresa : empresas) {
 			parser.serialize(metadata, empresa, from);
@@ -188,7 +188,7 @@ public class ComplexParserTest {
 		PJ pj = MockFactory.pjBancoDoBrasil();
 		StaticMetadata metadata = new MetadataBuilder().buildStatic(pj);
 		Metaclass from = new BasicMetaclassReader().read(PJ.class);
-		PayloadMapper parser = createParser(metadata, from);
+		PositionalMapper parser = createParser(metadata, from);
 		dump(metadata);
 		String serial = parser.serialize(metadata, pj, from);
 		serial(serial);
@@ -200,7 +200,7 @@ public class ComplexParserTest {
 	public void testPerson() {
 		Person person = new Person("Ladybug", 15, "Paris");
 		StaticMetadata metadata = new MetadataBuilder().buildStatic(person);
-		PayloadMapper parser = createParser(metadata, new BasicMetaclassReader().read(Person.class));
+		PositionalMapper parser = createParser(metadata, new BasicMetaclassReader().read(Person.class));
 		dump(metadata);
 		String s = parser.serialize(metadata, person, new BasicMetaclassReader().read(Person.class));
 		serial(s);

@@ -17,7 +17,7 @@
 package br.net.buzu.metaclass;
 
 
-import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.api.PositionalMapper;
 import br.net.buzu.model.Kind;
 import br.net.buzu.model.MetaInfo;
 import br.net.buzu.model.Metaclass;
@@ -39,7 +39,7 @@ public class ComplexMetaclass extends BasicMetaclass {
 	private final Map<String, Metaclass> internalMap = new HashMap<>();
 
 	public ComplexMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
-                            Class<? extends PayloadMapper> parserType, List<? extends Metaclass> children) {
+                            Class<? extends PositionalMapper> parserType, List<? extends Metaclass> children) {
 		super(field, fieldType, elementType, kind, metaInfo, parserType);
 		this.children = children != null ? Collections.unmodifiableList(children)
 				: Collections.unmodifiableList(new ArrayList<>());

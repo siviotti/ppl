@@ -27,8 +27,7 @@ import br.net.buzu.parsing.simple.oldtime.*;
 import br.net.buzu.parsing.simple.text.CharMapper;
 import br.net.buzu.parsing.simple.text.StringMapper;
 import br.net.buzu.parsing.simple.time.*;
-import br.net.buzu.api.PayloadMapper;
-import br.net.buzu.context.ParserFactory;
+import br.net.buzu.api.PositionalMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.Subtype;
 import br.net.buzu.util.Reflect;
@@ -49,7 +48,7 @@ public class BasicParserFactory implements ParserFactory {
 
 	public static final int TIME_OFFSET = 11;
 
-	private static final PayloadMapper[] PARSER_ARRAY = new PayloadMapper[Subtype.values().length + TIME_OFFSET];
+	private static final PositionalMapper[] PARSER_ARRAY = new PositionalMapper[Subtype.values().length + TIME_OFFSET];
 
 	static {
 
@@ -98,14 +97,14 @@ public class BasicParserFactory implements ParserFactory {
 	}
 	
 	@Override
-	public PayloadMapper create(Metaclass metaclass) {
+	public PositionalMapper create(Metaclass metaclass) {
 		if (metaclass.hasCustomParser()) {
-			return (PayloadMapper) Reflect.newInstance(metaclass.mapperType());
+			return (PositionalMapper) Reflect.newInstance(metaclass.mapperType());
 		}
 		return metaclass.kind().isComplex() ? createComplex(metaclass) : createSimple(metaclass);
 	}
 
-	protected PayloadMapper createSimple(Metaclass metaclass) {
+	protected PositionalMapper createSimple(Metaclass metaclass) {
 		if (metaclass.isEnum()) {
 			if (metaclass.isPplSerializable()){
 				return EnumPplSerializableMapper.INSTANCE;
@@ -119,8 +118,8 @@ public class BasicParserFactory implements ParserFactory {
 		return PARSER_ARRAY[parserIndex];
 	}
 
-	protected PayloadMapper createComplex(Metaclass metaClass) {
-		List<PayloadMapper> children = new ArrayList<>();
+	protected PositionalMapper createComplex(Metaclass metaClass) {
+		List<PositionalMapper> children = new ArrayList<>();
 		metaClass.children().forEach(m-> children.add(create((Metaclass) m)));
 		return new ComplexMapper(children);
 	}

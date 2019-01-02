@@ -16,6 +16,7 @@
  */
 package br.net.buzu.pplimpl.jvm
 
+import br.net.buzu.exception.PplParseException
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Subtype
 import br.net.buzu.model.ValueMapper
@@ -39,6 +40,7 @@ private val MAPPERS = createArrayOfMapper()
 
 fun getValueMapper(subtype: Subtype, elementType: Class<*>): ValueMapper {
     return when {
+        elementType.isEnum -> EnumMapper(elementType)
         elementType == Char::class.java || elementType == Char::class.javaPrimitiveType -> OneCharMapper
         subtype == Subtype.NUMBER -> when (elementType) {
             BigDecimal::class.java -> BigDecimalMapper
@@ -55,7 +57,7 @@ fun getValueMapper(subtype: Subtype, elementType: Class<*>): ValueMapper {
 
 abstract class JvmValueMapper(val jvmType: Class<*>, val subType: Subtype) : ValueMapper {
     override fun getValueSize(value: Any?): Int = if (value == null) 0 else toText(value).length
-    override fun toString(): String = "subType:$subType jvm-type:$jvmType"
+    override fun toString(): String = "${javaClass.simpleName}(subType:$subType jvm-type:${jvmType.simpleName})"
 }
 
 // Error Mapper - Complex type has no Mapper
@@ -63,6 +65,22 @@ abstract class JvmValueMapper(val jvmType: Class<*>, val subType: Subtype) : Val
 object ErrorMapper : JvmValueMapper(Any::class.java, Subtype.OBJ) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = throw OperationNotSupportedException()
     override fun toText(value: Any): String = throw OperationNotSupportedException()
+}
+
+// ENUM
+class EnumMapper (jvmType: Class<*>): JvmValueMapper(jvmType, Subtype.STRING) {
+    override fun toValue(text: String, metaInfo: MetaInfo): Any? {
+        val fields = getAllFields(jvmType)
+        val constName = text.trim { it <= ' ' }
+        for (field in fields) {
+            if (field.isEnumConstant() && field.getName() == constName) {
+                return field.get(null)
+            }
+        }
+        throw PplParseException("The text '$constName' is missing at enum $jvmType")
+
+    }
+    override fun toText(value: Any): String = (value as Enum<*>).name
 }
 
 // TEXT

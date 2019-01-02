@@ -16,9 +16,10 @@
  */
 package br.net.buzu.parsing;
 
-import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.api.PositionalMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.StaticMetadata;
+import br.net.buzu.pplimpl.core.FitKt;
 import br.net.buzu.util.Reflect;
 
 import java.util.*;
@@ -30,7 +31,7 @@ import java.util.logging.Logger;
  * @author Douglas Siviotti
  * @since 1.0
  */
-public abstract class AbstractPositionalMapper implements PayloadMapper {
+public abstract class AbstractPositionalMapper implements PositionalMapper {
 
 	// ******************** PARSE ********************
 
@@ -82,7 +83,7 @@ public abstract class AbstractPositionalMapper implements PayloadMapper {
 	}
 
 	protected String serializeNull(StaticMetadata metadata) {
-		return br.net.buzu.pplimpl.util.TextKt.fill(metadata.info().getAlign(), "", metadata.serialMaxSize(),
+		return FitKt.fill(metadata.info().getAlign(), "", metadata.serialMaxSize(),
 				metadata.info().getSubtype().getDataType().getNullChar());
 	}
 

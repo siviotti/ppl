@@ -16,7 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.api.PositionalMapper;
 import br.net.buzu.model.Kind;
 import br.net.buzu.model.MetaInfo;
 import br.net.buzu.model.StaticMetadata;
@@ -35,7 +35,7 @@ public class SimpleStaticMetaclass extends SimpleMetaclass implements StaticMeta
 	private final int serialMaxSize;
 
 	public SimpleStaticMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind,
-			MetaInfo metaInfo, Class<? extends PayloadMapper> parserType) {
+			MetaInfo metaInfo, Class<? extends PositionalMapper> parserType) {
 		super(field, fieldType, elementType, kind, metaInfo, parserType);
 		if (!metaInfo.isComplete()) {
 			throw new IllegalArgumentException("Static Metaclass requires a complete metainfo (has size and maxOccurs):"+metaInfo);

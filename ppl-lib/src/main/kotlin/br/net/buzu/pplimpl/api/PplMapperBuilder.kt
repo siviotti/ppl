@@ -1,4 +1,4 @@
-package br.net.buzu.pplimpl
+package br.net.buzu.pplimpl.api
 
 import br.net.buzu.pplimpl.metadata.CreateMetadata
 

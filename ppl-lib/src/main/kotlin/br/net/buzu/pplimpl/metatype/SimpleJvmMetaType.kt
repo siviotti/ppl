@@ -14,10 +14,11 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplimpl.jvm
+package br.net.buzu.pplimpl.metatype
 
 import br.net.buzu.model.*
-import java.lang.reflect.Field
+import br.net.buzu.pplimpl.core.arrayParse
+import br.net.buzu.pplimpl.core.arraySerialize
 
 /**
  * MetaType for simple structures (not complex). This class handle "ATOMIC" and 'ARRAY" kinds.
@@ -27,26 +28,9 @@ import java.lang.reflect.Field
  */
 open class SimpleJvmMetaType(fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
                              treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
-    : JvmMetaType(fieldPath, fieldName, metaInfo, children, treeIndex, typeAdapter, valueMapper) {
+    : AbstractMetaType(fieldPath, fieldName, metaInfo, children, treeIndex, typeAdapter, valueMapper) {
 
-    override fun doParse(text: String, metadata: StaticMetadata): Any? {
-        val metaInfo: MetaInfo = metadata.info()
-        var beginIndex = 0
-        var endIndex = 0
-        val array = createAndFillArray(metaInfo.maxOccurs)
-        for (i in array.indices) {
-            endIndex += metaInfo.size
-            array[i] = parseAtomic(text.substring(beginIndex, endIndex), metadata)
-            beginIndex += metaInfo.size
-        }
-        return maxArrayToValue(array)
+    override fun doParse(text: String, metadata: StaticMetadata): Any? = arrayParse(text, metadata, typeAdapter, valueMapper)
 
-    }
-
-    override fun doSerialize(value: Any?, metadata: StaticMetadata): String {
-        val sb = StringBuilder()
-        val array = valueToMaxArray(value, metadata.info().maxOccurs)
-        for (element in array) sb.append(serializeAtomic(element, metadata))
-        return sb.toString()
-    }
+    override fun doSerialize(value: Any?, metadata: StaticMetadata): String = arraySerialize(value, metadata, typeAdapter, valueMapper)
 }

@@ -16,7 +16,7 @@
  */
 package br.net.buzu.context
 
-import br.net.buzu.api.PayloadMapper
+import br.net.buzu.api.PositionalMapper
 import br.net.buzu.model.Metaclass
 
 /**
@@ -34,5 +34,5 @@ interface ParserFactory {
      * The metadata
      * @return The instance domainOf ValueParser.
      */
-    fun create(metaClass: Metaclass): PayloadMapper
+    fun create(metaClass: Metaclass): PositionalMapper
 }

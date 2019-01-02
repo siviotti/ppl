@@ -7,17 +7,18 @@ import br.net.buzu.exception.PplReflectionException
 import br.net.buzu.lang.DEFAULT_MIN_OCCURS
 import br.net.buzu.lang.EMPTY
 import br.net.buzu.lang.PATH_SEP
-import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.MetaType
-import br.net.buzu.model.TypeAdapter
-import br.net.buzu.model.ValueMapper
+import br.net.buzu.model.*
 import br.net.buzu.pplimpl.metadata.IndexSequence
+import br.net.buzu.pplimpl.metatype.AtomicJvmMetaType
+import br.net.buzu.pplimpl.metatype.ComplexJvmMetaType
+import br.net.buzu.pplimpl.metatype.SimpleJvmMetaType
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
-private val EMPTY_CHILDREN : List<MetaType> = listOf()
+private val EMPTY_CHILDREN: List<MetaType> = listOf()
 
 val genericSkip: (Field) -> Boolean = { skip(it) }
+
 
 @JvmOverloads
 fun readMetaType(type: Class<*>, skip: (Field) -> Boolean = genericSkip): MetaType {
@@ -29,12 +30,12 @@ fun readMetaType(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean
     val seq = IndexSequence()
     val pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
     val index = seq.next()
-    val metaInfo = createMetaInfo(pplMetadata, elementType, EMPTY, index)
-    val valueMapper = getValueMapper(metaInfo.subtype, elementType)
     val fakeField = getAllFields({ }::class.java)[0]
-    val typeAdapter = JvmTypeAdapter(type, elementType, fakeField, metaInfo.subtype.dataType.isComplex)
-    return createJvmMetaType(EMPTY, EMPTY, type, elementType, metaInfo,
-            createChildren(metaInfo, EMPTY, elementType, skip, seq), index, typeAdapter, valueMapper)
+    val typeAdapter = JvmTypeAdapter(type, elementType, fakeField)
+    val metaInfo = createMetaInfo(pplMetadata, typeAdapter.defaultSubtype, EMPTY, index)
+    val valueMapper = getValueMapper(metaInfo.subtype, elementType)
+    return createJvmMetaType(EMPTY, EMPTY, metaInfo,
+            createChildren(EMPTY, elementType, skip, seq), index, typeAdapter, valueMapper)
 }
 
 private fun readFromField(parentFullName: String, field: Field, index: Int, skip: (Field) -> Boolean, seq: IndexSequence): MetaType {
@@ -46,15 +47,14 @@ private fun readFromField(parentFullName: String, field: Field, index: Int, skip
         pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
     }
     val fullName = if (parentFullName.isEmpty()) field.name else parentFullName + PATH_SEP + field.name
-    val metaInfo = createMetaInfo(pplMetadata, elementType, field.name, index)
+    val typeAdapter = JvmTypeAdapter(field.type, elementType, field)
+    val metaInfo = createMetaInfo(pplMetadata, typeAdapter.defaultSubtype, field.name, index)
     val valueMapper = getValueMapper(metaInfo.subtype, elementType)
-    val typeAdapter = JvmTypeAdapter(field.type, elementType, field, metaInfo.subtype.dataType.isComplex)
-    return createJvmMetaType(fullName, field.name, field.type, elementType, metaInfo,
-            createChildren(metaInfo, fullName, elementType, skip, seq), index, typeAdapter, valueMapper)
+    return createJvmMetaType(fullName, field.name, metaInfo,
+            createChildren(fullName, elementType, skip, seq), index, typeAdapter, valueMapper)
 }
 
-private fun createMetaInfo(pplMetadata: PplMetadata?, elementType: Class<*>, fieldName: String, index: Int): MetaInfo {
-    val subtype = defaultSubTypeOf(elementType)
+private fun createMetaInfo(pplMetadata: PplMetadata?, subtype: Subtype, fieldName: String, index: Int): MetaInfo {
     return if (pplMetadata != null)
         MetaInfo(pplMetadata, fieldName, subtype)
     else
@@ -62,8 +62,8 @@ private fun createMetaInfo(pplMetadata: PplMetadata?, elementType: Class<*>, fie
                 DEFAULT_MIN_OCCURS, PplMetadata.EMPTY_INTEGER)
 }
 
-private fun createChildren(parentMetaInfo: MetaInfo, parentPath: String, parentType: Class<*>, skip: (Field) -> Boolean, seq: IndexSequence): List<MetaType> {
-    if (isSimpleType(parentType)) {
+private fun createChildren(parentPath: String, parentType: Class<*>, skip: (Field) -> Boolean, seq: IndexSequence): List<MetaType> {
+    if (JvmTypeAdapter.isSimpleType(parentType)) {
         return EMPTY_CHILDREN
     }
     val children = mutableListOf<MetaType>()
@@ -87,33 +87,28 @@ private fun skip(field: Field): Boolean {
         return false
     }
 
-    // Precedence 3: Static, Transient or Ignore
-    if (Modifier.isStatic(field.modifiers)) {
-        return true
-    }
-    if (Modifier.isTransient(field.modifiers)) {
+    // Precedence 3: Static or Transient
+    if (Modifier.isStatic(field.modifiers) || Modifier.isTransient(field.modifiers)) {
         return true
     }
 
     // Precedence 4: Field Class
     var fieldClass: Class<*>
-    try {
-        fieldClass = getElementType(field)
+    fieldClass = try {
+        getElementType(field)
     } catch (pre: PplReflectionException) {
-        fieldClass = field.javaClass
+        field.javaClass
     }
 
     return fieldClass.isAnnotationPresent(PplIgnore::class.java)
 }
 
-fun createJvmMetaType(fullname: String, metaName: String, fieldType: Class<*>, elementType: Class<*>,
-                      metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, typeAdapter:TypeAdapter, valueMapper: ValueMapper): MetaType {
-
+fun createJvmMetaType(fullName: String, metaName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int,
+                      typeAdapter: TypeAdapter, valueMapper: ValueMapper): MetaType {
     return when {
-        elementType.isEnum -> EnumSimpleJvmMetaType(fullname, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
-        metaInfo.subtype.dataType.isComplex -> ComplexJvmMetaType(fullname, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
-        metaInfo.isMultiple -> SimpleJvmMetaType(fullname, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
-        else -> AtomicJvmMetaType(fullname, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
+        typeAdapter.isComplex -> ComplexJvmMetaType(fullName, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
+        metaInfo.isMultiple -> SimpleJvmMetaType(fullName, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
+        else -> AtomicJvmMetaType(fullName, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
     }
 
 }

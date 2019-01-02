@@ -29,4 +29,4 @@ import kotlin.reflect.KClass
  */
 @Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS, AnnotationTarget.FILE)
 @Retention(RetentionPolicy.RUNTIME)
-annotation class PplParser(val value: KClass<out PayloadMapper>)
+annotation class PplParser(val value: KClass<out PositionalMapper>)

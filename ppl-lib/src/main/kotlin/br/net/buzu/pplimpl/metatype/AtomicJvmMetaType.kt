@@ -14,10 +14,11 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.pplimpl.jvm
+package br.net.buzu.pplimpl.metatype
 
 import br.net.buzu.model.*
-import java.lang.reflect.Field
+import br.net.buzu.pplimpl.core.atomicParse
+import br.net.buzu.pplimpl.core.atomicSerialize
 
 /**
  * MetaType specific for "ATOMIC" kind.
@@ -27,9 +28,9 @@ import java.lang.reflect.Field
  */
 class AtomicJvmMetaType(fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
                         treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
-    : JvmMetaType(fieldPath, fieldName, metaInfo, children, treeIndex, typeAdapter, valueMapper) {
+    : AbstractMetaType(fieldPath, fieldName, metaInfo, children, treeIndex, typeAdapter, valueMapper) {
 
-    override fun doParse(text: String, metadata: StaticMetadata): Any? = parseAtomic(text, metadata)
+    override fun doParse(text: String, metadata: StaticMetadata): Any? = atomicParse(text, metadata, valueMapper)
 
-    override fun doSerialize(value: Any?, metadata: StaticMetadata): String = serializeAtomic(value, metadata)
+    override fun doSerialize(value: Any?, metadata: StaticMetadata): String = atomicSerialize(value, metadata, valueMapper)
 }

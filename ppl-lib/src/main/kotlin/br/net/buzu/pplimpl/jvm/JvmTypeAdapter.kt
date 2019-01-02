@@ -1,11 +1,19 @@
 package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.exception.PplParseException
+import br.net.buzu.model.Subtype
 import br.net.buzu.model.TypeAdapter
 import java.lang.reflect.Field
+import java.math.BigDecimal
+import java.math.BigInteger
+import java.time.*
+import java.util.*
 
-class JvmTypeAdapter(val fieldType: Class<*>, val elementType: Class<*>, private val field: Field, private val isComplex: Boolean) : TypeAdapter {
+class JvmTypeAdapter(val fieldType: Class<*>, val elementType: Class<*>, private val field: Field) : TypeAdapter {
 
+    override val isComplex: Boolean = !isSimpleType(elementType)
+    override val isEnum: Boolean = elementType.isEnum
+    override val defaultSubtype: Subtype = defaultSubTypeOf(elementType)
     private val isArray: Boolean = fieldType.isArray
     private val isCollection: Boolean = Collection::class.java.isAssignableFrom(fieldType)
 
@@ -62,6 +70,43 @@ class JvmTypeAdapter(val fieldType: Class<*>, val elementType: Class<*>, private
             }
         }
         throw PplParseException("The text '" + constName + "' is missing at enum " + elementType)
+    }
+
+    companion object {
+        private val DEFAULT_SUBTYPE_MAPPING: Map<Class<*>, Subtype> = mapOf(
+                String::class.java to Subtype.STRING,
+                Int::class.java to Subtype.INTEGER,
+                Int::class.javaPrimitiveType!! to Subtype.INTEGER,
+                Integer::class.java to Subtype.INTEGER,
+                Boolean::class.java to Subtype.BOOLEAN,
+                Boolean::class.javaPrimitiveType!! to Subtype.BOOLEAN,
+                Date::class.java to Subtype.TIMESTAMP,
+                LocalDateTime::class.java to Subtype.TIMESTAMP,
+                OffsetDateTime::class.java to Subtype.UTC_TIMESTAMP,
+                LocalDate::class.java to Subtype.DATE,
+                LocalTime::class.java to Subtype.TIME,
+                OffsetTime::class.java to Subtype.UTC_TIME,
+                Period::class.java to Subtype.PERIOD,
+                BigDecimal::class.java to Subtype.NUMBER,
+                Double::class.java to Subtype.NUMBER,
+                Double::class.javaPrimitiveType!! to Subtype.NUMBER,
+                Float::class.java to Subtype.NUMBER,
+                Float::class.javaPrimitiveType!! to Subtype.NUMBER,
+                Long::class.java to Subtype.LONG,
+                BigInteger::class.java to Subtype.LONG,
+                Long::class.javaPrimitiveType!! to Subtype.LONG,
+                Byte::class.java to Subtype.INTEGER,
+                Byte::class.javaPrimitiveType!! to Subtype.INTEGER,
+                Short::class.java to Subtype.INTEGER,
+                Short::class.javaPrimitiveType!! to Subtype.INTEGER,
+                Char::class.java to Subtype.CHAR,
+                Char::class.javaPrimitiveType!! to Subtype.CHAR
+        )
+
+        fun defaultSubTypeOf(typeClass: Class<*>): Subtype = if (typeClass.isEnum) Subtype.STRING
+        else DEFAULT_SUBTYPE_MAPPING[typeClass] ?: Subtype.DEFAULT_COMPLEX
+
+        fun isSimpleType(type: Class<*>): Boolean = DEFAULT_SUBTYPE_MAPPING.containsKey(type) || type.isEnum
     }
 
 }

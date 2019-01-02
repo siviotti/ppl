@@ -20,6 +20,7 @@ import br.net.buzu.parsing.AbstractPositionalMapper;
 import br.net.buzu.model.MetaInfo;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.StaticMetadata;
+import br.net.buzu.pplimpl.core.FitKt;
 
 /**
  * Superclass domainOf simple parsers (String, Integer Boolean etc).
@@ -83,11 +84,11 @@ public abstract class AbstractSimpleMapper extends AbstractPositionalMapper {
 	 * @see MetaInfo#getDefaultValue()
 	 */
 	protected String serializeNullElement(MetaInfo meta) {
-		return br.net.buzu.pplimpl.util.TextKt.fill(meta.getAlign(), meta.getDefaultValue(), meta.getSize(), meta.getSubtype().getDataType().getNullChar());
+		return FitKt.fill(meta.getAlign(), meta.getDefaultValue(), meta.getSize(), meta.getSubtype().getDataType().getNullChar());
 	}
 
 	protected String serializeElement(MetaInfo meta, Object obj) {
-		return br.net.buzu.pplimpl.util.TextKt.fit(meta.getAlign(), asStringFromNotNull(meta, obj), meta.getSize(), meta.getFillChar());
+		return FitKt.fit(meta.getAlign(), asStringFromNotNull(meta, obj), meta.getSize(), meta.getFillChar());
 	}
 
 	protected abstract String asStringFromNotNull(MetaInfo meta, Object obj);

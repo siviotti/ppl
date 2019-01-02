@@ -6,7 +6,7 @@ import br.net.buzu.parsing.simple.oldtime.OldTimestampMapper;
 import br.net.buzu.parsing.simple.time.DateMapper;
 import br.net.buzu.api.PplParser;
 import br.net.buzu.api.MetaclassReader;
-import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.api.PositionalMapper;
 import br.net.buzu.model.MetaInfo;
 import br.net.buzu.model.MetaInfoTest;
 import br.net.buzu.model.Metaclass;
@@ -175,15 +175,15 @@ public class BasicMetaclassReaderTest {
 		
 		BasicParserFactory factory = new BasicParserFactory();
 		Metaclass field4Metaclass = metaclass.getChildByName("field4");
-		PayloadMapper parser4 = factory.create(field4Metaclass);
+		PositionalMapper parser4 = factory.create(field4Metaclass);
 		assertEquals(OldTimestampMapper.class, parser4.getClass());
 		
 		Metaclass field5Metaclass = metaclass.getChildByName("field5");
-		PayloadMapper parser5 = factory.create(field5Metaclass);
+		PositionalMapper parser5 = factory.create(field5Metaclass);
 		assertEquals(OldTimestampMapper.class, parser5.getClass());
 
 		Metaclass field6Metaclass = metaclass.getChildByName("field6");
-		PayloadMapper parser6 = factory.create(field6Metaclass);
+		PositionalMapper parser6 = factory.create(field6Metaclass);
 		assertEquals(DateMapper.class, parser6.getClass());
 	}
 

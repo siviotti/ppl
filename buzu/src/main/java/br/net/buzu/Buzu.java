@@ -181,7 +181,7 @@ public class Buzu implements JavaPplMapper {
 
 	@Override
 	public String toPpl(StaticMetadata metadata, Object source, Metaclass fromClass) {
-		PayloadMapper payloadMapper = context.parserFactory().create(fromClass);
+		PositionalMapper payloadMapper = context.parserFactory().create(fromClass);
 		return pplToString(coder.code(metadata),
 				payloadMapper.serialize(metadata, source, fromClass));
 	}
