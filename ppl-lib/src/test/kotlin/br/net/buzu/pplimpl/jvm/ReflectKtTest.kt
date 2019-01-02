@@ -195,17 +195,17 @@ internal class ReflectKtTest {
         assertTrue(m.s == "DEFAULT")// Used constructor has 0 parameters
         // List
         val list = newInstance(List::class.java) as List<*>
-        assertTrue(list is ArrayList<*>)
+        assertTrue(list is List)
         // Set
         val set = newInstance(Set::class.java) as Set<*>
-        assertTrue(set is HashSet<*>)
+        assertTrue(set is Set)
         // Map
         val map = newInstance(Map::class.java) as Map<*, *>
-        assertTrue(map is HashMap<*, *>)
+        assertTrue(map is Map)
 
         // Explicit Construtor
         val elements = newInstance(Elements::class.java) as Elements
-        assertTrue(map is HashMap<*, *>)
+        assertTrue(map is Map)
         // # Constructors - select 1 parameter
         val m2 = newInstance(MultiConstructorNoDefaultNotSerializable::class.java) as MultiConstructorNoDefaultNotSerializable
         assertTrue(m2 is MultiConstructorNoDefaultNotSerializable)

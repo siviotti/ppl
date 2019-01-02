@@ -26,11 +26,11 @@ import br.net.buzu.pplimpl.core.arraySerialize
  * @author Douglas Siviotti
  * @since 1.0
  */
-open class SimpleJvmMetaType(fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
-                             treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
+open class SimpleMetaType(fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
+                          treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
     : AbstractMetaType(fieldPath, fieldName, metaInfo, children, treeIndex, typeAdapter, valueMapper) {
 
-    override fun doParse(text: String, metadata: StaticMetadata): Any? = arrayParse(text, metadata, typeAdapter, valueMapper)
+    override fun doParse(text: String, metadata: StaticMetadata): Any? = arrayParse(text, metadata.info(), typeAdapter, valueMapper)
 
-    override fun doSerialize(value: Any?, metadata: StaticMetadata): String = arraySerialize(value, metadata, typeAdapter, valueMapper)
+    override fun doSerialize(value: Any?, metadata: StaticMetadata): String = arraySerialize(value, metadata.info(), typeAdapter, valueMapper)
 }

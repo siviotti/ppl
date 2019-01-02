@@ -34,10 +34,10 @@ abstract class MetaType(val fullName: String, val metaName: String, val metaInfo
 
     abstract fun serialize(value: Any?, metadata: StaticMetadata): String
 
-    // Metadata Load Helper API
-
     abstract fun nodeCount(): Int
 
-    abstract fun getChildByMetaName(name: String): MetaType
+    abstract fun getChildByMetaName(metaName: String): MetaType
+
+    //abstract fun toMapper(metadata: StaticMetadata): TypeMapper
 
 }

@@ -26,11 +26,11 @@ import br.net.buzu.pplimpl.core.atomicSerialize
  * @author Douglas Siviotti
  * @since 1.0
  */
-class AtomicJvmMetaType(fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
-                        treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
+class AtomicMetaType(fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
+                     treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
     : AbstractMetaType(fieldPath, fieldName, metaInfo, children, treeIndex, typeAdapter, valueMapper) {
 
-    override fun doParse(text: String, metadata: StaticMetadata): Any? = atomicParse(text, metadata, valueMapper)
+    override fun doParse(text: String, metadata: StaticMetadata): Any? = atomicParse(text, metadata.info(), valueMapper)
 
-    override fun doSerialize(value: Any?, metadata: StaticMetadata): String = atomicSerialize(value, metadata, valueMapper)
+    override fun doSerialize(value: Any?, metadata: StaticMetadata): String = atomicSerialize(value, metadata.info(), valueMapper)
 }

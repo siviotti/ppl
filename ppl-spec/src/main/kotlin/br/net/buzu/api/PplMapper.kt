@@ -20,7 +20,7 @@ import br.net.buzu.exception.PplParseException
 import br.net.buzu.exception.PplSerializeException
 
 /**
- * Mapper to transform PPL to Object and Object to PPL.
+ * Simple Mapper to transform PPL to Object and Object to PPL.
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -30,13 +30,6 @@ interface PplMapper{
     // **************************************************
     // API TEXT->OBJECT
     // **************************************************
-
-    /**
-     * @param text
-     * @return
-     * @throws PplParseException
-     */
-    fun fromPpl(text: String): Map<String, Any>
 
     /**
      * Parsers a PPL text and returns the correspondent object based on the
@@ -54,17 +47,17 @@ interface PplMapper{
     fun <T> fromPpl(text: String, type: Class<T>): T
 
     /**
-     * Parsers a PPL text and always returns a correspondent **List** domainOf
+     * Parsers a PPL text and always returns a correspondent **List** of
      * elements.
      *
      * @param text
      * The PPL text at the format `(METADATA)PAYLOAD`.
      * @param elementType
-     * The type of the element of the List which will be created.
-     * @return The Collection corresponding to the PPL text.
+     * The type of the list element which will be created.
+     * @return The List corresponding to the PPL text.
      * @throws PplParseException
      */
-    fun <T> fromPplList(text: String, elementType: Class<T>): List<T>
+    fun <T> fromPplToList(text: String, elementType: Class<T>): List<T>
 
     // **************************************************
     // API OBJECT->TEXT

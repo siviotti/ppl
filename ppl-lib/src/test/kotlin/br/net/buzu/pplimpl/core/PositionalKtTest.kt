@@ -19,4 +19,13 @@ internal class PositionalKtTest {
         val order: Order = positionalParse(pplString.payload, metadata, metaType) as Order
         println(order)
     }
+
+    @Test
+    fun testPositionalSerialize(){
+        val metaType = readMetaType(Order::class.java)
+        val pplString = pplStringOf(Order.PPL_STRING)
+        val metadata = loadMetadata(Order.INSTANCE, metaType) as StaticMetadata
+        val ppl: String = positionalSerialize(Order.INSTANCE, metadata, metaType)
+        println(ppl)
+    }
 }

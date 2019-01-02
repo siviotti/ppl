@@ -49,8 +49,8 @@ abstract class AbstractMetaType(fullName: String, metaName: String, metaInfo: Me
     abstract fun doSerialize(value: Any?, metadata: StaticMetadata): String
 
 
-    override fun getChildByMetaName(name: String): MetaType = childrenMap[name]
-            ?: throw IllegalArgumentException("MetaType child '$name' not found at ${toString()}. Children:$children")
+    override fun getChildByMetaName(metaName: String): MetaType = childrenMap[metaName]
+            ?: throw IllegalArgumentException("Child metaType '$metaName' not found at ${toString()}. Children:$children")
 
 
     override fun nodeCount(): Int {

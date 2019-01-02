@@ -7,11 +7,11 @@ import br.net.buzu.exception.PplReflectionException
 import br.net.buzu.lang.DEFAULT_MIN_OCCURS
 import br.net.buzu.lang.EMPTY
 import br.net.buzu.lang.PATH_SEP
-import br.net.buzu.model.*
+import br.net.buzu.model.MetaInfo
+import br.net.buzu.model.MetaType
+import br.net.buzu.model.Subtype
 import br.net.buzu.pplimpl.metadata.IndexSequence
-import br.net.buzu.pplimpl.metatype.AtomicJvmMetaType
-import br.net.buzu.pplimpl.metatype.ComplexJvmMetaType
-import br.net.buzu.pplimpl.metatype.SimpleJvmMetaType
+import br.net.buzu.pplimpl.metatype.createMetaType
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
@@ -34,7 +34,7 @@ fun readMetaType(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean
     val typeAdapter = JvmTypeAdapter(type, elementType, fakeField)
     val metaInfo = createMetaInfo(pplMetadata, typeAdapter.defaultSubtype, EMPTY, index)
     val valueMapper = getValueMapper(metaInfo.subtype, elementType)
-    return createJvmMetaType(EMPTY, EMPTY, metaInfo,
+    return createMetaType(EMPTY, EMPTY, metaInfo,
             createChildren(EMPTY, elementType, skip, seq), index, typeAdapter, valueMapper)
 }
 
@@ -50,7 +50,7 @@ private fun readFromField(parentFullName: String, field: Field, index: Int, skip
     val typeAdapter = JvmTypeAdapter(field.type, elementType, field)
     val metaInfo = createMetaInfo(pplMetadata, typeAdapter.defaultSubtype, field.name, index)
     val valueMapper = getValueMapper(metaInfo.subtype, elementType)
-    return createJvmMetaType(fullName, field.name, metaInfo,
+    return createMetaType(fullName, field.name, metaInfo,
             createChildren(fullName, elementType, skip, seq), index, typeAdapter, valueMapper)
 }
 
@@ -101,14 +101,4 @@ private fun skip(field: Field): Boolean {
     }
 
     return fieldClass.isAnnotationPresent(PplIgnore::class.java)
-}
-
-fun createJvmMetaType(fullName: String, metaName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int,
-                      typeAdapter: TypeAdapter, valueMapper: ValueMapper): MetaType {
-    return when {
-        typeAdapter.isComplex -> ComplexJvmMetaType(fullName, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
-        metaInfo.isMultiple -> SimpleJvmMetaType(fullName, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
-        else -> AtomicJvmMetaType(fullName, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper)
-    }
-
 }

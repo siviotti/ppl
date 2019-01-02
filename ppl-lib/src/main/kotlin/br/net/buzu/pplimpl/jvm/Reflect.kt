@@ -236,11 +236,11 @@ fun newInstance(type: Class<*>): Any {
 
 internal fun newInstanceFromInterface(type: Class<*>): Any {
     if (List::class.java == type) {
-        return ArrayList<Any>()
+        return listOf<Any>()
     } else if (Set::class.java == type || Collection::class.java == type) {
-        return HashSet<Any>()
+        return setOf<Any>()
     } else if (Map::class.java == type) {
-        return HashMap<String, Any>()
+        return mapOf<String, Any>()
     }
     throw PplReflectionException("Is not possible create a new instance from the interface $type")
 }
@@ -287,7 +287,6 @@ internal fun instantiateUsingSerialization(type: Class<*>): Any {
     } catch (e: ClassNotFoundException) {
         throw PplReflectionException("Cannot find class " + e.message)
     }
-
 }
 
 internal fun getMostSimpleConstructor(toClass: Class<*>): Constructor<*> {

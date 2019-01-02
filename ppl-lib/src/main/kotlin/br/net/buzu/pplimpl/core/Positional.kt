@@ -20,44 +20,48 @@ import br.net.buzu.model.*
 
 fun positionalParse(text: String, metadata: StaticMetadata, metaType: MetaType): Any?{
     return when (metadata.kind()){
-        Kind.ATOMIC -> atomicParse(text, metadata, metaType.valueMapper)
-        Kind.ARRAY -> arrayParse(text, metadata, metaType.typeAdapter, metaType.valueMapper)
+        Kind.ATOMIC -> atomicParse(text, metadata.info(), metaType.valueMapper)
+        Kind.ARRAY -> arrayParse(text, metadata.info(), metaType.typeAdapter, metaType.valueMapper)
         else -> complexParse(text, metadata, metaType)
     }
 }
 
-fun atomicParse(text: String, metadata: StaticMetadata, valueMapper: ValueMapper): Any? {
-    val info: MetaInfo = metadata.info()
-    return if (isPositionalNull(text, info.nullChar))
-        if (info.hasDefaultValue()) valueMapper.toValue(metadata.info().defaultValue, info) else null
+fun positionalSerialize(value: Any?, metadata: StaticMetadata, metaType: MetaType): String{
+    return when (metadata.kind()){
+        Kind.ATOMIC -> atomicSerialize(value, metadata.info(), metaType.valueMapper)
+        Kind.ARRAY -> arraySerialize(value, metadata.info(), metaType.typeAdapter, metaType.valueMapper)
+        else -> complexSerialize(value, metadata, metaType)
+    }
+}
+
+fun atomicParse(text: String, metaInfo: MetaInfo, valueMapper: ValueMapper): Any? {
+    return if (isPositionalNull(text, metaInfo.nullChar))
+        if (metaInfo.hasDefaultValue()) valueMapper.toValue(metaInfo.defaultValue, metaInfo) else null
     else
-        valueMapper.toValue(text, info)
+        valueMapper.toValue(text, metaInfo)
 }
 
-fun atomicSerialize(value: Any?, metadata: StaticMetadata, valueMapper: ValueMapper): String {
-    val info: MetaInfo = metadata.info()
-    return if (value == null) fill(info.align, info.defaultValue, info.size, info.nullChar)
-    else fit(info.align, valueMapper.toText(value), info.size, info.fillChar)
+fun atomicSerialize(value: Any?, metaInfo: MetaInfo, valueMapper: ValueMapper): String {
+    return if (value == null) fill(metaInfo.align, metaInfo.defaultValue, metaInfo.size, metaInfo.nullChar)
+    else fit(metaInfo.align, valueMapper.toText(value), metaInfo.size, metaInfo.fillChar)
 }
 
-fun arrayParse(text: String, metadata: StaticMetadata, typeAdapter: TypeAdapter, valueMapper: ValueMapper): Any? {
-    val metaInfo: MetaInfo = metadata.info()
+fun arrayParse(text: String, metaInfo: MetaInfo, typeAdapter: TypeAdapter, valueMapper: ValueMapper): Any? {
     var beginIndex = 0
     var endIndex = 0
     val array = typeAdapter.createAndFillArray(metaInfo.maxOccurs)
     for (i in array.indices) {
         endIndex += metaInfo.size
-        array[i] = atomicParse(text.substring(beginIndex, endIndex), metadata, valueMapper)
+        array[i] = atomicParse(text.substring(beginIndex, endIndex), metaInfo, valueMapper)
         beginIndex += metaInfo.size
     }
     return typeAdapter.maxArrayToValue(array)
-
 }
 
-fun arraySerialize(value: Any?, metadata: StaticMetadata, typeAdapter: TypeAdapter, valueMapper: ValueMapper): String {
+fun arraySerialize(value: Any?, metaInfo: MetaInfo, typeAdapter: TypeAdapter, valueMapper: ValueMapper): String {
     val sb = StringBuilder()
-    val array = typeAdapter.valueToMaxArray(value, metadata.info().maxOccurs)
-    for (element in array) sb.append(atomicSerialize(element, metadata, valueMapper))
+    val array = typeAdapter.valueToMaxArray(value, metaInfo.maxOccurs)
+    for (element in array) sb.append(atomicSerialize(element, metaInfo, valueMapper))
     return sb.toString()
 }
 
@@ -71,7 +75,7 @@ fun complexParse(text: String, metadata: StaticMetadata, metaType: MetaType): An
         for (childMetadata in metadata.children<StaticMetadata>()) {
             childMetaType = metaType.getChildByMetaName(childMetadata.name())
             endIndex += childMetadata.serialMaxSize()
-            parsed = childMetaType.parse (text.substring(beginIndex, endIndex), childMetadata)
+            parsed = positionalParse (text.substring(beginIndex, endIndex), childMetadata, childMetaType)
             beginIndex += childMetadata.serialMaxSize()
             childMetaType.typeAdapter.setFieldValue(array[i]!!, parsed)
         }
@@ -86,13 +90,11 @@ fun complexSerialize(value: Any?, metadata: StaticMetadata, metaType: MetaType):
     for (element in array) {
         for (childMetadata in metadata.children<StaticMetadata>()) {
             childMetaType = metaType.getChildByMetaName(childMetadata.name())
-            sb.append(childMetaType.serialize(childMetaType.typeAdapter.getFieldValue(element!!), childMetadata))
+            sb.append(positionalSerialize(childMetaType.typeAdapter.getFieldValue(element!!), childMetadata, childMetaType))
         }
     }
     return sb.toString()
 }
-
-
 
 fun isPositionalNull(text: String, nullChar: Char): Boolean {
     for (i in 0 until text.length) if (text[i] != nullChar) return false

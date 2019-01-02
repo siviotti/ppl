@@ -26,8 +26,8 @@ import br.net.buzu.pplimpl.core.complexSerialize
  * @author Douglas Siviotti
  * @since 1.0
  */
-class ComplexJvmMetaType (fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
-                          treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
+class ComplexMetaType (fieldPath: String, fieldName: String, metaInfo: MetaInfo, children: List<MetaType>,
+                       treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
     : AbstractMetaType(fieldPath, fieldName,metaInfo, children, treeIndex, typeAdapter, valueMapper) {
 
     override fun doParse(text: String, metadata: StaticMetadata): Any? = complexParse(text, metadata, this)
