@@ -33,7 +33,7 @@ fun readMetaType(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean
     val fakeField = getAllFields({ }::class.java)[0]
     val typeAdapter = JvmTypeAdapter(type, elementType, fakeField)
     val metaInfo = createMetaInfo(pplMetadata, typeAdapter.defaultSubtype, EMPTY, index)
-    val valueMapper = getValueMapper(metaInfo.subtype, elementType)
+    val valueMapper = typeAdapter.getValueMapper(metaInfo.subtype)
     return createMetaType(EMPTY, EMPTY, metaInfo,
             createChildren(EMPTY, elementType, skip, seq), index, typeAdapter, valueMapper)
 }
@@ -49,7 +49,7 @@ private fun readFromField(parentFullName: String, field: Field, index: Int, skip
     val fullName = if (parentFullName.isEmpty()) field.name else parentFullName + PATH_SEP + field.name
     val typeAdapter = JvmTypeAdapter(field.type, elementType, field)
     val metaInfo = createMetaInfo(pplMetadata, typeAdapter.defaultSubtype, field.name, index)
-    val valueMapper = getValueMapper(metaInfo.subtype, elementType)
+    val valueMapper = typeAdapter.getValueMapper(metaInfo.subtype)
     return createMetaType(fullName, field.name, metaInfo,
             createChildren(fullName, elementType, skip, seq), index, typeAdapter, valueMapper)
 }

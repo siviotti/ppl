@@ -287,7 +287,7 @@ internal class JvmValueMapperTest {
         assertEquals("11:22:33", OldIsoTimeMapper.toText(date))
     }
 
-    //@Test
+    @Test
     fun testOldUtcTimeMapper() {
         val offset = SimpleDateFormat("XXX").format(Date())
         val textTime = "11:22:33$offset"

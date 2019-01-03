@@ -19,6 +19,8 @@ package br.net.buzu.pplimpl.metatype
 import br.net.buzu.model.*
 import br.net.buzu.pplimpl.core.complexParse
 import br.net.buzu.pplimpl.core.complexSerialize
+import br.net.buzu.pplimpl.core.positionalParse
+import br.net.buzu.pplimpl.core.positionalSerialize
 
 /**
  * MetaType for complex structures (has children). This class handle "RECORD" and 'TABLE" kinds.
@@ -30,7 +32,35 @@ class ComplexMetaType (fieldPath: String, fieldName: String, metaInfo: MetaInfo,
                        treeIndex: Int, typeAdapter: TypeAdapter, valueMapper: ValueMapper)
     : AbstractMetaType(fieldPath, fieldName,metaInfo, children, treeIndex, typeAdapter, valueMapper) {
 
-    override fun doParse(text: String, metadata: StaticMetadata): Any? = complexParse(text, metadata, this)
+    override fun parse(text: String, metadata: StaticMetadata): Any? {
+        var beginIndex = 0
+        var endIndex = 0
+        var parsed: Any?
+        var childMetaType: MetaType
+        val array = typeAdapter.createAndFillArray(metadata.info().maxOccurs)
+        for (i in array.indices) {
+            for (childMetadata in metadata.children<StaticMetadata>()) {
+                childMetaType = getChildByMetaName(childMetadata.name())
+                endIndex += childMetadata.serialMaxSize()
+                parsed = childMetaType.parse (text.substring(beginIndex, endIndex), childMetadata)
+                beginIndex += childMetadata.serialMaxSize()
+                childMetaType.typeAdapter.setFieldValue(array[i]!!, parsed)
+            }
+        }
+        return typeAdapter.maxArrayToValue(array)
 
-    override fun doSerialize(value: Any?, metadata: StaticMetadata): String = complexSerialize(value, metadata, this)
+    }
+
+    override fun serialize(value: Any?, metadata: StaticMetadata): String {
+        val sb = StringBuilder()
+        val array = typeAdapter.valueToMaxArray(value, metadata.info().maxOccurs)
+        var childMetaType: MetaType
+        for (element in array) {
+            for (childMetadata in metadata.children<StaticMetadata>()) {
+                childMetaType = getChildByMetaName(childMetadata.name())
+                sb.append(childMetaType.serialize(childMetaType.typeAdapter.getFieldValue(element!!), childMetadata))
+            }
+        }
+        return sb.toString()
+    }
 }

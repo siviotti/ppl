@@ -3,6 +3,7 @@ package br.net.buzu.pplimpl.jvm
 import br.net.buzu.exception.PplParseException
 import br.net.buzu.model.Subtype
 import br.net.buzu.model.TypeAdapter
+import br.net.buzu.model.ValueMapper
 import java.lang.reflect.Field
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -71,6 +72,8 @@ class JvmTypeAdapter(val fieldType: Class<*>, val elementType: Class<*>, private
         }
         throw PplParseException("The text '" + constName + "' is missing at enum " + elementType)
     }
+
+    override fun getValueMapper(subtype: Subtype): ValueMapper = getValueMapper(subtype, elementType)
 
     companion object {
         private val DEFAULT_SUBTYPE_MAPPING: Map<Class<*>, Subtype> = mapOf(

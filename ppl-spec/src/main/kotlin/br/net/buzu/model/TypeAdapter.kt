@@ -44,4 +44,6 @@ interface TypeAdapter {
 
     fun enumConstantToValue(constName: String): Any
 
+    fun getValueMapper(subtype: Subtype): ValueMapper
+
 }

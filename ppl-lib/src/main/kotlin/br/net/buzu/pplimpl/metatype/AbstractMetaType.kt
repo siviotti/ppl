@@ -28,27 +28,6 @@ abstract class AbstractMetaType(fullName: String, metaName: String, metaInfo: Me
     override val hasChildren: Boolean = children.isNotEmpty()
     private val childrenMap = children.map { it.metaName to it }.toMap()
 
-    override fun parse(text: String, metadata: StaticMetadata): Any? {
-        try {
-            return doParse(text, metadata)
-        } catch (e: Exception) {
-            throw PplParseException("Parsing error \n[from text]:$text\n[ to type ]:$typeAdapter\n[  mapper ]:$valueMapper", e)
-        }
-    }
-
-    override fun serialize(value: Any?, metadata: StaticMetadata): String {
-        try {
-            return doSerialize(value, metadata)
-        } catch (e: Exception) {
-            throw PplSerializeException("Serialization error at ${toString()} \n valueMapper:$valueMapper", e)
-        }
-    }
-
-    abstract fun doParse(text: String, metadata: StaticMetadata): Any?
-
-    abstract fun doSerialize(value: Any?, metadata: StaticMetadata): String
-
-
     override fun getChildByMetaName(metaName: String): MetaType = childrenMap[metaName]
             ?: throw IllegalArgumentException("Child metaType '$metaName' not found at ${toString()}. Children:$children")
 
@@ -63,5 +42,9 @@ abstract class AbstractMetaType(fullName: String, metaName: String, metaInfo: Me
 
     override fun toString(): String = "[$treeIndex] $fullName: $typeAdapter ($metaName) $valueMapper $metaInfo"
 
+    override fun getValueMapperFor(metadataInfo: MetaInfo): ValueMapper {
+        return if (metadataInfo.subtype == metaInfo.subtype) valueMapper
+        else typeAdapter.getValueMapper(metadataInfo.subtype)
+    }
 
 }

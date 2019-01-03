@@ -18,7 +18,7 @@ package br.net.buzu.model
 
 /**
  * Abstraction over a field type. If this type is complex the MetaType has children (another MetaTypes).
- * So, the MetaType is a Node of a Tree os MetaTypes.
+ * So, the MetaType is a Node of a Tree of MetaTypes.
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -37,6 +37,8 @@ abstract class MetaType(val fullName: String, val metaName: String, val metaInfo
     abstract fun nodeCount(): Int
 
     abstract fun getChildByMetaName(metaName: String): MetaType
+
+    abstract fun getValueMapperFor(metadataInfo: MetaInfo): ValueMapper
 
     //abstract fun toMapper(metadata: StaticMetadata): TypeMapper
 
