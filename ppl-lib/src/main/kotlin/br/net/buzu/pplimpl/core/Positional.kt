@@ -20,8 +20,8 @@ import br.net.buzu.model.*
 
 fun positionalParse(text: String, metadata: StaticMetadata, metaType: MetaType): Any?{
     return when (metadata.kind()){
-        Kind.ATOMIC -> atomicParse(text, metadata.info(), metaType.getValueMapperFor(metadata.info()))
-        Kind.ARRAY -> arrayParse(text, metadata.info(), metaType.typeAdapter, metaType.getValueMapperFor(metadata.info()))
+        Kind.ATOMIC -> atomicParse(text, metadata.info(), metaType.valueMapperOf(metadata.info()))
+        Kind.ARRAY -> arrayParse(text, metadata.info(), metaType.typeAdapter, metaType.valueMapperOf(metadata.info()))
         else -> complexParse(text, metadata, metaType)
     }
 }

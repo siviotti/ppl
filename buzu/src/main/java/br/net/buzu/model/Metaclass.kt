@@ -16,7 +16,7 @@
  */
 package br.net.buzu.model
 
-import br.net.buzu.api.PositionalMapper
+import br.net.buzu.api.PayloadMapper
 
 /**
  * Imutable informations about the target class on a parsing operation.
@@ -48,7 +48,7 @@ interface Metaclass : Metadata {
 
     fun elementType(): Class<*>
 
-    fun mapperType(): Class<out PositionalMapper>
+    fun mapperType(): Class<out PayloadMapper>
 
     fun hasCustomParser(): Boolean
 

@@ -4,7 +4,7 @@ import br.net.buzu.Buzu;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import br.net.buzu.api.PositionalMapper;
+import br.net.buzu.api.PayloadMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.PplString;
 import br.net.buzu.model.StaticMetadata;
@@ -53,7 +53,7 @@ public class PocTime {
 		PplString pplString = new PplString(empresaPpl1);
 		StaticMetadata metadata = (StaticMetadata) new MetadataBuilder().build(source);
 		Metaclass from = new BasicMetaclassReader().read(List.class, source.get(0).getClass());
-		PositionalMapper parser = new BasicParserFactory().create(from);
+		PayloadMapper parser = new BasicParserFactory().create(from);
 		Metaclass toClass = new BasicMetaclassReader().read(List.class, source.get(0).getClass());
 		String empresaPpl2 = pplString.getPayload();
 		Object object = source.get(0);

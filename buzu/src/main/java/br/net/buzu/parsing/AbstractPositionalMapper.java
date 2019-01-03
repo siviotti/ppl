@@ -16,7 +16,7 @@
  */
 package br.net.buzu.parsing;
 
-import br.net.buzu.api.PositionalMapper;
+import br.net.buzu.api.PayloadMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.StaticMetadata;
 import br.net.buzu.pplimpl.core.FitKt;
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  * @author Douglas Siviotti
  * @since 1.0
  */
-public abstract class AbstractPositionalMapper implements PositionalMapper {
+public abstract class AbstractPositionalMapper implements PayloadMapper {
 
 	// ******************** PARSE ********************
 

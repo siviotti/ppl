@@ -147,13 +147,15 @@ fun getAllFields(type: Class<*>): List<Field> {
 }
 
 fun getPplMetadata(field: Field): PplMetadata? {
-    if (field.isAnnotationPresent(PplMetadata::class.java)) {
-        return field.getAnnotation(PplMetadata::class.java)
+    return when {
+        field.isAnnotationPresent(PplMetadata::class.java) -> field.getAnnotation(PplMetadata::class.java)
+        else -> {
+            val elementType = getElementType(field)
+            if (elementType.isAnnotationPresent(PplMetadata::class.java)) {
+                elementType.getAnnotation(PplMetadata::class.java)
+            } else null
+        }
     }
-    val elementType = getElementType(field)
-    return if (elementType.isAnnotationPresent(PplMetadata::class.java)) {
-        elementType.getAnnotation(PplMetadata::class.java)
-    } else null
 }
 
 fun getValue(field: Field, instance: Any): Any? {

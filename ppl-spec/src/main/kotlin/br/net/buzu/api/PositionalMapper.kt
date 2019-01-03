@@ -1,12 +1,15 @@
 package br.net.buzu.api
 
 /**
- * Advanced Mapper to transform PPL to Object and Object to PPL based on Metadata and MetaType already created.
+ * Mapper to transform Positional Text to Payload Object and vice-versa.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface PositionalMapper : PplMapper{
+interface PositionalMapper {
 
+    fun parse(text: String): Any?
+
+    fun serialize(value: Any?): String
 
 }

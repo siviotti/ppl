@@ -31,8 +31,8 @@ class AtomicMetaType(fieldPath: String, fieldName: String, metaInfo: MetaInfo, c
     : AbstractMetaType(fieldPath, fieldName, metaInfo, children, treeIndex, typeAdapter, valueMapper) {
 
     override fun parse(text: String, metadata: StaticMetadata): Any? =
-            atomicParse(text, metadata.info(), getValueMapperFor(metadata.info()))
+            atomicParse(text, metadata.info(), valueMapperOf(metadata.info()))
 
     override fun serialize(value: Any?, metadata: StaticMetadata): String =
-            atomicSerialize(value, metadata.info(), getValueMapperFor(metadata.info()))
+            atomicSerialize(value, metadata.info(), valueMapperOf(metadata.info()))
 }

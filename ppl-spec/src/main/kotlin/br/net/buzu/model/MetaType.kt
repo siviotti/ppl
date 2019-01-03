@@ -38,8 +38,8 @@ abstract class MetaType(val fullName: String, val metaName: String, val metaInfo
 
     abstract fun getChildByMetaName(metaName: String): MetaType
 
-    abstract fun getValueMapperFor(metadataInfo: MetaInfo): ValueMapper
+    abstract fun valueMapperOf(metadataInfo: MetaInfo): ValueMapper
 
-    //abstract fun toMapper(metadata: StaticMetadata): TypeMapper
+    //abstract fun toMapper(metadata: StaticMetadata): PositionalMapper
 
 }

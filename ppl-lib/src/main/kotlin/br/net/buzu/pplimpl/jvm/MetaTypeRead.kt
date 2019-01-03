@@ -39,13 +39,8 @@ fun readMetaType(type: Class<*>, elementType: Class<*>, skip: (Field) -> Boolean
 }
 
 private fun readFromField(parentFullName: String, field: Field, index: Int, skip: (Field) -> Boolean, seq: IndexSequence): MetaType {
-    // Precedence 1: Field Annotation
-    var pplMetadata: PplMetadata? = field.getAnnotation(PplMetadata::class.java)
-    // Precedence 2: If null, use field Type Annotation
     val elementType = getElementType(field)
-    if (pplMetadata == null) {
-        pplMetadata = elementType.getAnnotation(PplMetadata::class.java)
-    }
+    val pplMetadata = getPplMetadata(field)
     val fullName = if (parentFullName.isEmpty()) field.name else parentFullName + PATH_SEP + field.name
     val typeAdapter = JvmTypeAdapter(field.type, elementType, field)
     val metaInfo = createMetaInfo(pplMetadata, typeAdapter.defaultSubtype, field.name, index)
@@ -67,7 +62,6 @@ private fun createChildren(parentPath: String, parentType: Class<*>, skip: (Fiel
         return EMPTY_CHILDREN
     }
     val children = mutableListOf<MetaType>()
-    var count = 0
     for (field in getAllFields(parentType).filterNot(skip)) {
         children.add(readFromField(parentPath, field, seq.next(), skip, seq))
     }

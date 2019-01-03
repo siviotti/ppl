@@ -28,7 +28,7 @@ import br.net.buzu.model.StaticMetadata
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface PositionalMapper  {
+interface PayloadMapper  {
     /**
      * Convets the payload text to object based on Metadata.
      *

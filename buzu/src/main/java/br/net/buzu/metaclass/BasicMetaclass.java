@@ -16,7 +16,7 @@
  */
 package br.net.buzu.metaclass;
 
-import br.net.buzu.api.PositionalMapper;
+import br.net.buzu.api.PayloadMapper;
 import br.net.buzu.lang.Token;
 import br.net.buzu.model.Kind;
 import br.net.buzu.model.MetaInfo;
@@ -41,11 +41,11 @@ public abstract class BasicMetaclass implements Metaclass {
 	private final String fieldName;
 	private final Class<?> fieldType;
 	private final Class<?> elementType;
-	private final Class<? extends PositionalMapper> parserType;
+	private final Class<? extends PayloadMapper> parserType;
 	private final MetaInfo metaInfo;
 
 	public BasicMetaclass(Field field, Class<?> fieldType, Class<?> elementType, Kind kind, MetaInfo metaInfo,
-			Class<? extends PositionalMapper> parserType) {
+			Class<? extends PayloadMapper> parserType) {
 		super();
 		this.field = field;
 		this.fieldName = field != null ? field.getName() : "";
@@ -80,7 +80,7 @@ public abstract class BasicMetaclass implements Metaclass {
 	}
 
 	@Override
-	public Class<? extends PositionalMapper> mapperType() {
+	public Class<? extends PayloadMapper> mapperType() {
 		return parserType;
 	}
 

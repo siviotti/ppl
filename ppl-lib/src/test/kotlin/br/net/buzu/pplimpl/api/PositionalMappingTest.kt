@@ -1,6 +1,6 @@
 package br.net.buzu.pplimpl.api
 
-import br.net.buzu.api.TypeMapper
+import br.net.buzu.api.PositionalMapper
 import br.net.buzu.model.MetaType
 import br.net.buzu.model.StaticMetadata
 import br.net.buzu.model.pplStringOf
@@ -11,15 +11,16 @@ import br.net.buzu.sample.order.Order
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
 
-internal class BasicTypeMapperTest {
+internal class PositionalMappingTest {
 
     @Test
     fun testMapperRoundTrip(){
         val pplString = pplStringOf(Order.PPL_STRING)
         val metaType = readMetaType(Order::class.java)
         val metadata = parseMetadata(pplString) as StaticMetadata
-        val mapper= BasicTypeMapper.create(metadata, metaType)
+        val mapper= positionalMapperOf(metadata, metaType)
         // parsing
         val order =  mapper.parse(pplString.payload) as Order
         assertEquals(Order.INSTANCE, order)
@@ -28,19 +29,20 @@ internal class BasicTypeMapperTest {
         assertEquals(pplString.payload, payload)
     }
 
+    @Disabled
     @Test
     fun testPerformance(){
         val pplString = pplStringOf(Order.PPL_STRING)
         val metaType = readMetaType(Order::class.java)
         val metadata = parseMetadata(pplString) as StaticMetadata
-        val mapper = BasicTypeMapper.create(metadata, metaType)
+        val mapper = positionalMapperOf(metadata, metaType)
 
         val t0 = System.currentTimeMillis()
         for (i in 1..1000000){
-            //parseByApi(pplString.payload, metadata, metaType)
+            parseByApi(pplString.payload, metadata, metaType)
             //parseByMetaType(pplString.payload, metadata, metaType)
             //parseByMapper(pplString.payload, metadata, metaType)
-            parseByCreatedMapper(pplString.payload, mapper)
+            //parseByCreatedMapper(pplString.payload, mapper)
         }
         val t1 = System.currentTimeMillis()
 
@@ -56,11 +58,11 @@ internal class BasicTypeMapperTest {
     }
 
     fun parseByMapper(payload: String, metadata: StaticMetadata, metaType: MetaType) {
-        BasicTypeMapper.create(metadata, metaType).parse(payload)
+        positionalMapperOf(metadata, metaType).parse(payload)
     }
 
-    fun parseByCreatedMapper(payload: String, typeMapper: TypeMapper) {
-        typeMapper.parse(payload)
+    fun parseByCreatedMapper(payload: String, positionalMapper: PositionalMapper) {
+        positionalMapper.parse(payload)
     }
 
 }

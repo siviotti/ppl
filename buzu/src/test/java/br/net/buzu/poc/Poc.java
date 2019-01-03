@@ -5,7 +5,7 @@ import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.poc.model.Request;
-import br.net.buzu.api.PositionalMapper;
+import br.net.buzu.api.PayloadMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.PplString;
 import br.net.buzu.model.StaticMetadata;
@@ -28,7 +28,7 @@ public class Poc {
     static final PplString PPL_STRING = pplStringOf(REQUEST_PPL);
     static final StaticMetadata STATIC_METADATA = (StaticMetadata) new BasicMetadataParser().parse(PPL_STRING);
     static final Metaclass METACLASS = new BasicMetaclassReader().read(Request.class);
-    static final PositionalMapper PARSER = new BasicParserFactory().create(METACLASS);
+    static final PayloadMapper PARSER = new BasicParserFactory().create(METACLASS);
 
 	public static void main(String[] args) {
 		String format = PPL;

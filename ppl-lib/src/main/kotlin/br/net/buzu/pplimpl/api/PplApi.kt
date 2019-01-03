@@ -16,7 +16,7 @@ fun fromPpl(text: String, type: Class<*>): Any? {
     val pplString = pplStringOf(text)
     val metadata = parseMetadata(pplString) as StaticMetadata
     val metaType = readMetaType(type)
-    return metaType.parse(pplString.payload, metadata)
+    return positionalMapperOf (metadata, metaType).parse(pplString.payload)
 }
 
 ////////////////////////////////////////

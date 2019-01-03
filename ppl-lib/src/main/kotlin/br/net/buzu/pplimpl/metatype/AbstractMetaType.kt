@@ -42,7 +42,7 @@ abstract class AbstractMetaType(fullName: String, metaName: String, metaInfo: Me
 
     override fun toString(): String = "[$treeIndex] $fullName: $typeAdapter ($metaName) $valueMapper $metaInfo"
 
-    override fun getValueMapperFor(metadataInfo: MetaInfo): ValueMapper {
+    override fun valueMapperOf(metadataInfo: MetaInfo): ValueMapper {
         return if (metadataInfo.subtype == metaInfo.subtype) valueMapper
         else typeAdapter.getValueMapper(metadataInfo.subtype)
     }
