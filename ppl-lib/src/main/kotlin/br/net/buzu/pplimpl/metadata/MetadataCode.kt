@@ -23,12 +23,12 @@ import br.net.buzu.model.Dialect
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
 import br.net.buzu.model.Subtype
+import java.lang.IllegalStateException
 
 internal const val SPACE = "" + br.net.buzu.lang.SPACE
 
-fun codeMetadata(metadata: Metadata): String {
-    return metadataAsShort(metadata)
-}
+fun codeMetadata(metadata: Metadata, dialect: Dialect = Dialect.DEFAULT): String = Coders.from(dialect).code(metadata)
+
 
 fun metadataAsVerbose(metadata: Metadata): String {
     return serialize(metadata, 0, " ", "\n", "\n", " ", " ",
@@ -243,13 +243,11 @@ class StructuralCoder : MetadataCoder {
     }
 }
 
-class GenericCodeManager : CoderManager {
-    override fun getCoder(dialect: Dialect): MetadataCoder {
-        return CODER_ARRAY[dialect.ordinal]!!
-    }
+class Coders : CoderManager {
+    override fun getCoder(dialect: Dialect): MetadataCoder = from(dialect)
 
     companion object {
-        internal val CODER_ARRAY = arrayOfNulls<MetadataCoder>(Dialect.values().size)
+        private val CODER_ARRAY = arrayOfNulls<MetadataCoder>(Dialect.values().size)
 
         init {
             CODER_ARRAY[Dialect.VERBOSE.ordinal] = VerboseCoder()
@@ -258,6 +256,12 @@ class GenericCodeManager : CoderManager {
             CODER_ARRAY[Dialect.COMPACT.ordinal] = CompactCoder()
             CODER_ARRAY[Dialect.STRUCTURAL.ordinal] = StructuralCoder()
         }
+
+        fun from(dialect: Dialect): MetadataCoder {
+            return CODER_ARRAY[dialect.ordinal]
+                    ?: throw IllegalStateException("Invalid array 'CODER_ARRAY'. Missing $dialect")
+        }
+
     }
 
 }

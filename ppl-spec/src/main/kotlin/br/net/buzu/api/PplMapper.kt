@@ -57,7 +57,7 @@ interface PplMapper{
      * @return The List corresponding to the PPL text.
      * @throws PplParseException
      */
-    fun <T> fromPplToList(text: String, elementType: Class<T>): List<T>
+    //fun <T> fromPplToList(text: String, elementType: Class<T>): List<T>
 
     // **************************************************
     // API OBJECT->TEXT

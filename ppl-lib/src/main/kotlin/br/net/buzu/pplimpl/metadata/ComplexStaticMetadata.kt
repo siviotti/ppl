@@ -25,7 +25,7 @@ import br.net.buzu.model.StaticStructure
  * @author Douglas Siviotti
  * @since 1.0
  */
-class ComplexStaticMetadada(metaInfo: MetaInfo, children: List<Metadata>) : ComplexMetadata(metaInfo, children), StaticMetadata {
+class ComplexStaticMetadata(metaInfo: MetaInfo, children: List<Metadata>) : ComplexMetadata(metaInfo, children), StaticMetadata {
 
     private val serialSize: Int
 
@@ -54,8 +54,8 @@ class ComplexStaticMetadada(metaInfo: MetaInfo, children: List<Metadata>) : Comp
     }
 
     override fun equals(obj: Any?): Boolean {
-        if (obj is ComplexStaticMetadada) {
-            val other = obj as ComplexStaticMetadada?
+        if (obj is ComplexStaticMetadata) {
+            val other = obj as ComplexStaticMetadata?
             return super.equals(other) && serialSize == other.serialSize
         }
         return false

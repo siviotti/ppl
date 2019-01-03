@@ -39,8 +39,7 @@ internal class PositionalMappingTest {
 
         val t0 = System.currentTimeMillis()
         for (i in 1..1000000){
-            parseByApi(pplString.payload, metadata, metaType)
-            //parseByMetaType(pplString.payload, metadata, metaType)
+            //parseByApi(pplString.payload, metadata, metaType)
             //parseByMapper(pplString.payload, metadata, metaType)
             //parseByCreatedMapper(pplString.payload, mapper)
         }
@@ -53,9 +52,6 @@ internal class PositionalMappingTest {
         positionalParse(payload, metadata, metaType)
     }
 
-    fun parseByMetaType(payload: String, metadata: StaticMetadata, metaType: MetaType) {
-        metaType.parse(payload, metadata)
-    }
 
     fun parseByMapper(payload: String, metadata: StaticMetadata, metaType: MetaType) {
         positionalMapperOf(metadata, metaType).parse(payload)

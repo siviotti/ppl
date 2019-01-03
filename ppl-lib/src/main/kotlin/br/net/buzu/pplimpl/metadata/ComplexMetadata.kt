@@ -47,11 +47,10 @@ open class ComplexMetadata(metaInfo: MetaInfo, children: List<Metadata>)
     }
 
     override fun equals(obj: Any?): Boolean {
-        if (obj is ComplexMetadata) {
+        return if (obj is ComplexMetadata) {
             val other = obj as ComplexMetadata?
-            return super.equals(other) && children == other.children
-        }
-        return false
+            super.equals(other) && children == other.children
+        } else false
     }
 
     override fun hasChildren(): Boolean {

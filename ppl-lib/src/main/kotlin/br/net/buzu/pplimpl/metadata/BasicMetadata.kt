@@ -22,6 +22,7 @@ import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
 
 import br.net.buzu.model.kindOf
+import java.util.*
 
 /**
  * Most basic abstract implementation of Metadata.
@@ -33,17 +34,11 @@ abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
 
     private val kind: Kind = kindOf(metaInfo.isMultiple, metaInfo.subtype.dataType.isComplex)
 
-    override fun name(): String {
-        return metaInfo.name
-    }
+    override fun name(): String = metaInfo.name
 
-    override fun kind(): Kind {
-        return kind
-    }
+    override fun kind(): Kind = kind
 
-    override fun info(): MetaInfo {
-        return metaInfo
-    }
+    override fun info(): MetaInfo = metaInfo
 
     override fun toTree(level: Int): String {
         val sb = StringBuilder()
@@ -59,9 +54,7 @@ abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
         return sb.toString()
     }
 
-    override fun hashCode(): Int {
-        return kind.ordinal * 31 + metaInfo.hashCode() * 31
-    }
+    override fun hashCode(): Int = kind.ordinal * 31 + metaInfo.hashCode() * 31
 
     override fun equals(obj: Any?): Boolean {
         if (obj === this) {
@@ -77,9 +70,7 @@ abstract class BasicMetadata(private val metaInfo: MetaInfo) : Metadata {
         return false
     }
 
-    override fun toString(): String {
-        return kind.toString() + " " + metaInfo.ppl()
-    }
+    override fun toString(): String = kind.toString() + " " + metaInfo.ppl()
 
     companion object {
         private const val META_INFO_MUST_BE_COMPLETE = "MetaInfo must be complete (size and occurrences) for static behave:"

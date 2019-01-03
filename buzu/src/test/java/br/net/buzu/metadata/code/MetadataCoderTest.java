@@ -48,7 +48,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertTrue(code.contains(getDEFAULT_OCCURS()));
+		assertTrue(code.contains(Syntax.DEFAULT_OCCURS));
 		assertTrue(code.contains(""+ENTER));
 		assertTrue(code.contains(""+Subtype.STRING.getId()));
 		
@@ -66,7 +66,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(getDEFAULT_OCCURS()));
+		assertFalse(code.contains(Syntax.DEFAULT_OCCURS));
 		assertTrue(code.contains(""+Syntax.ENTER));
 		assertTrue(code.contains(""+Subtype.STRING.getId()));
 	}
@@ -83,7 +83,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(getDEFAULT_OCCURS()));
+		assertFalse(code.contains(Syntax.DEFAULT_OCCURS));
 		assertFalse(code.contains(""+Syntax.ENTER));
 		assertTrue(code.contains(""+Subtype.STRING.getId()));
 	}
@@ -100,7 +100,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(getDEFAULT_OCCURS()));
+		assertFalse(code.contains(Syntax.DEFAULT_OCCURS));
 		assertFalse(code.contains(""+Syntax.ENTER));
 		assertFalse(code.contains(""+Subtype.STRING.getId()));
 	}
@@ -117,7 +117,7 @@ public class MetadataCoderTest {
 		
 		String code = coder.code(BOOK);
 		
-		assertFalse(code.contains(getDEFAULT_OCCURS()));
+		assertFalse(code.contains(Syntax.DEFAULT_OCCURS));
 		assertFalse(code.contains(""+Syntax.ENTER));
 	}
 

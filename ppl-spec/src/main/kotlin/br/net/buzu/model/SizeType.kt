@@ -17,7 +17,7 @@
 package br.net.buzu.model
 
 /**
- * Lista com as estratégias de definição de tamanho dos campos.
+ * List of size types.
  *
  * @author Douglas Siviotti
  * @since 1.0

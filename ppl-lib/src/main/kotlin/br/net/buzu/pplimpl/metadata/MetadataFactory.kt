@@ -17,7 +17,7 @@ fun createMetadata(metaInfo: MetaInfo, children: List<Metadata>): Metadata {
             SimpleMetadata(metaInfo)
     else {
         if (isStaticChildren(children))
-            ComplexStaticMetadada(metaInfo, children)
+            ComplexStaticMetadata(metaInfo, children)
         else
             ComplexMetadata(metaInfo, children)
     }

@@ -71,13 +71,14 @@ object ErrorMapper : JvmValueMapper(Any::class.java, Subtype.OBJ) {
 class EnumMapper (jvmType: Class<*>): JvmValueMapper(jvmType, Subtype.STRING) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? {
         val fields = getAllFields(jvmType)
+        println(text)
         val constName = text.trim { it <= ' ' }
         for (field in fields) {
-            if (field.isEnumConstant() && field.getName() == constName) {
+            if (field.isEnumConstant && field.name == constName) {
                 return field.get(null)
             }
         }
-        throw PplParseException("The text '$constName' is missing at enum $jvmType")
+        throw PplParseException("The constant name '$constName' is missing at enum $jvmType")
 
     }
     override fun toText(value: Any): String = (value as Enum<*>).name

@@ -77,7 +77,7 @@ class MetadataParserTest {
     @Test
     fun testEmptyLayout() {
         val metadada = parseMetadata(pplStringOf("(X:(;;))")) as StaticMetadata
-        //assertEquals(ComplexStaticMetadada.class, metadada.getClass());
+        //assertEquals(ComplexStaticMetadata.class, metadada.getClass());
         assertEquals("X", metadada.name())
         assertEquals(Subtype.OBJ, metadada.info().subtype)
         assertEquals(0, metadada.info().size) // 2 x 0

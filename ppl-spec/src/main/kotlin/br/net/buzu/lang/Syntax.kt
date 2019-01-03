@@ -29,10 +29,8 @@ const val EMPTY = ""
 const val ENTER = '\n'
 const val TAB = '\t'
 const val SPACE = ' '
-/** Prefix used when the Metadata has no name.  */
-const val NO_NAME_START = "__"
+const val NO_NAME_START = "__" // Prefix used when the Metadata has no name.
 const val UNBOUNDED = 0
-const val SINGLE_OCCURS = 1
 
 // **************************************************
 // Defaults
@@ -41,17 +39,11 @@ const val DEFAULT_TYPE = TYPE_STRING
 const val DEFAULT_SIZE = 0
 const val DEFAULT_MIN_OCCURS = 0
 const val DEFAULT_MAX_OCCURS = 1
-val DEFAULT_OCCURS = ("" + OCCURS_BEGIN + DEFAULT_MIN_OCCURS + OCCURS_RANGE
-        + DEFAULT_MAX_OCCURS)
-val SINGLE_REQUIRED_OCCURS_VALUE = "" + SINGLE_OCCURS + OCCURS_RANGE + SINGLE_OCCURS
-val SINGLE_REQUIRED_OCCURS = OCCURS_BEGIN + SINGLE_REQUIRED_OCCURS_VALUE
+const val DEFAULT_OCCURS = ("" + OCCURS_BEGIN + DEFAULT_MIN_OCCURS + OCCURS_RANGE + DEFAULT_MAX_OCCURS)
 
 // **************************************************
 // Regex
 // **************************************************
-
-const val PPL_SPEC = "(METADATA)PAYLOAD"
-const val META = "[NAME]:[TYPE(SUB)][SIZE|{FORMAT}]#[OCCURS][EXTENSION]"
 
 const val NAME_REGEX = "[a-zA-Z_][a-zA-Z0-9-_]{0,49}:"
 val NAME_PATTERN: Pattern = Pattern.compile(NAME_REGEX)
@@ -66,7 +58,7 @@ val SIZE_PATTERN: Pattern = Pattern.compile(SIZE_REGEX)
 const val OCCURS_REGEX = "[0-9]{1,9}(-[0-9]{1,9})?"
 val OCCURS_PATTERN: Pattern = Pattern.compile(OCCURS_REGEX)
 
-val META_REGEX = ("(" + NAME_REGEX + ")?(" + TYPE_REGEX + ")?((" + SIZE_REGEX + ")" + ")?("
+const val META_REGEX = ("(" + NAME_REGEX + ")?(" + TYPE_REGEX + ")?((" + SIZE_REGEX + ")" + ")?("
         + OCCURS_REGEX + ")?.*;")
 val META_PATTERN: Pattern = Pattern.compile(META_REGEX)
 

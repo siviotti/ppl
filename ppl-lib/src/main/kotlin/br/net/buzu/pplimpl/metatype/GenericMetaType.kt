@@ -16,26 +16,33 @@
  */
 package br.net.buzu.pplimpl.metatype
 
-import br.net.buzu.exception.PplParseException
-import br.net.buzu.exception.PplSerializeException
-import br.net.buzu.model.*
+import br.net.buzu.model.MetaInfo
+import br.net.buzu.model.MetaType
+import br.net.buzu.model.TypeAdapter
+import br.net.buzu.model.ValueMapper
 
+/**
+ * Generic implementation of MetaType independent of language/platform.
+ *
+ * @author Douglas Siviotti
+ * @since 1.0
+ * @see MetaType
+ */
+class GenericMetaType(override val fullName: String, override val metaName: String, override val metaInfo: MetaInfo,
+                      override val children: List<MetaType>, override val treeIndex: Int,
+                      override val typeAdapter: TypeAdapter, override val valueMapper: ValueMapper)
+    : MetaType {
 
-abstract class AbstractMetaType(fullName: String, metaName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int, typeAdapter: TypeAdapter,
-                                valueMapper: ValueMapper) :
-        MetaType(fullName, metaName, metaInfo, treeIndex, children, typeAdapter, valueMapper) {
-
-    override val hasChildren: Boolean = children.isNotEmpty()
+    override val hasChildren = children.isNotEmpty()
     private val childrenMap = children.map { it.metaName to it }.toMap()
 
     override fun getChildByMetaName(metaName: String): MetaType = childrenMap[metaName]
             ?: throw IllegalArgumentException("Child metaType '$metaName' not found at ${toString()}. Children:$children")
 
-
-    override fun nodeCount(): Int {
+    override fun treeSize(): Int {
         return if (children.isEmpty()) 1 else {
             var count = 1
-            for (it in children) count += it.nodeCount()
+            for (it in children) count += it.treeSize()
             count
         }
     }

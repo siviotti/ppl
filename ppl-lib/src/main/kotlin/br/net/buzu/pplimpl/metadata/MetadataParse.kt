@@ -29,12 +29,9 @@ internal const val INVALID_DOMAIN = "Invalid domain:"
 private val EMPTY_DOMAIN = Domain.EMPTY
 private val EMPTY_CHILDREN: List<Metadata> = listOf()
 
-
-fun parseMetadata(pplString: PplString): Metadata {
-    return parseMetadata(pplString, createMetadata = genericCreateMetadata)
-}
-
-fun parseMetadata(pplString: PplString, createMetadata: CreateMetadata, seq: IndexSequence = IndexSequence()): Metadata {
+@JvmOverloads
+fun parseMetadata(pplString: PplString, createMetadata: CreateMetadata= genericCreateMetadata,
+                  seq: IndexSequence = IndexSequence()): Metadata {
     try {
         val nodes = splitNodes(pplString.pplMetadata)
         return if (nodes.size > 1) {
@@ -45,7 +42,6 @@ fun parseMetadata(pplString: PplString, createMetadata: CreateMetadata, seq: Ind
     } catch (e: ParseException) {
         throw PplParseException("Parsing error on text:\n$pplString", e)
     }
-
 }
 
 internal fun createRoot(nodes: List<PplNode>): PplNode {
@@ -221,7 +217,7 @@ class GenericMetadataParser : MetadataParser {
 }
 
 class IndexSequence {
-    private var internalValue = 0;
+    private var internalValue = 0
     fun next() = internalValue++
 }
 

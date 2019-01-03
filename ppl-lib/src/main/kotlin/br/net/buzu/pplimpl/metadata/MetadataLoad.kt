@@ -23,7 +23,7 @@ import java.util.*
 @JvmOverloads
 fun loadMetadata(rootInstance: Any, metaType: MetaType, createMetadata: CreateMetadata = genericCreateMetadata): Metadata {
     val loadNode = LoadNode(rootInstance, metaType)
-    val maxMap = MaxMap(metaType.nodeCount() + 1)
+    val maxMap = MaxMap(metaType.treeSize() + 1)
     val metaInfo = metaType.metaInfo
     val max = getMax(maxMap, loadNode, metaInfo)
     return createMetadata(metaInfo.update(max.maxSize, max.maxOccurs), createMetaChildren(loadNode, maxMap, createMetadata))
@@ -34,13 +34,13 @@ internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: 
     if (!metaType.hasChildren) {
         return listOf()
     }
-    val typeList = metaType.children
-    val children = arrayOfNulls<Metadata>(typeList.size)
+    val metaTypeList = metaType.children
+    val children = arrayOfNulls<Metadata>(metaTypeList.size)
     var fieldValue: Any?
     var childMetaType: MetaType
     for (itemValue in node.value) {
-        for (i in typeList.indices) {
-            childMetaType = typeList[i]
+        for (i in metaTypeList.indices) {
+            childMetaType = metaTypeList[i]
             fieldValue = if (itemValue != null) childMetaType.typeAdapter.getFieldValue(itemValue) else null
             children[i] = loadChild(fieldValue, childMetaType, node, maxMap, createMetadata)
         }

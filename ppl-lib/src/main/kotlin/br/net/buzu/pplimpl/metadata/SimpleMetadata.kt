@@ -20,27 +20,17 @@ import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
 
 /**
- * No complex metadata.
+ * Not complex metadata.
  *
  * @author Douglas Siviotti
  * @since 1.0 (15/05/2017)
  */
 open class SimpleMetadata(metaInfo: MetaInfo) : BasicMetadata(metaInfo) {
 
-    override fun <T: Metadata> children(): List<T> {
-        throw UnsupportedOperationException(SIMPLE_METADATA_HAS_NO_CHILDREN)
-    }
+    override fun <T : Metadata> children(): List<T> = throw UnsupportedOperationException("SimpleMetadata has no children!")
 
-    override fun hasChildren(): Boolean {
-        return false
-    }
+    override fun hasChildren(): Boolean = false
 
+    override fun isStatic(): Boolean = false
 
-    override fun isStatic(): Boolean {
-        return false
-    }
-
-    companion object {
-        private const val SIMPLE_METADATA_HAS_NO_CHILDREN = "SimpleMetadata has no children!"
-    }
 }

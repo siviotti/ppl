@@ -98,16 +98,15 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
     /** ISO Offset Timestamp yyyy-mm-ddThh:mm:ss+hh:mm  - UTC (Coordinated Universal Time)*/
     UTC_TIMESTAMP(DataType.TIMESTAMP, "" + DataType.TIMESTAMP.id + "U", 25, true),
 
-
     /** Default Period  */
     PERIOD(DataType.PERIOD),
 
     // DataType COMPLEX
 
-    /** Tipo complexo porém plano, ou seja, sem ocorrências indefinidas  */
+    /** Untyped complex objects  */
     MAP(DataType.MAP),
 
-    /** Tipo complexo porém plano, ou seja, sem ocorrências indefinidas  */
+    /** Typed complex objects  */
     OBJ(DataType.OBJECT),
 
     @Deprecated("this instance represents a null Subtype")
@@ -137,11 +136,7 @@ enum class Subtype(val dataType: DataType, val id: String = "" + dataType.id, va
         }
 
         fun of(id: String): Subtype {
-            val tmp: Subtype? = INTERNAL_MAP[id]
-            if (tmp != null) {
-                return tmp
-            }
-            throw IllegalArgumentException("The id $id correspond to none Subtype")
+            return INTERNAL_MAP[id] ?: throw IllegalArgumentException("The id '$id' correspond to none Subtype")
         }
     }
 

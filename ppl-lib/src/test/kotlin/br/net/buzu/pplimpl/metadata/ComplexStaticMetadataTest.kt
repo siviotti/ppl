@@ -43,15 +43,15 @@ class ComplexStaticMetadataTest {
         internal var ssm1 = SimpleStaticMetadata(metaInfo)
         internal var ssm2 = SimpleStaticMetadata(metaInfo)
         internal var children: MutableList<Metadata> = ArrayList()
-        internal var cmm1: ComplexStaticMetadada
-        internal var cmm2: ComplexStaticMetadada
+        internal var cmm1: ComplexStaticMetadata
+        internal var cmm2: ComplexStaticMetadata
 
         init {
             children.add(ssm1)
             children.add(ssm2)
 
-            cmm1 = ComplexStaticMetadada(metaInfo, children)
-            cmm2 = ComplexStaticMetadada(metaInfo, children)
+            cmm1 = ComplexStaticMetadata(metaInfo, children)
+            cmm2 = ComplexStaticMetadata(metaInfo, children)
         }
     }
 

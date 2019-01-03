@@ -51,7 +51,7 @@ interface Metadata : Nameable {
     fun info(): MetaInfo
 
     /**
-     * Returns tha list domainOf subElements.
+     * Returns tha list of subElements.
      *
      * @return The children elements.
      */

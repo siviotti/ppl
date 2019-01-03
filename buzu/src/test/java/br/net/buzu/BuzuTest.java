@@ -7,7 +7,7 @@ import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.code.ShortMetadataCoder;
-import br.net.buzu.pplimpl.metadata.GenericCodeManager;
+import br.net.buzu.pplimpl.metadata.Coders;
 import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
 import br.net.buzu.api.MetadataCoder;
 import br.net.buzu.context.JavaContext;
@@ -149,7 +149,7 @@ public class BuzuTest {
     }
 
     private static Buzu kotlinBuzu() {
-        JavaContext context = new ContextBuilder().coderManager(new GenericCodeManager()).build();
+        JavaContext context = new ContextBuilder().coderManager(new Coders()).build();
         return new BuzuBuilder().context(context).metadataParser(new GenericMetadataParser()).build();
     }
 

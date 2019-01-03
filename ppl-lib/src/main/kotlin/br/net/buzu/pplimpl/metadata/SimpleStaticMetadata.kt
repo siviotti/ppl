@@ -33,13 +33,9 @@ class SimpleStaticMetadata(metaInfo: MetaInfo) : SimpleMetadata(metaInfo), Stati
         serialMaxSize = metaInfo.size * metaInfo.maxOccurs
     }
 
-    override fun isStatic(): Boolean {
-        return true
-    }
+    override fun isStatic(): Boolean =true
 
-    override fun serialMaxSize(): Int {
-        return serialMaxSize
-    }
+    override fun serialMaxSize(): Int =serialMaxSize
 
     override fun hashCode(): Int {
         val prime = 31
@@ -49,17 +45,11 @@ class SimpleStaticMetadata(metaInfo: MetaInfo) : SimpleMetadata(metaInfo), Stati
     }
 
     override fun equals(obj: Any?): Boolean {
-        if (this === obj) {
-            return true
-        }
-        if (obj == null) {
-            return false
-        }
         if (obj is SimpleStaticMetadata) {
             val other = obj as SimpleStaticMetadata?
             return super.equals(other) && serialMaxSize == other.serialMaxSize
         }
-        return true
+        return false
     }
 
 }

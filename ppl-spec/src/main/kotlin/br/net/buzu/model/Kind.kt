@@ -25,7 +25,7 @@ fun kindOf(multiple: Boolean, complex: Boolean): Kind {
 }
 
 /**
- * List of Metadata Kind: ATOMIC, ARRAY, RECORD and TABLE
+ * List of Metadata/MetaType Kind: ATOMIC, ARRAY, RECORD and TABLE
  *
  * @author Douglas Siviotti
  * @since 1.0
@@ -39,7 +39,7 @@ enum class Kind(
          */
         val isMultiple: Boolean,
         /**
-         * Indicates if a metadata is composed for other metadatas.
+         * Indicates if a metadata is composed by other metadatas.
          *
          * @return `true` if a metadata is composed by others or
          * `false` if its value is a simple value.
@@ -48,7 +48,7 @@ enum class Kind(
 
     /** One single value. String, Integer, Boolean etc.  */
     ATOMIC(false, false),
-    /** Many single values. List, Set, Arrays etc.  */
+    /** Many single values. List<String>, Set<Integer>, Arrays etc.  */
     ARRAY(true, false),
     /** One complex value. Customer, Person etc.  */
     RECORD(false, true),

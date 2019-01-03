@@ -17,7 +17,8 @@
 package br.net.buzu.model
 
 /**
- * Represents an Adapter for the element type and get/set field values
+ * Represents an Adapter for the element type and get/set field values.
+ * This adapter encapsulates all knowledge about the language types.
  *
  * @author Douglas Siviotti
  * @since 1.0
