@@ -27,10 +27,6 @@ import br.net.buzu.exception.PplSerializeException
  */
 interface PplMapper{
 
-    // **************************************************
-    // API TEXT->OBJECT
-    // **************************************************
-
     /**
      * Parsers a PPL text and returns the correspondent object based on the
      * indicated type. If the PPL text represents multiple records, the result will
@@ -58,10 +54,6 @@ interface PplMapper{
      * @throws PplParseException
      */
     //fun <T> fromPplToList(text: String, elementType: Class<T>): List<T>
-
-    // **************************************************
-    // API OBJECT->TEXT
-    // **************************************************
 
     /**
      * Transforms an object into PPL text (Serialization).

@@ -17,5 +17,6 @@ internal class BasicPplMapperTest {
 
     @Test
     fun testToPpl() {
+        assertEquals(Order.PPL_STRING, mapper.toPpl(Order.INSTANCE))
     }
 }

@@ -150,12 +150,11 @@ internal val serializeCompactSimpleType: (metaInfo: MetaInfo) -> String = { meta
 // size
 
 internal fun serializeSimpleSize(metaInfo: MetaInfo, afterSize: String): String {
-    if (metaInfo.subtype.isFixedSizeType) {
-        return EMPTY
-    } else
-        return if (metaInfo.hasScale()) {
-            "" + metaInfo.size + DECIMAL_SEP + metaInfo.scale + afterSize
-        } else "" + metaInfo.size + afterSize
+    return when {
+        metaInfo.subtype.isFixedSizeType -> EMPTY
+        metaInfo.hasScale() -> "" + metaInfo.size + DECIMAL_SEP + metaInfo.scale + afterSize
+        else -> "" + metaInfo.size + afterSize
+    }
 }
 
 internal val serializeVerboseComplexSize: (metaInfo: MetaInfo, afterSize: String) -> String = { metaInfo, afterSize ->

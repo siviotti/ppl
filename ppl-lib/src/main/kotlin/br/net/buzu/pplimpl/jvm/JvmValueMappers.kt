@@ -71,7 +71,6 @@ object ErrorMapper : JvmValueMapper(Any::class.java, Subtype.OBJ) {
 class EnumMapper (jvmType: Class<*>): JvmValueMapper(jvmType, Subtype.STRING) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? {
         val fields = getAllFields(jvmType)
-        println(text)
         val constName = text.trim { it <= ' ' }
         for (field in fields) {
             if (field.isEnumConstant && field.name == constName) {
