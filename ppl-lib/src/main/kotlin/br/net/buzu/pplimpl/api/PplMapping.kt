@@ -1,7 +1,7 @@
 package br.net.buzu.pplimpl.api
 
-import br.net.buzu.api.ParamPplMapper
 import br.net.buzu.api.PplMapper
+import br.net.buzu.api.PplSimpleMapper
 import br.net.buzu.lang.pplToString
 import br.net.buzu.model.Dialect
 import br.net.buzu.model.MetaType
@@ -12,16 +12,18 @@ import br.net.buzu.pplimpl.metadata.codeMetadata
 import br.net.buzu.pplimpl.metadata.loadMetadata
 import br.net.buzu.pplimpl.metadata.parseMetadata
 
-fun pplMapperOf(dialect:Dialect= Dialect.DEFAULT) : PplMapper{
-    return BasicPplMapper(dialect)
+fun pplSimpleMapperOf(dialect: Dialect = Dialect.DEFAULT): PplSimpleMapper = SimpleMapper(dialect)
+
+fun pplMapperOf(dialect:Dialect= Dialect.DEFAULT): PplMapper{
+    return GenericMapper(dialect)
 }
 
-class BasicPplMapper (val dialect: Dialect): PplMapper{
+internal class SimpleMapper(val dialect: Dialect) : PplSimpleMapper {
 
     override fun <T> fromPpl(text: String, type: Class<T>): T {
         val pplString = pplStringOf(text)
-        val metaType = readMetaType(type)
         val metadata = parseMetadata(pplString) as StaticMetadata
+        val metaType = readMetaType(type)
         val mapper = positionalMapperOf(metadata, metaType)
         return mapper.parse(pplString.payload) as T
     }
@@ -34,7 +36,7 @@ class BasicPplMapper (val dialect: Dialect): PplMapper{
     }
 }
 
-class BasicParamPplMapper(val dialect: Dialect): ParamPplMapper{
+internal class GenericMapper(val dialect: Dialect) : PplMapper {
 
     override fun <T> fromPpl(text: String, type: Class<T>): T {
         return fromPpl(text, readMetaType(type))
@@ -48,7 +50,6 @@ class BasicParamPplMapper(val dialect: Dialect): ParamPplMapper{
         val pplString = pplStringOf(text)
         val mapper = positionalMapperOf(metadata, metaType)
         return mapper.parse(pplString.payload) as T
-
     }
 
     override fun toPpl(source: Any): String {
@@ -61,9 +62,6 @@ class BasicParamPplMapper(val dialect: Dialect): ParamPplMapper{
     }
 
     override fun toPpl(source: Any, metaType: MetaType, metadata: StaticMetadata): String {
-        val mapper = positionalMapperOf(metadata, metaType)
-        return pplToString(codeMetadata(metadata, dialect), mapper.serialize(source))
+        return pplToString(codeMetadata(metadata, dialect), positionalMapperOf(metadata, metaType).serialize(source))
     }
-
-
 }

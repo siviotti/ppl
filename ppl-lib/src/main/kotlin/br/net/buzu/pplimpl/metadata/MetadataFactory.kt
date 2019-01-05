@@ -1,6 +1,6 @@
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.api.MetadataFactory
+import br.net.buzu.ext.MetadataFactory
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
 import br.net.buzu.model.StaticStructure

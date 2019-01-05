@@ -16,8 +16,8 @@
  */
 package br.net.buzu.context
 
-import br.net.buzu.api.CoderManager
-import br.net.buzu.api.MetadataFactory
+import br.net.buzu.ext.MetadataCoderResolver
+import br.net.buzu.ext.MetadataFactory
 
 /**
  * Context domainOf parsing/serialization with Factories and Managers used to create
@@ -33,7 +33,7 @@ interface JavaContext {
 
     fun subtypeManager(): SubtypeManager
 
-    fun coderManager(): CoderManager
+    fun coderManager(): MetadataCoderResolver
 
     fun parserFactory(): ParserFactory
 

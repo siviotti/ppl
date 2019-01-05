@@ -21,7 +21,7 @@ import br.net.buzu.annotation.PplMetadata;
 import br.net.buzu.api.PplParser;
 import br.net.buzu.api.MetaclassReader;
 import br.net.buzu.api.PayloadMapper;
-import br.net.buzu.api.SkipStrategy;
+import br.net.buzu.ext.SkipStrategy;
 import br.net.buzu.context.JavaContext;
 import br.net.buzu.exception.PplException;
 import br.net.buzu.lang.Syntax;

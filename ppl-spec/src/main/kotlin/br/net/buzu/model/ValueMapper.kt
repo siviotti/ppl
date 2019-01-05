@@ -16,6 +16,10 @@
  */
 package br.net.buzu.model
 
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
+import kotlin.reflect.KClass
+
 /**
  * Represents the element able to convert value to text (toText) and text to value (toValue).
  * This capability also allows to determinate the serial size of a given value (getValueSize).
@@ -25,10 +29,14 @@ package br.net.buzu.model
  */
 interface ValueMapper {
 
-    fun getValueSize(value: Any?): Int
+    fun getValueSize(value: Any?, metaInfo: MetaInfo): Int
 
     fun toValue(text: String, metaInfo: MetaInfo): Any?
 
-    fun toText(value: Any): String
+    fun toText(value: Any, metaInfo: MetaInfo): String
+
+    @Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS)
+    @Retention(RetentionPolicy.RUNTIME)
+    annotation class MappedBy(val value: KClass<out ValueMapper>)
 
 }

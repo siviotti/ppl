@@ -36,6 +36,7 @@ const val UNBOUNDED = 0
 // Defaults
 // **************************************************
 const val DEFAULT_TYPE = TYPE_STRING
+const val DEFAULT_FILL_CHAR = ' '
 const val DEFAULT_SIZE = 0
 const val DEFAULT_MIN_OCCURS = 0
 const val DEFAULT_MAX_OCCURS = 1

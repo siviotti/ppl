@@ -17,7 +17,7 @@ public class BasicContextTest {
 		// default members
 		assertEquals(BasicSubtypeManager.class, context.subtypeManager().getClass());
 		assertEquals(BasicMetadataFactory.class, context.metadataFactory().getClass());
-		assertEquals(BasicCoderManager.class, context.coderManager().getClass());
+		assertEquals(BasicMetadataCoderResolver.class, context.coderManager().getClass());
 		assertEquals(BasicParserFactory.class, context.parserFactory().getClass());
 	}
 	

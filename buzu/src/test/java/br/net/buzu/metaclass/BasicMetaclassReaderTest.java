@@ -36,7 +36,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class BasicMetaclassReaderTest {
 
-	private static final int NO_SCALE = MetaInfo.Companion.getNO_SCALE();
+	private static final int NO_SCALE = MetaInfo.NO_SCALE;
 
 	private MetaclassReader reader;
 

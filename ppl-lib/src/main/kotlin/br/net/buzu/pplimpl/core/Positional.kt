@@ -43,7 +43,7 @@ fun atomicParse(text: String, metaInfo: MetaInfo, valueMapper: ValueMapper): Any
 
 fun atomicSerialize(value: Any?, metaInfo: MetaInfo, valueMapper: ValueMapper): String {
     return if (value == null) fill(metaInfo.align, metaInfo.defaultValue, metaInfo.size, metaInfo.nullChar)
-    else fit(metaInfo.align, valueMapper.toText(value), metaInfo.size, metaInfo.fillChar)
+    else fit(metaInfo.align, valueMapper.toText(value, metaInfo), metaInfo.size, metaInfo.fillChar)
 }
 
 fun arrayParse(text: String, metaInfo: MetaInfo, typeAdapter: TypeAdapter, valueMapper: ValueMapper): Any? {

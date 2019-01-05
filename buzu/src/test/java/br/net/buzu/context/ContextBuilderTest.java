@@ -1,6 +1,5 @@
 package br.net.buzu.context;
 
-import br.net.buzu.context.JavaContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,7 +49,7 @@ public class ContextBuilderTest {
 
 	@Test
 	public void testCustomBuild() {
-		JavaContext context = contextBuilder.metadataFactory(new CustomMetadataFactory()).coderManager(new CustomCoderManager())
+		JavaContext context = contextBuilder.metadataFactory(new CustomMetadataFactory()).coderManager(new CustomMetadataCoderResolver())
 				.subtypeManager(new CustomSubtypeManager()).parserFactory(new CustomParserFactory()).build();
 		assertEquals(BasicContext.class, context.getClass());
 
@@ -69,7 +68,7 @@ class CustomSubtypeManager extends BasicSubtypeManager {
 class CustomMetadataFactory extends BasicMetadataFactory {
 }
 
-class CustomCoderManager extends BasicCoderManager {
+class CustomMetadataCoderResolver extends BasicMetadataCoderResolver {
 }
 
 class CustomParserFactory extends BasicParserFactory {

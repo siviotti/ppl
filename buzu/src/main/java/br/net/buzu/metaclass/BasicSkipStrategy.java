@@ -18,7 +18,7 @@ package br.net.buzu.metaclass;
 
 import br.net.buzu.annotation.PplIgnore;
 import br.net.buzu.annotation.PplUse;
-import br.net.buzu.api.SkipStrategy;
+import br.net.buzu.ext.SkipStrategy;
 import br.net.buzu.exception.PplReflectionException;
 import br.net.buzu.util.Reflect;
 

@@ -19,7 +19,7 @@ package br.net.buzu.metadata.build.parse;
 import static br.net.buzu.model.Domains.*;
 
 import br.net.buzu.context.BasicContext;
-import br.net.buzu.api.MetadataParser;
+import br.net.buzu.ext.MetadataParser;
 import br.net.buzu.context.JavaContext;
 import br.net.buzu.exception.PplParseException;
 

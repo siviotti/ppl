@@ -14,21 +14,27 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.annotation
+package br.net.buzu.ext
 
-import br.net.buzu.model.ValueMapper
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-import kotlin.reflect.KClass
+import br.net.buzu.model.Metadata
 
 /**
- * Indicates that a given "ValueMapper" must be used over the default
+ * Converts Metadata to PPL text.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-@Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS)
-@Retention(RetentionPolicy.RUNTIME)
-annotation class PplValueMapper(val value: KClass<out ValueMapper>)
+@FunctionalInterface
+interface MetadataCoder {
+
+    /**
+     * Converts the Metadada into PPL text.
+     *
+     * @param meta
+     * The metaElement to serialize.
+     * @return The resulting text as PPL.
+     */
+    fun code(meta: Metadata): String
 
 
+}

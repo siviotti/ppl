@@ -16,8 +16,8 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.api.CoderManager
-import br.net.buzu.api.MetadataCoder
+import br.net.buzu.ext.MetadataCoderResolver
+import br.net.buzu.ext.MetadataCoder
 import br.net.buzu.lang.*
 import br.net.buzu.model.Dialect
 import br.net.buzu.model.MetaInfo
@@ -242,8 +242,8 @@ class StructuralCoder : MetadataCoder {
     }
 }
 
-class Coders : CoderManager {
-    override fun getCoder(dialect: Dialect): MetadataCoder = from(dialect)
+class Coders : MetadataCoderResolver {
+    override fun resolve(dialect: Dialect): MetadataCoder = from(dialect)
 
     companion object {
         private val CODER_ARRAY = arrayOfNulls<MetadataCoder>(Dialect.values().size)

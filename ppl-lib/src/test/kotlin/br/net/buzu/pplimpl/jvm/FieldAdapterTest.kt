@@ -8,7 +8,7 @@ internal class FieldAdapterTest {
 
     @Test
     fun testRead() {
-        val fieldAdapter=readMetaType(Order::class.java, genericSkip)
-        println(asTree(fieldAdapter, { it.children }))
+        val metaType=readMetaType(Order::class.java)
+        println(asTree(metaType, { it.children }))
     }
 }

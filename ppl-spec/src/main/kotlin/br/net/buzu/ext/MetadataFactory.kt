@@ -14,27 +14,19 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.api
+package br.net.buzu.ext
 
+import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
 
 /**
- * Converts Metadata to PPL text.
+ * Simple Metadata Factory
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
 @FunctionalInterface
-interface MetadataCoder {
+interface MetadataFactory {
 
-    /**
-     * Converts the Metadada into PPL text.
-     *
-     * @param meta
-     * The metaElement to serialize.
-     * @return The resulting text as PPL.
-     */
-    fun code(meta: Metadata): String
-
-
+    fun create(metaInfo: MetaInfo, children: List<Metadata>): Metadata
 }

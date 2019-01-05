@@ -27,8 +27,8 @@ internal class JvmValueMapperTest {
         assertEquals('1', OneCharMapper.toValue("123 ", metaInfo))
         assertEquals(' ', OneCharMapper.toValue("  1 ", metaInfo))
 
-        assertEquals("1", OneCharMapper.toText('1'))
-        assertEquals(" ", OneCharMapper.toText(' '))
+        assertEquals("1", OneCharMapper.toText('1', metaInfo))
+        assertEquals(" ", OneCharMapper.toText(' ', metaInfo))
     }
 
     @Test
@@ -39,10 +39,10 @@ internal class JvmValueMapperTest {
         assertEquals(" 123 ", CharMapper.toValue(" 123 ", metaInfo))
         assertEquals(" 123 ", CharMapper.toValue(" 123 ", metaInfo))
 
-        assertEquals("123", CharMapper.toText("123"))
-        assertEquals(" 123", CharMapper.toText(" 123"))
-        assertEquals("123 ", CharMapper.toText("123 "))
-        assertEquals(" 123 ", CharMapper.toText(" 123 "))
+        assertEquals("123", CharMapper.toText("123",metaInfo ))
+        assertEquals(" 123", CharMapper.toText(" 123", metaInfo))
+        assertEquals("123 ", CharMapper.toText("123 ",metaInfo ))
+        assertEquals(" 123 ", CharMapper.toText(" 123 ",metaInfo ))
     }
 
     @Test
@@ -51,10 +51,10 @@ internal class JvmValueMapperTest {
         assertEquals("123", StringMapper.toValue(" 123", metaInfo))
         assertEquals("123", StringMapper.toValue("123 ", metaInfo))
         assertEquals("123", StringMapper.toValue(" 123 ", metaInfo))
-        assertEquals("123", StringMapper.toText("123"))
-        assertEquals(" 123", StringMapper.toText(" 123"))
-        assertEquals("123 ", StringMapper.toText("123 "))
-        assertEquals(" 123 ", StringMapper.toText(" 123 "))
+        assertEquals("123", StringMapper.toText("123", metaInfo))
+        assertEquals(" 123", StringMapper.toText(" 123",metaInfo ))
+        assertEquals("123 ", StringMapper.toText("123 ", metaInfo))
+        assertEquals(" 123 ", StringMapper.toText(" 123 ", metaInfo))
     }
 
     // DECIMAL
@@ -62,20 +62,20 @@ internal class JvmValueMapperTest {
     @Test
     fun testDoubleMapper() {
         assertEquals(23.78, DoubleMapper.toValue("23.78", metaInfo))
-        assertEquals("23.78", DoubleMapper.toText(23.78))
+        assertEquals("23.78", DoubleMapper.toText(23.78, metaInfo))
     }
 
     @Test
     fun testFloatMapper() {
         assertEquals(23.78f, FloatMapper.toValue("23.78", metaInfo))
-        assertEquals("23.78", FloatMapper.toText(23.78f))
+        assertEquals("23.78", FloatMapper.toText(23.78f, metaInfo))
     }
 
     @Test
     fun testBigDecimalMapper() {
         val metaInfo = MetaInfo(0, EMPTY, Subtype.STRING, 0, 2, 0, 0)
         assertEquals(BigDecimal("23.78"), BigDecimalMapper.toValue("23.78", metaInfo))
-        assertEquals("23.78", BigDecimalMapper.toText(BigDecimal("23.78")))
+        assertEquals("23.78", BigDecimalMapper.toText(BigDecimal("23.78"), metaInfo))
     }
 
     // INTEGER
@@ -83,7 +83,7 @@ internal class JvmValueMapperTest {
     @Test
     fun testIntegerMapper() {
         assertEquals(123, IntegerMapper.toValue("123", metaInfo))
-        assertEquals("123", IntegerMapper.toText(123))
+        assertEquals("123", IntegerMapper.toText(123, metaInfo))
     }
 
     // LONG
@@ -91,13 +91,13 @@ internal class JvmValueMapperTest {
     @Test
     fun testLongMapper() {
         assertEquals(123L, LongMapper.toValue("123", metaInfo))
-        assertEquals("123", LongMapper.toText(123L))
+        assertEquals("123", LongMapper.toText(123L, metaInfo))
     }
     @Test
     fun testBigIntegerMapper() {
         val bigInt = BigInteger.valueOf(123L)
         assertEquals(bigInt, BigIntegerMapper.toValue("123", metaInfo))
-        assertEquals("123", BigIntegerMapper.toText(bigInt))
+        assertEquals("123", BigIntegerMapper.toText(bigInt, metaInfo))
     }
 
     // BOOLEAN
@@ -109,45 +109,45 @@ internal class JvmValueMapperTest {
         assertEquals(true, BooleanMapper.toValue("TRUE", metaInfo))
         assertEquals(false, BooleanMapper.toValue("false", metaInfo))
         assertEquals(false, BooleanMapper.toValue("etc", metaInfo))
-        assertEquals("true", BooleanMapper.toText(true))
-        assertEquals("false", BooleanMapper.toText(false))
-        assertEquals("true", BooleanMapper.toText(1==1))
-        assertEquals("false", BooleanMapper.toText(1==2))
+        assertEquals("true", BooleanMapper.toText(true, metaInfo))
+        assertEquals("false", BooleanMapper.toText(false, metaInfo))
+        assertEquals("true", BooleanMapper.toText(1==1, metaInfo))
+        assertEquals("false", BooleanMapper.toText(1==2, metaInfo))
     }
 
     @Test
     fun testBozMapper() {
         assertEquals(true, BozMapper.toValue("1", metaInfo))
-        assertEquals("1", BozMapper.toText(true))
+        assertEquals("1", BozMapper.toText(true, metaInfo))
         assertEquals(false, BozMapper.toValue("0", metaInfo))
-        assertEquals("0", BozMapper.toText(false))
+        assertEquals("0", BozMapper.toText(false, metaInfo))
         assertEquals(false, BozMapper.toValue("X", metaInfo))
     }
 
     @Test
     fun testBtfMapper() {
         assertEquals(true, BtfMapper.toValue("T", metaInfo))
-        assertEquals("T", BtfMapper.toText(true))
+        assertEquals("T", BtfMapper.toText(true, metaInfo))
         assertEquals(false, BtfMapper.toValue("F", metaInfo))
-        assertEquals("F", BtfMapper.toText(false))
+        assertEquals("F", BtfMapper.toText(false, metaInfo))
         assertEquals(false, BtfMapper.toValue("X", metaInfo))
     }
 
     @Test
     fun testBynMapper() {
         assertEquals(true, BynMapper.toValue("Y", metaInfo))
-        assertEquals("Y", BynMapper.toText(true))
+        assertEquals("Y", BynMapper.toText(true, metaInfo))
         assertEquals(false, BynMapper.toValue("N", metaInfo))
-        assertEquals("N", BynMapper.toText(false))
+        assertEquals("N", BynMapper.toText(false, metaInfo))
         assertEquals(false, BynMapper.toValue("X", metaInfo))
     }
 
     @Test
     fun testBsnMapper() {
         assertEquals(true, BsnMapper.toValue("S", metaInfo))
-        assertEquals("S", BsnMapper.toText(true))
+        assertEquals("S", BsnMapper.toText(true, metaInfo))
         assertEquals(false, BsnMapper.toValue("N", metaInfo))
-        assertEquals("N", BsnMapper.toText(false))
+        assertEquals("N", BsnMapper.toText(false, metaInfo))
         assertEquals(false, BsnMapper.toValue("X", metaInfo))
     }
 
@@ -157,14 +157,14 @@ internal class JvmValueMapperTest {
     fun testDateMapper() {
         val date = LocalDate.of(2018, 12, 26)
         assertEquals(date, DateMapper.toValue("20181226", metaInfo))
-        assertEquals("20181226", DateMapper.toText(date))
+        assertEquals("20181226", DateMapper.toText(date, metaInfo))
     }
 
     @Test
     fun testIsoDateMapper() {
         val date = LocalDate.of(2018, 12, 26)
         assertEquals(date, IsoDateMapper.toValue("2018-12-26", metaInfo))
-        assertEquals("2018-12-26", IsoDateMapper.toText(date))
+        assertEquals("2018-12-26", IsoDateMapper.toText(date, metaInfo))
     }
 
     // TIME
@@ -173,21 +173,21 @@ internal class JvmValueMapperTest {
     fun testTimeMapper() {
         val date = LocalTime.of(11, 22, 33)
         assertEquals(date, TimeMapper.toValue("112233", metaInfo))
-        assertEquals("112233", TimeMapper.toText(date))
+        assertEquals("112233", TimeMapper.toText(date, metaInfo))
     }
 
     @Test
     fun testTimeAndMillisMapper() {
         val date = LocalTime.of(11, 22, 33,  444 * 1000000)
         assertEquals(date, TimeAndMillisMapper.toValue("112233444", metaInfo))
-        assertEquals("112233444", TimeAndMillisMapper.toText(date))
+        assertEquals("112233444", TimeAndMillisMapper.toText(date, metaInfo))
     }
 
     @Test
     fun testIsoTimeMapper() {
         val date = LocalTime.of(11, 22, 33)
         assertEquals(date, IsoTimeMapper.toValue("11:22:33", metaInfo))
-        assertEquals("11:22:33", IsoTimeMapper.toText(date))
+        assertEquals("11:22:33", IsoTimeMapper.toText(date, metaInfo))
     }
 
     @Test
@@ -195,7 +195,7 @@ internal class JvmValueMapperTest {
         val localTime = LocalTime.of( 11, 22, 33)
         val date = OffsetTime.of(localTime, ZoneOffset.ofHours(-2))
         assertEquals(date, UtcTimeMapper.toValue("11:22:33-02:00", metaInfo))
-        assertEquals("11:22:33-02:00", UtcTimeMapper.toText(date))
+        assertEquals("11:22:33-02:00", UtcTimeMapper.toText(date, metaInfo))
     }
 
     // TIMESTAMP
@@ -204,21 +204,21 @@ internal class JvmValueMapperTest {
     fun testTimestampMapper() {
         val date = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
         assertEquals(date, TimestampMapper.toValue("20181226112233", metaInfo))
-        assertEquals("20181226112233", TimestampMapper.toText(date))
+        assertEquals("20181226112233", TimestampMapper.toText(date, metaInfo))
     }
 
     @Test
     fun testTimestampAndMillisMapper() {
         val localDateTime = LocalDateTime.of(2018, 12, 26, 11, 22, 33,  444 * 1000000)
         assertEquals(localDateTime, TimestampAndMillisMapper.toValue("20181226112233444", metaInfo))
-        assertEquals("20181226112233444", TimestampAndMillisMapper.toText(localDateTime))
+        assertEquals("20181226112233444", TimestampAndMillisMapper.toText(localDateTime, metaInfo))
     }
 
     @Test
     fun testIsoTimestampMapper() {
         val date = LocalDateTime.of(2018, 12, 26, 11, 22, 33)
         assertEquals(date, IsoTimestampMapper.toValue("2018-12-26T11:22:33", metaInfo))
-        assertEquals("2018-12-26T11:22:33", IsoTimestampMapper.toText(date))
+        assertEquals("2018-12-26T11:22:33", IsoTimestampMapper.toText(date, metaInfo))
     }
 
     @Test
@@ -227,7 +227,7 @@ internal class JvmValueMapperTest {
         val date = OffsetDateTime.of(localDateTime, ZoneOffset.ofHours(-2))
         val parsed = UtcTimestampMapper.toValue("2018-12-26T11:22:33-02:00", metaInfo)as OffsetDateTime
         assertEquals(date, parsed)
-        assertEquals("2018-12-26T11:22:33-02:00", UtcTimestampMapper.toText(date))
+        assertEquals("2018-12-26T11:22:33-02:00", UtcTimestampMapper.toText(date, metaInfo))
     }
 
 
@@ -238,7 +238,7 @@ internal class JvmValueMapperTest {
         val calendar = GregorianCalendar(2018, Calendar.DECEMBER, 26)
         val date = Date(calendar.timeInMillis)
         assertEquals(date, OldDateMapper.toValue("20181226", metaInfo))
-        assertEquals("20181226", OldDateMapper.toText(date))
+        assertEquals("20181226", OldDateMapper.toText(date, metaInfo))
     }
 
     @Test
@@ -246,7 +246,7 @@ internal class JvmValueMapperTest {
         val calendar = GregorianCalendar(2018, Calendar.DECEMBER, 26)
         val date = Date(calendar.timeInMillis)
         assertEquals(date, OldIsoDateMapper.toValue("2018-12-26", metaInfo))
-        assertEquals("2018-12-26", OldIsoDateMapper.toText(date))
+        assertEquals("2018-12-26", OldIsoDateMapper.toText(date, metaInfo))
     }
 
     @Test
@@ -258,7 +258,7 @@ internal class JvmValueMapperTest {
         val date = sdf.parse(textDate)
         val parsed = OldUtcDateMapper.toValue(textDate, metaInfo)
         assertEquals(date, parsed)
-        assertEquals(textDate, OldUtcDateMapper.toText(date))
+        assertEquals(textDate, OldUtcDateMapper.toText(date, metaInfo))
     }
 
 
@@ -269,7 +269,7 @@ internal class JvmValueMapperTest {
         val calendar = GregorianCalendar(1970,0,1,11,22,33)
         val date = Date(calendar.timeInMillis)
         assertEquals(date, OldTimeMapper.toValue("112233", metaInfo))
-        assertEquals("112233", OldTimeMapper.toText(date))
+        assertEquals("112233", OldTimeMapper.toText(date, metaInfo))
     }
 
     @Test
@@ -278,14 +278,14 @@ internal class JvmValueMapperTest {
         cal.set(Calendar.MILLISECOND, 444)
         val date = Date(cal.timeInMillis)
         assertEquals(date, OldTimeAndMillisMapper.toValue("112233444", metaInfo))
-        assertEquals("112233444", OldTimeAndMillisMapper.toText(date))
+        assertEquals("112233444", OldTimeAndMillisMapper.toText(date, metaInfo))
     }
 
     @Test
     fun testOldIsoTimeMapper() {
         val date = Date(GregorianCalendar(1970,0,1,11,22,33).timeInMillis)
         assertEquals(date, OldIsoTimeMapper.toValue("11:22:33", metaInfo))
-        assertEquals("11:22:33", OldIsoTimeMapper.toText(date))
+        assertEquals("11:22:33", OldIsoTimeMapper.toText(date, metaInfo))
     }
 
     @Disabled
@@ -296,7 +296,7 @@ internal class JvmValueMapperTest {
         val sdf = SimpleDateFormat("HH:mm:ssXXX")
         val date = sdf.parse(textTime)
         assertEquals(date, OldUtcTimeMapper.toValue(textTime, metaInfo))
-        assertEquals(textTime, OldUtcTimeMapper.toText(date))
+        assertEquals(textTime, OldUtcTimeMapper.toText(date, metaInfo))
     }
 
     // OLD TIMESTAMP
@@ -306,7 +306,7 @@ internal class JvmValueMapperTest {
         val calendar = GregorianCalendar(2018,Calendar.DECEMBER,26,11,22,33)
         val date = Date(calendar.timeInMillis)
         assertEquals(date, OldTimestampMapper.toValue("20181226112233", metaInfo))
-        assertEquals("20181226112233", OldTimestampMapper.toText(date))
+        assertEquals("20181226112233", OldTimestampMapper.toText(date, metaInfo))
     }
 
     @Test
@@ -315,7 +315,7 @@ internal class JvmValueMapperTest {
         calendar.set(Calendar.MILLISECOND, 444)
         val date = Date(calendar.timeInMillis)
         assertEquals(date, OldTimestampAndMillisMapper.toValue("20181226112233444", metaInfo))
-        assertEquals("20181226112233444", OldTimestampAndMillisMapper.toText(date))
+        assertEquals("20181226112233444", OldTimestampAndMillisMapper.toText(date, metaInfo))
     }
 
     @Test
@@ -323,7 +323,7 @@ internal class JvmValueMapperTest {
         val calendar = GregorianCalendar(2018,Calendar.DECEMBER,26,11,22,33)
         val date = Date(calendar.timeInMillis)
         assertEquals(date, OldIsoTimestampMapper.toValue("2018-12-26T11:22:33", metaInfo))
-        assertEquals("2018-12-26T11:22:33", OldIsoTimestampMapper.toText(date))
+        assertEquals("2018-12-26T11:22:33", OldIsoTimestampMapper.toText(date, metaInfo))
     }
 
     @Test
@@ -334,7 +334,7 @@ internal class JvmValueMapperTest {
         val date = sdf.parse(textDate)
         val parsed = OldUtcTimestampMapper.toValue(textDate, metaInfo)
         assertEquals(date, parsed)
-        assertEquals(textDate, OldUtcTimestampMapper.toText(date))
+        assertEquals(textDate, OldUtcTimestampMapper.toText(date, metaInfo))
     }
 
 

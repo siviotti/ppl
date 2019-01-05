@@ -18,51 +18,72 @@ package br.net.buzu.api
 
 import br.net.buzu.exception.PplParseException
 import br.net.buzu.exception.PplSerializeException
+import br.net.buzu.model.MetaType
+import br.net.buzu.model.StaticMetadata
 
 /**
- * Simple Mapper to transform PPL to Object and Object to PPL.
+ * Extended Mapper to transform PPL to Object and Object to PPL using parameterized methods.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface PplMapper{
+interface PplMapper : PplSimpleMapper{
 
     /**
      * Parsers a PPL text and returns the correspondent object based on the
-     * indicated type. If the PPL text represents multiple records, the result will
+     * indicated MetaType. If the PPL text represents multiple records, the result will
      * be a Collection parametrized to the 'type'. If the PPL text represents only
      * one record, the result is a single object.
      *
      * @param text
-     * The PPL text at the format `(METADATA)PAYLOAD`.
-     * @param type
-     * The type of the object will be created.
+     * The Metadata (Static) corresponding to the first part of 'text' parameter.
+     * @param metaType
+     * The MetaType corresponding to the original Type (class).
      * @return The object corresponding to the PPL text.
      * @throws PplParseException
      */
-    fun <T> fromPpl(text: String, type: Class<T>): T
+    fun <T> fromPpl(text: String, metaType: MetaType): T
 
     /**
-     * Parsers a PPL text and always returns a correspondent **List** of
-     * elements.
+     * Parsers a PPL text and returns the correspondent object based on the
+     * indicated MetaType. If the PPL text represents multiple records, the result will
+     * be a Collection parametrized to the 'type'. If the PPL text represents only
+     * one record, the result is a single object.
      *
      * @param text
+     * The Metadata (Static) corresponding to the first part of 'text' parameter.
+     * @param metaType
      * The PPL text at the format `(METADATA)PAYLOAD`.
-     * @param elementType
-     * The type of the list element which will be created.
-     * @return The List corresponding to the PPL text.
+     * @param metadata
+     * The MetaType corresponding to the original Type (class).
+     * @return The object corresponding to the PPL text.
      * @throws PplParseException
      */
-    //fun <T> fromPplToList(text: String, elementType: Class<T>): List<T>
+    fun <T> fromPpl(text: String, metaType: MetaType, metadata: StaticMetadata): T
 
     /**
      * Transforms an object into PPL text (Serialization).
      *
      * @param source
      * The object to be serialized.
+     * @param metaType
+     * The MetaType corresponding to the original Type (class) of 'source' parameter.
      * @return The PPL text corresponding to the object.
      * @throws PplSerializeException
      */
-    fun toPpl(source: Any): String
+    fun toPpl(source: Any, metaType: MetaType): String
+    /**
+     * Transforms an object into PPL text (Serialization).
+     *
+     * @param source
+     * The object to be serialized.
+     * @param metaType
+     * The MetaType corresponding to the original Type (class) of 'source' parameter.
+     * @param metadata
+     * The Metadata (Static) corresponding to the 'source' parameter
+     * @return The PPL text corresponding to the object.
+     * @throws PplSerializeException
+     */
+    fun toPpl(source: Any, metaType: MetaType, metadata: StaticMetadata): String
 
 }

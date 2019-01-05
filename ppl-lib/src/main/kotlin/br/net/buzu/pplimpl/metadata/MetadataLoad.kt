@@ -93,7 +93,7 @@ internal class LoadNode(originalValue: Any?, val metaType: MetaType) {
             var max = 0
             var tmp = 0
             for (obj in value) {
-                tmp = metaType.valueMapper.getValueSize(obj!!)
+                tmp = metaType.valueMapper.getValueSize(obj!!, metaType.metaInfo)
                 if (tmp > max) {
                     max = tmp
                 }

@@ -16,9 +16,8 @@
  */
 package br.net.buzu.context;
 
-import br.net.buzu.api.CoderManager;
-import br.net.buzu.api.MetadataFactory;
-import br.net.buzu.context.*;
+import br.net.buzu.ext.MetadataCoderResolver;
+import br.net.buzu.ext.MetadataFactory;
 
 import java.util.Objects;
 
@@ -35,20 +34,20 @@ public class BasicContext implements JavaContext {
 
 	private final SubtypeManager subtypeManager;
 	private final MetadataFactory metadataFactory;
-	private final CoderManager coderManager;
+	private final MetadataCoderResolver metadataCoderResolver;
 	private final ParserFactory parserFactory;
 
 	public BasicContext() {
-		this(BasicSubtypeManager.INSTANCE, BasicMetadataFactory.INSTANCE, BasicCoderManager.INSTANCE,
+		this(BasicSubtypeManager.INSTANCE, BasicMetadataFactory.INSTANCE, BasicMetadataCoderResolver.INSTANCE,
 				BasicParserFactory.INSTANCE);
 	}
 
 	public BasicContext(SubtypeManager subtypeManager, MetadataFactory metadataFactory,
-			CoderManager coderManager, ParserFactory parserFactory) {
+                        MetadataCoderResolver metadataCoderResolver, ParserFactory parserFactory) {
 		super();
 		this.subtypeManager = Objects.requireNonNull(subtypeManager, "subtypeManager cannot be null");
 		this.metadataFactory = Objects.requireNonNull(metadataFactory, "metadataFactory cannot be null");
-		this.coderManager = Objects.requireNonNull(coderManager, "coderManager cannot be null");
+		this.metadataCoderResolver = Objects.requireNonNull(metadataCoderResolver, "metadataCoderResolver cannot be null");
 		this.parserFactory = Objects.requireNonNull(parserFactory, "parserFactory cannot be null");
 	}
 
@@ -67,8 +66,8 @@ public class BasicContext implements JavaContext {
 	}
 
 	@Override
-	public CoderManager coderManager() {
-		return coderManager;
+	public MetadataCoderResolver coderManager() {
+		return metadataCoderResolver;
 	}
 
 	@Override

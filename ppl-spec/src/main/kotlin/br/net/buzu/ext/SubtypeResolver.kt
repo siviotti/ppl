@@ -14,17 +14,18 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.api
+package br.net.buzu.ext
 
-import br.net.buzu.model.Dialect
+import br.net.buzu.model.Subtype
 
 /**
- * Simple MetadataSerializerFactory
+ * Resolver to returns the default PPL Subtype corresponding to the platform type.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface CoderManager {
+@FunctionalInterface
+interface SubtypeResolver {
 
-    fun getCoder(dialect: Dialect): MetadataCoder
+    fun resolve(type: Class<*>): Subtype
 }

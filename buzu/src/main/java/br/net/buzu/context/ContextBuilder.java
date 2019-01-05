@@ -16,9 +16,8 @@
  */
 package br.net.buzu.context;
 
-import br.net.buzu.api.CoderManager;
-import br.net.buzu.api.MetadataFactory;
-import br.net.buzu.context.*;
+import br.net.buzu.ext.MetadataCoderResolver;
+import br.net.buzu.ext.MetadataFactory;
 
 /**
  * Context domainOf parsing/serialization with Factories used to create objects and
@@ -33,11 +32,11 @@ public class ContextBuilder {
 
 	private SubtypeManager subtypeManager = new BasicSubtypeManager();
 	private MetadataFactory metadataFactory = new BasicMetadataFactory();
-	private CoderManager coderManager = new BasicCoderManager();
+	private MetadataCoderResolver metadataCoderResolver = new BasicMetadataCoderResolver();
 	private ParserFactory parserFactory = new BasicParserFactory();
 
 	public JavaContext build() {
-		return new BasicContext(subtypeManager, metadataFactory, coderManager, parserFactory);
+		return new BasicContext(subtypeManager, metadataFactory, metadataCoderResolver, parserFactory);
 	}
 
 	// **************************************************
@@ -61,11 +60,11 @@ public class ContextBuilder {
 		return this;
 	}
 
-	public ContextBuilder coderManager(CoderManager codermanager) {
+	public ContextBuilder coderManager(MetadataCoderResolver codermanager) {
 		if (codermanager == null) {
 			throw new NullPointerException("[PPL Context] codermanager canot be null!");
 		}
-		this.coderManager = codermanager;
+		this.metadataCoderResolver = codermanager;
 		return this;
 	}
 

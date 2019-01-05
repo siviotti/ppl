@@ -25,8 +25,8 @@ import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.build.parse.Splitter;
 import br.net.buzu.api.MetaclassReader;
 import br.net.buzu.api.MetadataLoader;
-import br.net.buzu.api.MetadataParser;
-import br.net.buzu.api.SkipStrategy;
+import br.net.buzu.ext.MetadataParser;
+import br.net.buzu.ext.SkipStrategy;
 import br.net.buzu.context.JavaContext;
 import br.net.buzu.model.Dialect;
 
@@ -35,7 +35,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Builder to specific PplMapper (Buzu).
+ * Builder to specific PplSimpleMapper (Buzu).
  *
  * @author Douglas Siviotti
  * @since 1.0

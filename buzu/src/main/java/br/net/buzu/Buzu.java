@@ -19,6 +19,8 @@ package br.net.buzu;
 import static br.net.buzu.lang.Syntax.pplToString;
 
 import br.net.buzu.context.BasicContext;
+import br.net.buzu.ext.MetadataCoder;
+import br.net.buzu.ext.MetadataParser;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
@@ -33,7 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Buzu Façade class. Basic implementation domainOf <code>PplMapper</code>.
+ * Buzu Façade class. Basic implementation domainOf <code>PplSimpleMapper</code>.
  * 
  * @author Douglas Siviotti
  * @since 1.0
@@ -92,7 +94,7 @@ public class Buzu implements JavaPplMapper {
 		this.loader = metadataLoader == null ? new BasicMetadataLoader(context) : metadataLoader;
 		this.serializeNulls = serializeNulls;
 		this.dialect = dialect != null ? dialect : DEFAULT_DIALECT;
-		this.coder = context.coderManager().getCoder(this.dialect);
+		this.coder = context.coderManager().resolve(this.dialect);
 	}
 
 	// **************************************************

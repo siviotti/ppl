@@ -312,13 +312,13 @@ internal fun getMostSimpleConstructor(toClass: Class<*>): Constructor<*> {
 // Etc
 // **************************************************
 
-internal fun extractElementType(fieldType: Class<*>): Class<*> {
-    if (Collection::class.java.isAssignableFrom(fieldType)) {
-        if (fieldType.genericSuperclass !is ParameterizedType) {
+internal fun extractElementType(type: Class<*>): Class<*> {
+    if (Collection::class.java.isAssignableFrom(type)) {
+        if (type.genericSuperclass !is ParameterizedType) {
             return Any::class.java
         }
-        val parType = fieldType.genericSuperclass as ParameterizedType
-        if (parType.actualTypeArguments.size < 1) {
+        val parType = type.genericSuperclass as ParameterizedType
+        if (parType.actualTypeArguments.isEmpty()) {
             return Any::class.java
         }
         val itemType = parType.actualTypeArguments[0]
@@ -327,10 +327,10 @@ internal fun extractElementType(fieldType: Class<*>): Class<*> {
         } catch (e: ClassNotFoundException) {
             throw PplException(e)
         }
-    } else return if (fieldType.isArray) {
-        fieldType.componentType
+    } else return if (type.isArray) {
+        type.componentType
     } else {
-        fieldType
+        type
     }
 }
 

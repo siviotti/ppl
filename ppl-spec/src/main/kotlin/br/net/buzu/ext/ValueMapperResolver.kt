@@ -14,26 +14,19 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.metadata.code;
+package br.net.buzu.ext
 
-import br.net.buzu.ext.MetadataCoder;
-import br.net.buzu.model.Dialect;
+import br.net.buzu.model.Subtype
+import br.net.buzu.model.ValueMapper
 
 /**
- *
+ * Resolver to return a ValueMapper from a given subtype and a given type.
  *
  * @author Douglas Siviotti
  * @since 1.0
- *
  */
-public class StructuralMetadataCoder extends CompactMetadataCoder {
+@FunctionalInterface
+interface ValueMapperResolver {
 
-	public static final MetadataCoder INSTANCE = new StructuralMetadataCoder();
-	
-	@Override
-	public Dialect dialect() {
-		return Dialect.STRUCTURAL;
-	}
-
-
+    fun resolve(subtype: Subtype, type: Class<*>): ValueMapper
 }

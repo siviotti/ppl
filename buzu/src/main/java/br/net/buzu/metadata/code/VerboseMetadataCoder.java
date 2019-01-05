@@ -16,7 +16,7 @@
  */
 package br.net.buzu.metadata.code;
 
-import br.net.buzu.api.MetadataCoder;
+import br.net.buzu.ext.MetadataCoder;
 import br.net.buzu.lang.Syntax;
 import br.net.buzu.lang.Token;
 import br.net.buzu.model.*;

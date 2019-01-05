@@ -1,6 +1,6 @@
 package br.net.buzu;
 
-import br.net.buzu.context.BasicCoderManager;
+import br.net.buzu.context.BasicMetadataCoderResolver;
 import br.net.buzu.context.BasicContext;
 import br.net.buzu.context.ContextBuilder;
 import br.net.buzu.metaclass.BasicMetaclassReader;
@@ -9,7 +9,7 @@ import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.code.ShortMetadataCoder;
 import br.net.buzu.pplimpl.metadata.Coders;
 import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
-import br.net.buzu.api.MetadataCoder;
+import br.net.buzu.ext.MetadataCoder;
 import br.net.buzu.context.JavaContext;
 import br.net.buzu.exception.PplParseException;
 import br.net.buzu.lang.Token;
@@ -174,7 +174,7 @@ public class BuzuTest {
         assertEquals(BasicMetadataParser.class, buzu.parser().getClass());
         assertEquals(BasicMetaclassReader.class, buzu.reader().getClass());
         assertEquals(BasicMetadataLoader.class, buzu.loader().getClass());
-        MetadataCoder coder = BasicCoderManager.INSTANCE.getCoder(Dialect.Companion.getDEFAULT());
+        MetadataCoder coder = BasicMetadataCoderResolver.INSTANCE.resolve(Dialect.Companion.getDEFAULT());
         assertEquals(coder.getClass(), buzu.coder().getClass());
         assertEquals(Dialect.Companion.getDEFAULT(), buzu.dialect());
         assertFalse(buzu.isSerializeNulls());

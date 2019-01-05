@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 
-internal class BasicPplMapperTest {
+internal class SimpleMapperTest {
 
-    private val mapper = BasicPplMapper(Dialect.DEFAULT)
+    private val mapper = SimpleMapper(Dialect.DEFAULT)
 
     @Test
     fun testFromPpl() {

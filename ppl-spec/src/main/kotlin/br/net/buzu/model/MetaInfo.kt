@@ -20,7 +20,7 @@ import br.net.buzu.annotation.PplMetadata
 import br.net.buzu.lang.*
 
 /**
- * Basic Pojo resulting of annotations information or manual setting. This class
+ * Basic POJO resulting of annotations information or manual setting. This class
  * represents the PPL elements: name, type, size, scale, occurs , defaultValue,
  * domain, tags, key, indexed, align, fillChar, nullChar
  *
@@ -28,7 +28,7 @@ import br.net.buzu.lang.*
  * @since 1.0
  */
 class MetaInfo @JvmOverloads
-constructor(val index: Int, val name: String, val subtype: Subtype, size: Int,  scale:Int, minOccurs: Int, val maxOccurs: Int,
+constructor(val index: Int, val name: String, val subtype: Subtype, size: Int, scale: Int, minOccurs: Int, val maxOccurs: Int,
             val domain: Domain = Domain.EMPTY, val defaultValue: String = EMPTY, val tags: String = EMPTY) : Comparable<MetaInfo> {
     // Basic
     val size: Int = if (subtype.isFixedSizeType) subtype.fixedSize() else size
@@ -83,14 +83,11 @@ constructor(val index: Int, val name: String, val subtype: Subtype, size: Int,  
     val isRequired
         get() = minOccurs > 0
 
-    constructor(pplMetadata: PplMetadata, originalFieldName: String, originalSubtype: Subtype) : this(pplMetadata.index, getName(pplMetadata, originalFieldName),
+    constructor(pplMetadata: PplMetadata, originalFieldName: String, originalSubtype: Subtype)
+            : this(pplMetadata.index, getName(pplMetadata, originalFieldName),
             getSubtype(pplMetadata, originalSubtype), pplMetadata.size, pplMetadata.scale,
             pplMetadata.minOccurs, pplMetadata.maxOccurs, domainOf(*pplMetadata.domain),
             pplMetadata.defaultValue, buildTags(pplMetadata))
-
-    fun hasSize(): Boolean {
-        return PplMetadata.EMPTY_INTEGER != size
-    }
 
     init {
         this.scale = if (scale > NO_SCALE) scale else 0
@@ -108,30 +105,22 @@ constructor(val index: Int, val name: String, val subtype: Subtype, size: Int,  
         }
     }
 
-    fun hasMaxOccurs(): Boolean {
-        return PplMetadata.EMPTY_INTEGER != maxOccurs
-    }
+    fun hasSize(): Boolean = PplMetadata.EMPTY_INTEGER != size
 
-    fun hasScale(): Boolean {
-        return scale > NO_SCALE
-    }
+    fun hasMaxOccurs(): Boolean = PplMetadata.EMPTY_INTEGER != maxOccurs
+
+    fun hasScale(): Boolean = scale > NO_SCALE
 
     fun update(newSize: Int, newMaxOccurs: Int): MetaInfo {
         return MetaInfo(index, name, subtype, newSize, scale, minOccurs, newMaxOccurs, domain,
                 defaultValue, tags)
     }
 
-    fun hasDomain(): Boolean {
-        return !domain.isEmpty
-    }
+    fun hasDomain(): Boolean = !domain.isEmpty
 
-    fun hasDefaultValue(): Boolean {
-        return defaultValue != null && !defaultValue.isEmpty()
-    }
+    fun hasDefaultValue(): Boolean = defaultValue != null && !defaultValue.isEmpty()
 
-    fun hasTags(): Boolean {
-        return tags != null && !tags.isEmpty()
-    }
+    fun hasTags(): Boolean = tags != null && !tags.isEmpty()
 
     fun inDomain(valueItem: String?): Boolean {
         // Domain not defined
@@ -171,20 +160,16 @@ constructor(val index: Int, val name: String, val subtype: Subtype, size: Int,  
     }
 
     override fun equals(obj: Any?): Boolean {
-        if (this === obj) {
-            return true
-        }
-        if (obj == null) {
-            return false
-        }
+        if (this === obj) return true
+        if (obj == null) return false
         return if (this.javaClass == obj.javaClass) {
-            ppl().equals((obj as MetaInfo).ppl())
+            ppl() == (obj as MetaInfo).ppl()
         } else false
     }
 
     companion object {
 
-        val NO_SCALE = 0
+        const val NO_SCALE = 0
 
         private fun checkOccurs(minOccurs: Int, maxOccurs: Int) {
             if (maxOccurs > 0 && minOccurs > maxOccurs) {
@@ -234,7 +219,7 @@ constructor(val index: Int, val name: String, val subtype: Subtype, size: Int,  
 
         private fun getAlign(subtype: Subtype, tags: String): Align {
             return if (tags.indexOf(LEFT) > -1) Align.LEFT else {
-                if (tags.indexOf(RIGHT) > -1)  Align.RIGHT else subtype.dataType.align
+                if (tags.indexOf(RIGHT) > -1) Align.RIGHT else subtype.dataType.align
             }
         }
 

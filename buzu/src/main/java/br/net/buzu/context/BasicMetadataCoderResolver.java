@@ -17,20 +17,20 @@
 package br.net.buzu.context;
 
 import br.net.buzu.metadata.code.*;
-import br.net.buzu.api.MetadataCoder;
-import br.net.buzu.api.CoderManager;
+import br.net.buzu.ext.MetadataCoder;
+import br.net.buzu.ext.MetadataCoderResolver;
 import br.net.buzu.model.Dialect;
 
 /**
- * Simple CoderManager
+ * Simple MetadataCoderResolver
  *
  * @author Douglas Siviotti
  * @since 1.0
  *
  */
-public class BasicCoderManager implements CoderManager {
+public class BasicMetadataCoderResolver implements MetadataCoderResolver {
 	
-	public static final CoderManager INSTANCE = new BasicCoderManager();
+	public static final MetadataCoderResolver INSTANCE = new BasicMetadataCoderResolver();
 
 	static final MetadataCoder[] CODER_ARRAY = new MetadataCoder[Dialect.values().length];
 
@@ -42,7 +42,7 @@ public class BasicCoderManager implements CoderManager {
 		CODER_ARRAY[Dialect.STRUCTURAL.ordinal()]= StructuralMetadataCoder.INSTANCE;
 	}
 
-	public MetadataCoder getCoder(Dialect dialect) {
+	public MetadataCoder resolve(Dialect dialect) {
 		return CODER_ARRAY[dialect.ordinal()];
 	}
 
