@@ -32,7 +32,7 @@ constructor(val index: Int, val name: String, val subtype: Subtype, size: Int, s
             val domain: Domain = Domain.EMPTY, val defaultValue: String = EMPTY, val tags: String = EMPTY) : Comparable<MetaInfo> {
     // Basic
     val size: Int = if (subtype.isFixedSizeType) subtype.fixedSize() else size
-    val scale: Int
+    val scale: Int = if (scale > NO_SCALE) scale else 0
     val minOccurs: Int
     // Extension
     val isExtended: Boolean
@@ -90,7 +90,6 @@ constructor(val index: Int, val name: String, val subtype: Subtype, size: Int, s
             pplMetadata.defaultValue, buildTags(pplMetadata))
 
     init {
-        this.scale = if (scale > NO_SCALE) scale else 0
         checkOccurs(minOccurs, maxOccurs)
         this.minOccurs = if (minOccurs < 0) 0 else minOccurs
         this.isExtended = isExtended(this.domain, this.defaultValue, this.tags)
@@ -173,8 +172,7 @@ constructor(val index: Int, val name: String, val subtype: Subtype, size: Int, s
 
         private fun checkOccurs(minOccurs: Int, maxOccurs: Int) {
             if (maxOccurs > 0 && minOccurs > maxOccurs) {
-                throw IllegalArgumentException(
-                        "minOccurs cannot be bigger than maxOccurs:$minOccurs>$maxOccurs")
+                throw IllegalArgumentException("minOccurs cannot be bigger than maxOccurs:$minOccurs>$maxOccurs")
             }
         }
 

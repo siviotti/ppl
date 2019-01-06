@@ -242,7 +242,7 @@ class StructuralCoder : MetadataCoder {
     }
 }
 
-class Coders : MetadataCoderResolver {
+open class Coders : MetadataCoderResolver {
     override fun resolve(dialect: Dialect): MetadataCoder = from(dialect)
 
     companion object {
@@ -262,5 +262,6 @@ class Coders : MetadataCoderResolver {
         }
 
     }
-
 }
+
+object GenericMetadataCoderResolver: Coders()

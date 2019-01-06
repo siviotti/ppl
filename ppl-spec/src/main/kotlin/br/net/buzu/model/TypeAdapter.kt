@@ -16,8 +16,10 @@
  */
 package br.net.buzu.model
 
+import br.net.buzu.ext.ValueMapperKit
+
 /**
- * Represents an Adapter for the element type and get/set field values.
+ * Represents an Adapter over the specific element type and the get/set field methods.
  * This adapter encapsulates all knowledge about the language types.
  *
  * @author Douglas Siviotti
@@ -29,7 +31,7 @@ interface TypeAdapter {
 
     val isEnum: Boolean
 
-    val defaultSubtype: Subtype
+    val subtype: Subtype
 
     fun getFieldValue(parentObject: Any): Any?
 
@@ -45,6 +47,6 @@ interface TypeAdapter {
 
     fun enumConstantToValue(constName: String): Any
 
-    fun getValueMapper(subtype: Subtype): ValueMapper
+    fun getValueMapper(metaInfo: MetaInfo, kit: ValueMapperKit): ValueMapper
 
 }

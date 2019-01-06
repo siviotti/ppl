@@ -17,7 +17,7 @@
 package br.net.buzu.pplimpl.jvm
 
 import br.net.buzu.exception.PplParseException
-import br.net.buzu.ext.ValueMapperResolver
+import br.net.buzu.ext.ValueMapperKit
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Subtype
 import br.net.buzu.model.ValueMapper
@@ -33,15 +33,15 @@ import javax.naming.OperationNotSupportedException
 
 const val OLD_TIME_OFFSET = 11
 
-object JvmValueMapperResolver : ValueMapperResolver {
-    override fun resolve(subtype: Subtype, type: Class<*>): ValueMapper {
-        return getValueMapper(subtype, type)
+object JvmValueMapperKit : ValueMapperKit {
+    override fun getMapper(metaInfo: MetaInfo, type: Class<*>): ValueMapper {
+        return getValueMapper(metaInfo.subtype, type)
     }
 }
 
 private val MAPPERS = createArrayOfMapper()
 
-fun getValueMapper(subtype: Subtype, elementType: Class<*>): ValueMapper {
+internal fun getValueMapper(subtype: Subtype, elementType: Class<*>): ValueMapper {
     return when {
         elementType.isEnum -> EnumMapper(elementType)
         elementType == Char::class.java || elementType == Char::class.javaPrimitiveType -> OneCharMapper
@@ -61,6 +61,10 @@ fun getValueMapper(subtype: Subtype, elementType: Class<*>): ValueMapper {
 abstract class JvmValueMapper(val jvmType: Class<*>, val subType: Subtype) : ValueMapper {
     override fun getValueSize(value: Any?, metaInfo: MetaInfo): Int = if (value == null) 0 else toText(value, metaInfo).length
     override fun toString(): String = "${javaClass.simpleName}(subType:$subType jvm-type:${jvmType.simpleName})"
+}
+
+abstract class FixedJvmValueMapper(jvmType: Class<*>, subType: Subtype) : JvmValueMapper(jvmType,  subType) {
+    override fun getValueSize(value: Any?, metaInfo: MetaInfo): Int = metaInfo.subtype.fixedSize
 }
 
 // Error Mapper - Complex type has no Mapper
@@ -83,7 +87,6 @@ class EnumMapper(jvmType: Class<*>) : JvmValueMapper(jvmType, Subtype.STRING) {
         throw PplParseException("The constant name '$constName' is missing at enum $jvmType")
 
     }
-
     override fun toText(value: Any, metaInfo: MetaInfo): String = (value as Enum<*>).name
 }
 
@@ -143,12 +146,13 @@ object BigIntegerMapper : JvmValueMapper(Long::class.java, Subtype.LONG) {
 
 // BOOLEAN
 
-object BooleanMapper : JvmValueMapper(Boolean::class.java, Subtype.BOOLEAN) {
+object BooleanMapper : FixedJvmValueMapper(Boolean::class.java, Subtype.BOOLEAN) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text.toBoolean()
     override fun toText(value: Any, metaInfo: MetaInfo): String = value.toString()
 }
 
-open class BooleanCharMapper(subType: Subtype, val trueChar: Char, val falseChar: Char) : JvmValueMapper(Boolean::class.java, subType) {
+open class BooleanCharMapper(subType: Subtype, private val trueChar: Char, private val falseChar: Char)
+    : FixedJvmValueMapper(Boolean::class.java, subType) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = text[0] == trueChar
     override fun toText(value: Any, metaInfo: MetaInfo): String = if (value as Boolean) trueChar.toString() else falseChar.toString()
 }
@@ -161,7 +165,7 @@ object BsnMapper : BooleanCharMapper(Subtype.BSN, 'S', 'N')
 // DATE
 
 open class LocalDateMapper(subType: Subtype, private val formatter: DateTimeFormatter, jvmDateType: Class<*> = LocalDate::class.java)
-    : JvmValueMapper(jvmDateType, subType) {
+    : FixedJvmValueMapper(jvmDateType, subType) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = LocalDate.parse(text, formatter)
     override fun toText(value: Any, metaInfo: MetaInfo): String = (value as LocalDate).format(formatter)
 }
@@ -172,7 +176,8 @@ object UtcDateMapper : LocalDateMapper(Subtype.UTC_DATE, DateTimeFormatter.ISO_O
 
 // TIME
 
-open class LocalTimeMapper(subType: Subtype, private val formatter: DateTimeFormatter) : JvmValueMapper(LocalTime::class.java, subType) {
+open class LocalTimeMapper(subType: Subtype, private val formatter: DateTimeFormatter)
+    : FixedJvmValueMapper(LocalTime::class.java, subType) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = LocalTime.parse(text, formatter)
     override fun toText(value: Any, metaInfo: MetaInfo): String = (value as LocalTime).format(formatter)
 }
@@ -181,14 +186,15 @@ object TimeMapper : LocalTimeMapper(Subtype.TIME, DateTimeFormatter.ofPattern("H
 object TimeAndMillisMapper : LocalTimeMapper(Subtype.TIME_AND_MILLIS, DateTimeFormatter.ofPattern("HHmmssSSS"))
 object IsoTimeMapper : LocalTimeMapper(Subtype.ISO_TIME, DateTimeFormatter.ISO_LOCAL_TIME)
 
-object UtcTimeMapper : JvmValueMapper(OffsetTime::class.java, Subtype.UTC_TIME) {
+object UtcTimeMapper : LocalTimeMapper(Subtype.UTC_TIME, DateTimeFormatter.ISO_OFFSET_TIME) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = OffsetTime.parse(text, DateTimeFormatter.ISO_OFFSET_TIME)
     override fun toText(value: Any, metaInfo: MetaInfo): String = (value as OffsetTime).format(DateTimeFormatter.ISO_OFFSET_TIME)
 }
 
 // TIMESTAMP
 
-open class LocalTimestampMapper(subType: Subtype, private val formatter: DateTimeFormatter) : JvmValueMapper(LocalDateTime::class.java, subType) {
+open class LocalTimestampMapper(subType: Subtype, private val formatter: DateTimeFormatter)
+    : FixedJvmValueMapper(LocalDateTime::class.java, subType) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = LocalDateTime.parse(text, formatter)
     override fun toText(value: Any, metaInfo: MetaInfo): String = (value as LocalDateTime).format(formatter)
 }
@@ -201,7 +207,7 @@ object TimestampAndMillisMapper : LocalTimestampMapper(Subtype.TIMESTAMP_AND_MIL
 
 object IsoTimestampMapper : LocalTimestampMapper(Subtype.ISO_TIMESTAMP, DateTimeFormatter.ISO_DATE_TIME)
 
-object UtcTimestampMapper : LocalTimestampMapper(Subtype.UTC_TIMESTAMP, DateTimeFormatter.ISO_ZONED_DATE_TIME) {
+object UtcTimestampMapper : LocalTimestampMapper(Subtype.UTC_TIMESTAMP, DateTimeFormatter.ISO_OFFSET_DATE_TIME) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = OffsetDateTime.parse(text, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
     override fun toText(value: Any, metaInfo: MetaInfo): String = (value as OffsetDateTime).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
 }
@@ -209,7 +215,8 @@ object UtcTimestampMapper : LocalTimestampMapper(Subtype.UTC_TIMESTAMP, DateTime
 
 // OLD DATE
 
-open class OldJavaDateMapper(subType: Subtype, private val format: SimpleDateFormat) : JvmValueMapper(Date::class.java, subType) {
+open class OldJavaDateMapper(subType: Subtype, private val format: SimpleDateFormat)
+    : FixedJvmValueMapper(Date::class.java, subType) {
     override fun toValue(text: String, metaInfo: MetaInfo): Any? = format.parse(text)
     override fun toText(value: Any, metaInfo: MetaInfo): String = format.format(value as Date)
 }

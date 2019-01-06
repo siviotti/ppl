@@ -1,10 +1,10 @@
-package br.net.buzu.pplimpl.jvm
+package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.lang.METADATA_END
 import br.net.buzu.lang.NAME_END
 import br.net.buzu.model.Metadata
 import br.net.buzu.model.Subtype
-import br.net.buzu.pplimpl.metadata.loadMetadata
+import br.net.buzu.pplimpl.jvm.readMetaType
 import br.net.buzu.sample.order.*
 import br.net.buzu.sample.pojo.Person
 import br.net.buzu.sample.ppl.Human

@@ -19,6 +19,7 @@ package br.net.buzu.pplimpl.metadata
 import br.net.buzu.ext.MetadataParser
 import br.net.buzu.exception.MetadataParseException
 import br.net.buzu.exception.PplParseException
+import br.net.buzu.ext.MetadataFactory
 import br.net.buzu.lang.*
 import br.net.buzu.model.*
 import java.text.ParseException
@@ -30,14 +31,14 @@ private val EMPTY_DOMAIN = Domain.EMPTY
 private val EMPTY_CHILDREN: List<Metadata> = listOf()
 
 @JvmOverloads
-fun parseMetadata(pplString: PplString, createMetadata: CreateMetadata= genericCreateMetadata,
+fun parseMetadata(pplString: PplString, factory: MetadataFactory = GenericMetadataFactory,
                   seq: IndexSequence = IndexSequence()): Metadata {
     try {
         val nodes = splitNodes(pplString.pplMetadata)
         return if (nodes.size > 1) {
-            parseMetadata(createRoot(nodes), createMetadata, seq)
+            parseMetadata(createRoot(nodes), factory, seq)
         } else {
-            parseMetadata(nodes[0], createMetadata, seq)
+            parseMetadata(nodes[0], factory, seq)
         }
     } catch (e: ParseException) {
         throw PplParseException("Parsing error on text:\n$pplString", e)
@@ -58,7 +59,7 @@ internal fun createRoot(nodes: List<PplNode>): PplNode {
     return PplNode(name = rootName, children = children)
 }
 
-internal fun parseMetadata(node: PplNode, createMetadata: CreateMetadata, seq: IndexSequence): Metadata {
+internal fun parseMetadata(node: PplNode, factory: MetadataFactory, seq: IndexSequence): Metadata {
     val index = seq.next()
     val name = parseName(node, index)
     val subtype = parseSubtype(node)
@@ -69,16 +70,16 @@ internal fun parseMetadata(node: PplNode, createMetadata: CreateMetadata, seq: I
     val domain = parseDomain(node)
     val metaInfo = MetaInfo(index, name, subtype, size, scale, minOccurs, maxOccurs, domain,
             node.defaultValue, node.tags)
-    return createMetadata(metaInfo, parseChildren(node, createMetadata, seq))
+    return factory.create(metaInfo, parseChildren(node, factory, seq))
 }
 
-internal fun parseChildren(node: PplNode, createMetadata: CreateMetadata, seq: IndexSequence): List<Metadata> {
+internal fun parseChildren(node: PplNode, factory: MetadataFactory, seq: IndexSequence): List<Metadata> {
     if (!node.isComplex()) {
         return EMPTY_CHILDREN
     }
     val metas = mutableListOf<Metadata>()
     for (i in 0 until node.children.size) {
-        metas.add(parseMetadata(node.children.get(i), createMetadata, seq))
+        metas.add(parseMetadata(node.children.get(i), factory, seq))
     }
     return metas
 }

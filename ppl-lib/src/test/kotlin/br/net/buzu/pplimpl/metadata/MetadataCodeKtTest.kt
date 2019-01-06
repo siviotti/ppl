@@ -2,6 +2,7 @@ package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.model.Metadata
 import br.net.buzu.model.PplNode
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -9,12 +10,9 @@ internal class MetadataCodeKtTest {
 
     @Test
     fun metadataAsVerbose() {
-        val metadata: Metadata = parseMetadata( PERSON, genericCreateMetadata, IndexSequence())
-        println(metadata)
-        println(metadataAsVerbose(metadata))
-        println(metadataAsNatural(metadata))
-        println(metadataAsShort(metadata))
-        println(metadataAsCompact(metadata))
+        val short = "(name:S20#;age:I2;city:S5;color:S10[\"black\",\"white\",\"red\"] =\"red\"K I test;color:S10[\"1=black\",\"2=white\",\"3=red\"] =\"3\"K I test)"
+        val metadata: Metadata = parseMetadata( PERSON, GenericMetadataFactory, IndexSequence())
+        assertEquals(short, metadataAsShort(metadata))
     }
 
     companion object {

@@ -1,15 +1,16 @@
 package br.net.buzu.pplimpl.api
 
 import br.net.buzu.api.PositionalMapper
+import br.net.buzu.ext.PositionalMapperFactory
 import br.net.buzu.model.*
 import br.net.buzu.pplimpl.core.arrayParse
 import br.net.buzu.pplimpl.core.arraySerialize
 import br.net.buzu.pplimpl.core.atomicParse
 import br.net.buzu.pplimpl.core.atomicSerialize
 
-fun positionalMapperOf(metadata: StaticMetadata, metaType: MetaType): PositionalMapper{
+fun positionalMapperOf(metadata: StaticMetadata, metaType: MetaType): PositionalMapper {
     val info = metadata.info()
-    return when (metadata.kind()){
+    return when (metadata.kind()) {
         Kind.ATOMIC -> AtomicPositionalMapper(info, metadata.serialMaxSize(), metaType.typeAdapter, metaType.valueMapperOf(info))
         Kind.ARRAY -> ArrayPositionalMapper(info, metadata.serialMaxSize(), metaType.typeAdapter, metaType.valueMapperOf(info))
         else -> ComplexPositionalMapper(info, metadata.serialMaxSize(), metaType.typeAdapter, createChildren(metadata, metaType))
@@ -18,23 +19,23 @@ fun positionalMapperOf(metadata: StaticMetadata, metaType: MetaType): Positional
 
 private fun createChildren(metadata: StaticMetadata, metaType: MetaType): List<BasePositionalMapper> {
     val children = mutableListOf<BasePositionalMapper>()
-    for (childMetadata in metadata.children<StaticMetadata>()){
+    for (childMetadata in metadata.children<StaticMetadata>()) {
         children.add(positionalMapperOf(childMetadata, metaType.getChildByMetaName(childMetadata.name())) as BasePositionalMapper)
     }
     return children
 }
 
-abstract class BasePositionalMapper (val metaInfo: MetaInfo, val serialSize: Int, val typeAdapter: TypeAdapter) : PositionalMapper
+abstract class BasePositionalMapper(val metaInfo: MetaInfo, val serialSize: Int, val typeAdapter: TypeAdapter) : PositionalMapper
 
 internal class AtomicPositionalMapper(metaInfo: MetaInfo, serialSize: Int, typeAdapter: TypeAdapter, private val valueMapper: ValueMapper)
-    : BasePositionalMapper(metaInfo, serialSize, typeAdapter){
+    : BasePositionalMapper(metaInfo, serialSize, typeAdapter) {
 
     override fun parse(text: String): Any? = atomicParse(text, metaInfo, valueMapper)
     override fun serialize(value: Any?): String = atomicSerialize(value, metaInfo, valueMapper)
 }
 
 internal class ArrayPositionalMapper(metaInfo: MetaInfo, serialSize: Int, typeAdapter: TypeAdapter, private val valueMapper: ValueMapper)
-    : BasePositionalMapper(metaInfo, serialSize, typeAdapter){
+    : BasePositionalMapper(metaInfo, serialSize, typeAdapter) {
 
     override fun parse(text: String): Any? = arrayParse(text, metaInfo, typeAdapter, valueMapper)
     override fun serialize(value: Any?): String = arraySerialize(value, metaInfo, typeAdapter, valueMapper)
@@ -69,4 +70,8 @@ internal class ComplexPositionalMapper(metaInfo: MetaInfo, serialSize: Int, type
         }
         return sb.toString()
     }
+}
+
+object GenericPositionalMapperFactpry : PositionalMapperFactory {
+    override fun create(metadata: StaticMetadata, metaType: MetaType): PositionalMapper = positionalMapperOf(metadata, metaType)
 }

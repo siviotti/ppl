@@ -9,6 +9,6 @@ internal class FieldAdapterTest {
     @Test
     fun testRead() {
         val metaType=readMetaType(Order::class.java)
-        println(asTree(metaType, { it.children }))
+
     }
 }

@@ -5,8 +5,8 @@ import br.net.buzu.model.pplStringOf
 import br.net.buzu.pplimpl.jvm.readMetaType
 import br.net.buzu.pplimpl.metadata.loadMetadata
 import br.net.buzu.sample.order.Order
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 
 
 internal class PositionalKtTest {

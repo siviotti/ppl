@@ -17,19 +17,20 @@
 package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.exception.PplMetaclassViolationException
+import br.net.buzu.ext.MetadataFactory
 import br.net.buzu.model.*
 import java.util.*
 
 @JvmOverloads
-fun loadMetadata(rootInstance: Any, metaType: MetaType, createMetadata: CreateMetadata = genericCreateMetadata): Metadata {
+fun loadMetadata(rootInstance: Any, metaType: MetaType, factory: MetadataFactory = GenericMetadataFactory): Metadata {
     val loadNode = LoadNode(rootInstance, metaType)
     val maxMap = MaxMap(metaType.treeSize() + 1)
     val metaInfo = metaType.metaInfo
     val max = getMax(maxMap, loadNode, metaInfo)
-    return createMetadata(metaInfo.update(max.maxSize, max.maxOccurs), createMetaChildren(loadNode, maxMap, createMetadata))
+    return factory.create(metaInfo.update(max.maxSize, max.maxOccurs), createMetaChildren(loadNode, maxMap, factory))
 }
 
-internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: CreateMetadata): List<Metadata> {
+internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, factory: MetadataFactory ): List<Metadata> {
     val metaType = node.metaType
     if (!metaType.hasChildren) {
         return listOf()
@@ -42,20 +43,20 @@ internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, createMetadata: 
         for (i in metaTypeList.indices) {
             childMetaType = metaTypeList[i]
             fieldValue = if (itemValue != null) childMetaType.typeAdapter.getFieldValue(itemValue) else null
-            children[i] = loadChild(fieldValue, childMetaType, node, maxMap, createMetadata)
+            children[i] = loadChild(fieldValue, childMetaType, node, maxMap, factory)
         }
     }
     return Arrays.asList<Metadata>(*children)
 }
 
 internal fun loadChild(fieldValue: Any?, metaType: MetaType, parentNode: LoadNode, maxMap: MaxMap,
-                       createMetadata: CreateMetadata): Metadata {
+                       factory: MetadataFactory ): Metadata {
     val fieldNode = LoadNode(fieldValue, metaType)
     var metaInfo = metaType.metaInfo
     val max = getMax(maxMap, fieldNode, metaInfo)
     metaInfo = metaInfo.update(max.maxSize, max.maxOccurs)
-    val children = createMetaChildren(fieldNode, maxMap, createMetadata)
-    return createMetadata(metaInfo, children)
+    val children = createMetaChildren(fieldNode, maxMap, factory)
+    return factory.create(metaInfo, children)
 }
 
 internal fun getMax(maxMap: MaxMap, node: LoadNode, metaInfo: MetaInfo): Max {
@@ -93,9 +94,11 @@ internal class LoadNode(originalValue: Any?, val metaType: MetaType) {
             var max = 0
             var tmp = 0
             for (obj in value) {
-                tmp = metaType.valueMapper.getValueSize(obj!!, metaType.metaInfo)
-                if (tmp > max) {
-                    max = tmp
+                if (obj != null) {
+                    tmp = metaType.valueMapper.getValueSize(obj, metaType.metaInfo)
+                    if (tmp > max) {
+                        max = tmp
+                    }
                 }
             }
             return max

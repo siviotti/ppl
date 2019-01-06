@@ -16,6 +16,8 @@
  */
 package br.net.buzu.pplimpl.metatype
 
+import br.net.buzu.ext.MetaTypeFactory
+import br.net.buzu.ext.ValueMapperKit
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.MetaType
 import br.net.buzu.model.TypeAdapter
@@ -30,7 +32,7 @@ import br.net.buzu.model.ValueMapper
  */
 class GenericMetaType(override val fullName: String, override val metaName: String, override val metaInfo: MetaInfo,
                       override val children: List<MetaType>, override val treeIndex: Int,
-                      override val typeAdapter: TypeAdapter, override val valueMapper: ValueMapper)
+                      override val typeAdapter: TypeAdapter, override val valueMapper: ValueMapper, val kit: ValueMapperKit)
     : MetaType {
 
     override val hasChildren = children.isNotEmpty()
@@ -51,7 +53,15 @@ class GenericMetaType(override val fullName: String, override val metaName: Stri
 
     override fun valueMapperOf(metadataInfo: MetaInfo): ValueMapper {
         return if (metadataInfo.subtype == metaInfo.subtype) valueMapper
-        else typeAdapter.getValueMapper(metadataInfo.subtype)
+        else typeAdapter.getValueMapper(metadataInfo, kit)
     }
+}
+
+object GenericMetaTypeFactory: MetaTypeFactory{
+    override fun create(fullName: String, metaName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int,
+                        typeAdapter: TypeAdapter, valueMapper: ValueMapper, kit: ValueMapperKit): MetaType {
+        return GenericMetaType(fullName, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper, kit)
+    }
+
 
 }

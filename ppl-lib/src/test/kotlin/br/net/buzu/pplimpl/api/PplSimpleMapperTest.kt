@@ -14,19 +14,26 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.ext
+package br.net.buzu.pplimpl.api
 
-import br.net.buzu.model.Subtype
-import br.net.buzu.model.ValueMapper
+import br.net.buzu.api.PplSimpleMapper
+import br.net.buzu.model.Dialect
+import br.net.buzu.sample.order.Order
+import org.junit.jupiter.api.Test
 
-/**
- * Resolver to return a ValueMapper from a given subtype and a given type.
- *
- * @author Douglas Siviotti
- * @since 1.0
- */
-@FunctionalInterface
-interface ValueMapperResolver {
+import org.junit.jupiter.api.Assertions.*
 
-    fun resolve(subtype: Subtype, type: Class<*>): ValueMapper
+internal class PplSimpleMapperTest {
+
+    private val mapper: PplSimpleMapper = pplSimpleMapper()
+
+    @Test
+    fun testFromPpl() {
+        assertEquals(Order.INSTANCE, mapper.fromPpl(Order.PPL_STRING, Order::class.java))
+    }
+
+    @Test
+    fun testToPpl() {
+        assertEquals(Order.PPL_STRING, mapper.toPpl(Order.INSTANCE))
+    }
 }

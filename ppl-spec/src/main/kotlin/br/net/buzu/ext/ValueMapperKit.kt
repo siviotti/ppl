@@ -14,29 +14,19 @@
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.net.buzu.model
+package br.net.buzu.ext
 
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-import kotlin.reflect.KClass
+import br.net.buzu.model.MetaInfo
+import br.net.buzu.model.ValueMapper
 
 /**
- * Represents the element able to convert value to text (toText) and text to value (toValue).
- * This capability also allows to determinate the serial size of a given value (getValueSize).
+ * Resolver to return a ValueMapper from a given subtype and a given type.
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
-interface ValueMapper {
+@FunctionalInterface
+interface ValueMapperKit {
 
-    fun getValueSize(value: Any?, metaInfo: MetaInfo): Int
-
-    fun toValue(text: String, metaInfo: MetaInfo): Any?
-
-    fun toText(value: Any, metaInfo: MetaInfo): String
-
-    @Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS)
-    @Retention(RetentionPolicy.RUNTIME)
-    annotation class MappedBy(val mapper: KClass<out ValueMapper>)
-
+    fun getMapper(metaInfo: MetaInfo, type: Class<*>): ValueMapper
 }
