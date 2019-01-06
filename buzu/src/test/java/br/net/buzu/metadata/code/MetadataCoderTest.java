@@ -1,19 +1,17 @@
 package br.net.buzu.metadata.code;
 
-import static br.net.buzu.lang.Syntax.*;
-
+import br.net.buzu.lang.Syntax;
 import br.net.buzu.metadata.BasicMetadata;
 import br.net.buzu.metadata.ComplexMetadata;
 import br.net.buzu.metadata.ComplexMetadataTest;
 import br.net.buzu.metadata.SimpleMetadataTest;
-import br.net.buzu.lang.Syntax;
 import br.net.buzu.model.*;
-import br.net.buzu.model.MetaInfoTest;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.net.buzu.lang.Syntax.ENTER;
 import static org.junit.Assert.*;
 
 /**

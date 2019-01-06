@@ -16,8 +16,8 @@
  */
 package br.net.buzu.metadata.build.load;
 
-import br.net.buzu.context.BasicContext;
 import br.net.buzu.api.MetadataLoader;
+import br.net.buzu.context.BasicContext;
 import br.net.buzu.context.JavaContext;
 import br.net.buzu.exception.PplMetaclassViolationException;
 import br.net.buzu.model.MetaInfo;

@@ -3,10 +3,9 @@ package br.net.buzu.pplimpl.jvm
 import br.net.buzu.lang.EMPTY
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Subtype
-import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.text.SimpleDateFormat

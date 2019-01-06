@@ -1,12 +1,12 @@
 package br.net.buzu.context;
 
-import br.net.buzu.metaclass.SimpleMetaclass;
-import br.net.buzu.parsing.simple.text.StringMapper;
 import br.net.buzu.api.PayloadMapper;
+import br.net.buzu.metaclass.SimpleMetaclass;
 import br.net.buzu.model.Kind;
 import br.net.buzu.model.MetaInfo;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.Subtype;
+import br.net.buzu.parsing.simple.text.StringMapper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

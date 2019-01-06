@@ -1,9 +1,9 @@
 package br.net.buzu.metadata.build.parse;
 
 import br.net.buzu.context.BasicContext;
+import br.net.buzu.lang.Syntax;
 import br.net.buzu.metadata.ComplexStaticMetadada;
 import br.net.buzu.metadata.code.ShortMetadataCoder;
-import br.net.buzu.lang.Syntax;
 import br.net.buzu.model.Domain;
 import br.net.buzu.model.Metadata;
 import br.net.buzu.model.StaticMetadata;

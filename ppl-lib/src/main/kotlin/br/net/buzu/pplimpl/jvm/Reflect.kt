@@ -20,7 +20,6 @@ import br.net.buzu.annotation.PplMetadata
 import br.net.buzu.exception.PplException
 import br.net.buzu.exception.PplReflectionException
 import java.io.*
-import java.lang.Exception
 import java.lang.reflect.*
 import java.util.*
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType

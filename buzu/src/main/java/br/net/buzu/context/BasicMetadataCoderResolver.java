@@ -16,9 +16,9 @@
  */
 package br.net.buzu.context;
 
-import br.net.buzu.metadata.code.*;
 import br.net.buzu.ext.MetadataCoder;
 import br.net.buzu.ext.MetadataCoderResolver;
+import br.net.buzu.metadata.code.*;
 import br.net.buzu.model.Dialect;
 
 /**

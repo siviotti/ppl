@@ -17,11 +17,9 @@
 package br.net.buzu.pplimpl.api
 
 import br.net.buzu.api.PplSimpleMapper
-import br.net.buzu.model.Dialect
 import br.net.buzu.sample.order.Order
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class PplSimpleMapperTest {
 

@@ -16,10 +16,10 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.ext.MetadataParser
 import br.net.buzu.exception.MetadataParseException
 import br.net.buzu.exception.PplParseException
 import br.net.buzu.ext.MetadataFactory
+import br.net.buzu.ext.MetadataParser
 import br.net.buzu.lang.*
 import br.net.buzu.model.*
 import java.text.ParseException

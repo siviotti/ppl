@@ -23,3 +23,8 @@
 hs_err_pid*
 
 /.idea/
+ppl.iml
+/buzu/buzu.iml
+/ppl-lib/ppl-lib.iml
+/ppl-spec/ppl-spec.iml
+

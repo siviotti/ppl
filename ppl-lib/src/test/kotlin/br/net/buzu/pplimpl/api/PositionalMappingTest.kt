@@ -24,10 +24,9 @@ import br.net.buzu.pplimpl.core.positionalParse
 import br.net.buzu.pplimpl.jvm.readMetaType
 import br.net.buzu.pplimpl.metadata.parseMetadata
 import br.net.buzu.sample.order.Order
-import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 
 internal class PositionalMappingTest {
 

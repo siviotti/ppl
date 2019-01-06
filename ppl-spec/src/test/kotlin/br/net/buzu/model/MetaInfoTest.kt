@@ -2,7 +2,10 @@ package br.net.buzu.model
 
 
 import br.net.buzu.annotation.PplMetadata
-import br.net.buzu.lang.*
+import br.net.buzu.lang.EMPTY
+import br.net.buzu.lang.INDEXED
+import br.net.buzu.lang.KEY
+import br.net.buzu.lang.RIGHT
 import org.junit.Assert.*
 import org.junit.Test
 

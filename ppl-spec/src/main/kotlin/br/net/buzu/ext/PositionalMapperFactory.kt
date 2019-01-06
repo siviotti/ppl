@@ -17,7 +17,8 @@
 package br.net.buzu.ext
 
 import br.net.buzu.api.PositionalMapper
-import br.net.buzu.model.*
+import br.net.buzu.model.MetaType
+import br.net.buzu.model.StaticMetadata
 
 /**
  * Specification of a PositionalMapper Factory

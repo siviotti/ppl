@@ -16,7 +16,10 @@
  */
 package br.net.buzu.ext
 
-import br.net.buzu.model.*
+import br.net.buzu.model.MetaInfo
+import br.net.buzu.model.MetaType
+import br.net.buzu.model.TypeAdapter
+import br.net.buzu.model.ValueMapper
 
 /**
  * Specification of a MetaType Factory

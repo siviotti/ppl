@@ -16,14 +16,13 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.ext.MetadataCoderResolver
 import br.net.buzu.ext.MetadataCoder
+import br.net.buzu.ext.MetadataCoderResolver
 import br.net.buzu.lang.*
 import br.net.buzu.model.Dialect
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
 import br.net.buzu.model.Subtype
-import java.lang.IllegalStateException
 
 internal const val SPACE = "" + br.net.buzu.lang.SPACE
 

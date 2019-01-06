@@ -17,9 +17,6 @@
 package br.net.buzu.pplimpl.metadata
 
 import br.net.buzu.exception.PplParseException
-import br.net.buzu.lang.EMPTY
-import br.net.buzu.lang.SPACE
-import br.net.buzu.lang.VAR
 import br.net.buzu.lang.*
 import br.net.buzu.model.PplNode
 
@@ -215,7 +212,7 @@ internal fun splitDefaultValue(text: String, beginIndex: Int): Split {
         endIndex = pplNextStringDelimiter(text, index, c) + 1
         Split(endIndex + 1, text.substring(firstChar + 2, endIndex - 1))
     } else {
-        endIndex = pplNextCharOrLast(text, index, SPACE)
+        endIndex = pplNextCharOrLast(text, index, br.net.buzu.lang.SPACE)
         Split(endIndex + 1, text.substring(firstChar + 1, endIndex))
     }
 

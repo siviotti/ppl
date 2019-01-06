@@ -16,15 +16,14 @@
  */
 package br.net.buzu.metadata.build.parse;
 
-import static br.net.buzu.lang.Syntax.*;
-
 import br.net.buzu.exception.PplParseException;
 import br.net.buzu.lang.Token;
-
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static br.net.buzu.lang.Syntax.*;
 
 /**
  * [STATELESS] Class to perform the split domainOf a String into <code>Meta</code>

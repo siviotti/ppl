@@ -3,9 +3,9 @@ package br.net.buzu.pplimpl.metadata
 import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.Metadata
 import br.net.buzu.model.Subtype
-import java.util.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.util.*
 
 
 /**

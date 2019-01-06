@@ -1,8 +1,7 @@
 package br.net.buzu.sample.order
 
 import java.time.LocalDate
-import java.util.ArrayList
-import java.util.Arrays
+import java.util.*
 
 /**
  * Test Data Builder for Order.

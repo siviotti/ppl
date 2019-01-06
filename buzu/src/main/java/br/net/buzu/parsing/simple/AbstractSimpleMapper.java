@@ -16,10 +16,10 @@
  */
 package br.net.buzu.parsing.simple;
 
-import br.net.buzu.parsing.AbstractPositionalMapper;
 import br.net.buzu.model.MetaInfo;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.StaticMetadata;
+import br.net.buzu.parsing.AbstractPositionalMapper;
 import br.net.buzu.pplimpl.core.FitKt;
 
 /**

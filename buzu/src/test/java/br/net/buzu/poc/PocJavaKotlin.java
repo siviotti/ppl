@@ -1,14 +1,14 @@
 package br.net.buzu.poc;
 
-import static br.net.buzu.pplimpl.metadata.MetadataCodeKt.*;
-
 import br.net.buzu.Buzu;
 import br.net.buzu.BuzuBuilder;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
-import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
 import br.net.buzu.model.Metadata;
 import br.net.buzu.model.PplString;
+import br.net.buzu.pplimpl.metadata.GenericMetadataParser;
 import br.net.buzu.sample.order.Order;
+
+import static br.net.buzu.pplimpl.metadata.MetadataCodeKt.metadataAsVerbose;
 
 public class PocJavaKotlin {
 

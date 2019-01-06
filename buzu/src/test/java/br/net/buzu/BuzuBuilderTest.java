@@ -1,14 +1,14 @@
 package br.net.buzu;
 
+import br.net.buzu.api.JavaPplMapper;
 import br.net.buzu.context.BasicContext;
+import br.net.buzu.context.JavaContext;
 import br.net.buzu.metaclass.AnnotationSkipStrategy;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metaclass.BasicSkipStrategy;
 import br.net.buzu.metadata.build.load.BasicMetadataLoader;
 import br.net.buzu.metadata.build.parse.BasicMetadataParser;
 import br.net.buzu.metadata.build.parse.Splitter;
-import br.net.buzu.api.JavaPplMapper;
-import br.net.buzu.context.JavaContext;
 import br.net.buzu.model.Dialect;
 import org.junit.Test;
 

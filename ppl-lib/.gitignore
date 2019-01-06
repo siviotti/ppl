@@ -2,6 +2,5 @@
 /.project
 /target
 /.settings
-/ppl-lib.iml
+ppl-lib.iml
 /.idea
-/.ppl-lib.iml

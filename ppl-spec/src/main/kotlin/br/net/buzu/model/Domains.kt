@@ -20,7 +20,7 @@ package br.net.buzu.model
 
 import br.net.buzu.lang.EMPTY
 import br.net.buzu.lang.VALUE_LABEL_SEPARATOR
-import java.util.ArrayList
+import java.util.*
 
 fun domainOf(vararg array: String): Domain = Domain.create(EMPTY, domainItemListOf(*array))
 

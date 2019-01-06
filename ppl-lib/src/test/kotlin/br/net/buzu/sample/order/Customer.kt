@@ -1,6 +1,6 @@
 package br.net.buzu.sample.order
 
-import java.util.ArrayList
+import java.util.*
 
 class Customer {
 

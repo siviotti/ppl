@@ -16,7 +16,6 @@
  */
 package br.net.buzu.context;
 
-import br.net.buzu.context.SubtypeManager;
 import br.net.buzu.model.Subtype;
 
 import java.math.BigDecimal;

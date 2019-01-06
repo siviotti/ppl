@@ -1,10 +1,10 @@
 package br.net.buzu.conserpro;
 
 import br.net.buzu.Buzu;
+import br.net.buzu.api.PayloadMapper;
 import br.net.buzu.context.BasicParserFactory;
 import br.net.buzu.metaclass.BasicMetaclassReader;
 import br.net.buzu.metadata.build.MetadataBuilder;
-import br.net.buzu.api.PayloadMapper;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.PplString;
 import br.net.buzu.model.StaticMetadata;

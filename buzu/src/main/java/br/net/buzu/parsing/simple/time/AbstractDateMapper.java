@@ -16,10 +16,10 @@
  */
 package br.net.buzu.parsing.simple.time;
 
-import br.net.buzu.parsing.simple.AbstractSimpleMapper;
 import br.net.buzu.model.MetaInfo;
 import br.net.buzu.model.Metaclass;
 import br.net.buzu.model.StaticMetadata;
+import br.net.buzu.parsing.simple.AbstractSimpleMapper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

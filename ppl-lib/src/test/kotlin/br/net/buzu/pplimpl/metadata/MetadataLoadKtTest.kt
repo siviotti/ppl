@@ -9,9 +9,8 @@ import br.net.buzu.sample.order.*
 import br.net.buzu.sample.pojo.Person
 import br.net.buzu.sample.ppl.Human
 import br.net.buzu.sample.ppl.StaticPerson
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
