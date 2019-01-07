@@ -2,6 +2,7 @@ package br.net.buzu.sample.ppl
 
 import br.net.buzu.annotation.PplMetadata
 import br.net.buzu.model.Subtype
+import br.net.buzu.sample.pojo.Person
 
 /**
  *
@@ -32,4 +33,11 @@ class StaticPerson {
     }
 
 
+    companion object {
+        const val PERSON_NAME = "Ladybug"
+        const val PERSON_AGE = 15
+        const val PERSON_CITY = "Paris"
+
+        val PERSON_INSTANCE = StaticPerson(PERSON_NAME, PERSON_AGE, PERSON_CITY)
+    }
 }
