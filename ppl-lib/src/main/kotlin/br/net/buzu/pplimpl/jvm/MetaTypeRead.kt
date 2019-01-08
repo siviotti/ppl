@@ -43,7 +43,7 @@ fun readMetaType(type: Class<*>, elementType: Class<*>, factory: MetaTypeFactory
     val valueMapper = typeAdapter.getValueMapper(metaInfo, kit)
     val children = if (subtype.dataType.isComplex)
         createChildren(EMPTY, elementType, factory, resolver, kit, skip, seq) else EMPTY_CHILDREN
-    return factory.create(EMPTY, EMPTY, metaInfo, children, index, typeAdapter, valueMapper, kit)
+    return factory.create(EMPTY, metaInfo, children, index, typeAdapter, valueMapper, kit)
 }
 
 private fun readFromField(parentFullName: String, field: Field, index: Int, factory: MetaTypeFactory, resolver: SubtypeResolver,
@@ -57,7 +57,7 @@ private fun readFromField(parentFullName: String, field: Field, index: Int, fact
     val valueMapper = typeAdapter.getValueMapper(metaInfo, kit)
     val children = if (subtype.dataType.isComplex)
         createChildren(fullName, elementType, factory, resolver, kit, skip, seq) else EMPTY_CHILDREN
-    return factory.create(fullName, field.name, metaInfo, children, index, typeAdapter, valueMapper, kit)
+    return factory.create(fullName, metaInfo, children, index, typeAdapter, valueMapper, kit)
 }
 
 private fun createMetaInfo(pplMetadata: PplMetadata?, subtype: Subtype, fieldName: String, index: Int): MetaInfo {
@@ -96,8 +96,7 @@ private fun skip(field: Field): Boolean {
     }
 
     // Precedence 4: Field Class
-    var fieldClass: Class<*>
-    fieldClass = try {
+    val fieldClass: Class<*> = try {
         getElementType(field)
     } catch (pre: PplReflectionException) {
         field.javaClass

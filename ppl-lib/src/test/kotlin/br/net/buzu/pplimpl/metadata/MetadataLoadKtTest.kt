@@ -47,6 +47,14 @@ internal class MetadataLoadKtTest {
                 ")"
     }
 
+    @Test
+    fun testStaticPerson(){
+        val person = StaticPerson.INSTANCE
+        val metaType = readMetaType(person.javaClass)
+        val metadata = loadMetadata(person, metaType)
+        //println(metadata.toTree(0))
+    }
+
     fun assertMetadata(metadata:Metadata, name: String, type: Subtype, size: Int =0, minOccurs:Int=0, maxOccurs:Int=1){
         assertEquals(name, metadata.name())
         assertEquals(type, metadata.info().subtype)

@@ -32,12 +32,32 @@ class StaticPerson {
         return "Person [name=$name, age=$age, city=$city]"
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as StaticPerson
+
+        if (name != other.name) return false
+        if (age != other.age) return false
+        if (city != other.city) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name?.hashCode() ?: 0
+        result = 31 * result + (age ?: 0)
+        result = 31 * result + (city?.hashCode() ?: 0)
+        return result
+    }
+
 
     companion object {
-        const val PERSON_NAME = "Ladybug"
+        const val PERSON_NAME = "Ladybug   "
         const val PERSON_AGE = 15
-        const val PERSON_CITY = "Paris"
-
-        val PERSON_INSTANCE = StaticPerson(PERSON_NAME, PERSON_AGE, PERSON_CITY)
+        const val PERSON_CITY = "Paris     "
+        const val PPL_STRING = "(personName:C10;personAge:I10;personCity:C10)Ladybug   0000000015Paris     "
+        val INSTANCE = StaticPerson(PERSON_NAME, PERSON_AGE, PERSON_CITY)
     }
 }

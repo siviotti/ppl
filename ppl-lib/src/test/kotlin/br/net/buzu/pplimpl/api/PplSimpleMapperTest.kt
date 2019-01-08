@@ -19,6 +19,7 @@ package br.net.buzu.pplimpl.api
 import br.net.buzu.api.PplSimpleMapper
 import br.net.buzu.sample.order.Order
 import br.net.buzu.sample.pojo.Person
+import br.net.buzu.sample.ppl.StaticPerson
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -29,12 +30,14 @@ internal class PplSimpleMapperTest {
     @Test
     fun testFromPpl() {
         assertEquals(Person.INSTANCE, mapper.fromPpl(Person.PPL_STRING, Person::class.java))
+        assertEquals(StaticPerson.INSTANCE, mapper.fromPpl(StaticPerson.PPL_STRING, StaticPerson::class.java))
         assertEquals(Order.INSTANCE, mapper.fromPpl(Order.PPL_STRING, Order::class.java))
     }
 
     @Test
     fun testToPpl() {
         assertEquals(Person.PPL_STRING, mapper.toPpl(Person.INSTANCE))
+        assertEquals(StaticPerson.PPL_STRING, mapper.toPpl(StaticPerson.INSTANCE))
         assertEquals(Order.PPL_STRING, mapper.toPpl(Order.INSTANCE))
     }
 }

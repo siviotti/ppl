@@ -30,6 +30,6 @@ import br.net.buzu.model.ValueMapper
 @FunctionalInterface
 interface MetaTypeFactory {
 
-    fun create(fullName: String, metaName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int,
+    fun create(fullName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int,
                typeAdapter: TypeAdapter, valueMapper: ValueMapper, kit: ValueMapperKit): MetaType
 }

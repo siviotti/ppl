@@ -28,9 +28,6 @@ interface MetaType {
     /** Complete field path (including the field name) like 'order.customer.addresses.street' */
     val fullName: String
 
-    /** The metadata name used on serialization. Can be the same of field name.*/
-    val metaName: String
-
     /** */
     val metaInfo: MetaInfo
 

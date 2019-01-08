@@ -10,7 +10,6 @@
     <modules>
         <module>ppl-spec</module>
         <module>ppl-lib</module>
-        <module>buzu</module>
     </modules>
 
     <licenses>

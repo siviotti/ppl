@@ -43,13 +43,13 @@ internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, factory: Metadat
         for (i in metaTypeList.indices) {
             childMetaType = metaTypeList[i]
             fieldValue = if (itemValue != null) childMetaType.typeAdapter.getFieldValue(itemValue) else null
-            children[i] = loadChild(fieldValue, childMetaType, node, maxMap, factory)
+            children[i] = loadChild(fieldValue, childMetaType, maxMap, factory)
         }
     }
     return Arrays.asList<Metadata>(*children)
 }
 
-internal fun loadChild(fieldValue: Any?, metaType: MetaType, parentNode: LoadNode, maxMap: MaxMap,
+internal fun loadChild(fieldValue: Any?, metaType: MetaType, maxMap: MaxMap,
                        factory: MetadataFactory ): Metadata {
     val fieldNode = LoadNode(fieldValue, metaType)
     var metaInfo = metaType.metaInfo
@@ -66,9 +66,11 @@ internal fun getMax(maxMap: MaxMap, node: LoadNode, metaInfo: MetaInfo): Max {
     val maxOccurs = max.tryNewMaxOccurs(node.occurs).maxOccurs
     if (metaInfo.hasSize()) {
         checkLimit("size", fieldPath, metaInfo.size, size)
+        max.tryNewMaxSize(metaInfo.size)
     }
     if (metaInfo.hasMaxOccurs()) {
         checkLimit("maxOccurs", fieldPath, metaInfo.maxOccurs, maxOccurs)
+        max.tryNewMaxOccurs(metaInfo.maxOccurs)
     }
     return max
 }
@@ -92,7 +94,7 @@ internal class LoadNode(originalValue: Any?, val metaType: MetaType) {
     fun calcMaxSize(): Int {
         if (subtype.dataType.sizeType == SizeType.CUSTOM) {
             var max = 0
-            var tmp = 0
+            var tmp: Int
             for (obj in value) {
                 if (obj != null) {
                     tmp = metaType.valueMapper.getValueSize(obj, metaType.metaInfo)

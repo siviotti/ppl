@@ -30,13 +30,13 @@ import br.net.buzu.model.ValueMapper
  * @since 1.0
  * @see MetaType
  */
-class GenericMetaType(override val fullName: String, override val metaName: String, override val metaInfo: MetaInfo,
+class GenericMetaType(override val fullName: String, override val metaInfo: MetaInfo,
                       override val children: List<MetaType>, override val treeIndex: Int,
                       override val typeAdapter: TypeAdapter, override val valueMapper: ValueMapper, val kit: ValueMapperKit)
     : MetaType {
 
     override val hasChildren = children.isNotEmpty()
-    private val childrenMap = children.map { it.metaName to it }.toMap()
+    private val childrenMap = children.map { it.metaInfo.name to it }.toMap()
 
     override fun getChildByMetaName(metaName: String): MetaType = childrenMap[metaName]
             ?: throw IllegalArgumentException("Child metaType '$metaName' not found at ${toString()}. Children:$children")
@@ -49,7 +49,7 @@ class GenericMetaType(override val fullName: String, override val metaName: Stri
         }
     }
 
-    override fun toString(): String = "[$treeIndex] $fullName: $typeAdapter ($metaName) $valueMapper $metaInfo"
+    override fun toString(): String = "[$treeIndex] $fullName: $typeAdapter (${metaInfo.name}) $valueMapper $metaInfo"
 
     override fun valueMapperOf(metadataInfo: MetaInfo): ValueMapper {
         return if (metadataInfo.subtype == metaInfo.subtype) valueMapper
@@ -58,9 +58,9 @@ class GenericMetaType(override val fullName: String, override val metaName: Stri
 }
 
 object GenericMetaTypeFactory: MetaTypeFactory{
-    override fun create(fullName: String, metaName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int,
+    override fun create(fullName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int,
                         typeAdapter: TypeAdapter, valueMapper: ValueMapper, kit: ValueMapperKit): MetaType {
-        return GenericMetaType(fullName, metaName, metaInfo, children, treeIndex, typeAdapter, valueMapper, kit)
+        return GenericMetaType(fullName, metaInfo, children, treeIndex, typeAdapter, valueMapper, kit)
     }
 
 
