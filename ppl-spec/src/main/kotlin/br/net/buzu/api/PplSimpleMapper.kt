@@ -40,7 +40,7 @@ interface PplSimpleMapper{
      * @return The object corresponding to the PPL text.
      * @throws PplParseException
      */
-    fun <T> fromPpl(text: String, type: Class<T>): T
+    fun fromPpl(text: String, type: Class<*>): Any?
 
     /**
      * Parsers a PPL text and always returns a correspondent **List** of
@@ -64,5 +64,7 @@ interface PplSimpleMapper{
      * @throws PplSerializeException
      */
     fun toPpl(source: Any): String
+
+
 
 }

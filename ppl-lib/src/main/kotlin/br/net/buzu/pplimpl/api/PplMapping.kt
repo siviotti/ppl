@@ -4,14 +4,8 @@ import br.net.buzu.api.PplMapper
 import br.net.buzu.api.PplSimpleMapper
 import br.net.buzu.ext.*
 import br.net.buzu.lang.pplToString
-import br.net.buzu.model.Dialect
-import br.net.buzu.model.MetaType
-import br.net.buzu.model.StaticMetadata
-import br.net.buzu.model.pplStringOf
-import br.net.buzu.pplimpl.jvm.JvmSubtypeResolver
-import br.net.buzu.pplimpl.jvm.JvmValueMapperKit
-import br.net.buzu.pplimpl.jvm.genericSkip
-import br.net.buzu.pplimpl.jvm.readMetaType
+import br.net.buzu.model.*
+import br.net.buzu.pplimpl.jvm.*
 import br.net.buzu.pplimpl.metadata.*
 import br.net.buzu.pplimpl.metatype.GenericMetaTypeFactory
 import java.lang.reflect.Field
@@ -30,20 +24,23 @@ fun pplMapper(dialect: Dialect = Dialect.DEFAULT,
 
 internal class GenericPplSimpleMapper : PplSimpleMapper {
 
-    override fun <T> fromPpl(text: String, type: Class<T>): T {
+    override fun fromPpl(text: String, type: Class<*>): Any? {
         val pplString = pplStringOf(text)
         val metadata = parseMetadata(pplString) as StaticMetadata
-        val metaType = readMetaType(type)
+        val metaType = getMetaType(metadata, type)
         val mapper = positionalMapperOf(metadata, metaType)
-        return mapper.parse(pplString.payload) as T
+        return mapper.parse(pplString.payload)
     }
 
     override fun toPpl(source: Any): String {
-        val metaType = readMetaType(source.javaClass)
+        if (source is Collection<*> && source.isEmpty()) return PplString.EMPTY.metadata
+        val elementType = if (source is Collection<*>) getElementType(source) else source.javaClass
+        val metaType = readMetaType(source.javaClass, elementType)
         val metadata = loadMetadata(source, metaType) as StaticMetadata
         val mapper = positionalMapperOf(metadata, metaType)
         return pplToString(codeMetadata(metadata), mapper.serialize(source))
     }
+
 }
 
 internal class GenericPplMapper(val dialect: Dialect,
@@ -56,7 +53,7 @@ internal class GenericPplMapper(val dialect: Dialect,
                                 val positionalMapperFactory: PositionalMapperFactory)
     : PplMapper {
 
-    override fun <T> fromPpl(text: String, type: Class<T>): T {
+    override fun fromPpl(text: String, type: Class<*>): Any {
         return fromPpl(text, readMetaType(type, metaTypeFactory, subtypeResolver, valueMapperKit, skip))
     }
 
@@ -81,4 +78,12 @@ internal class GenericPplMapper(val dialect: Dialect,
         return pplToString(metadataCoderResolver.resolve(dialect).code(metadata),
                 positionalMapperFactory.create(metadata, metaType).serialize(source))
     }
+}
+
+internal fun getMetaType(metadata: StaticMetadata, type: Class<*>): MetaType {
+    return if (metadata.kind().isMultiple) readMetaType(List::class.java, type) else readMetaType(type)
+}
+
+private fun getElementType(source: Collection<*>): Class<Any> {
+    return if (source.isEmpty()) Any::class.java else source.iterator().next()!!.javaClass
 }

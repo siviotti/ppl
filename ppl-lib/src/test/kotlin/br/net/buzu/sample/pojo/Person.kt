@@ -2,8 +2,6 @@ package br.net.buzu.sample.pojo
 
 import br.net.buzu.lang.METADATA_END
 import br.net.buzu.lang.NAME_END
-import br.net.buzu.sample.ppl.StaticPerson
-
 
 
 /**
@@ -54,11 +52,11 @@ class Person {
     companion object {
         private val PERSON_METADATA_NAMES = arrayOf("name", "age", "city")
         val PERSON_METADATA_TYPES = arrayOf("S", "I", "S")
-        val PERSON_NAME = "Ladybug"
-        val PERSON_AGE = 15
-        val PERSON_CITY = "Paris"
+        val NAME = "Ladybug"
+        val AGE = 15
+        val CITY = "Paris"
 
-        val PERSON_METADATA_SIZES = intArrayOf(PERSON_NAME.length, PERSON_AGE.toString().length, PERSON_CITY.length)
+        val PERSON_METADATA_SIZES = intArrayOf(NAME.length, AGE.toString().length, CITY.length)
         // metadata = (name:S7;age:I2;city:S5)
         val PERSON_METADATA = ("(" + PERSON_METADATA_NAMES[0] + NAME_END
                 + PERSON_METADATA_TYPES[0] + PERSON_METADATA_SIZES[0] + METADATA_END + PERSON_METADATA_NAMES[1]
@@ -68,7 +66,7 @@ class Person {
         // PPL = (name:S7;age:I2;city:S5)Ladybug15Paris
         val PPL_STRING = PERSON_METADATA + PERSON_PAYLOAD
 
-        val INSTANCE = Person(PERSON_NAME, PERSON_AGE, PERSON_CITY)
+        val INSTANCE = Person(NAME, AGE, CITY)
 
 
     }

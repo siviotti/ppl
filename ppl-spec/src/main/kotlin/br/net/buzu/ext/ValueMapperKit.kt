@@ -20,7 +20,7 @@ import br.net.buzu.model.MetaInfo
 import br.net.buzu.model.ValueMapper
 
 /**
- * Resolver to return a ValueMapper from a given subtype and a given type.
+ * Resolver (internal kit) to return a ValueMapper from a given subtype and a given type.
  *
  * @author Douglas Siviotti
  * @since 1.0

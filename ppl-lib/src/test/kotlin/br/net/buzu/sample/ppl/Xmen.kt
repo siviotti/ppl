@@ -18,16 +18,37 @@ class Xmen : Human() {
     companion object {
 
         private val serialVersionUID = 1L
-
-        val WOLVERINE: Xmen
+        val PPL_STRING = "(fullName:C10;fixed-field:C5;weight:N5;birthDay:DI;power:S20)Wolverine fix  099.01882-04-05healing             "
+        val INSTANCE: Xmen
 
         init {
-            WOLVERINE = Xmen()
-            WOLVERINE.name = "Wolverine"
-            WOLVERINE.birth = LocalDate.of(1882, 4, 5)
-            WOLVERINE.weight = 99.0
-            WOLVERINE.skill = "healing"
+            INSTANCE = Xmen()
+            INSTANCE.name = "Wolverine "
+            INSTANCE.birth = LocalDate.of(1882, 4, 5)
+            INSTANCE.weight = 99.0
+            INSTANCE.skill = "healing"
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        if (!super.equals(other)) return false
+
+        other as Xmen
+
+        if (name != other.name) return false
+        if (birth != other.birth) return false
+        if (weight != other.weight) return false
+        if (skill != other.skill) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (skill?.hashCode() ?: 0)
+        return result
     }
 
 }
