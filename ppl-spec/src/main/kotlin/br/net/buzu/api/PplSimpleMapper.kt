@@ -29,31 +29,19 @@ interface PplSimpleMapper{
 
     /**
      * Parsers a PPL text and returns the correspondent object based on the
-     * indicated type. If the PPL text represents multiple records, the result will
-     * be a Collection parametrized to the 'type'. If the PPL text represents only
+     * indicated elementType. If the PPL text represents multiple records, the result will
+     * be a Collection parametrized to the 'elementType'. If the PPL text represents only
      * one record, the result is a single object.
      *
      * @param text
      * The PPL text at the format `(METADATA)PAYLOAD`.
-     * @param type
-     * The type of the object will be created.
-     * @return The object corresponding to the PPL text.
-     * @throws PplParseException
-     */
-    fun fromPpl(text: String, type: Class<*>): Any?
-
-    /**
-     * Parsers a PPL text and always returns a correspondent **List** of
-     * elements.
-     *
-     * @param text
-     * The PPL text at the format `(METADATA)PAYLOAD`.
      * @param elementType
-     * The type of the list element which will be created.
-     * @return The List corresponding to the PPL text.
+     * The elementType of the object will be created.
+     * @return The object corresponding to the PPL text (single or list).
      * @throws PplParseException
      */
-    //fun <T> fromPplToList(text: String, elementType: Class<T>): List<T>
+    fun fromPpl(text: String, elementType: Class<*>): Any?
+
 
     /**
      * Transforms an object into PPL text (Serialization).

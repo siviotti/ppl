@@ -40,7 +40,9 @@ internal class PplSimpleMapperTest {
 
     @Test
     fun testShouldParseUsingFromPpl() {
+        assertEquals(null, mapper.fromPpl("()", Any::class.java))
         assertEquals(Person.INSTANCE, mapper.fromPpl(Person.PPL_STRING, Person::class.java))
+        assertEquals(Person.MULTI_INSTANCE, mapper.fromPpl(Person.PPL_MULTI_STRING, Person::class.java))
         assertEquals(StaticPerson.INSTANCE, mapper.fromPpl(StaticPerson.PPL_STRING, StaticPerson::class.java))
         assertEquals(Human.INSTANCE, mapper.fromPpl(Human.PPL_STRING, Human::class.java))
         assertEquals(Xmen.INSTANCE, mapper.fromPpl(Xmen.PPL_STRING, Xmen::class.java))
@@ -49,7 +51,9 @@ internal class PplSimpleMapperTest {
 
     @Test
     fun testShouldSerializeUsingToPpl() {
+        assertEquals("(S0)", mapper.toPpl(""))
         assertEquals(Person.PPL_STRING, mapper.toPpl(Person.INSTANCE))
+        assertEquals(Person.PPL_MULTI_STRING, mapper.toPpl(Person.MULTI_INSTANCE))
         assertEquals(StaticPerson.PPL_STRING, mapper.toPpl(StaticPerson.INSTANCE))
         assertEquals(Human.PPL_STRING, mapper.toPpl(Human.INSTANCE))
         assertEquals(Xmen.PPL_STRING, mapper.toPpl(Xmen.INSTANCE))

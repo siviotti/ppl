@@ -68,6 +68,8 @@ class Person {
 
         val INSTANCE = Person(NAME, AGE, CITY)
 
+        val MULTI_INSTANCE = listOf(INSTANCE, INSTANCE, INSTANCE)
+        val PPL_MULTI_STRING = "("+PERSON_METADATA + "#0-3)"+ PERSON_PAYLOAD + PERSON_PAYLOAD + PERSON_PAYLOAD
 
     }
 }
