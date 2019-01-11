@@ -1,7 +1,7 @@
 package br.net.buzu.sample.pojo
 
-import br.net.buzu.lang.METADATA_END
-import br.net.buzu.lang.NAME_END
+import br.net.buzu.pplspec.lang.METADATA_END
+import br.net.buzu.pplspec.lang.NAME_END
 
 
 /**

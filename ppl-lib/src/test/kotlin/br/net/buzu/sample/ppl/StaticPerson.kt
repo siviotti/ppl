@@ -1,8 +1,7 @@
 package br.net.buzu.sample.ppl
 
-import br.net.buzu.annotation.PplMetadata
-import br.net.buzu.model.Subtype
-import br.net.buzu.sample.pojo.Person
+import br.net.buzu.pplspec.annotation.PplMetadata
+import br.net.buzu.pplspec.model.Subtype
 
 /**
  *

@@ -16,12 +16,12 @@
  */
 package br.net.buzu.pplimpl.metatype
 
-import br.net.buzu.ext.MetaTypeFactory
-import br.net.buzu.ext.ValueMapperKit
-import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.MetaType
-import br.net.buzu.model.TypeAdapter
-import br.net.buzu.model.ValueMapper
+import br.net.buzu.pplspec.ext.MetaTypeFactory
+import br.net.buzu.pplspec.ext.ValueMapperKit
+import br.net.buzu.pplspec.model.MetaInfo
+import br.net.buzu.pplspec.model.MetaType
+import br.net.buzu.pplspec.model.TypeAdapter
+import br.net.buzu.pplspec.model.ValueMapper
 
 /**
  * Generic implementation of MetaType independent of language/platform.
@@ -57,7 +57,7 @@ class GenericMetaType(override val fullName: String, override val metaInfo: Meta
     }
 }
 
-object GenericMetaTypeFactory: MetaTypeFactory{
+object GenericMetaTypeFactory: MetaTypeFactory {
     override fun create(fullName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int,
                         typeAdapter: TypeAdapter, valueMapper: ValueMapper, kit: ValueMapperKit): MetaType {
         return GenericMetaType(fullName, metaInfo, children, treeIndex, typeAdapter, valueMapper, kit)

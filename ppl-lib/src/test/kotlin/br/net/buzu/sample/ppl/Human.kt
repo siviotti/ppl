@@ -1,9 +1,8 @@
 package br.net.buzu.sample.ppl
 
-import br.net.buzu.annotation.PplMetadata
-import br.net.buzu.annotation.PplUse
-import br.net.buzu.model.Subtype
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF
+import br.net.buzu.pplspec.annotation.PplMetadata
+import br.net.buzu.pplspec.annotation.PplUse
+import br.net.buzu.pplspec.model.Subtype
 
 import java.io.Serializable
 import java.time.LocalDate

@@ -16,13 +16,13 @@
  */
 package br.net.buzu.pplimpl.api
 
-import br.net.buzu.api.PositionalMapper
-import br.net.buzu.model.MetaType
-import br.net.buzu.model.StaticMetadata
-import br.net.buzu.model.pplStringOf
 import br.net.buzu.pplimpl.core.positionalParse
 import br.net.buzu.pplimpl.jvm.readMetaType
 import br.net.buzu.pplimpl.metadata.parseMetadata
+import br.net.buzu.pplspec.api.PositionalMapper
+import br.net.buzu.pplspec.model.MetaType
+import br.net.buzu.pplspec.model.StaticMetadata
+import br.net.buzu.pplspec.model.pplStringOf
 import br.net.buzu.sample.order.Order
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled

@@ -1,9 +1,9 @@
 package br.net.buzu.pplimpl.core
 
-import br.net.buzu.model.StaticMetadata
-import br.net.buzu.model.pplStringOf
 import br.net.buzu.pplimpl.jvm.readMetaType
 import br.net.buzu.pplimpl.metadata.loadMetadata
+import br.net.buzu.pplspec.model.StaticMetadata
+import br.net.buzu.pplspec.model.pplStringOf
 import br.net.buzu.sample.order.Order
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

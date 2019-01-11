@@ -1,7 +1,7 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.model.MetaType
-import br.net.buzu.model.Subtype
+import br.net.buzu.pplspec.model.MetaType
+import br.net.buzu.pplspec.model.Subtype
 import br.net.buzu.sample.order.Order
 import br.net.buzu.sample.pojo.Person
 import org.junit.jupiter.api.Assertions.assertEquals

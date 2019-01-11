@@ -16,8 +16,8 @@
  */
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.ext.SubtypeResolver
-import br.net.buzu.model.Subtype
+import br.net.buzu.pplspec.ext.SubtypeResolver
+import br.net.buzu.pplspec.model.Subtype
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.time.*

@@ -1,8 +1,8 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.lang.EMPTY
-import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.Subtype
+import br.net.buzu.pplspec.lang.EMPTY
+import br.net.buzu.pplspec.model.MetaInfo
+import br.net.buzu.pplspec.model.Subtype
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test

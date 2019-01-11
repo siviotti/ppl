@@ -16,22 +16,21 @@
  */
 package br.net.buzu.pplimpl.api
 
-import br.net.buzu.api.PplSimpleMapper
+import br.net.buzu.pplspec.api.PplSimpleMapper
+import br.net.buzu.pplspec.model.PplString
+import br.net.buzu.pplspec.model.pplStringOf
 import br.net.buzu.sample.order.Order
 import br.net.buzu.sample.pojo.Person
 import br.net.buzu.sample.ppl.Human
 import br.net.buzu.sample.ppl.StaticPerson
 import br.net.buzu.sample.ppl.Xmen
-import org.junit.jupiter.api.Test
 import br.net.buzu.sample.time.TimePojo
-import java.util.GregorianCalendar
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.LocalDate
-import java.util.ArrayList
-import br.net.buzu.model.PplString
-import br.net.buzu.model.pplStringOf
-import org.junit.jupiter.api.Assertions.*
+import java.util.*
 
 
 internal class PplSimpleMapperTest {

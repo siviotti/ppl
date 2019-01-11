@@ -16,7 +16,7 @@
  */
 package br.net.buzu.pplimpl.core
 
-import br.net.buzu.model.Align
+import br.net.buzu.pplspec.model.Align
 
 fun fit(align: Align, original: String, finalSize: Int, c: Char): String {
     val len = original.length

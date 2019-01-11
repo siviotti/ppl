@@ -16,9 +16,9 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.exception.PplMetaclassViolationException
-import br.net.buzu.ext.MetadataFactory
-import br.net.buzu.model.*
+import br.net.buzu.pplspec.exception.PplMetaclassViolationException
+import br.net.buzu.pplspec.ext.MetadataFactory
+import br.net.buzu.pplspec.model.*
 import java.util.*
 
 @JvmOverloads
@@ -30,7 +30,7 @@ fun loadMetadata(rootInstance: Any, metaType: MetaType, factory: MetadataFactory
     return factory.create(metaInfo.update(max.maxSize, max.maxOccurs), createMetaChildren(loadNode, maxMap, factory))
 }
 
-internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, factory: MetadataFactory ): List<Metadata> {
+internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, factory: MetadataFactory): List<Metadata> {
     val metaType = node.metaType
     if (!metaType.hasChildren) {
         return listOf()
@@ -50,7 +50,7 @@ internal fun createMetaChildren(node: LoadNode, maxMap: MaxMap, factory: Metadat
 }
 
 internal fun loadChild(fieldValue: Any?, metaType: MetaType, maxMap: MaxMap,
-                       factory: MetadataFactory ): Metadata {
+                       factory: MetadataFactory): Metadata {
     val fieldNode = LoadNode(fieldValue, metaType)
     var metaInfo = metaType.metaInfo
     val max = getMax(maxMap, fieldNode, metaInfo)

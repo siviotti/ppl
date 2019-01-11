@@ -16,15 +16,15 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.ext.MetadataCoder
-import br.net.buzu.ext.MetadataCoderResolver
-import br.net.buzu.lang.*
-import br.net.buzu.model.Dialect
-import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.Metadata
-import br.net.buzu.model.Subtype
+import br.net.buzu.pplspec.ext.MetadataCoder
+import br.net.buzu.pplspec.ext.MetadataCoderResolver
+import br.net.buzu.pplspec.lang.*
+import br.net.buzu.pplspec.model.Dialect
+import br.net.buzu.pplspec.model.MetaInfo
+import br.net.buzu.pplspec.model.Metadata
+import br.net.buzu.pplspec.model.Subtype
 
-internal const val SPACE = "" + br.net.buzu.lang.SPACE
+internal const val SPACE = "" + br.net.buzu.pplspec.lang.SPACE
 
 fun codeMetadata(metadata: Metadata, dialect: Dialect = Dialect.DEFAULT): String = Coders.from(dialect).code(metadata)
 

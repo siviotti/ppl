@@ -1,6 +1,6 @@
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.model.pplStringOf
+import br.net.buzu.pplspec.model.pplStringOf
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

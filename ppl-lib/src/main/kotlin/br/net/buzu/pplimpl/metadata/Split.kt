@@ -16,9 +16,9 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.exception.PplParseException
-import br.net.buzu.lang.*
-import br.net.buzu.model.PplNode
+import br.net.buzu.pplspec.exception.PplParseException
+import br.net.buzu.pplspec.lang.*
+import br.net.buzu.pplspec.model.PplNode
 
 internal const val WRONG_USE_OF_BLOCK = "Wrong use domainOf block "
 
@@ -212,7 +212,7 @@ internal fun splitDefaultValue(text: String, beginIndex: Int): Split {
         endIndex = pplNextStringDelimiter(text, index, c) + 1
         Split(endIndex + 1, text.substring(firstChar + 2, endIndex - 1))
     } else {
-        endIndex = pplNextCharOrLast(text, index, br.net.buzu.lang.SPACE)
+        endIndex = pplNextCharOrLast(text, index, br.net.buzu.pplspec.lang.SPACE)
         Split(endIndex + 1, text.substring(firstChar + 1, endIndex))
     }
 

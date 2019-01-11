@@ -16,7 +16,7 @@
  */
 package br.net.buzu.pplimpl.core
 
-import br.net.buzu.model.*
+import br.net.buzu.pplspec.model.*
 
 fun positionalParse(text: String, metadata: StaticMetadata, metaType: MetaType): Any?{
     return when (metadata.kind()){

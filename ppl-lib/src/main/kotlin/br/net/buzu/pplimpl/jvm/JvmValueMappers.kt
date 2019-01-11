@@ -16,11 +16,11 @@
  */
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.exception.PplParseException
-import br.net.buzu.ext.ValueMapperKit
-import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.Subtype
-import br.net.buzu.model.ValueMapper
+import br.net.buzu.pplspec.exception.PplParseException
+import br.net.buzu.pplspec.ext.ValueMapperKit
+import br.net.buzu.pplspec.model.MetaInfo
+import br.net.buzu.pplspec.model.Subtype
+import br.net.buzu.pplspec.model.ValueMapper
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.text.SimpleDateFormat

@@ -1,13 +1,16 @@
 package br.net.buzu.pplimpl.api
 
-import br.net.buzu.api.PplMapper
-import br.net.buzu.api.PplSimpleMapper
-import br.net.buzu.ext.*
-import br.net.buzu.lang.pplToString
-import br.net.buzu.model.*
-import br.net.buzu.pplimpl.jvm.*
+import br.net.buzu.pplimpl.jvm.JvmSubtypeResolver
+import br.net.buzu.pplimpl.jvm.JvmValueMapperKit
+import br.net.buzu.pplimpl.jvm.genericSkip
+import br.net.buzu.pplimpl.jvm.readMetaType
 import br.net.buzu.pplimpl.metadata.*
 import br.net.buzu.pplimpl.metatype.GenericMetaTypeFactory
+import br.net.buzu.pplspec.api.PplMapper
+import br.net.buzu.pplspec.api.PplSimpleMapper
+import br.net.buzu.pplspec.ext.*
+import br.net.buzu.pplspec.lang.pplToString
+import br.net.buzu.pplspec.model.*
 import java.lang.reflect.Field
 
 fun pplSimpleMapper(): PplSimpleMapper = GenericPplSimpleMapper()

@@ -16,8 +16,8 @@
  */
 package br.net.buzu.pplimpl.api
 
-import br.net.buzu.api.PplMapper
-import br.net.buzu.model.Dialect
+import br.net.buzu.pplspec.api.PplMapper
+import br.net.buzu.pplspec.model.Dialect
 import br.net.buzu.sample.order.Order
 import br.net.buzu.sample.pojo.Person
 import br.net.buzu.sample.ppl.Human

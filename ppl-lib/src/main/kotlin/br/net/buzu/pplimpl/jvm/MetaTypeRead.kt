@@ -1,20 +1,20 @@
 package br.net.buzu.pplimpl.jvm
 
-import br.net.buzu.annotation.PplIgnore
-import br.net.buzu.annotation.PplMetadata
-import br.net.buzu.annotation.PplUse
-import br.net.buzu.exception.PplReflectionException
-import br.net.buzu.ext.MetaTypeFactory
-import br.net.buzu.ext.SubtypeResolver
-import br.net.buzu.ext.ValueMapperKit
-import br.net.buzu.lang.DEFAULT_MIN_OCCURS
-import br.net.buzu.lang.EMPTY
-import br.net.buzu.lang.PATH_SEP
-import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.MetaType
-import br.net.buzu.model.Subtype
 import br.net.buzu.pplimpl.metadata.IndexSequence
 import br.net.buzu.pplimpl.metatype.GenericMetaTypeFactory
+import br.net.buzu.pplspec.annotation.PplIgnore
+import br.net.buzu.pplspec.annotation.PplMetadata
+import br.net.buzu.pplspec.annotation.PplUse
+import br.net.buzu.pplspec.exception.PplReflectionException
+import br.net.buzu.pplspec.ext.MetaTypeFactory
+import br.net.buzu.pplspec.ext.SubtypeResolver
+import br.net.buzu.pplspec.ext.ValueMapperKit
+import br.net.buzu.pplspec.lang.DEFAULT_MIN_OCCURS
+import br.net.buzu.pplspec.lang.EMPTY
+import br.net.buzu.pplspec.lang.PATH_SEP
+import br.net.buzu.pplspec.model.MetaInfo
+import br.net.buzu.pplspec.model.MetaType
+import br.net.buzu.pplspec.model.Subtype
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
@@ -30,8 +30,8 @@ fun readMetaType(type: Class<*>, factory: MetaTypeFactory = GenericMetaTypeFacto
 }
 
 @JvmOverloads
-fun readMetaType(type: Class<*>, elementType: Class<*>, factory: MetaTypeFactory= GenericMetaTypeFactory,
-                 resolver: SubtypeResolver = JvmSubtypeResolver,  kit: ValueMapperKit= JvmValueMapperKit,
+fun readMetaType(type: Class<*>, elementType: Class<*>, factory: MetaTypeFactory = GenericMetaTypeFactory,
+                 resolver: SubtypeResolver = JvmSubtypeResolver, kit: ValueMapperKit = JvmValueMapperKit,
                  skip: (Field) -> Boolean = genericSkip): MetaType {
     val seq = IndexSequence()
     val pplMetadata = elementType.getAnnotation(PplMetadata::class.java)

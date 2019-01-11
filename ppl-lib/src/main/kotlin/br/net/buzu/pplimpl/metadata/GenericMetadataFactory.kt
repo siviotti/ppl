@@ -16,10 +16,10 @@
  */
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.ext.MetadataFactory
-import br.net.buzu.model.MetaInfo
-import br.net.buzu.model.Metadata
-import br.net.buzu.model.StaticStructure
+import br.net.buzu.pplspec.ext.MetadataFactory
+import br.net.buzu.pplspec.model.MetaInfo
+import br.net.buzu.pplspec.model.Metadata
+import br.net.buzu.pplspec.model.StaticStructure
 
 /**
  * Generic implementation of  MetadataFactory

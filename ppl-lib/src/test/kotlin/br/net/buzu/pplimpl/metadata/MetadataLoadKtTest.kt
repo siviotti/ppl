@@ -1,8 +1,8 @@
 package br.net.buzu.pplimpl.metadata
 
-import br.net.buzu.model.Metadata
-import br.net.buzu.model.Subtype
 import br.net.buzu.pplimpl.jvm.readMetaType
+import br.net.buzu.pplspec.model.Metadata
+import br.net.buzu.pplspec.model.Subtype
 import br.net.buzu.sample.order.Order
 import br.net.buzu.sample.pojo.Person
 import br.net.buzu.sample.ppl.Human
@@ -76,7 +76,7 @@ internal class MetadataLoadKtTest {
     }
 
 
-    fun assertMetadata(metadata:Metadata, name: String, type: Subtype, size: Int =0, minOccurs:Int=0, maxOccurs:Int=1){
+    fun assertMetadata(metadata: Metadata, name: String, type: Subtype, size: Int =0, minOccurs:Int=0, maxOccurs:Int=1){
         assertEquals(name, metadata.name())
         assertEquals(type, metadata.info().subtype)
         assertEquals(size, metadata.info().size)

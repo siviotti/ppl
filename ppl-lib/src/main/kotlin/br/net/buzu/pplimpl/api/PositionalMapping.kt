@@ -1,12 +1,12 @@
 package br.net.buzu.pplimpl.api
 
-import br.net.buzu.api.PositionalMapper
-import br.net.buzu.ext.PositionalMapperFactory
-import br.net.buzu.model.*
 import br.net.buzu.pplimpl.core.arrayParse
 import br.net.buzu.pplimpl.core.arraySerialize
 import br.net.buzu.pplimpl.core.atomicParse
 import br.net.buzu.pplimpl.core.atomicSerialize
+import br.net.buzu.pplspec.api.PositionalMapper
+import br.net.buzu.pplspec.ext.PositionalMapperFactory
+import br.net.buzu.pplspec.model.*
 
 fun positionalMapperOf(metadata: StaticMetadata, metaType: MetaType): PositionalMapper {
     val info = metadata.info()
