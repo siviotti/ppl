@@ -30,6 +30,19 @@ import br.net.buzu.pplspec.model.ValueMapper
 @FunctionalInterface
 interface MetaTypeFactory {
 
+    /**
+     * Creates a instance of MetaType from given parameters.
+     * @param fullName The complete field name including the parent field names like 'order.customer.addresses.street'
+     * @param metaInfo The PPL basic information (name, type, size, occurs, default, domain etc)
+     * @param children The MetaType children nodes
+     * @param treeIndex The index of this element at the tree ( if is root = 0)
+     * @param typeAdapter The TypeAdapter corresponding to the field type
+     * @param valueMapper The ValueMapper corresponding to the field type and the Subtype at MetaInfo.
+     * @param kit The Kit/Resolver used if the subtype of MetaType is not the same of Metadata.
+     * This kit is used to create the correct ValueMapper to the Metadata subtype.
+     *
+     * @return The created instance of MetaType
+     */
     fun create(fullName: String, metaInfo: MetaInfo, children: List<MetaType>, treeIndex: Int,
                typeAdapter: TypeAdapter, valueMapper: ValueMapper, kit: ValueMapperKit): MetaType
 }

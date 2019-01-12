@@ -29,5 +29,13 @@ import br.net.buzu.pplspec.model.StaticMetadata
 @FunctionalInterface
 interface PositionalMapperFactory {
 
+    /**
+     * Creates a PositionalMapper (payload mapping) from a Metadata (defines metaInfo and serialSize) and from a
+     * MetaType (defines typeAdapter and ValueMapper).
+     * @param metadata The static metadata that describes the structure of the data
+     * @param metaType The element that describes the type of the object as meta information readable by the mapper
+     *
+     * @return The mapper able to parse/serialize data and objects (payload)
+     */
     fun create(metadata: StaticMetadata, metaType: MetaType): PositionalMapper
 }

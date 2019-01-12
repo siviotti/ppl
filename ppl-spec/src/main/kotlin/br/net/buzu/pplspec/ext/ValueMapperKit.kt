@@ -28,5 +28,14 @@ import br.net.buzu.pplspec.model.ValueMapper
 @FunctionalInterface
 interface ValueMapperKit {
 
+    /**
+     * Returns the ValueMapper corresponding to the informed params.
+     *
+     * @param metaInfo The meta information used to create the mapper. This is the Metadata basic information.
+     * @param type The type witch will be mapped.
+     *
+     * @return The ValueMapper instance corresponding to the given parameters.
+     *
+     */
     fun getMapper(metaInfo: MetaInfo, type: Class<*>): ValueMapper
 }

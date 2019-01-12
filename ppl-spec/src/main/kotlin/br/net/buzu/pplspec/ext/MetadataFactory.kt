@@ -28,5 +28,13 @@ import br.net.buzu.pplspec.model.Metadata
 @FunctionalInterface
 interface MetadataFactory {
 
+    /**
+     * Creates a Metadata from a given MetaInfo and the metadata children.
+     *
+     * @param metaInfo The Metadata info
+     * @param children The Metadata children
+     *
+     * @return The instence of Metadata.
+     */
     fun create(metaInfo: MetaInfo, children: List<Metadata>): Metadata
 }

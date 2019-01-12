@@ -26,5 +26,10 @@ import br.net.buzu.pplspec.model.Dialect
  */
 interface MetadataCoderResolver {
 
+    /**
+     * Resolves and returns the MetadataCoder corresponding to the Dialect informed.
+     *
+     * @param The dialect used to serialize the Metadata.
+     */
     fun resolve(dialect: Dialect): MetadataCoder
 }

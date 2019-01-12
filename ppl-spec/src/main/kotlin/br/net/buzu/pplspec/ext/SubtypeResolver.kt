@@ -27,5 +27,14 @@ import br.net.buzu.pplspec.model.Subtype
 @FunctionalInterface
 interface SubtypeResolver {
 
+    /**
+     * Resolves and returns a Subtype from a given type. This resolver is used to create MetaTypes and TypeAdapters
+     * returning the default subtypes before create a Mapper that uses the Metadata information.
+     * In this case is possible that the subtype be replaced.
+     *
+     * @param type The type that must be associated to a Subtype.
+     *
+     * @return The Subtype corresponding to the informed type.
+     */
     fun resolve(type: Class<*>): Subtype
 }
