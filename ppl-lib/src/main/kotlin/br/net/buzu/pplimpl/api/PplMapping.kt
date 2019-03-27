@@ -15,6 +15,7 @@ import java.lang.reflect.Field
 
 fun pplSimpleMapper(): PplSimpleMapper = GenericPplSimpleMapper()
 
+@JvmOverloads
 fun pplMapper(dialect: Dialect = Dialect.DEFAULT,
               metaTypeFactory: MetaTypeFactory = GenericMetaTypeFactory, subtypeResolver: SubtypeResolver = JvmSubtypeResolver,
               valueMapperKit: ValueMapperKit = JvmValueMapperKit, skip: (Field) -> Boolean = genericSkip,
