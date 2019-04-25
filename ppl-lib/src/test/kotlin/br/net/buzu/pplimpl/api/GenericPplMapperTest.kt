@@ -1,18 +1,18 @@
 /*
- *	This file is part of Buzu.
+ *	This file is part of DefaultPplMapper.
  *
- *   Buzu is free software: you can redistribute it and/or modify
+ *   DefaultPplMapper is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU Lesser General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
  *
- *   Buzu is distributed in the hope that it will be useful,
+ *   DefaultPplMapper is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Lesser General Public License for more details.
  *
  *   You should have received a copy of the GNU Lesser General Public License
- *   along with Buzu.  If not, see <http://www.gnu.org/licenses/>.
+ *   along with DefaultPplMapper.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.net.buzu.pplimpl.api
 
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test
 
 internal class GenericPplMapperTest {
 
-    private val mapper: PplMapper = pplMapper()
+    private val mapper: PplMapper = pplMapperOf()
 
     @Test
     fun testShouldParseUsingFromPpl() {
@@ -52,7 +52,7 @@ internal class GenericPplMapperTest {
 
     @Test
     fun testCustomizeDialect() {
-        val mapper: GenericPplMapper = pplMapper(dialect = Dialect.VERBOSE) as GenericPplMapper
+        val mapper: GenericPplMapper = pplMapperOf(dialect = Dialect.VERBOSE) as GenericPplMapper
         assertEquals(Dialect.VERBOSE, mapper.dialect)
     }
 

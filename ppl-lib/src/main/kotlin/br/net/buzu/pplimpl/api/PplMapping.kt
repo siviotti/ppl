@@ -1,3 +1,19 @@
+/*
+ *	This file is part of DefaultPplMapper.
+ *
+ *   DefaultPplMapper is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   DefaultPplMapper is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public License
+ *   along with DefaultPplMapper.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package br.net.buzu.pplimpl.api
 
 import br.net.buzu.pplimpl.jvm.JvmSubtypeResolver
@@ -13,20 +29,22 @@ import br.net.buzu.pplspec.lang.pplToString
 import br.net.buzu.pplspec.model.*
 import java.lang.reflect.Field
 
-fun pplSimpleMapper(): PplSimpleMapper = GenericPplSimpleMapper()
+fun pplSimpleMapper(): PplSimpleMapper = GenericPplSimpleMapper
+
+fun pplMapper(): PplMapper = DefaultPplMapper
 
 @JvmOverloads
-fun pplMapper(dialect: Dialect = Dialect.DEFAULT,
-              metaTypeFactory: MetaTypeFactory = GenericMetaTypeFactory, subtypeResolver: SubtypeResolver = JvmSubtypeResolver,
-              valueMapperKit: ValueMapperKit = JvmValueMapperKit, skip: (Field) -> Boolean = genericSkip,
-              metadataFactory: MetadataFactory = GenericMetadataFactory,
-              metadataCoderResolver: MetadataCoderResolver = GenericMetadataCoderResolver,
-              positionalMapperFactory: PositionalMapperFactory = GenericPositionalMapperFactpry)
+fun pplMapperOf(dialect: Dialect = Dialect.DEFAULT,
+                metaTypeFactory: MetaTypeFactory = GenericMetaTypeFactory, subtypeResolver: SubtypeResolver = JvmSubtypeResolver,
+                valueMapperKit: ValueMapperKit = JvmValueMapperKit, skip: (Field) -> Boolean = genericSkip,
+                metadataFactory: MetadataFactory = GenericMetadataFactory,
+                metadataCoderResolver: MetadataCoderResolver = GenericMetadataCoderResolver,
+                positionalMapperFactory: PositionalMapperFactory = GenericPositionalMapperFactpry)
         : PplMapper = GenericPplMapper(dialect, metaTypeFactory, subtypeResolver, valueMapperKit, skip,
         metadataFactory, metadataCoderResolver, positionalMapperFactory)
 
 
-internal class GenericPplSimpleMapper : PplSimpleMapper {
+internal object GenericPplSimpleMapper : PplSimpleMapper {
 
     override fun fromPpl(text: String, elementType: Class<*>): Any? {
         val pplString = pplStringOf(text)
@@ -48,14 +66,14 @@ internal class GenericPplSimpleMapper : PplSimpleMapper {
 
 }
 
-internal class GenericPplMapper(val dialect: Dialect,
+open class GenericPplMapper(val dialect: Dialect,
         // MetaType extension points
-                                val metaTypeFactory: MetaTypeFactory, val subtypeResolver: SubtypeResolver,
-                                val valueMapperKit: ValueMapperKit, val skip: (Field) -> Boolean,
+                            val metaTypeFactory: MetaTypeFactory, val subtypeResolver: SubtypeResolver,
+                            val valueMapperKit: ValueMapperKit, val skip: (Field) -> Boolean,
         // Metadata exrension points
-                                val metadataFactory: MetadataFactory, val metadataCoderResolver: MetadataCoderResolver,
+                            val metadataFactory: MetadataFactory, val metadataCoderResolver: MetadataCoderResolver,
         // Mapper extension points
-                                val positionalMapperFactory: PositionalMapperFactory)
+                            val positionalMapperFactory: PositionalMapperFactory)
     : PplMapper {
 
     override fun fromPpl(text: String, elementType: Class<*>): Any {
@@ -88,6 +106,13 @@ internal class GenericPplMapper(val dialect: Dialect,
                 positionalMapperFactory.create(metadata, metaType).serialize(source))
     }
 }
+
+internal object DefaultPplMapper : GenericPplMapper(Dialect.DEFAULT,
+        GenericMetaTypeFactory, JvmSubtypeResolver,
+        JvmValueMapperKit, genericSkip,
+        GenericMetadataFactory,
+        GenericMetadataCoderResolver,
+        GenericPositionalMapperFactpry)
 
 private fun getElementType(source: Any): Class<Any> {
     return if (source is Collection<*>) {
