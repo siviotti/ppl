@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.net.buzu</groupId>
     <artifactId>ppl-spec</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -30,7 +29,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.3.10</kotlin.version>
-        <maven-gpg-plugin.version/>
+        <maven-gpg-plugin.version />
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
@@ -44,7 +43,7 @@
         <connection>scm:git:git://github.com/simpligility/ossrh-demo.git</connection>
         <developerConnection>scm:git:https://github.com/siviotti/ppl.git</developerConnection>
         <url>http://github.com/siviotti/ppl/tree/master</url>
-        <tag>v1.0.0</tag>
+        <tag>ppl-spec-1.0.0</tag>
     </scm>
 
     <distributionManagement>
