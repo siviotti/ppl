@@ -1,8 +1,8 @@
 package br.net.buzu.pplspec.model
 
 import br.net.buzu.pplspec.lang.EMPTY
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 /**
  * @author Douglas Siviotti

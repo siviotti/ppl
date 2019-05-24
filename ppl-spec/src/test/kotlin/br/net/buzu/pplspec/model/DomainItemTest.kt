@@ -1,22 +1,14 @@
 package br.net.buzu.pplspec.model
 
-import org.junit.Assert.*
-import org.junit.Ignore
-import org.junit.Test
-
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 /**
  *
  * @author Douglas Siviotti
  * @since 1.0
  */
 class DomainItemTest {
-
-    @Test
-    @Ignore // Kotlin not null
-    fun testNull() {
-        val item = domainItemOf(null!!)
-        assertEquals(null, item)
-    }
 
     @Test
     fun testBlank() {
@@ -37,12 +29,6 @@ class DomainItemTest {
         val item = domainItemOf("345")
         assertEquals("345", item.value())
         assertEquals(null, item.label())
-    }
-
-    @Test(expected = NullPointerException::class)
-    @Ignore // Kotlin not null
-    fun testNullPointerException() {
-        //DomainItem(null)
     }
 
     @Test

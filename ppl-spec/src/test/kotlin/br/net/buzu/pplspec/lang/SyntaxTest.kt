@@ -1,7 +1,7 @@
 package br.net.buzu.pplspec.lang
 
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import java.text.ParseException
 
 /**
@@ -134,40 +134,34 @@ class SyntaxTest {
         assertEquals(24, pplBlockEndIndex("test(inside')'(go)\"x'y\"z)out", 4, '(', ')').toLong())
         // 1 2 X 2 1
 
-        try {
+        val e = assertThrows(ParseException::class.java){
             assertEquals(3, pplBlockEndIndex("a{b}c", 1, '(', ')').toLong())
-            fail() // ( no lugar de {
-        } catch (e: ParseException) {
-            val message = e.message ?: ""
-            assertTrue(message.startsWith(BLOCK_ERROR_INVALID_OPEN_CHAR))
         }
+        val message = e.message ?: ""
+        assertTrue(message.startsWith(BLOCK_ERROR_INVALID_OPEN_CHAR))
 
         assertEquals(12, pplBlockEndIndex("xyz (abc(JJ)) def", 4, '(', ')').toLong())
         assertEquals(12, pplBlockEndIndex("2[34[4[5]ax]]", 1, '[', ']').toLong())
 
-        try {
+        val e2 = assertThrows(ParseException::class.java){
             pplBlockEndIndex("2[34[4[5]ax]", 1, '[', ']')
-            fail() // abrem 3 e fecham 2
-        } catch (e: ParseException) {
-            val message = e.message ?: ""
-            assertTrue(message.startsWith(BLOCK_ERROR))
         }
+        val message2 = e2.message ?: ""
+        assertTrue(message2.startsWith(BLOCK_ERROR))
 
-        try {
+
+        val e3 = assertThrows(ParseException::class.java){
             pplBlockEndIndex("2[34[4[5]ax]", 1, '[', ']')
-            fail() // abrem 3 e fecham 2
-        } catch (e: ParseException) {
-            val message = e.message ?: ""
-            assertTrue(message.startsWith(BLOCK_ERROR))
         }
+        val message3 = e3.message ?: ""
+        assertTrue(message3.startsWith(BLOCK_ERROR))
 
-        try {
+
+        val e4 = assertThrows(ParseException::class.java){
             pplBlockEndIndex("abc ( 'def) xyz", 4, '(', ')')
-            fail() // opened String
-        } catch (e: ParseException) {
-            val message = e.message ?: ""
-            assertTrue(message.startsWith(UNTERMINATED_STRING))
         }
+        val message4 = e4.message ?: ""
+        assertTrue(message4.startsWith(UNTERMINATED_STRING))
 
     }
 

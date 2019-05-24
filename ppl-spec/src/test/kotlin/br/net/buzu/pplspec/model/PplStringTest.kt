@@ -1,9 +1,9 @@
 package br.net.buzu.pplspec.model
 
 import br.net.buzu.pplspec.exception.PplParseException
-import org.junit.Assert.*
-import org.junit.Ignore
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 
 /**
  * PplString unit test
@@ -13,31 +13,25 @@ import org.junit.Test
  */
 class PplStringTest {
 
-    @Ignore // impossible assign (null)
-    @Test(expected = IllegalArgumentException::class)
-    fun testNull() {
-        //PplString(null)
-    }
-
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun testEmpty() {
-        PplString("")
+        assertThrows(IllegalArgumentException::class.java){
+            PplString("")
+        }
     }
 
-    @Test(expected = PplParseException::class)
+    @Test
     fun testOpenSub() {
-        PplString("(")
+        assertThrows(PplParseException::class.java){
+            PplString("(")
+        }
     }
 
-    @Ignore // impossilble assign (null)
-    @Test(expected = IllegalArgumentException::class)
-    fun testNullContext() {
-        //PplString("(zzz)abc", null)
-    }
-
-    @Test(expected = PplParseException::class)
+    @Test
     fun testNoMetadata() {
-        PplString("Ladybug   015Paris")
+        assertThrows(PplParseException::class.java){
+            PplString("Ladybug   015Paris")
+        }
     }
 
     @Test
@@ -54,9 +48,11 @@ class PplStringTest {
         assertEquals("Ladybug   015Paris", pplString.payload)
     }
 
-    @Test(expected = PplParseException::class)
+    @Test
     fun testUnclosedMetadata() {
-        PplString("(name: S10; age: I3; city:S5 Ladybug   015Paris")
+        assertThrows(PplParseException::class.java){
+            PplString("(name: S10; age: I3; city:S5 Ladybug   015Paris")
+        }
     }
 
     @Test

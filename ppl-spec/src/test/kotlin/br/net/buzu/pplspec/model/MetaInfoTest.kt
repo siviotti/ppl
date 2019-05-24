@@ -2,13 +2,13 @@ package br.net.buzu.pplspec.model
 
 
 import br.net.buzu.pplspec.annotation.PplMetadata
+import br.net.buzu.pplspec.exception.PplParseException
 import br.net.buzu.pplspec.lang.EMPTY
 import br.net.buzu.pplspec.lang.INDEXED
 import br.net.buzu.pplspec.lang.KEY
 import br.net.buzu.pplspec.lang.RIGHT
-import br.net.buzu.pplspec.model.*
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 
 /**
@@ -21,16 +21,20 @@ class MetaInfoTest {
 
 
     //@Test(expected = IllegalArgumentException::class)
-    @Test(expected = KotlinNullPointerException::class)
+    @Test
     fun testMissingSubtype() {
-        // null!! creates a KotlinNullPointerException
-        MetaInfo(0, EMPTY, null!!, 0, 0, 0, 0)
+        assertThrows(KotlinNullPointerException::class.java){
+            // null!! creates a KotlinNullPointerException
+            MetaInfo(0, EMPTY, null!!, 0, 0, 0, 0)
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun testInvalidOccurs() {
-        MetaInfo(0, EMPTY, Subtype.STRING, 0, 0, 5, 0) // 5 > 0, Unbounded
-        MetaInfo(0, EMPTY, Subtype.STRING, 0, 0, 5, 4) // 5 > 4, invalid
+        assertThrows(IllegalArgumentException::class.java){
+            MetaInfo(0, EMPTY, Subtype.STRING, 0, 0, 5, 0) // 5 > 0, Unbounded
+            MetaInfo(0, EMPTY, Subtype.STRING, 0, 0, 5, 4) // 5 > 4, invalid
+        }
     }
 
     @Test
